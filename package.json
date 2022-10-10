@@ -1,0 +1,19 @@
+{
+  "name": "dicionario",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/main/main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "keywords": [],
+  "author": "Arthur Lobo",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^21.0.1"
+  },
+  "dependencies": {
+    "electron-frame": "^0.7.5",
+    "electron-store": "^8.1.0"
+  }
+}
