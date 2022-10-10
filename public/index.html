@@ -6,11 +6,30 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dicionário.js</title>
-    <script src="./index.js" type="module" defer></script>
+    <!-- <script src="./index.js" type="module" defer></script> -->
     <link rel="stylesheet" href="./style/main.css">
 </head>
 
 <body>
+    <div class="page" id="create">
+        <header>
+            <div class="return" title="Voltar">
+                <img src="../assets/left-arrow.svg" width="30">
+            </div>
+            <h1>Adicionar Palavra</h1>
+        </header>
+        <div class="dashed-border spacing-16 grid-fill-center gap">
+            <label>
+                Palavra
+            <input type="text" id="word" placeholder="Palavra">
+            </label>
+            <div class="t-wrapper grid-fill-bottom">
+                Significado
+                <textarea id="sig" placeholder="Escreva os significados que a palavra pode ter."></textarea>
+            </div>
+            <button>Adicionar</button>
+        </div>
+    </div>
     
 </body>
 

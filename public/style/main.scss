@@ -1,9 +1,17 @@
 @import url(../fonts/import/index.css);
 
+:root{
+    --blue: #3485FF;
+    --white: #FAFAFA;
+    --hover-blue: #5699FF;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    border: none;
+    outline: none;
 }
 
 body {
@@ -11,19 +19,71 @@ body {
     display: grid;
 }
 
-header{
-    text-align: center;
+header {
     font-family: 'Open Sans', sans-serif;
+    position: relative;
+    height: 30px;
+
+    & h1{
+        position: absolute;
+        right: 50%;
+        left: 50%;
+        top: 0;
+        width: max-content;
+        transform: translateX(-50%);
+        font-size: 30px;
+        line-height: 30px;
+    }
+
+    & .return{
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--blue);
+        padding: 0 8px;
+        cursor: pointer;
+        display: flex;
+        &:hover{
+            background-color: rgba(0, 0, 0, 0.171);
+        }
+    }
+}
+
+.dashed-border {
+    border: 2px dashed #ccc;
+    border-radius: 16px;
+}
+
+.spacing-16 {
+    padding: 16px;
+    margin: 16px
+}
+
+.grid-fill-center {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content auto max-content;
+}
+
+.grid-fill-bottom {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content auto;
+}
+
+.gap {
+    gap: 20px;
 }
 
 .option {
+    @extend .dashed-border;
+
     display: flex;
     justify-content: space-evenly;
     align-items: center;
     flex-direction: column;
+
     background-color: #f5f5f5;
-    border: 2px dashed #ccc;
-    border-radius: 16px;
     width: 80%;
     aspect-ratio: 1/1;
     font-size: 20px;
@@ -47,10 +107,57 @@ header{
 .page {
     height: -webkit-fill-available;
 
-    &#home{
-        display: grid;
-        height: 100%;
-        grid-template-columns: 1fr;
-        grid-template-rows: max-content auto;
+
+    display: grid;
+    height: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content auto;
+
+    & button {
+        @extend .flex-center;
+        background-color: var(--blue);
+        color: var(--white);
+        cursor: pointer;
+        font-size: 18px;
+        border-radius: 8px;
+        padding: 6px 12px;
+        width: max-content;
+        font-family: 'Nunito', sans-serif;
+        user-select: none;
+        justify-self: center;
     }
+
+    &#create {
+        font-family: "Nunito", sans-serif;
+
+        & input,
+        textarea {
+            width: 100%;
+            font-family: "Nunito", sans-serif;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            padding: 8px 8px;
+            display: block;
+            &:focus {
+                border: 2px solid var(--hover-blue);
+            }
+        }
+
+        & .t-wrapper {
+            display: grid;
+        }
+
+        & textarea {
+            width: 100%;
+            height: 100%;
+            resize: none;
+        }
+    }
+
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
 }
