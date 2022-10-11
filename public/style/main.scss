@@ -47,7 +47,7 @@ header {
             background-color: rgba(0, 0, 0, 0.171);
         }
     }
-}
+}s
 
 .dashed-border {
     border: 2px dashed #ccc;
@@ -140,6 +140,9 @@ header {
             display: block;
             &:focus {
                 border: 2px solid var(--hover-blue);
+            }
+            &:invalid{
+                border: 2px solid red;
             }
         }
 
