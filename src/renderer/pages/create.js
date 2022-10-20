@@ -28,7 +28,10 @@ export function Create() {
                         onclick: () => {
                             const word = document.getElementById("word").value
                             const sig = document.getElementById("sig").value
-                            console.table({ word, sig })
+                            window.api.createWord({
+                                palavra: word.trim(),
+                                definicao: sig.trim()
+                            })
                         }
                     })
                 ]

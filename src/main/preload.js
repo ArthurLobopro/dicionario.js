@@ -1,6 +1,6 @@
 const { contextBridge } = require("electron")
 const { electronFrame } = require('electron-frame/renderer')
-const { api } = require("../store/renderer.js")
+const { api } = require("../store/Api.js")
 
 contextBridge.exposeInMainWorld("require", require)
 contextBridge.exposeInMainWorld("api", api)

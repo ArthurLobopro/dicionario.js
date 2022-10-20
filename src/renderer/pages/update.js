@@ -1,7 +1,8 @@
 import { CreateElement } from "../../Util.js"
 import { Page } from "../components/page.js"
 
-export function Update({ word, sig }) {
+export function Update({ word }) {
+    const palavra = window.api.palavras[word]
     return Page({
         id: "create",
         content: [
@@ -16,19 +17,19 @@ export function Update({ word, sig }) {
                 content: [
                     `<label>
                         Palavra
-                        <input type="text" id="word" placeholder="Palavra" minlength="3" value="${word}">
+                        <input type="text" id="palavra" placeholder="Palavra" minlength="3" value="${word}">
                     </label>
                     <div class="t-wrapper grid-fill-bottom">
                         Significado
-                        <textarea id="sig" minlength="5" placeholder="Escreva os significados que a palavra pode ter.">${sig}</textarea>
+                        <textarea id="definicao" minlength="5" placeholder="Escreva os significados que a palavra pode ter.">${palavra.definicao}</textarea>
                     </div>`,
                     CreateElement("button", {
                         className: "btn",
                         content: "Atualizar",
                         onclick: () => {
-                            const word = document.getElementById("word").value
-                            const sig = document.getElementById("sig").value
-                            console.table({ word, sig })
+                            const palavra = document.getElementById("palavra").value
+                            const definicao = document.getElementById("definicao").value
+                            window.api.updateWord(word, { palavra, definicao })
                         }
                     })
                 ]
