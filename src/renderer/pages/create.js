@@ -1,16 +1,14 @@
 import { CreateElement } from "../../Util.js"
+import { Header } from "../components/Header.js"
 import { Page } from "../components/page.js"
 
 export function Create() {
     return Page({
         id: "create",
         content: [
-            `<header>
-                <div class="return" title="Voltar">
-                    <img src="../assets/left-arrow.svg" width="30">
-                </div>
-                <h1>Adicionar Palavra</h1>
-            </header>`,
+            Header({
+                title: "Adicionar Palavra"
+            }),
             CreateElement("div", {
                 className: "dashed-border spacing-16 grid-fill-center gap",
                 content: [

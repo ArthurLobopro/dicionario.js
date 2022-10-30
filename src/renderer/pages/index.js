@@ -1,5 +1,7 @@
 import { CreateElement } from "../../Util.js"
 import { Page } from "../components/page.js"
+import { ScreenManager } from "../ScreenManager.js"
+import { Create } from "./create.js"
 
 function Option({ text, icon, onclick }) {
     return CreateElement("div", {
@@ -22,8 +24,8 @@ export function Home() {
         id: "home",
         content: [
             `<header>
-                    <h1>Dicionário Pessoal</h1>
-                </header>`,
+                <h1>Dicionário Pessoal</h1>
+            </header>`,
             CreateElement("div", {
                 className: "option-wrapper",
                 content: [
@@ -31,7 +33,7 @@ export function Home() {
                         text: "Adicionar",
                         icon: "../assets/add-icon.svg",
                         onclick: () => {
-                            alert("add")
+                            ScreenManager.setAtualScreen(Create())
                         }
                     }),
                     Option({
