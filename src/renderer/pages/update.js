@@ -10,7 +10,7 @@ export function Update({ word }) {
                 <div class="return" title="Voltar">
                     <img src="../assets/left-arrow.svg" width="30">
                 </div>
-                <h1>Adicionar Palavra</h1>
+                <h1>Editar Palavra</h1>
             </header>`,
             CreateElement("div", {
                 className: "dashed-border spacing-16 grid-fill-center gap",

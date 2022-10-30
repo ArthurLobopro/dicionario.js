@@ -86,13 +86,19 @@ header {
 
     background-color: #f5f5f5;
     width: 80%;
+    max-width: 300px;
     aspect-ratio: 1/1;
     font-size: 20px;
     font-family: 'Open Sans', sans-serif;
     padding: 25px 0;
     cursor: pointer;
     border-radius: 16px;
-
+    
+    & img{
+        width: 15%;
+        aspect-ratio: 1/1;
+        object-fit: contain;
+    }
 
     &:hover {
         filter: brightness(0.8);
@@ -101,9 +107,38 @@ header {
 
 .option-wrapper {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     justify-content: center;
     align-items: center;
+}
+
+.word-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 16px;
+
+    & .word-header{
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    &>.word{
+        display: grid;
+        grid-template-columns: auto max-content;
+        & .controls{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            & > img{
+                border-radius: 50%;
+                cursor: pointer;
+                &:hover{
+                    background-color: rgba(119, 108, 108, 0.226);
+                }
+            }
+        }
+    }
 }
 
 .page {

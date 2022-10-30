@@ -2,6 +2,7 @@ import { CreateElement } from "../../Util.js"
 import { Page } from "../components/page.js"
 import { ScreenManager } from "../ScreenManager.js"
 import { Create } from "./create.js"
+import { View } from "./View.js"
 
 function Option({ text, icon, onclick }) {
     return CreateElement("div", {
@@ -40,16 +41,16 @@ export function Home() {
                         text: "Visualizar",
                         icon: "../assets/eye-icon.svg",
                         onclick: () => {
-                            alert("view")
+                            ScreenManager.setAtualScreen(View())
                         }
                     }),
-                    Option({
-                        text: "Configurações",
-                        icon: "../assets/config-icon.svg",
-                        onclick: () => {
-                            alert("config")
-                        }
-                    })
+                    // Option({
+                    //     text: "Configurações",
+                    //     icon: "../assets/config-icon.svg",
+                    //     onclick: () => {
+                    //         alert("config")
+                    //     }
+                    // })
                 ]
             })
         ]
