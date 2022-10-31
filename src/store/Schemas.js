@@ -2,6 +2,7 @@ const ElectronStore = require('electron-store')
 
 const data = new ElectronStore({
     name: "data",
+    watch: true,
     schema: {
         palavras: {
             default: [],

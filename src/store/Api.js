@@ -34,7 +34,7 @@ function UpdateWords() {
 }
 
 const api = {
-    get palavras() {
+    palavras() {
         return palavras
     },
 
@@ -53,6 +53,8 @@ const api = {
         SortWords()
 
         data.set("palavras", GetWordsToSave())
+
+        UpdateWords()
     },
 
     createWord({ palavra, definicao }) {
@@ -69,7 +71,23 @@ const api = {
         SortWords()
 
         data.set("palavras", GetWordsToSave())
+
+        UpdateWords()
     },
+
+    deleteWord(palavra) {
+        if (!palavra in palavras) {
+            throw new Error("Palavra não encontrada")
+        }
+
+        delete palavras[palavra]
+
+        SortWords()
+
+        data.set("palavras", GetWordsToSave())
+
+        UpdateWords()
+    }
 }
 
 UpdateWords()

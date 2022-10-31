@@ -1,7 +1,7 @@
 import { CreateElement } from "../../Util.js"
 import { Page } from "../components/page.js"
 import { ScreenManager } from "../ScreenManager.js"
-import { Create } from "./create.js"
+import { Create } from "./Create.js"
 import { View } from "./View.js"
 
 function Option({ text, icon, onclick }) {
