@@ -12,7 +12,6 @@ export function Header(props) {
                 content: CreateElement("img", {
                     src: "../assets/left-arrow.svg",
                     id: "return",
-                    width: "30",
                     onclick: () => {
                         ScreenManager.setAtualScreen(Home())
                     }
