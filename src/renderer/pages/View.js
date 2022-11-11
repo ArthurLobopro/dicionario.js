@@ -2,6 +2,7 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Confirm } from "../components/modals/Confirm.js"
+import { ViewModal } from "../components/modals/View.js"
 import { ScreenManager } from "../ScreenManager.js"
 import { Update } from "./Update.js"
 
@@ -41,7 +42,13 @@ export function View() {
                                                 src: "../assets/eye-icon.svg",
                                                 width: "30",
                                                 onclick: () => {
-                                                    //api.setAtualScreen("update", palavra)
+                                                    const viewModal = ViewModal({
+                                                        word: palavra,
+                                                        onClose: () => {
+
+                                                        }
+                                                    })
+                                                    document.body.appendChild(viewModal)
                                                 }
                                             }),
                                             CreateElement("img", {

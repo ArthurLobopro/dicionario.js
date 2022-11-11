@@ -1,8 +1,8 @@
 import { CreateElement } from "../../../Util.js"
+import { Wrapper } from "./Wrapper.js"
 
 export function Confirm({ title = "Atenção", message, onClose = () => { } }) {
-    const wrapper = CreateElement("div", {
-        className: "modal-wrapper",
+    const wrapper = Wrapper({
         content: [
             CreateElement("div", {
                 className: "modal",
