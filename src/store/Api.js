@@ -43,11 +43,26 @@ const api = {
             throw new Error("Palavra não encontrada")
         }
 
-        palavras[word] = {
-            ...palavras[word],
-            palavra,
-            definicao,
-            ultimaEdicao: new Date()
+        if (word !== palavra) {
+            if (palavra in palavras) {
+                throw new Error("Palavra já existe")
+            }
+
+            const new_palavra = palavras[word]
+            delete palavras[word]
+            palavras[palavra] = {
+                ...new_palavra,
+                palavra,
+                definicao,
+                ultimaEdicao: new Date()
+            }
+        } else {
+            palavras[word] = {
+                ...palavras[word],
+                palavra,
+                definicao,
+                ultimaEdicao: new Date()
+            }
         }
 
         SortWords()
