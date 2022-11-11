@@ -1,5 +1,6 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
+import { Alert } from "../components/modals/Alert.js"
 import { Page } from "../components/page.js"
 
 export function Update({ word }) {
@@ -15,7 +16,7 @@ export function Update({ word }) {
                 content: [
                     `<label>
                         Palavra
-                        <input type="text" id="palavra" placeholder="Palavra" minlength="3" value="${word}">
+                        <input type="text" id="word" placeholder="Palavra" minlength="3" value="${word}">
                     </label>
                     <div class="t-wrapper grid-fill-bottom">
                         Significado
@@ -25,9 +26,20 @@ export function Update({ word }) {
                         className: "btn",
                         content: "Atualizar",
                         onclick: () => {
-                            const palavra = document.getElementById("palavra").value
-                            const definicao = document.getElementById("definicao").value
+                            const palavra_input = document.getElementById("word")
+                            const definicao_input = document.getElementById("definicao")
+                            const palavra = palavra_input.value
+                            const definicao = definicao_input.value
                             window.api.updateWord(word, { palavra, definicao })
+                            const alert = Alert({
+                                message: "Palavra atualizada com sucesso!",
+                                title: "Sucesso",
+                                onClose: () => {
+                                    palavra_input.value = ""
+                                    definicao_input.value = ""
+                                }
+                            })
+                            document.body.appendChild(alert)
                         }
                     })
                 ]

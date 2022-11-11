@@ -1,5 +1,6 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
+import { Alert } from "../components/modals/Alert.js"
 import { Page } from "../components/page.js"
 
 export function Create() {
@@ -24,12 +25,23 @@ export function Create() {
                         className: "btn",
                         content: "Adicionar",
                         onclick: () => {
-                            const word = document.getElementById("word").value
-                            const sig = document.getElementById("sig").value
+                            const word_input = document.getElementById("word")
+                            const sig_input = document.getElementById("sig")
+                            const word = word_input.value
+                            const sig = sig_input.value
                             window.api.createWord({
                                 palavra: word.trim(),
                                 definicao: sig.trim()
                             })
+                            const alert = Alert({
+                                message: "Palavra adicionada com sucesso!",
+                                title: "Sucesso",
+                                onClose: () => {
+                                    word_input.value = ""
+                                    sig_input.value = ""
+                                }
+                            })
+                            document.body.appendChild(alert)
                         }
                     })
                 ]
