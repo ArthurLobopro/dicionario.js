@@ -30,16 +30,24 @@ export function Update({ word }) {
                             const definicao_input = document.getElementById("definicao")
                             const palavra = palavra_input.value
                             const definicao = definicao_input.value
-                            window.api.updateWord(word, { palavra, definicao })
-                            const alert = Alert({
-                                message: "Palavra atualizada com sucesso!",
-                                title: "Sucesso",
-                                onClose: () => {
-                                    palavra_input.value = ""
-                                    definicao_input.value = ""
-                                }
-                            })
-                            document.body.appendChild(alert)
+                            try {
+                                window.api.updateWord(word, { palavra, definicao })
+                                const alert = Alert({
+                                    message: "Palavra atualizada com sucesso!",
+                                    title: "Sucesso",
+                                    onClose: () => {
+                                        palavra_input.value = ""
+                                        definicao_input.value = ""
+                                    }
+                                })
+                                document.body.appendChild(alert)
+                            } catch (error) {
+                                const alert = Alert({
+                                    message: error.message,
+                                    title: "Erro"
+                                })
+                                document.body.appendChild(alert)
+                            }
                         }
                     })
                 ]

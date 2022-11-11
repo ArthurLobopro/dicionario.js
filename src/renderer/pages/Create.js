@@ -29,19 +29,27 @@ export function Create() {
                             const sig_input = document.getElementById("sig")
                             const word = word_input.value
                             const sig = sig_input.value
-                            window.api.createWord({
-                                palavra: word.trim(),
-                                definicao: sig.trim()
-                            })
-                            const alert = Alert({
-                                message: "Palavra adicionada com sucesso!",
-                                title: "Sucesso",
-                                onClose: () => {
-                                    word_input.value = ""
-                                    sig_input.value = ""
-                                }
-                            })
-                            document.body.appendChild(alert)
+                            try {
+                                window.api.createWord({
+                                    palavra: word.trim(),
+                                    definicao: sig.trim()
+                                })
+                                const alert = Alert({
+                                    message: "Palavra adicionada com sucesso!",
+                                    title: "Sucesso",
+                                    onClose: () => {
+                                        word_input.value = ""
+                                        sig_input.value = ""
+                                    }
+                                })
+                                document.body.appendChild(alert)
+                            } catch (error) {
+                                const alert = Alert({
+                                    message: error.message,
+                                    title: "Erro"
+                                })
+                                document.body.appendChild(alert)
+                            }
                         }
                     })
                 ]
