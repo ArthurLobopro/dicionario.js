@@ -1,19 +1,63 @@
 {
   "name": "dicionario",
   "version": "1.0.0",
-  "description": "",
+  "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
   "main": "./src/main/main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "keywords": [],
   "author": "Arthur Lobo",
   "license": "MIT",
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./src/build/icon",
+        "ignore": [
+          "\\.git",
+          "\\.scss",
+          "/build"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "dicionario",
+            "setupIcon": "./build/icon.ico",
+            "setupExe": "${name}-${version}-setup.exe"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  },
   "devDependencies": {
+    "@electron-forge/maker-deb": "^6.0.1",
+    "@electron-forge/maker-rpm": "^6.0.1",
+    "@electron-forge/maker-squirrel": "^6.0.1",
+    "@electron-forge/maker-zip": "^6.0.1",
+    "@electron-forge/cli": "^6.0.1",
     "electron": "^21.0.1"
   },
   "dependencies": {
     "electron-frame": "^0.7.5",
+    "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0"
   }
 }
