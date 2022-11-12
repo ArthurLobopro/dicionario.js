@@ -126,10 +126,17 @@ header {
     cursor: pointer;
     border-radius: 16px;
 
-    & img {
-        width: 15%;
-        aspect-ratio: 1/1;
-        object-fit: contain;
+    & > div{
+        @extend .flex-center;
+    }
+
+    & svg * {
+        &[stroke] {
+            stroke: var(--main-color);
+        }
+        &[fill] {
+            fill: var(--main-color);
+        }
     }
 
     &:hover {
@@ -184,6 +191,7 @@ header {
                 height: 30px;
                 border-radius: 50%;
                 cursor: pointer;
+                @extend .flex-center;
 
                 &:hover {
                     background-color: rgba(119, 108, 108, 0.226);

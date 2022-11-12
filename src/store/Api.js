@@ -1,4 +1,4 @@
-const { data } = require("./Schemas.js")
+const { data, options } = require("./Schemas.js")
 
 let palavras
 
@@ -34,6 +34,14 @@ function UpdateWords() {
 }
 
 const api = {
+    options() {
+        return options.store
+    },
+
+    toggleDarkMode() {
+        options.set('darkMode', !options.store.darkMode)
+    },
+
     palavras() {
         return palavras
     },

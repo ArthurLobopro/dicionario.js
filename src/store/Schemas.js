@@ -39,6 +39,17 @@ const data = new ElectronStore({
     },
 })
 
+const options = new ElectronStore({
+    name: "options",
+    watch: true,
+    schema: {
+        darkMode: {
+            type: "boolean",
+            default: false
+        },
+    }
+})
+
 data.get("palavras") ? null : data.store.palavras = []
 
-module.exports = { data }
+module.exports = { data, options }

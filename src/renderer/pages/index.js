@@ -1,4 +1,4 @@
-import { CreateElement } from "../../Util.js"
+import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
 import { Page } from "../components/page.js"
 import { ScreenManager } from "../ScreenManager.js"
 import { Create } from "./Create.js"
@@ -11,9 +11,9 @@ function Option({ text, icon, onclick }) {
             CreateElement("span", {
                 content: text
             }),
-            CreateElement("img", {
-                src: icon,
-                width: "30"
+            CreateElement("div", {
+                style: "width: 30px; height: 30px;",
+                content: icon
             })
         ],
         onclick
@@ -32,14 +32,14 @@ export function Home() {
                 content: [
                     Option({
                         text: "Adicionar",
-                        icon: "../assets/add-icon.svg",
+                        icon: loadSVG(assetsPath, "add-icon.svg"),
                         onclick: () => {
                             ScreenManager.setAtualScreen(Create())
                         }
                     }),
                     Option({
                         text: "Visualizar",
-                        icon: "../assets/eye-icon.svg",
+                        icon: loadSVG(assetsPath, "eye-icon.svg"),
                         onclick: () => {
                             ScreenManager.setAtualScreen(View())
                         }
