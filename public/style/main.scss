@@ -5,6 +5,21 @@
     --white: #FAFAFA;
     --hover-blue: #5699FF;
     --red: #e73333;
+
+    --main-background: #FAFAFA;
+    --option-background: #F5F5F5;
+    --modal-background: #FFFFFF;
+    --border-color: #ccc;
+    --main-color: #000;
+
+}
+
+body.dark {
+    --main-background: #1F1F1F;
+    --option-background: #2F2F2F;
+    --modal-background: #2F2F2F;
+    --border-color: #ccc;
+    --main-color: #ddd;
 }
 
 * {
@@ -19,6 +34,8 @@ body {
     height: 100vh;
     display: grid;
     overflow: hidden;
+    background-color: var(--main-background);
+    color: var(--main-color);
 }
 
 header {
@@ -53,6 +70,9 @@ header {
         & > *{
             width: 70%;
             height: 70%;
+            & > * {
+                stroke: var(--main-color);
+            }
         }
 
         &:hover {
@@ -62,7 +82,7 @@ header {
 }
 
 .dashed-border {
-    border: 2px dashed #ccc;
+    border: 2px dashed var(--border-color);
     border-radius: 16px;
 }
 
@@ -96,7 +116,7 @@ header {
     flex-direction: column;
     justify-self: center;
 
-    background-color: #f5f5f5;
+    background-color: var(--option-background);
     width: 80%;
     max-width: 300px;
     aspect-ratio: 1/1;
@@ -137,6 +157,7 @@ header {
     & .word-header {
         font-weight: bold;
         font-size: 20px;
+        text-transform: capitalize;
     }
 
     &>.word {
@@ -158,12 +179,20 @@ header {
             justify-content: center;
             align-items: center;
 
-            &>img {
+            &>div {
+                width: 30px;
+                height: 30px;
                 border-radius: 50%;
                 cursor: pointer;
 
                 &:hover {
                     background-color: rgba(119, 108, 108, 0.226);
+                }
+
+                &>svg {
+                    &>path {
+                        fill: var(--main-color);
+                    }
                 }
             }
         }
@@ -185,7 +214,7 @@ header {
     &>.modal {
         width: 100%;
         max-width: 500px;
-        background: #fff;
+        background: var(--modal-background);
         border-radius: 5px;
         display: flex;
         flex-direction: column;
@@ -290,10 +319,12 @@ input,
 textarea {
     width: 100%;
     font-family: "Nunito", sans-serif;
-    border: 2px solid #ccc;
+    border: 2px solid var(--border-color);
     border-radius: 8px;
     padding: 8px 8px;
     display: block;
+    background-color: var(--main-background);
+    color: var(--main-color);
 
     &:read-only{
         resize: none;

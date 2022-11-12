@@ -53,3 +53,7 @@ app.on('activate', () => {
 // if (require('electron-squirrel-startup')) {
 //     app.quit()
 // }
+
+ipcMain.on('app-path', (event) => {
+    event.returnValue = appPath
+})

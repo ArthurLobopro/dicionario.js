@@ -39,6 +39,8 @@ const api = {
     },
 
     updateWord(word, { palavra, definicao }) {
+        palavra = palavra.trim().toLowerCase()
+
         if (!word in palavras) {
             throw new Error("Palavra não encontrada")
         }
@@ -73,6 +75,8 @@ const api = {
     },
 
     createWord({ palavra, definicao }) {
+        palavra = palavra.trim().toLowerCase()
+
         if (palavra in palavras) {
             throw new Error("Palavra já existe")
         }

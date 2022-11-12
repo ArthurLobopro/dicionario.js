@@ -1,10 +1,17 @@
+const fs = require("fs")
+const path = require('path')
+
+export const appPath = ipcRenderer.sendSync("app-path")
+export const assetsPath = path.join(appPath, "assets")
+
 /**
  * 
  * @param {*} type 
  * @param {string | HTMLElement} content 
  */
 
-function StringToElement(str) {
+export function StringToElement(str) {
+    console.log(str)
     const wrapper = document.createElement('template')
     wrapper.innerHTML = str
     return wrapper.content.childNodes
@@ -38,4 +45,8 @@ export function CreateElement(type, { content = '', ...props } = {}) {
     }
 
     return element
+}
+
+export function loadSVG(...PathSegments) {
+    return fs.readFileSync(path.resolve(...PathSegments), { encoding: "utf-8" })
 }

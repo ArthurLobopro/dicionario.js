@@ -1,5 +1,5 @@
 // import { api } from "../../store/Api.js"
-import { CreateElement } from "../../Util.js"
+import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Confirm } from "../components/modals/Confirm.js"
 import { ViewModal } from "../components/modals/View.js"
@@ -38,9 +38,8 @@ export function View() {
                                     CreateElement("div", {
                                         className: "controls",
                                         content: [
-                                            CreateElement("img", {
-                                                src: "../assets/eye-icon.svg",
-                                                width: "30",
+                                            CreateElement("div", {
+                                                content: loadSVG(assetsPath, "eye-icon.svg"),
                                                 onclick: () => {
                                                     const viewModal = ViewModal({
                                                         word: palavra,
@@ -51,16 +50,14 @@ export function View() {
                                                     document.body.appendChild(viewModal)
                                                 }
                                             }),
-                                            CreateElement("img", {
-                                                src: "../assets/edit-icon.svg",
-                                                width: "30",
+                                            CreateElement("div", {
+                                                content: loadSVG(assetsPath, "edit-icon.svg"),
                                                 onclick: () => {
                                                     ScreenManager.setAtualScreen(Update({ word: palavra }))
                                                 }
                                             }),
-                                            CreateElement("img", {
-                                                src: "../assets/trash-icon.svg",
-                                                width: "30",
+                                            CreateElement("div", {
+                                                content: loadSVG(assetsPath, "trash-icon.svg"),
                                                 onclick: () => {
                                                     const modal = Confirm({
                                                         message: "Deseja realmente excluir esta palavra?",
