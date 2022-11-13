@@ -14,7 +14,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "./src/build/icon",
+        "icon": "./build/icon",
         "ignore": [
           "\\.git",
           "\\.scss",

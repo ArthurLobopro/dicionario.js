@@ -49,10 +49,11 @@ app.on('activate', () => {
         createWindow()
     }
 })
+
 // Faz com que o programa não inicie várias vezes durante a instalação
-// if (require('electron-squirrel-startup')) {
-//     app.quit()
-// }
+if (require('electron-squirrel-startup')) {
+    app.quit()
+}
 
 ipcMain.on('app-path', (event) => {
     event.returnValue = appPath
