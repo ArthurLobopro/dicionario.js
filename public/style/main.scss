@@ -260,9 +260,18 @@ button {
         }
     }
 
-    &#config .line{
-        font-family: "Nunito", sans-serif;
-        font-size: 18px;
+    &#config {
+        user-select: none;
+        & .dashed-border{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        & .line{
+            font-family: "Nunito", sans-serif;
+            font-size: 18px;
+        }
     }
 
 }
@@ -289,6 +298,14 @@ textarea {
     &:invalid {
         border: 2px solid red;
     }
+}
+
+select {
+    background-color: var(--main-background);
+    color: var(--main-color);
+    padding: 4px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--main-color);
 }
 
 .flex-center {

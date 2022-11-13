@@ -11,7 +11,7 @@ export function Config() {
                 title: "Configurações"
             }),
             CreateElement("div", {
-                className: "dashed-border spacing-16 grid-fill-center gap",
+                className: "dashed-border spacing-16",
                 content: [
                     CreateElement("div", {
                         className: "line",
@@ -27,7 +27,34 @@ export function Config() {
                                 checked: api.options().darkMode
                             }),
                         ]
-                    })
+                    }),
+                    CreateElement("div", {
+                        className: "line",
+                        content: [
+                            CreateElement("span", {
+                                content: "Estilo da janela"
+                            }),
+                            CreateElement("select", {
+                                className: "select",
+                                content: [
+                                    CreateElement("option", {
+                                        content: "Windows",
+                                        value: "windows"
+                                    }),
+                                    CreateElement("option", {
+                                        content: "Macos",
+                                        value: "macos"
+                                    }),
+                                ],
+                                value: api.options().frameStyle,
+                                onchange: (event) => {
+                                    const frameStyle = event.currentTarget.value
+                                    api.setFrameStyle(frameStyle)
+                                    frame.setFrameStyle(frameStyle)
+                                }
+                            })
+                        ]
+                    }),
                 ]
             })
         ]

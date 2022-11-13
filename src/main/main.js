@@ -15,6 +15,7 @@ function createWindow() {
         height: 600,
         frame: false,
         autoHideMenuBar: true,
+        icon: path.join(appPath, 'assets', 'icon.png'),
         webPreferences: {
             nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js')
