@@ -1,0 +1,31 @@
+name: Publish App
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install
+        run: |
+          yarn install
+      - name: compile-sass
+        run: |
+          yarn sass-compiler --compile
+      - name: Publish
+        run: |
+          yarn run publish
+          dir
+        env:
+          GITHUB_TOKEN: ${{ github.token }}

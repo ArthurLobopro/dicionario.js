@@ -5,6 +5,7 @@ const Store = require('electron-store')
 Store.initRenderer()
 
 require('electron-frame/main')
+require("update-electron-app")()
 
 const appPath = app.getAppPath()
 
