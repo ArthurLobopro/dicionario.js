@@ -6,9 +6,18 @@ contextBridge.exposeInMainWorld("require", require)
 contextBridge.exposeInMainWorld("api", api)
 contextBridge.exposeInMainWorld("ipcRenderer", ipcRenderer)
 
+const frame = new electronFrame({
+    frameStyle: api.options().frameStyle,
+})
+
+const frameApi = {
+    setFrameStyle(frameStyle) {
+        frame.setFrameStyle(frameStyle)
+    },
+}
+
+contextBridge.exposeInMainWorld("frame", frameApi)
+
 window.addEventListener("DOMContentLoaded", () => {
-    const frame = new electronFrame({
-        frameStyle: "macos"
-    })
     frame.insert()
 })

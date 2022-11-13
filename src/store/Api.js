@@ -42,6 +42,10 @@ const api = {
         options.set('darkMode', !options.store.darkMode)
     },
 
+    setFrameStyle(frameStyle) {
+        options.set('frameStyle', frameStyle)
+    },
+
     palavras() {
         return palavras
     },

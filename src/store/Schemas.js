@@ -47,7 +47,12 @@ const options = new ElectronStore({
             type: "boolean",
             default: false
         },
-    }
+        frameStyle: {
+            type: "string",
+            enum: ["windows", "macos"],
+            default: "macos"
+        }
+    },
 })
 
 data.get("palavras") ? null : data.store.palavras = []
