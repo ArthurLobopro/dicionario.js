@@ -1,6 +1,7 @@
 import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
 import { Page } from "../components/page.js"
 import { ScreenManager } from "../ScreenManager.js"
+import { Config } from "./Config.js"
 import { Create } from "./Create.js"
 import { View } from "./View.js"
 
@@ -44,13 +45,13 @@ export function Home() {
                             ScreenManager.setAtualScreen(View())
                         }
                     }),
-                    // Option({
-                    //     text: "Configurações",
-                    //     icon: "../assets/config-icon.svg",
-                    //     onclick: () => {
-                    //         alert("config")
-                    //     }
-                    // })
+                    Option({
+                        text: "Configurações",
+                        icon: loadSVG(assetsPath, "config-icon.svg"),
+                        onclick: () => {
+                            ScreenManager.setAtualScreen(Config())
+                        }
+                    })
                 ]
             })
         ]

@@ -1,4 +1,6 @@
 @import url(../fonts/import/index.css);
+@import url(./modal.css);
+@import url(./switch.css);
 
 :root {
     --blue: #3485FF;
@@ -12,14 +14,22 @@
     --border-color: #ccc;
     --main-color: #000;
 
+    --main-hover-brightness: .95;
+}
+
+.line{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 body.dark {
     --main-background: #1F1F1F;
-    --option-background: #2F2F2F;
-    --modal-background: #2F2F2F;
+    --option-background: #1f1f1f;
+    --modal-background: #262626;
     --border-color: #ccc;
     --main-color: #ddd;
+    --main-hover-brightness: 1.3;
 }
 
 * {
@@ -134,19 +144,19 @@ header {
         &[stroke] {
             stroke: var(--main-color);
         }
-        &[fill] {
+        &[fill]:not([fill="none"]) {
             fill: var(--main-color);
         }
     }
 
     &:hover {
-        filter: brightness(0.8);
+        filter: brightness(var(--main-hover-brightness));
     }
 }
 
 .option-wrapper {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
 }
@@ -207,77 +217,6 @@ header {
     }
 }
 
-.modal-wrapper {
-    position: fixed;
-    top: 30px;
-    left: 0;
-    width: 100vw;
-    min-height: 100vh;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 9999;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    &>.modal {
-        width: 100%;
-        max-width: 500px;
-        background: var(--modal-background);
-        border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        font-family: "Poppins", sans-serif;
-
-        &:has(.dashed-border) {
-            display: block;
-        }
-
-        & .modal-header {
-            display: flex;
-            justify-content: flex-start;
-            align-items: center;
-            font-size: 24px;
-            line-height: 24px;
-            padding: 8px 8px 0;
-            width: 100%;
-        }
-
-        & .modal-body {
-            text-align: left;
-            width: 100%;
-            border: solid black;
-            border-width: 1px 0;
-            padding: 20px 8px;
-        }
-
-        & .modal-footer {
-            display: flex;
-            justify-content: space-evenly;
-            align-items: center;
-            width: 100%;
-            padding: 8px;
-
-
-            & button {
-                &.cancel {
-                    background-color: var(--red);
-                }
-
-                &.close:hover {
-                    filter: brightness(1.1);
-                    transition: background 200ms;
-                }
-            }
-        }
-
-        & ul {
-            padding-left: 20px;
-        }
-    }
-}
-
 button {
     @extend .flex-center;
     background-color: var(--blue);
@@ -319,6 +258,11 @@ button {
             height: 100%;
             resize: none;
         }
+    }
+
+    &#config .line{
+        font-family: "Nunito", sans-serif;
+        font-size: 18px;
     }
 
 }
