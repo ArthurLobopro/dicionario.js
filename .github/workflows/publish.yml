@@ -2,7 +2,7 @@ name: Publish App
 
 on:
   push:
-    branches: [ auto-update ]
+    branches: [ main ]
 
 jobs:
   publish:
