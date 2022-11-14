@@ -3,6 +3,7 @@
 @import url(./switch.css);
 @import url(./scroll.css);
 @import url(./header.css);
+@import url(./word-wrapper.css);
 
 :root {
     --blue: #3485FF;
@@ -39,7 +40,7 @@
     --scrollbar-thumb-active: #444;
 }
 
-.line{
+.line {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -106,7 +107,7 @@ body {
     cursor: pointer;
     border-radius: 16px;
 
-    & > div{
+    &>div {
         @extend .flex-center;
     }
 
@@ -114,6 +115,7 @@ body {
         &[stroke]:not([stroke="none"]) {
             stroke: var(--main-color);
         }
+
         &[fill]:not([fill="none"]) {
             fill: var(--main-color);
         }
@@ -129,65 +131,6 @@ body {
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
-}
-
-.word-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    scroll-behavior: smooth;
-
-    & .word-header {
-        font-weight: bold;
-        font-size: 20px;
-        text-transform: capitalize;
-    }
-
-    &>.word {
-        display: grid;
-        grid-template-columns: auto max-content;
-        font-family: "Nunito";
-
-        & .word-definition{
-            font-size: 16px;
-            line-height: 16px;
-            white-space: nowrap;
-            max-width: calc(16px * 40);
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        & .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            &>div {
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                cursor: pointer;
-                @extend .flex-center;
-
-                &:hover {
-                    background-color: rgba(119, 108, 108, 0.226);
-                }
-
-                & svg * {
-                    &[stroke]:not([stroke="none"]) {
-                        stroke: var(--main-color);
-                    }
-                    &[fill]:not([fill="none"]) {
-                        fill: var(--main-color);
-                    }
-                }
-            }
-        }
-    }
 }
 
 button {
@@ -235,13 +178,14 @@ button {
 
     &#config {
         user-select: none;
-        & .dashed-border{
+
+        & .dashed-border {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
 
-        & .line{
+        & .line {
             font-family: "Nunito", sans-serif;
             font-size: 18px;
         }
@@ -260,7 +204,7 @@ textarea {
     background-color: var(--main-background);
     color: var(--main-color);
 
-    &:read-only{
+    &:read-only {
         resize: none;
     }
 

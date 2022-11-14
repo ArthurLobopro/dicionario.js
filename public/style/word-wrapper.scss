@@ -1,0 +1,62 @@
+.word-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    scroll-behavior: smooth;
+
+    & .word-header {
+        font-weight: bold;
+        font-size: 20px;
+        text-transform: capitalize;
+    }
+
+    &>.word {
+        display: grid;
+        grid-template-columns: auto max-content;
+        font-family: "Nunito";
+
+        & .word-definition {
+            font-size: 16px;
+            line-height: 16px;
+            white-space: nowrap;
+            max-width: calc(16px * 40);
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        & .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            &>div {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                cursor: pointer;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                &:hover {
+                    background-color: rgba(119, 108, 108, 0.226);
+                }
+
+                & svg * {
+                    &[stroke]:not([stroke="none"]) {
+                        stroke: var(--main-color);
+                    }
+
+                    &[fill]:not([fill="none"]) {
+                        fill: var(--main-color);
+                    }
+                }
+            }
+        }
+    }
+}
