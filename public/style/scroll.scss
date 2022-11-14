@@ -1,0 +1,21 @@
+::-webkit-scrollbar {
+    background-color: var(--scrollbar-background);
+    width: 10px;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--scrollbar-thumb);
+    border-radius: 10px;
+
+    &:hover {
+        background-color: var(--scrollbar-thumb-hover);
+    }
+
+    &:active {
+        background-color: var(--scrollbar-thumb-active);
+    }
+}

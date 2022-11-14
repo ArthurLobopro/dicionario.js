@@ -26,6 +26,8 @@ export function CreateElement(type, { content = '', ...props } = {}) {
         element.appendChild(content)
     } else if (content instanceof Array) {
         content.forEach((item) => {
+            if (item in [null, false, undefined]) return
+
             if (typeof item === 'string') {
                 if (item.includes('<') && item.includes('>')) {
                     StringToElement(item).forEach((child) => {

@@ -1,0 +1,47 @@
+header {
+    font-family: 'Open Sans', sans-serif;
+    position: relative;
+    height: 30px;
+
+    & h1 {
+        position: absolute;
+        right: 50%;
+        left: 50%;
+        top: 0;
+        width: max-content;
+        transform: translateX(-50%);
+        font-size: 30px;
+        line-height: 30px;
+        user-select: none;
+    }
+
+    & .return {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: var(--blue);
+        padding: 0 4px 0 0;
+        cursor: pointer;
+        border-radius: 50%;
+
+        width: 30px;
+        height: 30px;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        &>* {
+            width: 70%;
+            height: 70%;
+
+            &>* {
+                stroke: var(--main-color);
+            }
+        }
+
+        &:hover {
+            background-color: rgba(0, 0, 0, 0.171);
+        }
+    }
+}
