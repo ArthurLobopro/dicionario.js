@@ -12,6 +12,7 @@ header {
         transform: translateX(-50%);
         font-size: 30px;
         line-height: 30px;
+        user-select: none;
     }
 
     & .return {

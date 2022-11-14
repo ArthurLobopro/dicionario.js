@@ -111,7 +111,7 @@ body {
     }
 
     & svg * {
-        &[stroke] {
+        &[stroke]:not([stroke="none"]) {
             stroke: var(--main-color);
         }
         &[fill]:not([fill="none"]) {
@@ -177,8 +177,11 @@ body {
                     background-color: rgba(119, 108, 108, 0.226);
                 }
 
-                &>svg {
-                    &>path {
+                & svg * {
+                    &[stroke]:not([stroke="none"]) {
+                        stroke: var(--main-color);
+                    }
+                    &[fill]:not([fill="none"]) {
                         fill: var(--main-color);
                     }
                 }
