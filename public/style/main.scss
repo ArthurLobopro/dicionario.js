@@ -145,6 +145,11 @@ button {
     font-family: 'Nunito', sans-serif;
     user-select: none;
     justify-self: center;
+
+    &.stroke{
+        background-color: var(--main-background);
+        border: 1px solid;
+    }
 }
 
 .page {
@@ -209,7 +214,7 @@ textarea {
     }
 
     &:focus {
-        border: 2px solid var(--hover-blue);
+        border-color: var(--hover-blue) !important;
     }
 
     &:invalid {

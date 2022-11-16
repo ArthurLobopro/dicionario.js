@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
 const path = require('path')
 const Store = require('electron-store')
 
@@ -13,14 +13,22 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        minWidth: 800,
+        minHeight: 600,
         frame: false,
         autoHideMenuBar: true,
+        show: false,
         icon: path.join(appPath, 'assets', 'icon.png'),
         webPreferences: {
             nodeIntegration: true,
             preload: path.join(__dirname, 'preload.js')
         }
     })
+
+    if (app.isPackaged) {
+        win.setMenu(null)
+    }
+
     win.loadFile('public/index.html')
     win.once('ready-to-show', () => { win.show(); win.focus() })
 }
@@ -59,4 +67,11 @@ if (require('electron-squirrel-startup')) {
 
 ipcMain.on('app-path', (event) => {
     event.returnValue = appPath
+})
+
+ipcMain.on('open-devtolls', (event) => {
+    const win = BrowserWindow.getFocusedWindow()
+    win.webContents.openDevTools({
+        mode: 'undocked'
+    })
 })

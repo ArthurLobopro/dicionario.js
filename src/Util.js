@@ -52,3 +52,18 @@ export function CreateElement(type, { content = '', ...props } = {}) {
 export function loadSVG(...PathSegments) {
     return fs.readFileSync(path.resolve(...PathSegments), { encoding: "utf-8" })
 }
+
+export function formatDate(datestring) {
+    const pad2 = (n) => String(n).padStart(2, '0')
+
+    const date = new Date(datestring)
+
+    const year = date.getFullYear()
+    const month = pad2(date.getMonth() + 1)
+    const day = pad2(date.getDate())
+
+    const hours = pad2(date.getHours())
+    const minutes = pad2(date.getMinutes())
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`
+}
