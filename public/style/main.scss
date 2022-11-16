@@ -209,7 +209,7 @@ textarea {
     }
 
     &:focus {
-        border: 2px solid var(--hover-blue);
+        border-color: var(--hover-blue) !important;
     }
 
     &:invalid {
