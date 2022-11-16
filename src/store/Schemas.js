@@ -45,12 +45,12 @@ const options = new ElectronStore({
     schema: {
         darkMode: {
             type: "boolean",
-            default: false
+            default: true
         },
         frameStyle: {
             type: "string",
             enum: ["windows", "macos"],
-            default: "macos"
+            default: "windows"
         }
     },
 })
