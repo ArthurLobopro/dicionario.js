@@ -1,4 +1,4 @@
-import { CreateElement } from "../../../Util.js"
+import { CreateElement, formatDate } from "../../../Util.js"
 import { Wrapper } from "./Wrapper.js"
 
 export function ViewModal({ word, onClose = () => { } }) {
@@ -12,13 +12,24 @@ export function ViewModal({ word, onClose = () => { } }) {
                     CreateElement("div", {
                         className: "dashed-border spacing-16 grid-fill-center gap",
                         content: [
-                            `<label>
-                                Palavra
-                                <input type="text" readonly value="${word}">
-                            </label>
+                            `<div>
+                                <div>Palavra</div>
+                                <textarea readonly rows="1" class="info big">${word}</textarea>
+                            </div>
                             <div class="t-wrapper grid-fill-bottom">
-                                Significado
-                                <textarea readonly >${palavra.definicao}</textarea>
+                                <div>Significado</div>
+                                <textarea rows="3" readonly class="info big" >${palavra.definicao}</textarea>
+                            </div>`,
+                            `<div class="date-wrapper">
+                                <div>
+                                    <span>Data de registro</span> <span class="info">${formatDate(palavra.registro)}</span>
+                                </div>
+                                ${palavra.ultimaEdicao ?
+                                `<div>
+                                        <span>Última edição</span> <span class="info">${formatDate(palavra.ultimaEdicao)}</span>
+                                    </div>`
+                                : ""
+                            }
                             </div>`,
                             CreateElement("button", {
                                 className: "btn",
