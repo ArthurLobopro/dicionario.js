@@ -55,6 +55,18 @@ export function Config() {
                             })
                         ]
                     }),
+                    CreateElement("div", {
+                        className: "flex-center",
+                        content: [
+                            CreateElement("button", {
+                                className: "stroke",
+                                content: "Mostrar ferramentas de desenvolvedor",
+                                onclick: () => {
+                                    ipcRenderer.send("open-devtolls")
+                                }
+                            })
+                        ]
+                    })
                 ]
             })
         ]
