@@ -13,6 +13,8 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        minWidth: 800,
+        minHeight: 600,
         frame: false,
         autoHideMenuBar: true,
         icon: path.join(appPath, 'assets', 'icon.png'),
@@ -22,7 +24,6 @@ function createWindow() {
         }
     })
     win.loadFile('public/index.html')
-    win.once('ready-to-show', () => { win.show(); win.focus() })
 }
 
 const isUnicWindow = app.requestSingleInstanceLock()
