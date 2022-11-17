@@ -51,7 +51,12 @@ const options = new ElectronStore({
             type: "string",
             enum: ["windows", "macos"],
             default: "windows"
-        }
+        },
+        frameTheme: {
+            type: "string",
+            enum: ["light", "dark", "auto"],
+            default: "auto"
+        },
     },
 })
 

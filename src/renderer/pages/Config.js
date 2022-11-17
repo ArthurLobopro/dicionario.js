@@ -23,9 +23,41 @@ export function Config() {
                                 onToggle: (checked) => {
                                     api.toggleDarkMode()
                                     document.body.classList.toggle("dark")
+                                    frame.updateTheme()
                                 },
                                 checked: api.options().darkMode
                             }),
+                        ]
+                    }),
+                    CreateElement("div", {
+                        className: "line",
+                        content: [
+                            CreateElement("span", {
+                                content: "Tema do frame"
+                            }),
+                            CreateElement("select", {
+                                className: "select",
+                                content: [
+                                    CreateElement("option", {
+                                        content: "Automatico",
+                                        value: "auto"
+                                    }),
+                                    CreateElement("option", {
+                                        content: "Claro",
+                                        value: "light"
+                                    }),
+                                    CreateElement("option", {
+                                        content: "Escuro",
+                                        value: "dark"
+                                    })
+                                ],
+                                value: api.options().frameTheme,
+                                onchange: (event) => {
+                                    const frameTheme = event.currentTarget.value
+                                    api.setFrameTheme(frameTheme)
+                                    frame.updateTheme()
+                                }
+                            })
                         ]
                     }),
                     CreateElement("div", {
