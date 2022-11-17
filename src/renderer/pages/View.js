@@ -40,6 +40,7 @@ export function View() {
                                         content: [
                                             CreateElement("div", {
                                                 content: loadSVG(assetsPath, "eye-icon.svg"),
+                                                title: "Visualizar",
                                                 onclick: () => {
                                                     const viewModal = ViewModal({
                                                         word: palavra,
@@ -52,12 +53,15 @@ export function View() {
                                             }),
                                             CreateElement("div", {
                                                 content: loadSVG(assetsPath, "edit-icon.svg"),
+                                                title: "Editar",
                                                 onclick: () => {
                                                     ScreenManager.setAtualScreen(Update({ word: palavra }))
                                                 }
                                             }),
                                             CreateElement("div", {
                                                 content: loadSVG(assetsPath, "trash-icon.svg"),
+                                                id: "delete",
+                                                title: "Excluir",
                                                 onclick: () => {
                                                     const modal = Confirm({
                                                         message: "Deseja realmente excluir esta palavra?",
