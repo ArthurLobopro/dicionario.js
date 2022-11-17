@@ -54,6 +54,7 @@ export function View() {
                                             CreateElement("div", {
                                                 content: loadSVG(assetsPath, "edit-icon.svg"),
                                                 title: "Editar",
+                                                id: "edit",
                                                 onclick: () => {
                                                     ScreenManager.setAtualScreen(Update({ word: palavra }))
                                                 }

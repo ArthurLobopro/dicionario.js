@@ -167,8 +167,15 @@ button {
         grid-template-rows: max-content 1fr;
         gap: 10px;
         padding-bottom: 0;
-        & #delete:hover{
-            --main-color: var(--red);
+
+        & :hover{
+            &#delete{
+                --main-color: var(--red);
+            }
+
+            &#edit{
+                --main-color: var(--blue);
+            }
         }
     }
 
