@@ -1,4 +1,4 @@
-const { data, options } = require("./Schemas.js")
+const { data, options } = require("./Store.js")
 
 let palavras
 
