@@ -42,6 +42,13 @@ const api = {
         options.set('darkMode', !options.store.darkMode)
     },
 
+    /**
+     * @param {"light" | "dark" | "auto"} frameTheme
+     */
+    setFrameTheme(frameTheme) {
+        options.set('frameTheme', frameTheme)
+    },
+
     setFrameStyle(frameStyle) {
         options.set('frameStyle', frameStyle)
     },

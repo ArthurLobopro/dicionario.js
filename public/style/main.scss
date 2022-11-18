@@ -19,10 +19,11 @@
 
     --main-hover-brightness: .95;
 
-    --scrollbar-background: #bbb;
+    --scrollbar-background: transparent;
     --scrollbar-thumb: #999;
     --scrollbar-thumb-hover: #777;
     --scrollbar-thumb-active: #555;
+    
 }
 
 .dark {
@@ -148,6 +149,7 @@ button {
 
     &.stroke{
         background-color: var(--main-background);
+        color: var(--main-color);
         border: 1px solid;
     }
 }
@@ -165,6 +167,16 @@ button {
         grid-template-rows: max-content 1fr;
         gap: 10px;
         padding-bottom: 0;
+
+        & :hover{
+            &#delete{
+                --main-color: var(--red);
+            }
+
+            &#edit{
+                --main-color: var(--blue);
+            }
+        }
     }
 
     &#create {
@@ -190,9 +202,21 @@ button {
             gap: 10px;
         }
 
-        & .line {
+        & .lines {
             font-family: "Nunito", sans-serif;
             font-size: 18px;
+            display: grid;
+            grid-template-columns: auto max-content;
+            gap: 10px;
+            align-items: center;
+
+            & .switch {
+                justify-self: right;
+            }
+
+            select{
+                font-size: 14px;
+            }
         }
     }
 

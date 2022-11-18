@@ -38,7 +38,7 @@ export function Create() {
                                     })
                                     const alert = Alert({
                                         message: "Palavra adicionada com sucesso!",
-                                        title: "Sucesso",
+                                        title: "Palavra Adicionada",
                                         onClose: () => {
                                             word_input.value = ""
                                             sig_input.value = ""
@@ -48,14 +48,14 @@ export function Create() {
                                 } catch (error) {
                                     const alert = Alert({
                                         message: error.message,
-                                        title: "Erro"
+                                        title: "Erro!"
                                     })
                                     document.body.appendChild(alert)
                                 }
                             } else {
                                 const alert = Alert({
                                     message: "Escreva uma palavra e uma descrição válida.",
-                                    title: "Erro"
+                                    title: "Erro!"
                                 })
                                 document.body.appendChild(alert)
                             }
