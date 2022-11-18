@@ -13,8 +13,8 @@ export function Config() {
             CreateElement("div", {
                 className: "dashed-border spacing-16",
                 content: [
-                    CreateElement("div", {
-                        className: "line",
+                    CreateElement('div', {
+                        className: "lines",
                         content: [
                             CreateElement("span", {
                                 content: "Modo escuro"
@@ -27,11 +27,6 @@ export function Config() {
                                 },
                                 checked: api.options().darkMode
                             }),
-                        ]
-                    }),
-                    CreateElement("div", {
-                        className: "line",
-                        content: [
                             CreateElement("span", {
                                 content: "Tema do frame"
                             }),
@@ -57,12 +52,7 @@ export function Config() {
                                     api.setFrameTheme(frameTheme)
                                     frame.updateTheme()
                                 }
-                            })
-                        ]
-                    }),
-                    CreateElement("div", {
-                        className: "line",
-                        content: [
+                            }),
                             CreateElement("span", {
                                 content: "Estilo da janela"
                             }),
