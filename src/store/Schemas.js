@@ -1,35 +1,26 @@
 const palavrasSchema = {
     palavras: {
+        type: "array",
         default: [],
-        anyOf: [
-            {
-                type: "array",
-                contains: {
-                    type: "object",
-                    required: ["palavra", "definicao", "registro"],
-                    properties: {
-                        palavra: {
-                            type: "string"
-                        },
-                        definicao: {
-                            type: "string"
-                        },
-                        registro: {
-                            type: "string",
-                            format: "date-time"
-                        },
-                        ultimaEdicao: {
-                            type: "string",
-                            format: "date-time"
-                        }
-                    }
+        "items": {
+            required: ["palavra", "definicao", "registro"],
+            properties: {
+                palavra: {
+                    type: "string"
+                },
+                definicao: {
+                    type: "string"
+                },
+                registro: {
+                    type: "string",
+                    format: "date-time"
+                },
+                ultimaEdicao: {
+                    type: "string",
+                    format: "date-time"
                 }
-            },
-            {
-                type: "array",
-                default: []
             }
-        ]
+        }
     }
 }
 
