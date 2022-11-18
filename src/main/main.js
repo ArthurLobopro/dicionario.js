@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut, dialog } = require('electron')
 const path = require('path')
 const Store = require('electron-store')
 
@@ -73,5 +73,15 @@ ipcMain.on('open-devtolls', (event) => {
     const win = BrowserWindow.getFocusedWindow()
     win.webContents.openDevTools({
         mode: 'undocked'
+    })
+})
+
+ipcMain.on('get-folder', (event) => {
+    return dialog.showOpenDialog({
+        properties: ['openDirectory']
+    }).then(result => {
+        event.returnValue = result.filePaths[0]
+    }).catch(err => {
+        console.log(err)
     })
 })

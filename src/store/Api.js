@@ -1,4 +1,7 @@
 const { data, options } = require("./Store.js")
+const { ipcRenderer } = require("electron")
+const path = require("path")
+const fs = require("fs")
 
 let palavras
 
@@ -33,7 +36,24 @@ function UpdateWords() {
     }))
 }
 
+function exportWords() {
+    const words = GetWordsToSave()
+    const json = JSON.stringify(words, null, 4)
+
+    try {
+        const folder = ipcRenderer.sendSync("get-folder")
+        if (folder) {
+            const filename = path.join(folder, "dicionario.json")
+            fs.writeFileSync(filename, json)
+        }
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 const api = {
+    exportWords,
+
     options() {
         return options.store
     },
