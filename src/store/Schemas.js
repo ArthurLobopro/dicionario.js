@@ -2,7 +2,8 @@ const palavrasSchema = {
     palavras: {
         type: "array",
         default: [],
-        "items": {
+        items: {
+            type: "object",
             required: ["palavra", "definicao", "registro"],
             properties: {
                 palavra: {
@@ -16,8 +17,15 @@ const palavrasSchema = {
                     format: "date-time"
                 },
                 ultimaEdicao: {
-                    type: "string",
-                    format: "date-time"
+                    anyOf: [
+                        {
+                            type: "string",
+                            format: "date-time"
+                        },
+                        {
+                            type: "null"
+                        }
+                    ]
                 }
             }
         }
