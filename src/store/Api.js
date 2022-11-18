@@ -6,12 +6,12 @@ const fs = require("fs")
 let palavras
 
 function GetWordsToSave() {
-    return Object.entries(palavras).map(([palavra, { definicao, registro, ultimaEdicao }]) => {
+    return Object.entries(palavras).map(([palavra, { definicao, registro, ultimaEdicao = null }]) => {
         return {
             palavra,
             definicao,
-            registro,
-            ultimaEdicao
+            registro: registro.toISOString(),
+            ...((ultimaEdicao && { ultimaEdicao: ultimaEdicao.toISOString() }) || {})
         }
     })
 }
