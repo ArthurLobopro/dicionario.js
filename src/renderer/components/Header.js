@@ -1,5 +1,4 @@
 import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
-import { Home } from "../pages/index.js"
 import { ScreenManager } from "../ScreenManager.js"
 
 export function Header(props) {
@@ -10,7 +9,7 @@ export function Header(props) {
                 className: "return",
                 title: "Voltar",
                 onclick: () => {
-                    ScreenManager.setAtualScreen(Home())
+                    ScreenManager.setAtualScreen("home")
                 },
                 content: loadSVG(assetsPath, "left-arrow.svg")
             }),

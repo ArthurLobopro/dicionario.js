@@ -4,7 +4,6 @@ import { Header } from "../components/Header.js"
 import { Confirm } from "../components/modals/Confirm.js"
 import { ViewModal } from "../components/modals/View.js"
 import { ScreenManager } from "../ScreenManager.js"
-import { Update } from "./Update.js"
 
 export function View() {
     return CreateElement("div", {
@@ -56,7 +55,7 @@ export function View() {
                                                 title: "Editar",
                                                 id: "edit",
                                                 onclick: () => {
-                                                    ScreenManager.setAtualScreen(Update({ word: palavra }))
+                                                    ScreenManager.setAtualScreen("update", { word: palavra })
                                                 }
                                             }),
                                             CreateElement("div", {
@@ -69,7 +68,7 @@ export function View() {
                                                         onClose: (confirm) => {
                                                             if (confirm) {
                                                                 api.deleteWord(palavra)
-                                                                ScreenManager.setAtualScreen(View())
+                                                                ScreenManager.setAtualScreen("view")
                                                             }
                                                         }
                                                     })
