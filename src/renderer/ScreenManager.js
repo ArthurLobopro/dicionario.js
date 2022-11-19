@@ -1,6 +1,6 @@
 import { Config } from "./pages/Config.js"
 import { Create } from "./pages/Create.js"
-import { Home } from "./pages/index.js"
+import { Home } from "./pages/Home.js"
 import { Update } from "./pages/Update.js"
 import { View } from "./pages/View.js"
 
