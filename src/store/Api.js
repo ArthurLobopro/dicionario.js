@@ -36,23 +36,34 @@ function UpdateWords() {
     }))
 }
 
-function exportWords() {
+async function exportWords() {
     const words = GetWordsToSave()
     const json = JSON.stringify(words, null, 4)
 
     try {
         const folder = ipcRenderer.sendSync("get-folder")
-        if (folder) {
-            const filename = path.join(folder, "dicionario.json")
-            fs.writeFileSync(filename, json)
+        console.log(folder)
+
+        if (folder === "canceled") {
+            return "canceled"
         }
+
+        const filename = path.join(folder, "dicionario.json")
+        fs.writeFileSync(filename, json)
+
+        return true
     } catch (error) {
         console.error(error)
+        return false
     }
 }
 
 const api = {
     exportWords,
+
+    version() {
+        return ipcRenderer.sendSync("get-version")
+    },
 
     options() {
         return options.store

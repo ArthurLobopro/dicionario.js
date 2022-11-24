@@ -17,7 +17,11 @@ ipcMain.on('get-folder', (event) => {
     return dialog.showOpenDialog({
         properties: ['openDirectory']
     }).then(result => {
-        event.returnValue = result.filePaths[0]
+        if (result.canceled) {
+            event.returnValue = "canceled"
+        } else {
+            event.returnValue = result.filePaths[0]
+        }
     }).catch(err => {
         console.log(err)
     })

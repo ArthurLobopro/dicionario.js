@@ -1,5 +1,6 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
+import { Alert } from "../components/modals/Alert.js"
 import { Page } from "../components/page.js"
 import { switcher } from "../components/switch.js"
 
@@ -14,6 +15,7 @@ export function Config() {
                 className: "dashed-border spacing-16",
                 content: [
                     CreateElement("div", {
+                        className: "flex-column gap-10",
                         content: [
                             CreateElement('div', {
                                 className: "lines",
@@ -76,11 +78,39 @@ export function Config() {
                                             api.setFrameStyle(frameStyle)
                                             frame.setFrameStyle(frameStyle)
                                         }
+                                    }),
+                                    CreateElement("span", {
+                                        content: "Exportar palavras"
+                                    }),
+                                    CreateElement("button", {
+                                        className: "stroke",
+                                        content: "Exportar",
+                                        onclick: async () => {
+                                            const sucess = await api.exportWords()
+
+                                            if (sucess === "canceled") {
+                                                return
+                                            }
+
+                                            if (sucess) {
+                                                const alert = new Alert({
+                                                    title: "Sucesso",
+                                                    message: "Palavras exportadas com sucesso!"
+                                                })
+                                                document.body.appendChild(alert)
+                                            } else {
+                                                const alert = new Alert({
+                                                    title: "Erro",
+                                                    message: "Ocorreu um erro ao exportar as palavras!"
+                                                })
+                                                document.body.appendChild(alert)
+                                            }
+                                        }
                                     })
                                 ]
                             }),
                             CreateElement("div", {
-                                className: "flex-center fill-line",
+                                className: "flex-center",
                                 content: [
                                     CreateElement("button", {
                                         className: "stroke",
