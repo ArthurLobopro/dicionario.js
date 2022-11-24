@@ -1171,10 +1171,10 @@ duplexer3@^0.1.4:
   resolved "https://registry.yarnpkg.com/duplexer3/-/duplexer3-0.1.5.tgz#0b5e4d7bad5de8901ea4440624c8e1d20099217e"
   integrity sha512-1A8za6ws41LQgv9HrE/66jyC5yuSjQ3L/KOpFtoBilsAK2iA2wuS5rTt1OCzIvtS2V7nVmedsUU+DGRcjBmOYA==
 
-electron-frame@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.1.2.tgz#7b5f9f21bfb5df5bd2b3c800e5c5ffef6a7519dc"
-  integrity sha512-RM9kKwXL0+FEdtNPswkmBeQ4PvbkNm6dMZq2DJ2E8ax0C5IhjrnTZbPgqr/7hrh5qntr1on7IV7gJru+movMew==
+electron-frame@^1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.1.3.tgz#9fa40c9fede21b736dba38cfdef57a809b056635"
+  integrity sha512-cf5NV+SkPqYQbNJlWo/ZR8m12NDV2yS+48g5LKM3xDuQ+2r7po2UkUgYnbP9+P6oQSitI6qiJXPcriSI4RXPbw==
 
 electron-installer-common@^0.10.2:
   version "0.10.3"
@@ -1281,10 +1281,10 @@ electron-winstaller@^5.0.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@^21.3.0:
-  version "21.3.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-21.3.0.tgz#e9905e240add950443dc115b4be13d36162f0a05"
-  integrity sha512-MGRpshN8fBcx4IRuBABIsGDv0tB/MclIFsyFHFFXsBCUc+vIXaE/E6vuWaniGIFSz5WyeuapfTH5IeRb+7yIfw==
+electron@^21.3.1:
+  version "21.3.1"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-21.3.1.tgz#02a61053ace79ecdc592afc641ff663dec805b42"
+  integrity sha512-Ik/I9oFHA1h32JRtRm6GMgYdUctFpF/tPnHyATg4r3LXBTUT6habGh3GxSdmmTa5JgtA7uJUEm8EjjZItk7T3g==
   dependencies:
     "@electron/get" "^1.14.1"
     "@types/node" "^16.11.26"
