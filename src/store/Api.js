@@ -1,14 +1,17 @@
-const { data, options } = require("./Schemas.js")
+const { data, options } = require("./Store.js")
+const { ipcRenderer } = require("electron")
+const path = require("path")
+const fs = require("fs")
 
 let palavras
 
 function GetWordsToSave() {
-    return Object.entries(palavras).map(([palavra, { definicao, registro, ultimaEdicao }]) => {
+    return Object.entries(palavras).map(([palavra, { definicao, registro, ultimaEdicao = null }]) => {
         return {
             palavra,
             definicao,
-            registro,
-            ultimaEdicao
+            registro: registro.toISOString(),
+            ...((ultimaEdicao && { ultimaEdicao: ultimaEdicao.toISOString() }) || {})
         }
     })
 }
@@ -33,7 +36,35 @@ function UpdateWords() {
     }))
 }
 
+async function exportWords() {
+    const words = GetWordsToSave()
+    const json = JSON.stringify(words, null, 4)
+
+    try {
+        const folder = ipcRenderer.sendSync("get-folder")
+        console.log(folder)
+
+        if (folder === "canceled") {
+            return "canceled"
+        }
+
+        const filename = path.join(folder, "dicionario.json")
+        fs.writeFileSync(filename, json)
+
+        return true
+    } catch (error) {
+        console.error(error)
+        return false
+    }
+}
+
 const api = {
+    exportWords,
+
+    version() {
+        return ipcRenderer.sendSync("get-version")
+    },
+
     options() {
         return options.store
     },

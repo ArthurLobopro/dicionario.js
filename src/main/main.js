@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 const Store = require('electron-store')
 
@@ -6,6 +6,7 @@ Store.initRenderer()
 
 require('electron-frame/main')
 require("update-electron-app")()
+require("./main-events.js")
 
 const appPath = app.getAppPath()
 
@@ -64,14 +65,3 @@ app.on('activate', () => {
 if (require('electron-squirrel-startup')) {
     app.quit()
 }
-
-ipcMain.on('app-path', (event) => {
-    event.returnValue = appPath
-})
-
-ipcMain.on('open-devtolls', (event) => {
-    const win = BrowserWindow.getFocusedWindow()
-    win.webContents.openDevTools({
-        mode: 'undocked'
-    })
-})

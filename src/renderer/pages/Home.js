@@ -1,9 +1,6 @@
 import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
 import { Page } from "../components/page.js"
 import { ScreenManager } from "../ScreenManager.js"
-import { Config } from "./Config.js"
-import { Create } from "./Create.js"
-import { View } from "./View.js"
 
 function Option({ text, icon, onclick }) {
     return CreateElement("div", {
@@ -35,21 +32,21 @@ export function Home() {
                         text: "Adicionar",
                         icon: loadSVG(assetsPath, "add-icon.svg"),
                         onclick: () => {
-                            ScreenManager.setAtualScreen(Create())
+                            ScreenManager.setAtualScreen("create")
                         }
                     }),
                     Option({
                         text: "Visualizar",
                         icon: loadSVG(assetsPath, "eye-icon.svg"),
                         onclick: () => {
-                            ScreenManager.setAtualScreen(View())
+                            ScreenManager.setAtualScreen("view")
                         }
                     }),
                     Option({
                         text: "Configurações",
                         icon: loadSVG(assetsPath, "config-icon.svg"),
                         onclick: () => {
-                            ScreenManager.setAtualScreen(Config())
+                            ScreenManager.setAtualScreen("config")
                         }
                     })
                 ]
