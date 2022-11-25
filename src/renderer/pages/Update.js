@@ -32,21 +32,19 @@ export function Update({ word }) {
                             const definicao = definicao_input.value
                             try {
                                 window.api.updateWord(word, { palavra, definicao })
-                                const alert = Alert({
+                                new Alert({
                                     message: "Palavra atualizada com sucesso!",
                                     title: "Sucesso",
                                     onClose: () => {
                                         palavra_input.value = ""
                                         definicao_input.value = ""
                                     }
-                                })
-                                document.body.appendChild(alert)
+                                }).append(document.body)
                             } catch (error) {
-                                const alert = Alert({
+                                new Alert({
                                     message: error.message,
                                     title: "Erro"
-                                })
-                                document.body.appendChild(alert)
+                                }).append(document.body)
                             }
                         }
                     })

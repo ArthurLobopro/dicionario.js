@@ -93,17 +93,15 @@ export function Config() {
                                             }
 
                                             if (sucess) {
-                                                const alert = new Alert({
+                                                new Alert({
                                                     title: "Sucesso",
                                                     message: "Palavras exportadas com sucesso!"
-                                                })
-                                                document.body.appendChild(alert)
+                                                }).append(document.body)
                                             } else {
-                                                const alert = new Alert({
+                                                new Alert({
                                                     title: "Erro",
                                                     message: "Ocorreu um erro ao exportar as palavras!"
-                                                })
-                                                document.body.appendChild(alert)
+                                                }).append(document.body)
                                             }
                                         }
                                     })
