@@ -1,5 +1,4 @@
 ::-webkit-scrollbar {
-    background-color: var(--scrollbar-background);
     width: 10px;
 }
 
@@ -18,4 +17,9 @@ textarea::-webkit-scrollbar {
     &:active {
         background-color: var(--scrollbar-thumb-active);
     }
+}
+
+::-webkit-scrollbar-track{
+    border-radius: 10px;
+    background-color: var(--scrollbar-background);
 }

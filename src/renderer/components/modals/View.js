@@ -12,25 +12,36 @@ export function ViewModal({ word, onClose = () => { } }) {
                     CreateElement("div", {
                         className: "dashed-border spacing-16 grid-fill-center gap",
                         content: [
-                            `<div>
-                                <div>Palavra</div>
-                                <textarea readonly rows="1" class="info big">${word}</textarea>
-                            </div>
-                            <div class="t-wrapper grid-fill-bottom">
-                                <div>Significado</div>
-                                <textarea rows="3" readonly class="info big" >${palavra.definicao}</textarea>
-                            </div>`,
-                            `<div class="date-wrapper">
-                                <div>
-                                    <span>Data de registro</span> <span class="info">${formatDate(palavra.registro)}</span>
-                                </div>
-                                ${palavra.ultimaEdicao ?
-                                `<div>
-                                        <span>Última edição</span> <span class="info">${formatDate(palavra.ultimaEdicao)}</span>
-                                    </div>`
-                                : ""
-                            }
-                            </div>`,
+                            CreateElement("div", {
+                                content: [
+                                    "<div>Palavra</div>",
+                                    `<textarea readonly rows="1" class="info big">${word}</textarea>`
+                                ]
+                            }),
+                            CreateElement("div", {
+                                content: [
+                                    "<div>Significado</div>",
+                                    `<textarea rows="3" readonly class="info big" >${palavra.definicao}</textarea>`
+                                ]
+                            }),
+                            CreateElement("div", {
+                                className: "date-wrapper",
+                                content: [
+                                    CreateElement("div", {
+                                        content: [
+                                            "<span>Data de registro</span>",
+                                            `<span class="info">${formatDate(palavra.registro)}</span>`
+                                        ]
+                                    }),
+                                    palavra.ultimaEdicao ?
+                                        CreateElement("div", {
+                                            content: [
+                                                "<span>Última edição</span>",
+                                                `<span class="info">${formatDate(palavra.ultimaEdicao)}</span>`
+                                            ]
+                                        }) : null
+                                ]
+                            }),
                             CreateElement("button", {
                                 className: "btn",
                                 content: "Ok",
