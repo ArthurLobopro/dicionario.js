@@ -1,5 +1,5 @@
 import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
-import { Page } from "../components/page.js"
+import { Page } from "../components/Page.js"
 import { ScreenManager } from "../ScreenManager.js"
 
 function Option({ text, icon, onclick }) {

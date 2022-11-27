@@ -1,7 +1,7 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/page.js"
+import { Page } from "../components/Page.js"
 import { switcher } from "../components/switch.js"
 
 export function Config() {
