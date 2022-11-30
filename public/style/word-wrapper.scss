@@ -1,3 +1,9 @@
+%flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .word-wrapper {
     display: flex;
     flex-direction: column;
@@ -8,18 +14,18 @@
     position: absolute;
     scroll-behavior: smooth;
 
-    & .word-header {
+    .word-header {
         font-weight: bold;
         font-size: 20px;
         text-transform: capitalize;
     }
 
-    &>.word {
+    >.word {
         display: grid;
         grid-template-columns: auto max-content;
         font-family: "Nunito";
 
-        & .word-definition {
+        .word-definition {
             font-size: 16px;
             line-height: 16px;
             white-space: nowrap;
@@ -28,37 +34,31 @@
             text-overflow: ellipsis;
         }
 
-        & .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .controls {
+            @extend %flex-center;
 
-            &>div {
+            >div {
                 width: 30px;
                 height: 30px;
                 border-radius: 50%;
                 cursor: pointer;
 
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                @extend %flex-center;
 
                 &:hover {
                     background-color: rgba(119, 108, 108, 0.226);
                 }
 
-                & svg {
+                svg {
                     max-width: 100%;
                     max-height: 100%;
 
-                    * {
-                        &[stroke]:not([stroke="none"]) {
-                            stroke: var(--main-color);
-                        }
-    
-                        &[fill]:not([fill="none"]) {
-                            fill: var(--main-color);
-                        }
+                    [stroke]:not([stroke="none"]) {
+                        stroke: var(--main-color);
+                    }
+
+                    [fill]:not([fill="none"]) {
+                        fill: var(--main-color);
                     }
                 }
             }
