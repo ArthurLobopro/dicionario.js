@@ -178,7 +178,8 @@ button {
         }
     }
 
-    &#create {
+    &#create,
+    &#edit {
         font-family: "Nunito", sans-serif;
 
         :not(input, textarea) {

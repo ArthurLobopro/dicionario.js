@@ -6,7 +6,7 @@ import { Page } from "../components/Page.js"
 export function Update({ word }) {
     const palavra = window.api.palavras()[word]
     return Page({
-        id: "create",
+        id: "edit",
         content: [
             Header({
                 title: "Editar Palavra"
