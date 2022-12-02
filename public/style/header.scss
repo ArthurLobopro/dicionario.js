@@ -3,7 +3,7 @@ header {
     position: relative;
     height: 30px;
 
-    & h1 {
+    h1 {
         position: absolute;
         right: 50%;
         left: 50%;
@@ -15,7 +15,7 @@ header {
         user-select: none;
     }
 
-    & .return {
+    .return {
         position: absolute;
         left: 0;
         top: 0;
@@ -31,11 +31,11 @@ header {
         justify-content: center;
         align-items: center;
 
-        &>* {
+        svg {
             width: 70%;
             height: 70%;
 
-            &>* {
+            * {
                 stroke: var(--main-color);
             }
         }
