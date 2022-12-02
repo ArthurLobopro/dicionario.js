@@ -1,4 +1,5 @@
 import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
+import { Header } from "../components/Header.js"
 import { Page } from "../components/Page.js"
 import { ScreenManager } from "../ScreenManager.js"
 
@@ -22,9 +23,7 @@ export function Home() {
     return Page({
         id: "home",
         content: [
-            `<header>
-                <h1>Dicionário Pessoal</h1>
-            </header>`,
+            Header({ title: "Dicionário Pessoal" }),
             CreateElement("div", {
                 className: "option-wrapper",
                 content: [

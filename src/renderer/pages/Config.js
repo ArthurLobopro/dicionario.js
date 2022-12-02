@@ -2,6 +2,7 @@ import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Alert } from "../components/modals/Alert.js"
 import { Page } from "../components/Page.js"
+import { ReturnButton } from "../components/ReturnButton.js"
 import { switcher } from "../components/switch.js"
 
 export function Config() {
@@ -9,7 +10,8 @@ export function Config() {
         id: "config",
         content: [
             Header({
-                title: "Configurações"
+                title: "Configurações",
+                left: ReturnButton()
             }),
             CreateElement("div", {
                 className: "dashed-border spacing-16",

@@ -2,13 +2,15 @@ import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Alert } from "../components/modals/Alert.js"
 import { Page } from "../components/Page.js"
+import { ReturnButton } from "../components/ReturnButton.js"
 
 export function Create() {
     return Page({
         id: "create",
         content: [
             Header({
-                title: "Adicionar Palavra"
+                title: "Adicionar Palavra",
+                left: ReturnButton()
             }),
             CreateElement("div", {
                 className: "dashed-border spacing-16 grid-fill-center gap",
