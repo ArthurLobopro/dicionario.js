@@ -181,11 +181,15 @@ button {
     &#create {
         font-family: "Nunito", sans-serif;
 
-        & .t-wrapper {
+        :not(input, textarea) {
+            user-select: none;
+        }
+
+        .t-wrapper {
             display: grid;
         }
 
-        & textarea {
+        textarea {
             width: 100%;
             height: 100%;
             resize: none;
