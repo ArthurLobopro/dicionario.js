@@ -14,7 +14,7 @@ export function View() {
                 title: "Visualizar Palavras"
             }),
             CreateElement("div", {
-                style: "position: relative",
+                style: "position: relative;margin-bottom: 5px;",
                 content: [
                     CreateElement("div", {
                         className: "word-wrapper",
