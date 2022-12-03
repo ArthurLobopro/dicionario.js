@@ -11,8 +11,9 @@
     align-items: center;
 
     >.modal {
-        width: 100%;
-        max-width: 500px;
+        width: auto;
+        max-width: 80vw;
+        min-width: 400px;
         background: var(--modal-background);
         border-radius: 5px;
         display: flex;
@@ -63,7 +64,7 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
-            font-size: 24px;
+            font-size: 20px;
             line-height: 24px;
             padding: 8px;
             width: 100%;
@@ -86,6 +87,9 @@
 
 
             button {
+                border-radius: 4px;
+                font-size: 14px;
+
                 &.cancel {
                     background-color: var(--red);
                 }
