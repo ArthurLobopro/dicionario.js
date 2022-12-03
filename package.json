@@ -1,6 +1,6 @@
 {
   "name": "dicionario",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
   "main": "./src/main/main.js",
   "scripts": {
