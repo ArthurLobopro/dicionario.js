@@ -1,15 +1,17 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/page.js"
+import { Page } from "../components/Page.js"
+import { ReturnButton } from "../components/ReturnButton.js"
 
 export function Update({ word }) {
     const palavra = window.api.palavras()[word]
     return Page({
-        id: "create",
+        id: "edit",
         content: [
             Header({
-                title: "Editar Palavra"
+                title: "Editar Palavra",
+                left: ReturnButton("view")
             }),
             CreateElement("div", {
                 className: "dashed-border spacing-16 grid-fill-center gap",
@@ -32,21 +34,19 @@ export function Update({ word }) {
                             const definicao = definicao_input.value
                             try {
                                 window.api.updateWord(word, { palavra, definicao })
-                                const alert = Alert({
+                                new Alert({
                                     message: "Palavra atualizada com sucesso!",
                                     title: "Sucesso",
                                     onClose: () => {
                                         palavra_input.value = ""
                                         definicao_input.value = ""
                                     }
-                                })
-                                document.body.appendChild(alert)
+                                }).append(document.body)
                             } catch (error) {
-                                const alert = Alert({
+                                new Alert({
                                     message: error.message,
                                     title: "Erro"
-                                })
-                                document.body.appendChild(alert)
+                                }).append(document.body)
                             }
                         }
                     })

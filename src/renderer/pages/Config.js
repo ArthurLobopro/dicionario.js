@@ -1,7 +1,8 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/page.js"
+import { Page } from "../components/Page.js"
+import { ReturnButton } from "../components/ReturnButton.js"
 import { switcher } from "../components/switch.js"
 
 export function Config() {
@@ -9,7 +10,8 @@ export function Config() {
         id: "config",
         content: [
             Header({
-                title: "Configurações"
+                title: "Configurações",
+                left: ReturnButton()
             }),
             CreateElement("div", {
                 className: "dashed-border spacing-16",
@@ -93,17 +95,15 @@ export function Config() {
                                             }
 
                                             if (sucess) {
-                                                const alert = new Alert({
+                                                new Alert({
                                                     title: "Sucesso",
                                                     message: "Palavras exportadas com sucesso!"
-                                                })
-                                                document.body.appendChild(alert)
+                                                }).append(document.body)
                                             } else {
-                                                const alert = new Alert({
+                                                new Alert({
                                                     title: "Erro",
                                                     message: "Ocorreu um erro ao exportar as palavras!"
-                                                })
-                                                document.body.appendChild(alert)
+                                                }).append(document.body)
                                             }
                                         }
                                     })

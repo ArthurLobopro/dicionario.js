@@ -1,14 +1,16 @@
 import { CreateElement } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/page.js"
+import { Page } from "../components/Page.js"
+import { ReturnButton } from "../components/ReturnButton.js"
 
 export function Create() {
     return Page({
         id: "create",
         content: [
             Header({
-                title: "Adicionar Palavra"
+                title: "Adicionar Palavra",
+                left: ReturnButton()
             }),
             CreateElement("div", {
                 className: "dashed-border spacing-16 grid-fill-center gap",
@@ -36,28 +38,25 @@ export function Create() {
                                         palavra: word.trim(),
                                         definicao: sig.trim()
                                     })
-                                    const alert = Alert({
+                                    new Alert({
                                         message: "Palavra adicionada com sucesso!",
                                         title: "Palavra Adicionada",
                                         onClose: () => {
                                             word_input.value = ""
                                             sig_input.value = ""
                                         }
-                                    })
-                                    document.body.appendChild(alert)
+                                    }).append(document.body)
                                 } catch (error) {
-                                    const alert = Alert({
+                                    new Alert({
                                         message: error.message,
                                         title: "Erro!"
-                                    })
-                                    document.body.appendChild(alert)
+                                    }).append(document.body)
                                 }
                             } else {
-                                const alert = Alert({
+                                new Alert({
                                     message: "Escreva uma palavra e uma descrição válida.",
                                     title: "Erro!"
-                                })
-                                document.body.appendChild(alert)
+                                }).append(document.body)
                             }
                         }
                     })

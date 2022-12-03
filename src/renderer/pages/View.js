@@ -1,20 +1,21 @@
-// import { api } from "../../store/Api.js"
 import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
 import { Header } from "../components/Header.js"
 import { Confirm } from "../components/modals/Confirm.js"
 import { ViewModal } from "../components/modals/View.js"
+import { Page } from "../components/page.js"
+import { ReturnButton } from "../components/ReturnButton.js"
 import { ScreenManager } from "../ScreenManager.js"
 
 export function View() {
-    return CreateElement("div", {
+    return Page({
         id: "view",
-        className: "page",
         content: [
             Header({
-                title: "Visualizar Palavras"
+                title: "Visualizar Palavras",
+                left: ReturnButton()
             }),
             CreateElement("div", {
-                style: "position: relative",
+                style: "position: relative;margin-bottom: 5px;",
                 content: [
                     CreateElement("div", {
                         className: "word-wrapper",

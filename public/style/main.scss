@@ -19,7 +19,7 @@
 
     --main-hover-brightness: .95;
 
-    --scrollbar-background: transparent;
+    --scrollbar-background: rgba(0, 0, 0, 0.205);
     --scrollbar-thumb: #999;
     --scrollbar-thumb-hover: #777;
     --scrollbar-thumb-active: #555;
@@ -35,10 +35,10 @@
 
     --main-hover-brightness: 1.3;
 
-    --scrollbar-background: transparent;
+    --scrollbar-background: #333;
     --scrollbar-thumb: #888;
     --scrollbar-thumb-hover: #555;
-    --scrollbar-thumb-active: #444;
+    --scrollbar-thumb-active: rgba(85, 85, 85, 0.616);
 }
 
 .line {
@@ -164,7 +164,6 @@ button {
 
     &#view {
         display: grid;
-        grid-template-rows: max-content 1fr;
         gap: 10px;
         padding-bottom: 0;
 
@@ -179,14 +178,19 @@ button {
         }
     }
 
-    &#create {
+    &#create,
+    &#edit {
         font-family: "Nunito", sans-serif;
 
-        & .t-wrapper {
+        :not(input, textarea) {
+            user-select: none;
+        }
+
+        .t-wrapper {
             display: grid;
         }
 
-        & textarea {
+        textarea {
             width: 100%;
             height: 100%;
             resize: none;

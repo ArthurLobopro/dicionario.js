@@ -1,20 +1,14 @@
-import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
-import { ScreenManager } from "../ScreenManager.js"
+import { CreateElement } from "../../Util.js"
+import { ReturnButton } from "./ReturnButton.js"
 
-export function Header(props) {
+
+export function Header({ title = "", left = null }) {
     return CreateElement("header", {
         className: "grid-fill-center gap",
         content: [
-            CreateElement("div", {
-                className: "return",
-                title: "Voltar",
-                onclick: () => {
-                    ScreenManager.setAtualScreen("home")
-                },
-                content: loadSVG(assetsPath, "left-arrow.svg")
-            }),
+            left,
             CreateElement("h1", {
-                content: props.title
+                content: title
             })
         ]
     })

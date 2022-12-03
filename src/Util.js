@@ -11,7 +11,6 @@ export const assetsPath = path.join(appPath, "assets")
  */
 
 export function StringToElement(str) {
-    console.log(str)
     const wrapper = document.createElement('template')
     wrapper.innerHTML = str
     return wrapper.content.childNodes
