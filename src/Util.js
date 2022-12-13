@@ -1,5 +1,6 @@
 const fs = require("fs")
 const path = require('path')
+// const { ipcRenderer } = require("electron")
 
 export const appPath = ipcRenderer.sendSync("app-path")
 export const assetsPath = path.join(appPath, "assets")

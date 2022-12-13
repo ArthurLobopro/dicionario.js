@@ -5,7 +5,9 @@ const Store = require('electron-store')
 Store.initRenderer()
 
 require('electron-frame/main')
-require("update-electron-app")()
+require("update-electron-app")({
+    notifyUser: false
+})
 require("./main-events.js")
 
 const appPath = app.getAppPath()
