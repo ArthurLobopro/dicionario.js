@@ -12,13 +12,15 @@ const screen_types = {
     update: Update
 }
 
+type screen = keyof typeof screen_types
+type options = { [key: string]: any }
+
 export const ScreenManager = {
     atualScreen: Home(),
-    /**
-     * @param {keyof screen_types} screen
-     */
-    setAtualScreen(screen, options = {}) {
+
+    setAtualScreen<T extends screen>(screen: T, options?: options) {
         this.atualScreen.remove()
+        //@ts-ignore
         this.atualScreen = screen_types[screen](options)
         document.body.appendChild(this.atualScreen)
     }
