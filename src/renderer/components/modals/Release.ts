@@ -2,7 +2,8 @@ import { CreateElement } from "../../../Util.js"
 import { Wrapper } from "./Wrapper.js"
 
 export class Release {
-    constructor({ onClose = () => { } }) {
+    wrapper: HTMLElement
+    constructor({ onClose = (result: boolean) => { } }) {
         const wrapper = Wrapper({
             content: [
                 CreateElement("div", {
@@ -44,7 +45,7 @@ export class Release {
         this.wrapper = wrapper
     }
 
-    append(element) {
+    append(element: HTMLElement) {
         element.appendChild(this.wrapper)
     }
 }
