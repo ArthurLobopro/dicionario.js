@@ -2,7 +2,7 @@
   "name": "dicionario",
   "version": "1.3.4",
   "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
-  "main": "./src/main/main.js",
+  "main": "./dist/main/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
