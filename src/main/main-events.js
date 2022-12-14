@@ -40,7 +40,7 @@ ipcMain.on('get-version', (event) => {
 autoUpdater.on("update-downloaded", (...props) => {
     const [event, releaseNotes, releaseName, releaseDate, updateUrl] = props
     ipcMain.emit("update-downloaded", event, releaseNotes, releaseName, releaseDate, updateUrl)
-    const mainWindow = BrowserWindow.getFocusedWindow()
+    const mainWindow = BrowserWindow.getAllWindows()[0]
     mainWindow.webContents.send("update-downloaded")
 })
 

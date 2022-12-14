@@ -7,14 +7,13 @@ if (api.options().darkMode) {
 
 window.addEventListener("update-downloaded", () => {
     console.log("render recive update-downloaded")
-    const releaseModal = Release({
+    new Release({
         onClose: (result) => {
             if (result) {
                 ipcRenderer.send("install-update")
             }
         }
-    })
-    document.body.appendChild(releaseModal)
+    }).append(document.body)
 })
 
 ScreenManager.setAtualScreen("home")
