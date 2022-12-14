@@ -1,3 +1,5 @@
+import { ipcRenderer } from "electron"
+import { api } from "../store/Api.js"
 import { Release } from "./components/modals/Release.js"
 import { ScreenManager } from "./ScreenManager.js"
 
