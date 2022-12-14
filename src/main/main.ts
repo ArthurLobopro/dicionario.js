@@ -1,6 +1,6 @@
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
-const Store = require('electron-store')
+import { app, BrowserWindow } from 'electron'
+import path from 'path'
+import Store from 'electron-store'
 
 Store.initRenderer()
 
@@ -8,7 +8,7 @@ require('electron-frame/main')
 require("update-electron-app")({
     notifyUser: false
 })
-require("./main-events.js")
+require("./main-events")
 
 const appPath = app.getAppPath()
 
