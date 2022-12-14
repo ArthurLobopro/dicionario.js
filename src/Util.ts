@@ -14,7 +14,8 @@ export function StringToElement(str: string) {
 type falsi = null | false | undefined
 
 type propsType = {
-    content?: string | HTMLElement | HTMLElement[] | falsi | falsi[] | string[]
+    // content?: string | HTMLElement | null | false | undefined | HTMLElement[] | falsi[] | string[]
+    content?: any
     [key: string]: any
 }
 
