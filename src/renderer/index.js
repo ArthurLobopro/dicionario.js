@@ -17,16 +17,3 @@ window.addEventListener("update-downloaded", () => {
 })
 
 ScreenManager.setAtualScreen("home")
-
-// function TestModal(params) {
-//     const releaseModal = Release({
-//         onClose: (result) => {
-//             if (result) {
-//                 ipcRenderer.send("install-update")
-//             }
-//         }
-//     })
-//     document.body.appendChild(releaseModal)
-// }
-
-// setTimeout(TestModal, 10000)
