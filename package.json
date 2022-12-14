@@ -80,6 +80,7 @@
     "electron-frame": "^1.1.3",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
+    "typescript": "^4.9.4",
     "update-electron-app": "^2.0.1"
   }
 }
