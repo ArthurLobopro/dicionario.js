@@ -1,17 +1,13 @@
-const { ipcMain, app, dialog, BrowserWindow, autoUpdater } = require('electron')
+import { ipcMain, app, dialog, BrowserWindow, autoUpdater } from 'electron'
 
 const appPath = app.getAppPath()
-
-const info = {
-    hasUpdateDownloaded: false
-}
 
 ipcMain.on('app-path', (event) => {
     event.returnValue = appPath
 })
 
 ipcMain.on('open-devtolls', (event) => {
-    const win = BrowserWindow.getFocusedWindow()
+    const win = BrowserWindow.fromId(event.sender.id) as BrowserWindow
     win.webContents.openDevTools({
         mode: 'undocked'
     })
