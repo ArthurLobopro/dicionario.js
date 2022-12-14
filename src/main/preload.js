@@ -13,6 +13,11 @@ const frame = new ElectronFrame({
     darkMode: options().frameTheme === "auto" ? options().darkMode : options().frameTheme === "dark",
 })
 
+ipcRenderer.on("update-downloaded", () => {
+    console.log("preoload send update-downloaded")
+    window.dispatchEvent(new CustomEvent("update-downloaded"))
+})
+
 const frameApi = {
     setFrameStyle(frameStyle) {
         frame.setFrameStyle(frameStyle)

@@ -1,15 +1,14 @@
 const fs = require("fs")
 const path = require('path')
+// const { ipcRenderer } = require("electron")
 
 export const appPath = ipcRenderer.sendSync("app-path")
 export const assetsPath = path.join(appPath, "assets")
 
 /**
- * 
- * @param {*} type 
- * @param {string | HTMLElement} content 
+ * @param {string} str
+ * @returns {NodeListOf<ChildNode>}
  */
-
 export function StringToElement(str) {
     const wrapper = document.createElement('template')
     wrapper.innerHTML = str

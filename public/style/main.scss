@@ -6,10 +6,10 @@
 @import url(./word-wrapper.css);
 
 :root {
-    --blue: #3485FF;
+    --blue: #296dd3;
     --white: #FAFAFA;
     --hover-blue: #5699FF;
-    --red: #e73333;
+    --red: #c32c2c;
 
     --main-background: #FAFAFA;
     --option-background: #F5F5F5;
@@ -93,9 +93,9 @@ body {
     @extend .dashed-border;
 
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
     flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
     justify-self: center;
 
     background-color: var(--option-background);
