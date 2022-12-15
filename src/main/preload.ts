@@ -1,6 +1,4 @@
-const { contextBridge, ipcRenderer } = require("electron")
-const { ElectronFrame } = require('electron-frame/renderer')
-const { api } = require("../store/Api.js")
+import { ipcRenderer } from "electron"
 
 ipcRenderer.on("update-downloaded", () => {
     console.log("preoload send update-downloaded")
