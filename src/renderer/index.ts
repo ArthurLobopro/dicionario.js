@@ -19,3 +19,5 @@ window.addEventListener("update-downloaded", () => {
 })
 
 ScreenManager.setAtualScreen("home")
+
+import "./Frame"
