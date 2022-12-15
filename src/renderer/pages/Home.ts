@@ -1,9 +1,9 @@
-import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
-import { Header } from "../components/Header.js"
-import { Page } from "../components/Page.js"
-import { ScreenManager } from "../ScreenManager.js"
+import { assetsPath, CreateElement, loadSVG } from "../../Util"
+import { Header } from "../components/Header"
+import { Page } from "../components/Page"
+import { ScreenManager } from "../ScreenManager"
 
-function Option({ text, icon, onclick }) {
+function Option({ text, icon, onclick }: { text: string; icon: string; onclick: () => void }) {
     return CreateElement("div", {
         className: "option",
         content: [
