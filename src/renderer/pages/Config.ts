@@ -1,12 +1,12 @@
 import { ipcRenderer } from "electron"
-import { frameStyle } from "electron-frame/renderer/ElectronFrame.js"
+import { frameStyle } from "electron-frame/renderer"
 import { api } from "../../store/Api"
 import { CreateElement } from "../../Util"
 import { Header } from "../components/Header"
 import { Alert } from "../components/modals/Alert"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { switcher } from "../components/switch"
+import { switcher } from "../components/Switcher"
 import { frame } from "../Frame"
 
 export function Config() {
@@ -35,7 +35,7 @@ export function Config() {
                                             document.body.classList.toggle("dark")
                                             frame.updateTheme()
                                         },
-                                        checked: api.options().darkMode
+                                        checked: api.options().darkMode as boolean
                                     }),
                                     CreateElement("span", {
                                         content: "Tema do frame"
