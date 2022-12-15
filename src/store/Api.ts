@@ -1,9 +1,15 @@
-const { data, options } = require("./Store.js")
-const { ipcRenderer } = require("electron")
-const path = require("path")
-const fs = require("fs")
+import { data, options } from "./Store"
+import { ipcRenderer } from "electron"
+import path from "path"
+import fs from "fs"
 
-let palavras
+let palavras: {
+    [s: string]: {
+        definicao: string
+        registro: Date
+        ultimaEdicao?: Date
+    }
+}
 
 function GetWordsToSave() {
     return Object.entries(palavras).map(([palavra, { definicao, registro, ultimaEdicao = null }]) => {
@@ -23,6 +29,7 @@ function SortWords() {
 }
 
 function UpdateWords() {
+    //@ts-ignore
     palavras = Object.fromEntries(data.get("palavras").map(palavra => {
         const { definicao, registro, ultimaEdicao = null } = palavra
         return [
@@ -34,6 +41,7 @@ function UpdateWords() {
             }
         ]
     }))
+
 }
 
 async function exportWords() {
@@ -58,7 +66,7 @@ async function exportWords() {
     }
 }
 
-const api = {
+export const api = {
     exportWords,
 
     version() {
@@ -73,14 +81,11 @@ const api = {
         options.set('darkMode', !options.store.darkMode)
     },
 
-    /**
-     * @param {"light" | "dark" | "auto"} frameTheme
-     */
-    setFrameTheme(frameTheme) {
+    setFrameTheme(frameTheme: "light" | "dark" | "auto") {
         options.set('frameTheme', frameTheme)
     },
 
-    setFrameStyle(frameStyle) {
+    setFrameStyle(frameStyle: "windows" | "macos") {
         options.set('frameStyle', frameStyle)
     },
 
@@ -88,10 +93,10 @@ const api = {
         return palavras
     },
 
-    updateWord(word, { palavra, definicao }) {
+    updateWord(word: string, { palavra, definicao }: { palavra: string, definicao: string }) {
         palavra = palavra.trim().toLowerCase()
 
-        if (!word in palavras) {
+        if (!(word in palavras)) {
             throw new Error("Palavra não encontrada")
         }
 
@@ -104,14 +109,12 @@ const api = {
             delete palavras[word]
             palavras[palavra] = {
                 ...new_palavra,
-                palavra,
                 definicao,
                 ultimaEdicao: new Date()
             }
         } else {
             palavras[word] = {
                 ...palavras[word],
-                palavra,
                 definicao,
                 ultimaEdicao: new Date()
             }
@@ -124,7 +127,7 @@ const api = {
         UpdateWords()
     },
 
-    createWord({ palavra, definicao }) {
+    createWord({ palavra, definicao }: { palavra: string, definicao: string }) {
         palavra = palavra.trim().toLowerCase()
 
         if (palavra in palavras) {
@@ -132,7 +135,6 @@ const api = {
         }
 
         palavras[palavra] = {
-            palavra,
             definicao,
             registro: new Date()
         }
@@ -144,8 +146,8 @@ const api = {
         UpdateWords()
     },
 
-    deleteWord(palavra) {
-        if (!palavra in palavras) {
+    deleteWord(palavra: string) {
+        if (!(palavra in palavras)) {
             throw new Error("Palavra não encontrada")
         }
 
@@ -160,5 +162,3 @@ const api = {
 }
 
 UpdateWords()
-
-module.exports = { api }

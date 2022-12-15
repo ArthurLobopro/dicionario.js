@@ -1,9 +1,13 @@
-import { CreateElement } from "../../Util.js"
-import { Header } from "../components/Header.js"
-import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/Page.js"
-import { ReturnButton } from "../components/ReturnButton.js"
-import { switcher } from "../components/switch.js"
+import { ipcRenderer } from "electron"
+import { frameStyle } from "electron-frame/renderer"
+import { api } from "../../store/Api"
+import { CreateElement } from "../../Util"
+import { Header } from "../components/Header"
+import { Alert } from "../components/modals/Alert"
+import { Page } from "../components/Page"
+import { ReturnButton } from "../components/ReturnButton"
+import { switcher } from "../components/Switcher"
+import { frame } from "../Frame"
 
 export function Config() {
     return Page({
@@ -26,12 +30,12 @@ export function Config() {
                                         content: "Modo escuro"
                                     }),
                                     switcher({
-                                        onToggle: (checked) => {
+                                        onToggle: () => {
                                             api.toggleDarkMode()
                                             document.body.classList.toggle("dark")
                                             frame.updateTheme()
                                         },
-                                        checked: api.options().darkMode
+                                        checked: api.options().darkMode as boolean
                                     }),
                                     CreateElement("span", {
                                         content: "Tema do frame"
@@ -53,8 +57,8 @@ export function Config() {
                                             })
                                         ],
                                         value: api.options().frameTheme,
-                                        onchange: (event) => {
-                                            const frameTheme = event.currentTarget.value
+                                        onchange: (event: InputEvent) => {
+                                            const frameTheme = (event.currentTarget as HTMLSelectElement).value as "auto" | "light" | "dark"
                                             api.setFrameTheme(frameTheme)
                                             frame.updateTheme()
                                         }
@@ -75,8 +79,8 @@ export function Config() {
                                             }),
                                         ],
                                         value: api.options().frameStyle,
-                                        onchange: (event) => {
-                                            const frameStyle = event.currentTarget.value
+                                        onchange: (event: InputEvent) => {
+                                            const frameStyle = (event.currentTarget as HTMLSelectElement).value as frameStyle
                                             api.setFrameStyle(frameStyle)
                                             frame.setFrameStyle(frameStyle)
                                         }

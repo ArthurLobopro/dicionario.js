@@ -2,7 +2,7 @@
   "name": "dicionario",
   "version": "1.3.4",
   "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
-  "main": "./src/main/main.js",
+  "main": "./dist/main/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
@@ -77,9 +77,10 @@
     "sass-compiler": "^1.3.0-beta"
   },
   "dependencies": {
-    "electron-frame": "^1.1.3",
+    "electron-frame": "^1.1.4",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
+    "typescript": "^4.9.4",
     "update-electron-app": "^2.0.1"
   }
 }

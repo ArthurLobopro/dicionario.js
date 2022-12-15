@@ -1,8 +1,9 @@
-import { CreateElement } from "../../Util.js"
-import { Header } from "../components/Header.js"
-import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/Page.js"
-import { ReturnButton } from "../components/ReturnButton.js"
+import { api } from "../../store/Api"
+import { CreateElement } from "../../Util"
+import { Header } from "../components/Header"
+import { Alert } from "../components/modals/Alert"
+import { Page } from "../components/Page"
+import { ReturnButton } from "../components/ReturnButton"
 
 export function Create() {
     return Page({
@@ -27,14 +28,14 @@ export function Create() {
                         className: "btn",
                         content: "Adicionar",
                         onclick: () => {
-                            const word_input = document.getElementById("word")
-                            const sig_input = document.getElementById("sig")
+                            const word_input = document.getElementById("word") as HTMLInputElement
+                            const sig_input = document.getElementById("sig") as HTMLTextAreaElement
                             const word = word_input.value.trim()
                             const sig = sig_input.value.trim()
 
                             if (word.length >= 3 && sig.length >= 5) {
                                 try {
-                                    window.api.createWord({
+                                    api.createWord({
                                         palavra: word.trim(),
                                         definicao: sig.trim()
                                     })
@@ -46,9 +47,9 @@ export function Create() {
                                             sig_input.value = ""
                                         }
                                     }).append(document.body)
-                                } catch (error) {
+                                } catch (error: unknown) {
                                     new Alert({
-                                        message: error.message,
+                                        message: (error as Error).message,
                                         title: "Erro!"
                                     }).append(document.body)
                                 }

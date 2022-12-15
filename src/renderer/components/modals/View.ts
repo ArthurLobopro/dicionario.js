@@ -1,8 +1,9 @@
-import { CreateElement, formatDate } from "../../../Util.js"
-import { Wrapper } from "./Wrapper.js"
+import { api } from "../../../store/Api"
+import { CreateElement, formatDate } from "../../../Util"
+import { Wrapper } from "./Wrapper"
 
-export function ViewModal({ word, onClose = () => { } }) {
-    const palavra = window.api.palavras()[word]
+export function ViewModal({ word, onClose = () => { } }: { word: string; onClose?: () => void }) {
+    const palavra = api.palavras()[word]
 
     const wrapper = Wrapper({
         content: [
@@ -30,14 +31,14 @@ export function ViewModal({ word, onClose = () => { } }) {
                                     CreateElement("div", {
                                         content: [
                                             "<span>Data de registro</span>",
-                                            `<span class="info">${formatDate(palavra.registro)}</span>`
+                                            `<span class="info">${formatDate(palavra.registro.toISOString())}</span>`
                                         ]
                                     }),
                                     palavra.ultimaEdicao ?
                                         CreateElement("div", {
                                             content: [
                                                 "<span>Última edição</span>",
-                                                `<span class="info">${formatDate(palavra.ultimaEdicao)}</span>`
+                                                `<span class="info">${formatDate(palavra.ultimaEdicao.toISOString())}</span>`
                                             ]
                                         }) : null
                                 ]

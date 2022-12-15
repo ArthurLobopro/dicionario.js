@@ -23,6 +23,9 @@ jobs:
       - name: compile-sass
         run: |
           yarn sass-compiler --compile
+      - name: compile typescript
+        run: |
+          yarn tsc
       - name: Publish
         run: |
           yarn run publish

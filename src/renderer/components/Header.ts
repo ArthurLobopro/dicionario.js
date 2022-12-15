@@ -1,8 +1,6 @@
-import { CreateElement } from "../../Util.js"
-import { ReturnButton } from "./ReturnButton.js"
+import { CreateElement } from "../../Util"
 
-
-export function Header({ title = "", left = null }) {
+export function Header({ title, left = undefined }: { title: string, left?: HTMLElement }) {
     return CreateElement("header", {
         className: "grid-fill-center gap",
         content: [

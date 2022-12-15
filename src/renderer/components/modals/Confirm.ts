@@ -1,8 +1,9 @@
-import { CreateElement } from "../../../Util.js"
-import { Wrapper } from "./Wrapper.js"
+import { CreateElement } from "../../../Util"
+import { Wrapper } from "./Wrapper"
 
-export class Release {
-    constructor({ onClose = () => { } }) {
+export class Confirm {
+    wrapper: HTMLElement
+    constructor({ title = "Atenção", message, onClose = () => { } }: { title?: string; message: string; onClose?: (confirm: boolean) => void }) {
         const wrapper = Wrapper({
             content: [
                 CreateElement("div", {
@@ -10,25 +11,25 @@ export class Release {
                     content: [
                         CreateElement("div", {
                             className: "modal-header",
-                            content: "Atualização disponível"
+                            content: title
                         }),
                         CreateElement("div", {
                             className: "modal-body",
-                            content: "Uma nova atualização está disponível, reinicie o aplicativo para atualizar."
+                            content: message
                         }),
                         CreateElement("div", {
                             className: "modal-footer",
                             content: [
                                 CreateElement("button", {
-                                    content: "Reiniciar Agora",
+                                    content: "Sim",
                                     onclick: () => {
                                         wrapper.remove()
                                         onClose(true)
                                     }
                                 }),
                                 CreateElement("button", {
-                                    className: "stroke",
-                                    content: "Atualizar Depois",
+                                    className: "cancel",
+                                    content: "Não",
                                     onclick: () => {
                                         wrapper.remove()
                                         onClose(false)
@@ -44,7 +45,7 @@ export class Release {
         this.wrapper = wrapper
     }
 
-    append(element) {
+    append(element: HTMLElement) {
         element.appendChild(this.wrapper)
     }
 }

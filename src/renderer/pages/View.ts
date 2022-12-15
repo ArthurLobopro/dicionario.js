@@ -1,10 +1,11 @@
-import { assetsPath, CreateElement, loadSVG } from "../../Util.js"
-import { Header } from "../components/Header.js"
-import { Confirm } from "../components/modals/Confirm.js"
-import { ViewModal } from "../components/modals/View.js"
-import { Page } from "../components/page.js"
-import { ReturnButton } from "../components/ReturnButton.js"
-import { ScreenManager } from "../ScreenManager.js"
+import { api } from "../../store/Api"
+import { assetsPath, CreateElement, loadSVG } from "../../Util"
+import { Header } from "../components/Header"
+import { Confirm } from "../components/modals/Confirm"
+import { ViewModal } from "../components/modals/View"
+import { Page } from "../components/Page"
+import { ReturnButton } from "../components/ReturnButton"
+import { ScreenManager } from "../ScreenManager"
 
 export function View() {
     return Page({
@@ -64,7 +65,7 @@ export function View() {
                                                 id: "delete",
                                                 title: "Excluir",
                                                 onclick: () => {
-                                                    const modal = Confirm({
+                                                    new Confirm({
                                                         message: "Deseja realmente excluir esta palavra?",
                                                         onClose: (confirm) => {
                                                             if (confirm) {
@@ -72,8 +73,7 @@ export function View() {
                                                                 ScreenManager.setAtualScreen("view")
                                                             }
                                                         }
-                                                    })
-                                                    document.body.appendChild(modal)
+                                                    }).append(document.body)
                                                 }
                                             })
                                         ],
