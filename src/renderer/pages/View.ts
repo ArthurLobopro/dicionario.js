@@ -65,7 +65,7 @@ export function View() {
                                                 id: "delete",
                                                 title: "Excluir",
                                                 onclick: () => {
-                                                    const modal = Confirm({
+                                                    new Confirm({
                                                         message: "Deseja realmente excluir esta palavra?",
                                                         onClose: (confirm) => {
                                                             if (confirm) {
@@ -73,8 +73,7 @@ export function View() {
                                                                 ScreenManager.setAtualScreen("view")
                                                             }
                                                         }
-                                                    })
-                                                    document.body.appendChild(modal)
+                                                    }).append(document.body)
                                                 }
                                             })
                                         ],
