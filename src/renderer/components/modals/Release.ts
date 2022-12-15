@@ -1,5 +1,5 @@
-import { CreateElement } from "../../../Util.js"
-import { Wrapper } from "./Wrapper.js"
+import { CreateElement } from "../../../Util"
+import { Wrapper } from "./Wrapper"
 
 export class Release {
     wrapper: HTMLElement

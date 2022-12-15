@@ -1,8 +1,8 @@
-import { Config } from "./pages/Config.js"
-import { Create } from "./pages/Create.js"
-import { Home } from "./pages/Home.js"
-import { Update } from "./pages/Update.js"
-import { View } from "./pages/View.js"
+import { Config } from "./pages/Config"
+import { Create } from "./pages/Create"
+import { Home } from "./pages/Home"
+import { Update } from "./pages/Update"
+import { View } from "./pages/View"
 
 const screen_types = {
     create: Create,

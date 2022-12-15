@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron"
-import { api } from "../store/Api.js"
-import { Release } from "./components/modals/Release.js"
-import { ScreenManager } from "./ScreenManager.js"
+import { api } from "../store/Api"
+import { Release } from "./components/modals/Release"
+import { ScreenManager } from "./ScreenManager"
 
 if (api.options().darkMode) {
     document.body.classList.add("dark")
