@@ -1,7 +1,7 @@
-import { CreateElement } from "../../../Util.js"
-import { Wrapper } from "./Wrapper.js"
+import { CreateElement } from "../../../Util"
+import { Wrapper } from "./Wrapper"
 
-export function Confirm({ title = "Atenção", message, onClose = () => { } }) {
+export function Confirm({ title = "Atenção", message, onClose = () => { } }: { title?: string; message: string; onClose?: (confirm: boolean) => void }) {
     const wrapper = Wrapper({
         content: [
             CreateElement("div", {
