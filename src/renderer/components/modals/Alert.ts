@@ -1,8 +1,15 @@
-import { CreateElement } from "../../../Util.js"
-import { Wrapper } from "./Wrapper.js"
+import { CreateElement } from "../../../Util"
+import { Wrapper } from "./Wrapper"
+
+interface alertProps {
+    title: string
+    message: string
+    onClose?: () => void
+}
 
 export class Alert {
-    constructor({ title = "Atenção", message, onClose = () => { } }) {
+    wrapper: HTMLElement
+    constructor({ title = "Atenção", message, onClose = () => { } }: alertProps) {
         const wrapper = Wrapper({
             content: [
                 CreateElement("div", {
@@ -23,7 +30,7 @@ export class Alert {
                                     content: "Ok",
                                     onclick: () => {
                                         wrapper.remove()
-                                        onClose(true)
+                                        onClose()
                                     }
                                 })
                             ]
@@ -36,7 +43,7 @@ export class Alert {
         this.wrapper = wrapper
     }
 
-    append(element) {
+    append(element: HTMLElement) {
         element.appendChild(this.wrapper)
     }
 }
