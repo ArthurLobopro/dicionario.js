@@ -1,11 +1,12 @@
-import { CreateElement } from "../../Util.js"
-import { Header } from "../components/Header.js"
-import { Alert } from "../components/modals/Alert.js"
-import { Page } from "../components/Page.js"
-import { ReturnButton } from "../components/ReturnButton.js"
+import { api } from "../../store/Api"
+import { CreateElement } from "../../Util"
+import { Header } from "../components/Header"
+import { Alert } from "../components/modals/Alert"
+import { Page } from "../components/Page"
+import { ReturnButton } from "../components/ReturnButton"
 
-export function Update({ word }) {
-    const palavra = window.api.palavras()[word]
+export function Update({ word }: { word: string }) {
+    const palavra = api.palavras()[word]
     return Page({
         id: "edit",
         content: [
@@ -28,12 +29,12 @@ export function Update({ word }) {
                         className: "btn",
                         content: "Atualizar",
                         onclick: () => {
-                            const palavra_input = document.getElementById("word")
-                            const definicao_input = document.getElementById("definicao")
+                            const palavra_input = document.getElementById("word") as HTMLInputElement
+                            const definicao_input = document.getElementById("definicao") as HTMLInputElement
                             const palavra = palavra_input.value
                             const definicao = definicao_input.value
                             try {
-                                window.api.updateWord(word, { palavra, definicao })
+                                api.updateWord(word, { palavra, definicao })
                                 new Alert({
                                     message: "Palavra atualizada com sucesso!",
                                     title: "Sucesso",
@@ -42,7 +43,7 @@ export function Update({ word }) {
                                         definicao_input.value = ""
                                     }
                                 }).append(document.body)
-                            } catch (error) {
+                            } catch (error: any) {
                                 new Alert({
                                     message: error.message,
                                     title: "Erro"
