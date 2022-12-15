@@ -7,8 +7,7 @@ if (api.options().darkMode) {
     document.body.classList.add("dark")
 }
 
-window.addEventListener("update-downloaded", () => {
-    console.log("render recive update-downloaded")
+ipcRenderer.on("update-downloaded", () => {
     new Release({
         onClose: (result) => {
             if (result) {
@@ -20,4 +19,4 @@ window.addEventListener("update-downloaded", () => {
 
 ScreenManager.setAtualScreen("home")
 
-import "./Frame"
+require("./Frame")
