@@ -22,15 +22,8 @@ export const data = new ElectronStore({
                         format: "date-time"
                     },
                     ultimaEdicao: {
-                        anyOf: [
-                            {
-                                type: "string",
-                                format: "date-time"
-                            },
-                            {
-                                type: "null"
-                            }
-                        ]
+                        type: "string",
+                        format: "date-time"
                     }
                 }
             }
