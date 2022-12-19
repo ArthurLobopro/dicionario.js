@@ -29,6 +29,24 @@ ipcMain.on('get-folder', (event) => {
     })
 })
 
+ipcMain.on("get-file", (event) => {
+    return dialog.showOpenDialog({
+        properties: ['openFile'],
+        title: "Selecione um arquivo para importar:",
+        filters: [
+            { name: 'JSON', extensions: ['json'] }
+        ]
+    }).then(result => {
+        if (result.canceled) {
+            event.returnValue = "canceled"
+        } else {
+            event.returnValue = result.filePaths[0]
+        }
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
 ipcMain.on('get-version', (event) => {
     event.returnValue = app.getVersion()
 })
