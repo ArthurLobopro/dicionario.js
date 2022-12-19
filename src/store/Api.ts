@@ -1,7 +1,11 @@
-import { data, options } from "./Store"
+import { data, options, type palavra } from "./Store"
 import { ipcRenderer } from "electron"
 import path from "path"
 import fs from "fs"
+
+import ajv from "ajv"
+import ajvFormats from "ajv-formats"
+import { mergeWords } from "./PalavrasController"
 
 let palavras: {
     [s: string]: {
@@ -37,7 +41,7 @@ function UpdateWords() {
             {
                 definicao,
                 registro: new Date(registro),
-                ultimaEdicao: ultimaEdicao && new Date(palavra.ultimaEdicao)
+                ultimaEdicao: ultimaEdicao && new Date(palavra.ultimaEdicao as string)
             }
         ]
     }))
@@ -66,8 +70,63 @@ async function exportWords() {
     }
 }
 
+async function importWords(palavras: palavra[]) {
+    const validator = ajvFormats(new ajv()).compile({
+        type: "array",
+        default: [],
+        items: {
+            type: "object",
+            required: ["palavra", "definicao", "registro"],
+            properties: {
+                palavra: {
+                    type: "string"
+                },
+                definicao: {
+                    type: "string"
+                },
+                registro: {
+                    type: "string",
+                    format: "date-time"
+                },
+                ultimaEdicao: {
+                    type: "string",
+                    format: "date-time"
+                }
+            }
+        }
+    })
+
+    if (validator(palavras)) {
+        mergeWords(palavras)
+        UpdateWords()
+    } else {
+        throw new Error("Arquivo inválido")
+    }
+}
+
 export const api = {
     exportWords,
+    importWords() {
+        try {
+            const file = ipcRenderer.sendSync("get-file")
+            console.log(file)
+
+            if (file === "canceled") {
+                return "canceled"
+            }
+
+            const jsonString = fs.readFileSync(file).toString()
+            console.log(jsonString)
+
+            const json = JSON.parse(jsonString)
+            console.log(json)
+
+            importWords(json)
+        } catch (error) {
+            console.error(error)
+            return false
+        }
+    },
 
     version() {
         return ipcRenderer.sendSync("get-version")
