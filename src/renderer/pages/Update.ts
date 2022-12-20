@@ -1,5 +1,6 @@
 import { CreateElement } from "../../Util"
 import { api } from "../../store/Api"
+import { ScreenManager } from "../ScreenManager"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
@@ -39,8 +40,7 @@ export function Update({ word }: { word: string }) {
                                     message: "Palavra atualizada com sucesso!",
                                     title: "Sucesso",
                                     onClose: () => {
-                                        palavra_input.value = ""
-                                        definicao_input.value = ""
+                                        ScreenManager.setAtualScreen("view")
                                     }
                                 }).append(document.body)
                             } catch (error: any) {
