@@ -1,11 +1,10 @@
-import { data, options, type palavra } from "./Store"
+import { data, options, type StoreWord } from "./Store"
 import { ipcRenderer } from "electron"
 import path from "path"
 import fs from "fs"
 
 import ajv from "ajv"
 import ajvFormats from "ajv-formats"
-import { mergeWords } from "./PalavrasController"
 import { WordsController } from "./Controllers/Words"
 
 let palavras: {
@@ -28,7 +27,8 @@ function GetWordsToSave() {
 }
 
 async function exportWords() {
-    const words = GetWordsToSave()
+    const words = data.get("palavras")
+
     const json = JSON.stringify(words, null, 4)
 
     try {
@@ -49,7 +49,7 @@ async function exportWords() {
     }
 }
 
-async function importWords(palavras: palavra[]) {
+async function importWords(palavras: StoreWord[]) {
     const validator = ajvFormats(new ajv()).compile({
         type: "array",
         default: [],
@@ -76,8 +76,7 @@ async function importWords(palavras: palavra[]) {
     })
 
     if (validator(palavras)) {
-        mergeWords(palavras)
-        UpdateWords()
+        WordsController.MergeWords(palavras)
     } else {
         throw new Error("Arquivo inválido")
     }

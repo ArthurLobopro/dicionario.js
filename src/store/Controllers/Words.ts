@@ -1,4 +1,4 @@
-import { data } from "../Store"
+import { StoreWord, data } from "../Store"
 
 type words = {
     [s: string]: {
@@ -103,5 +103,23 @@ export class WordsController {
         delete words[word]
 
         data.set("palavras", WordsController.GetWordsToSave(words))
+    }
+
+    static MergeWords(words: StoreWord[]) {
+        const store_keys = data.store.palavras.map(p => p.palavra)
+
+        const new_words = data.store.palavras
+
+        words.forEach(word => {
+            if (!(word.palavra in store_keys)) {
+                new_words.push(word)
+            }
+        })
+
+        new_words.sort((a, b) => {
+            return a.palavra.localeCompare(b.palavra)
+        })
+
+        data.set("palavras", new_words)
     }
 }
