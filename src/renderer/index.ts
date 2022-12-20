@@ -3,7 +3,7 @@ import { api } from "../store/Api"
 import { Release } from "./components/modals/Release"
 import { ScreenManager } from "./ScreenManager"
 
-if (api.options().darkMode) {
+if (api.options.darkMode) {
     document.body.classList.add("dark")
 }
 

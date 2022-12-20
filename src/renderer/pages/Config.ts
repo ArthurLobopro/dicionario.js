@@ -35,7 +35,7 @@ export function Config() {
                                             document.body.classList.toggle("dark")
                                             frame.updateTheme()
                                         },
-                                        checked: api.options().darkMode as boolean
+                                        checked: api.options.darkMode as boolean
                                     }),
                                     CreateElement("span", {
                                         content: "Tema do frame"
@@ -56,7 +56,7 @@ export function Config() {
                                                 value: "dark"
                                             })
                                         ],
-                                        value: api.options().frameTheme,
+                                        value: api.options.frameTheme,
                                         onchange: (event: InputEvent) => {
                                             const frameTheme = (event.currentTarget as HTMLSelectElement).value as "auto" | "light" | "dark"
                                             api.setFrameTheme(frameTheme)
@@ -78,7 +78,7 @@ export function Config() {
                                                 value: "macos"
                                             }),
                                         ],
-                                        value: api.options().frameStyle,
+                                        value: api.options.frameStyle,
                                         onchange: (event: InputEvent) => {
                                             const frameStyle = (event.currentTarget as HTMLSelectElement).value as frameStyle
                                             api.setFrameStyle(frameStyle)
@@ -151,7 +151,7 @@ export function Config() {
 
                     CreateElement("span", {
                         className: "version",
-                        content: `Versão ${api.version()}`
+                        content: `Versão ${api.version}`
                     })
                 ]
             })

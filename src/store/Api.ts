@@ -86,11 +86,11 @@ export const api = {
         }
     },
 
-    version() {
+    get version() {
         return ipcRenderer.sendSync("get-version")
     },
 
-    options() {
+    get options() {
         return options.store
     },
 
