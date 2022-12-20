@@ -1,13 +1,13 @@
 import { ipcRenderer } from "electron"
 import { frameStyle } from "electron-frame/renderer"
-import { api } from "../../store/Api"
 import { CreateElement } from "../../Util"
+import { api } from "../../store/Api"
+import { frame } from "../Frame"
 import { Header } from "../components/Header"
-import { Alert } from "../components/modals/Alert"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { switcher } from "../components/Switcher"
-import { frame } from "../Frame"
+import { Alert } from "../components/modals/Alert"
 
 export function Config() {
     return Page({
@@ -109,6 +109,33 @@ export function Config() {
                                                     message: "Ocorreu um erro ao exportar as palavras!"
                                                 }).append(document.body)
                                             }
+                                        }
+                                    }),
+                                    CreateElement("span", {
+                                        content: "Importar palavras"
+                                    }),
+                                    CreateElement("button", {
+                                        className: "stroke",
+                                        content: "Importar",
+                                        onclick: async () => {
+                                            // const sucess = await api.exportWords()
+
+                                            // if (sucess === "canceled") {
+                                            //     return
+                                            // }
+
+                                            // if (sucess) {
+                                            //     new Alert({
+                                            //         title: "Sucesso",
+                                            //         message: "Palavras exportadas com sucesso!"
+                                            //     }).append(document.body)
+                                            // } else {
+                                            //     new Alert({
+                                            //         title: "Erro",
+                                            //         message: "Ocorreu um erro ao exportar as palavras!"
+                                            //     }).append(document.body)
+                                            // }
+                                            api.importWords()
                                         }
                                     })
                                 ]

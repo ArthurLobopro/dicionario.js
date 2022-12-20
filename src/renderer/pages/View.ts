@@ -1,11 +1,11 @@
-import { api } from "../../store/Api"
 import { assetsPath, CreateElement, loadSVG } from "../../Util"
+import { api } from "../../store/Api"
+import { ScreenManager } from "../ScreenManager"
 import { Header } from "../components/Header"
-import { Confirm } from "../components/modals/Confirm"
-import { ViewModal } from "../components/modals/View"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { ScreenManager } from "../ScreenManager"
+import { Confirm } from "../components/modals/Confirm"
+import { ViewModal } from "../components/modals/View"
 
 export function View() {
     return Page({
