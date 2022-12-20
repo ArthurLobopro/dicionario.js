@@ -27,10 +27,6 @@ function GetWordsToSave() {
     })
 }
 
-function SortWords() {
-    palavras = WordsController.SortWords(palavras)
-}
-
 function UpdateWords() {
     //@ts-ignore
     palavras = Object.fromEntries(data.get("palavras").map(palavra => {
@@ -159,19 +155,7 @@ export const api = {
         WordsController.SaveWord({ palavra, definicao })
     },
 
-    deleteWord(palavra: string) {
-        if (!(palavra in palavras)) {
-            throw new Error("Palavra não encontrada")
-        }
-
-        delete palavras[palavra]
-
-        SortWords()
-
-        data.set("palavras", GetWordsToSave())
-
-        UpdateWords()
+    deleteWord(word: string) {
+        WordsController.DeleteWord(word)
     }
 }
-
-UpdateWords()
