@@ -7,25 +7,6 @@ import ajv from "ajv"
 import ajvFormats from "ajv-formats"
 import { WordsController } from "./Controllers/Words"
 
-let palavras: {
-    [s: string]: {
-        definicao: string
-        registro: Date
-        ultimaEdicao?: Date
-    }
-}
-
-function GetWordsToSave() {
-    return Object.entries(palavras).map(([palavra, { definicao, registro, ultimaEdicao = null }]) => {
-        return {
-            palavra,
-            definicao,
-            registro: registro.toISOString(),
-            ...((ultimaEdicao && { ultimaEdicao: ultimaEdicao.toISOString() }) || {})
-        }
-    })
-}
-
 async function exportWords() {
     const words = data.get("palavras")
 
