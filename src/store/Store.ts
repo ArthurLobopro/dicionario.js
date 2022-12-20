@@ -1,13 +1,13 @@
 import ElectronStore from 'electron-store'
 
-export type palavra = {
+export type StoreWord = {
     palavra: string,
     definicao: string,
     registro: string,
     ultimaEdicao?: string
 }
 
-export const data = new ElectronStore<{ palavras: palavra[] }>({
+export const data = new ElectronStore<{ palavras: StoreWord[] }>({
     name: "data",
     watch: true,
     schema: {
