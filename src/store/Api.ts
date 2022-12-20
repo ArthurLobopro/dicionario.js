@@ -6,6 +6,7 @@ import fs from "fs"
 import ajv from "ajv"
 import ajvFormats from "ajv-formats"
 import { mergeWords } from "./PalavrasController"
+import { WordsController } from "./Controllers/Words"
 
 let palavras: {
     [s: string]: {
@@ -27,9 +28,7 @@ function GetWordsToSave() {
 }
 
 function SortWords() {
-    palavras = Object.fromEntries(Object.entries(palavras).sort((a, b) => {
-        return a[0].localeCompare(b[0])
-    }))
+    palavras = WordsController.SortWords(palavras)
 }
 
 function UpdateWords() {
@@ -149,60 +148,15 @@ export const api = {
     },
 
     palavras() {
-        return palavras
+        return WordsController.GetWords()
     },
 
     updateWord(word: string, { palavra, definicao }: { palavra: string, definicao: string }) {
-        palavra = palavra.trim().toLowerCase()
-
-        if (!(word in palavras)) {
-            throw new Error("Palavra não encontrada")
-        }
-
-        if (word !== palavra) {
-            if (palavra in palavras) {
-                throw new Error("Palavra já existe")
-            }
-
-            const new_palavra = palavras[word]
-            delete palavras[word]
-            palavras[palavra] = {
-                ...new_palavra,
-                definicao,
-                ultimaEdicao: new Date()
-            }
-        } else {
-            palavras[word] = {
-                ...palavras[word],
-                definicao,
-                ultimaEdicao: new Date()
-            }
-        }
-
-        SortWords()
-
-        data.set("palavras", GetWordsToSave())
-
-        UpdateWords()
+        WordsController.UpdateWord(word, { palavra, definicao })
     },
 
     createWord({ palavra, definicao }: { palavra: string, definicao: string }) {
-        palavra = palavra.trim().toLowerCase()
-
-        if (palavra in palavras) {
-            throw new Error("Palavra já existe")
-        }
-
-        palavras[palavra] = {
-            definicao,
-            registro: new Date()
-        }
-
-        SortWords()
-
-        data.set("palavras", GetWordsToSave())
-
-        UpdateWords()
+        WordsController.SaveWord({ palavra, definicao })
     },
 
     deleteWord(palavra: string) {
