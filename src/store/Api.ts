@@ -63,6 +63,30 @@ async function importWords(palavras: StoreWord[]) {
 }
 
 export const api = {
+    get version() {
+        return ipcRenderer.sendSync("get-version")
+    },
+
+    get options() {
+        return options.store
+    },
+
+    get words() {
+        return WordsController.GetWords()
+    },
+
+    updateWord(word: string, { palavra, definicao }: { palavra: string, definicao: string }) {
+        WordsController.UpdateWord(word, { palavra, definicao })
+    },
+
+    createWord({ palavra, definicao }: { palavra: string, definicao: string }) {
+        WordsController.SaveWord({ palavra, definicao })
+    },
+
+    deleteWord(word: string) {
+        WordsController.DeleteWord(word)
+    },
+
     exportWords,
     importWords() {
         try {
@@ -86,14 +110,6 @@ export const api = {
         }
     },
 
-    get version() {
-        return ipcRenderer.sendSync("get-version")
-    },
-
-    get options() {
-        return options.store
-    },
-
     toggleDarkMode() {
         options.set('darkMode', !options.store.darkMode)
     },
@@ -104,21 +120,5 @@ export const api = {
 
     setFrameStyle(frameStyle: "windows" | "macos") {
         options.set('frameStyle', frameStyle)
-    },
-
-    get palavras() {
-        return WordsController.GetWords()
-    },
-
-    updateWord(word: string, { palavra, definicao }: { palavra: string, definicao: string }) {
-        WordsController.UpdateWord(word, { palavra, definicao })
-    },
-
-    createWord({ palavra, definicao }: { palavra: string, definicao: string }) {
-        WordsController.SaveWord({ palavra, definicao })
-    },
-
-    deleteWord(word: string) {
-        WordsController.DeleteWord(word)
     }
 }

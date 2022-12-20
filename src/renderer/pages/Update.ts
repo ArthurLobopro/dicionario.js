@@ -7,7 +7,7 @@ import { ReturnButton } from "../components/ReturnButton"
 import { Alert } from "../components/modals/Alert"
 
 export function Update({ word }: { word: string }) {
-    const palavra = api.palavras[word]
+    const palavra = api.words[word]
     return Page({
         id: "edit",
         content: [
