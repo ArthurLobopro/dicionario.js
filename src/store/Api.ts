@@ -1,11 +1,10 @@
-import { data, options, type StoreWord } from "./Store"
-import { ipcRenderer } from "electron"
-import path from "path"
-import fs from "fs"
-
 import ajv from "ajv"
 import ajvFormats from "ajv-formats"
+import { ipcRenderer } from "electron"
+import fs from "fs"
+import path from "path"
 import { WordsController } from "./Controllers/Words"
+import { data, options, type StoreWord } from "./Store"
 
 async function exportWords() {
     const words = data.get("palavras")
