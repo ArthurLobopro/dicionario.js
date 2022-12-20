@@ -27,22 +27,6 @@ function GetWordsToSave() {
     })
 }
 
-function UpdateWords() {
-    //@ts-ignore
-    palavras = Object.fromEntries(data.get("palavras").map(palavra => {
-        const { definicao, registro, ultimaEdicao = null } = palavra
-        return [
-            palavra.palavra,
-            {
-                definicao,
-                registro: new Date(registro),
-                ultimaEdicao: ultimaEdicao && new Date(palavra.ultimaEdicao as string)
-            }
-        ]
-    }))
-
-}
-
 async function exportWords() {
     const words = GetWordsToSave()
     const json = JSON.stringify(words, null, 4)
