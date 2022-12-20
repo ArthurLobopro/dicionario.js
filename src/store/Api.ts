@@ -106,7 +106,7 @@ export const api = {
         options.set('frameStyle', frameStyle)
     },
 
-    palavras() {
+    get palavras() {
         return WordsController.GetWords()
     },
 

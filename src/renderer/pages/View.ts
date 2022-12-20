@@ -20,7 +20,7 @@ export function View() {
                 content: [
                     CreateElement("div", {
                         className: "word-wrapper",
-                        content: Object.entries(api.palavras()).map(([palavra, palavra_props]) => {
+                        content: Object.entries(api.palavras).map(([palavra, palavra_props]) => {
                             return CreateElement("div", {
                                 className: "word",
                                 content: [
