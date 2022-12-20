@@ -118,24 +118,18 @@ export function Config() {
                                         className: "stroke",
                                         content: "Importar",
                                         onclick: async () => {
-                                            // const sucess = await api.exportWords()
-
-                                            // if (sucess === "canceled") {
-                                            //     return
-                                            // }
-
-                                            // if (sucess) {
-                                            //     new Alert({
-                                            //         title: "Sucesso",
-                                            //         message: "Palavras exportadas com sucesso!"
-                                            //     }).append(document.body)
-                                            // } else {
-                                            //     new Alert({
-                                            //         title: "Erro",
-                                            //         message: "Ocorreu um erro ao exportar as palavras!"
-                                            //     }).append(document.body)
-                                            // }
-                                            api.importWords()
+                                            try {
+                                                api.importWords()
+                                                new Alert({
+                                                    title: "Sucesso",
+                                                    message: "Palavras importadas com sucesso!"
+                                                })
+                                            } catch (error: unknown) {
+                                                new Alert({
+                                                    title: "Erro",
+                                                    message: (error as Error)?.message as string
+                                                })
+                                            }
                                         }
                                     })
                                 ]
