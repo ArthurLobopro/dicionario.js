@@ -6,29 +6,6 @@ import path from "path"
 import { WordsController } from "./Controllers/Words"
 import { data, options, type StoreWord } from "./Store"
 
-async function exportWords() {
-    const words = data.get("palavras")
-
-    const json = JSON.stringify(words, null, 4)
-
-    try {
-        const folder = ipcRenderer.sendSync("get-folder")
-        console.log(folder)
-
-        if (folder === "canceled") {
-            return "canceled"
-        }
-
-        const filename = path.join(folder, "dicionario.json")
-        fs.writeFileSync(filename, json)
-
-        return true
-    } catch (error) {
-        console.error(error)
-        return false
-    }
-}
-
 async function importWords(palavras: StoreWord[]) {
     const validator = ajvFormats(new ajv()).compile({
         type: "array",
@@ -87,7 +64,10 @@ export const api = {
         WordsController.DeleteWord(word)
     },
 
-    exportWords,
+    async exportWords() {
+        return WordsController.ExportWords()
+    },
+
     importWords() {
         try {
             const file = ipcRenderer.sendSync("get-file")

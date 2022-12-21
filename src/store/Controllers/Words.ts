@@ -1,3 +1,6 @@
+import { ipcRenderer } from "electron"
+import fs from "node:fs"
+import path from "node:path"
 import { StoreWord, data } from "../Store"
 
 type words = {
@@ -103,6 +106,28 @@ export class WordsController {
         delete words[word]
 
         data.set("palavras", WordsController.GetWordsToSave(words))
+    }
+
+    static ExportWords() {
+        try {
+            const folder = ipcRenderer.sendSync("get-folder")
+
+            if (folder === "canceled") {
+                return "canceled"
+            }
+
+            const filename = path.join(folder, "dicionario.json")
+
+            const words = data.get("palavras")
+            const json = JSON.stringify(words, null, 4)
+
+            fs.writeFileSync(filename, json)
+
+            return true
+        } catch (error) {
+            console.error(error)
+            return false
+        }
     }
 
     static MergeWords(words: StoreWord[]) {
