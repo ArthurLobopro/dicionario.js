@@ -123,12 +123,14 @@ export function Config() {
                                                 new Alert({
                                                     title: "Sucesso",
                                                     message: "Palavras importadas com sucesso!"
-                                                })
+                                                }).append(document.body)
                                             } catch (error: unknown) {
+                                                console.log(error)
+
                                                 new Alert({
                                                     title: "Erro",
                                                     message: (error as Error)?.message as string
-                                                })
+                                                }).append(document.body)
                                             }
                                         }
                                     })

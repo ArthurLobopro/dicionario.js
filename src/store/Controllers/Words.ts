@@ -1,8 +1,10 @@
+import ajv from "ajv"
+import ajvFormats from "ajv-formats"
 import { ipcRenderer } from "electron"
 import fs from "node:fs"
 import path from "node:path"
+import { StoreWord, wordsSchema } from "../Schemas"
 import { data } from "../Store"
-import { StoreWord } from "../Schemas"
 
 type words = {
     [s: string]: {
@@ -128,6 +130,31 @@ export class WordsController {
         } catch (error) {
             console.error(error)
             return false
+        }
+    }
+
+    static ImportWords() {
+        const file = ipcRenderer.sendSync("get-file")
+
+        if (file === "canceled") {
+            return "canceled"
+        }
+
+        const jsonString = fs.readFileSync(file).toString()
+        const json = JSON.parse(jsonString)
+
+        const validator = ajvFormats(new ajv({
+            allErrors: true,
+            strictRequired: true
+        })).compile(wordsSchema.palavras)
+
+        const valid = validator(json)
+
+        if (valid) {
+            WordsController.MergeWords(json as unknown as StoreWord[])
+        } else {
+            console.log(validator.errors)
+            throw new Error("Arquivo de importação inválido")
         }
     }
 
