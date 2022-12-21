@@ -1,7 +1,8 @@
 import { ipcRenderer } from "electron"
 import fs from "node:fs"
 import path from "node:path"
-import { StoreWord, data } from "../Store"
+import { data } from "../Store"
+import { StoreWord } from "../Schemas"
 
 type words = {
     [s: string]: {

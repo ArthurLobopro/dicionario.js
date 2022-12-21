@@ -2,9 +2,9 @@ import ajv from "ajv"
 import ajvFormats from "ajv-formats"
 import { ipcRenderer } from "electron"
 import fs from "fs"
-import path from "path"
 import { WordsController } from "./Controllers/Words"
-import { data, options, type StoreWord } from "./Store"
+import { options } from "./Store"
+import { StoreOptions, StoreWord } from "./Schemas"
 
 async function importWords(palavras: StoreWord[]) {
     const validator = ajvFormats(new ajv()).compile({
@@ -94,11 +94,11 @@ export const api = {
         options.set('darkMode', !options.store.darkMode)
     },
 
-    setFrameTheme(frameTheme: "light" | "dark" | "auto") {
+    setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {
         options.set('frameTheme', frameTheme)
     },
 
-    setFrameStyle(frameStyle: "windows" | "macos") {
+    setFrameStyle(frameStyle: StoreOptions["frameStyle"]) {
         options.set('frameStyle', frameStyle)
     }
 }

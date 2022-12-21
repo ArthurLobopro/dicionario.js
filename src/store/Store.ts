@@ -1,62 +1,16 @@
 import ElectronStore from 'electron-store'
-
-export type StoreWord = {
-    palavra: string,
-    definicao: string,
-    registro: string,
-    ultimaEdicao?: string
-}
+import { StoreOptions, StoreWord, optionsSchema, wordsSchema } from "./Schemas"
 
 export const data = new ElectronStore<{ palavras: StoreWord[] }>({
     name: "data",
     watch: true,
-    schema: {
-        palavras: {
-            type: "array",
-            default: [],
-            items: {
-                type: "object",
-                required: ["palavra", "definicao", "registro"],
-                properties: {
-                    palavra: {
-                        type: "string"
-                    },
-                    definicao: {
-                        type: "string"
-                    },
-                    registro: {
-                        type: "string",
-                        format: "date-time"
-                    },
-                    ultimaEdicao: {
-                        type: "string",
-                        format: "date-time"
-                    }
-                }
-            }
-        }
-    }
+    schema: wordsSchema
 })
 
-export const options = new ElectronStore({
+export const options = new ElectronStore<StoreOptions>({
     name: "options",
     watch: true,
-    schema: {
-        darkMode: {
-            type: "boolean",
-            default: true
-        },
-        frameStyle: {
-            type: "string",
-            enum: ["windows", "macos"],
-            default: "windows"
-        },
-        frameTheme: {
-            type: "string",
-            enum: ["light", "dark", "auto"],
-            default: "auto"
-        }
-    }
+    schema: optionsSchema
 })
 
 data.get("palavras") ? null : data.store.palavras = []
