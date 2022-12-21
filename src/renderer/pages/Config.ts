@@ -1,13 +1,13 @@
 import { ipcRenderer } from "electron"
 import { frameStyle } from "electron-frame/renderer"
-import { api } from "../../store/Api"
 import { CreateElement } from "../../Util"
+import { api } from "../../store/Api"
+import { frame } from "../Frame"
 import { Header } from "../components/Header"
-import { Alert } from "../components/modals/Alert"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { switcher } from "../components/Switcher"
-import { frame } from "../Frame"
+import { Alert } from "../components/modals/Alert"
 
 export function Config() {
     return Page({
@@ -35,7 +35,7 @@ export function Config() {
                                             document.body.classList.toggle("dark")
                                             frame.updateTheme()
                                         },
-                                        checked: api.options().darkMode as boolean
+                                        checked: api.options.darkMode as boolean
                                     }),
                                     CreateElement("span", {
                                         content: "Tema do frame"
@@ -56,7 +56,7 @@ export function Config() {
                                                 value: "dark"
                                             })
                                         ],
-                                        value: api.options().frameTheme,
+                                        value: api.options.frameTheme,
                                         onchange: (event: InputEvent) => {
                                             const frameTheme = (event.currentTarget as HTMLSelectElement).value as "auto" | "light" | "dark"
                                             api.setFrameTheme(frameTheme)
@@ -78,7 +78,7 @@ export function Config() {
                                                 value: "macos"
                                             }),
                                         ],
-                                        value: api.options().frameStyle,
+                                        value: api.options.frameStyle,
                                         onchange: (event: InputEvent) => {
                                             const frameStyle = (event.currentTarget as HTMLSelectElement).value as frameStyle
                                             api.setFrameStyle(frameStyle)
@@ -110,6 +110,29 @@ export function Config() {
                                                 }).append(document.body)
                                             }
                                         }
+                                    }),
+                                    CreateElement("span", {
+                                        content: "Importar palavras"
+                                    }),
+                                    CreateElement("button", {
+                                        className: "stroke",
+                                        content: "Importar",
+                                        onclick: async () => {
+                                            try {
+                                                api.importWords()
+                                                new Alert({
+                                                    title: "Sucesso",
+                                                    message: "Palavras importadas com sucesso!"
+                                                }).append(document.body)
+                                            } catch (error: unknown) {
+                                                console.log(error)
+
+                                                new Alert({
+                                                    title: "Erro",
+                                                    message: (error as Error)?.message as string
+                                                }).append(document.body)
+                                            }
+                                        }
                                     })
                                 ]
                             }),
@@ -130,7 +153,7 @@ export function Config() {
 
                     CreateElement("span", {
                         className: "version",
-                        content: `Versão ${api.version()}`
+                        content: `Versão ${api.version}`
                     })
                 ]
             })

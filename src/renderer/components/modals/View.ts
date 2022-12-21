@@ -3,7 +3,7 @@ import { CreateElement, formatDate } from "../../../Util"
 import { Wrapper } from "./Wrapper"
 
 export function ViewModal({ word, onClose = () => { } }: { word: string; onClose?: () => void }) {
-    const palavra = api.palavras()[word]
+    const palavra = api.words[word]
 
     const wrapper = Wrapper({
         content: [

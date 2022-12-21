@@ -1,12 +1,13 @@
-import { api } from "../../store/Api"
 import { CreateElement } from "../../Util"
+import { api } from "../../store/Api"
+import { ScreenManager } from "../ScreenManager"
 import { Header } from "../components/Header"
-import { Alert } from "../components/modals/Alert"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
+import { Alert } from "../components/modals/Alert"
 
 export function Update({ word }: { word: string }) {
-    const palavra = api.palavras()[word]
+    const palavra = api.words[word]
     return Page({
         id: "edit",
         content: [
@@ -39,8 +40,7 @@ export function Update({ word }: { word: string }) {
                                     message: "Palavra atualizada com sucesso!",
                                     title: "Sucesso",
                                     onClose: () => {
-                                        palavra_input.value = ""
-                                        definicao_input.value = ""
+                                        ScreenManager.setAtualScreen("view")
                                     }
                                 }).append(document.body)
                             } catch (error: any) {

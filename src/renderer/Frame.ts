@@ -1,7 +1,7 @@
 import { ElectronFrame, frameStyle } from "electron-frame/renderer"
 import { api } from "../store/Api"
 
-const options = () => api.options()
+const options = () => api.options
 
 const frame = new ElectronFrame({
     frameStyle: options().frameStyle as frameStyle,

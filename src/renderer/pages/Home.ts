@@ -1,7 +1,7 @@
 import { assetsPath, CreateElement, loadSVG } from "../../Util"
+import { ScreenManager } from "../ScreenManager"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
-import { ScreenManager } from "../ScreenManager"
 
 function Option({ text, icon, onclick }: { text: string; icon: string; onclick: () => void }) {
     return CreateElement("div", {
