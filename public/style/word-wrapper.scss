@@ -14,24 +14,35 @@
     position: absolute;
     scroll-behavior: smooth;
 
-    .word-header {
-        font-weight: bold;
-        font-size: 20px;
-        text-transform: capitalize;
-    }
-
-    >.word {
-        display: grid;
-        grid-template-columns: auto max-content;
+    .word {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
         font-family: "Nunito";
 
-        .word-definition {
-            font-size: 16px;
-            line-height: 16px;
-            white-space: nowrap;
-            max-width: calc(16px * 40);
+        .content {
+            flex-shrink: 1;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
             overflow: hidden;
-            text-overflow: ellipsis;
+
+            .word-header {
+                font-weight: bold;
+                font-size: 20px;
+                text-transform: capitalize;
+                flex: 1;
+            }
+
+            .word-definition {
+                font-size: 16px;
+                line-height: 16px;
+                width: 100%;
+                text-overflow: ellipsis;
+                flex: 1;
+                white-space: nowrap;
+                overflow: hidden;
+            }
         }
 
         .controls {
