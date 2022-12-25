@@ -14,24 +14,26 @@
     position: absolute;
     scroll-behavior: smooth;
 
-    .word-header {
-        font-weight: bold;
-        font-size: 20px;
-        text-transform: capitalize;
-    }
-
-    >.word {
+    .word {
         display: grid;
         grid-template-columns: auto max-content;
         font-family: "Nunito";
 
-        .word-definition {
-            font-size: 16px;
-            line-height: 16px;
-            white-space: nowrap;
-            max-width: calc(16px * 40);
-            overflow: hidden;
-            text-overflow: ellipsis;
+        .content {
+            .word-header {
+                font-weight: bold;
+                font-size: 20px;
+                text-transform: capitalize;
+            }
+
+            .word-definition {
+                font-size: 16px;
+                line-height: 16px;
+                white-space: nowrap;
+                max-width: calc(16px * 40);
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
         }
 
         .controls {

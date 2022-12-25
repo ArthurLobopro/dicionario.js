@@ -25,6 +25,7 @@ export function View() {
                                 className: "word",
                                 content: [
                                     CreateElement("div", {
+                                        className: "content",
                                         content: [
                                             CreateElement("div", {
                                                 className: "word-header",
