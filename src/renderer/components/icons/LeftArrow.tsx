@@ -1,0 +1,19 @@
+import * as React from "react"
+import { SVGProps } from "react"
+
+export const LeftArrowIcon = (props: SVGProps<SVGSVGElement>) => (
+    <svg
+        {...props}
+        width={6}
+        height={11}
+        viewBox="0 0 6 11"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+    >
+        <path
+            d="M5.25 1L1.19615 5.05385C0.934615 5.31538 0.934615 5.70769 1.19615 5.96923L5.25 10.1538"
+            stroke="black"
+            strokeLinecap="round"
+        />
+    </svg>
+)
