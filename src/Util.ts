@@ -5,49 +5,9 @@ import { ipcRenderer } from "electron"
 export const appPath = ipcRenderer.sendSync("app-path") as string
 export const assetsPath = path.join(appPath, "assets")
 
-export function StringToElement(str: string) {
-    const wrapper = document.createElement('template')
-    wrapper.innerHTML = str
-    return wrapper.content.childNodes
-}
-
 type propsType = {
     content?: any
     [key: string]: any
-}
-
-export function CreateElement(type: string, { content = '', ...props }: propsType = {}) {
-    const element = document.createElement(type)
-
-    if (typeof content === 'string') {
-        element.innerHTML = content
-    } else if (content instanceof HTMLElement) {
-        element.appendChild(content)
-    } else if (content instanceof Array) {
-        content.forEach((item) => {
-            //@ts-ignore
-            if ([null, false, undefined].includes(item)) return
-
-            if (typeof item === 'string') {
-                if (item.includes('<') && item.includes('>')) {
-                    StringToElement(item).forEach((child) => {
-                        element.appendChild(child)
-                    })
-                } else {
-                    element.appendChild(document.createTextNode(item))
-                }
-            } else if (item instanceof HTMLElement) {
-                element.appendChild(item)
-            }
-        })
-    }
-
-    for (const [key, value] of Object.entries(props)) {
-        //@ts-ignore
-        element[key] = value
-    }
-
-    return element
 }
 
 export function loadSVG(...PathSegments: string[]) {

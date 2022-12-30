@@ -116,7 +116,7 @@ export class WordsController {
             const folder = ipcRenderer.sendSync("get-folder")
 
             if (folder === "canceled") {
-                return "canceled"
+                return { status: "canceled" }
             }
 
             const filename = path.join(folder, "dicionario.json")
@@ -126,10 +126,10 @@ export class WordsController {
 
             fs.writeFileSync(filename, json)
 
-            return true
+            return { status: "success" }
         } catch (error) {
             console.error(error)
-            return false
+            return { status: "error" }
         }
     }
 
@@ -137,7 +137,7 @@ export class WordsController {
         const file = ipcRenderer.sendSync("get-file")
 
         if (file === "canceled") {
-            return "canceled"
+            return { status: "canceled" }
         }
 
         const jsonString = fs.readFileSync(file).toString()
@@ -152,6 +152,7 @@ export class WordsController {
 
         if (valid) {
             WordsController.MergeWords(json as unknown as StoreWord[])
+            return { status: "success" }
         } else {
             console.log(validator.errors)
             throw new Error("Arquivo de importação inválido")
