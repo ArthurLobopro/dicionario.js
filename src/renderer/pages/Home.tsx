@@ -23,8 +23,8 @@ export function Home() {
         <Page id="home">
             <Header title="Dicionário Pessoal" />
             <div className="option-wrapper">
-                <Option text="Adicionar" icon={<AddIcon />} onclick={() => alert("Adicionar")} />
-                <Option text="Visualizar" icon={<EyeIcon />} onclick={() => alert("Visualizar")} />
+                <Option text="Adicionar" icon={<AddIcon />} onclick={() => navigate("create")} />
+                <Option text="Visualizar" icon={<EyeIcon />} onclick={() => navigate("view")} />
                 <Option text="Configurações" icon={<ConfigIcon />} onclick={() => navigate("config")} />
             </div>
         </Page>

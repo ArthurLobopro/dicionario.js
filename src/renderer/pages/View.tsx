@@ -14,8 +14,7 @@ import { useNavigate } from "react-router-dom"
 export function ViewScreen() {
     const [words, setWords] = useState(Object.entries(api.words))
 
-    // const navigate = useNavigate()
-
+    const navigate = useNavigate()
 
     return (
         <Page id="view">
@@ -48,8 +47,7 @@ export function ViewScreen() {
                                 </div>
                                 <div title="Editar" id="edit"
                                     onClick={() => {
-                                        // ScreenManager.setAtualScreen("update", { word: word })
-                                        alert("Em desenvolvimento")
+                                        navigate(`/update/${word}`)
                                     }}
                                 >
                                     <EditIcon />
