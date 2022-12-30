@@ -16,8 +16,7 @@ ipcMain.on('open-devtolls', (event) => {
 ipcMain.on('get-folder', (event) => {
     return dialog.showOpenDialog({
         properties: ['openDirectory'],
-        title: "Selecione uma pasta para exportar:"
-
+        title: "Selecione uma pasta para exportar:",
     }).then(result => {
         if (result.canceled) {
             event.returnValue = "canceled"

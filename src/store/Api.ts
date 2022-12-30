@@ -34,7 +34,7 @@ export const api = {
     },
 
     importWords() {
-        WordsController.ImportWords()
+        return WordsController.ImportWords()
     },
 
     toggleDarkMode() {

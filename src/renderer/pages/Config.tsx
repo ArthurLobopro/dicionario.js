@@ -37,13 +37,13 @@ export function ConfigScreen() {
     }
 
     async function ExportWords() {
-        const sucess = await api.exportWords()
+        const { status } = await api.exportWords()
 
-        if (sucess === "canceled") {
+        if (status === "canceled") {
             return
         }
 
-        if (sucess) {
+        if (status === "success") {
             modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
         } else {
             modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
@@ -52,8 +52,15 @@ export function ConfigScreen() {
 
     function ImportWords() {
         try {
-            api.importWords()
-            modal.open(<AlertModal title="Sucesso" message="Palavras importadas com sucesso!" onClose={modal.hide} />)
+            const { status } = api.importWords()
+
+            if (status === "canceled") {
+                return
+            }
+
+            if (status === "success") {
+                modal.open(<AlertModal title="Sucesso" message="Palavras importadas com sucesso!" onClose={modal.hide} />)
+            }
         } catch (error: unknown) {
             console.log(error)
             modal.open(<AlertModal title="Erro" message={(error as Error)?.message as string} onClose={modal.hide} />)
