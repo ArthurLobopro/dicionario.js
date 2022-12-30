@@ -11,6 +11,41 @@ export function CreateScreen() {
         definicao: ""
     })
 
+    function SaveWord() {
+        let { palavra, definicao } = data
+        palavra = palavra.trim()
+        definicao = definicao.trim()
+
+        if (palavra.length >= 3 && definicao.length >= 5) {
+            try {
+                api.createWord({
+                    palavra: palavra.trim(),
+                    definicao: definicao.trim()
+                })
+                new Alert({
+                    message: "Palavra adicionada com sucesso!",
+                    title: "Palavra Adicionada",
+                    onClose: () => {
+                        setData({
+                            palavra: "",
+                            definicao: ""
+                        })
+                    }
+                }).append(document.body)
+            } catch (error: unknown) {
+                new Alert({
+                    message: (error as Error).message,
+                    title: "Erro!"
+                }).append(document.body)
+            }
+        } else {
+            new Alert({
+                message: "Escreva uma palavra e uma descrição válida.",
+                title: "Erro!"
+            }).append(document.body)
+        }
+    }
+
     return (
         <Page id="create">
             <Header title="Adicionar Palavra" left={<ReturnButton />} />
@@ -29,43 +64,7 @@ export function CreateScreen() {
                         value={data.definicao} onChange={e => setData({ ...data, definicao: e.target.value })}
                     ></textarea>
                 </div>
-                <button
-                    className="btn"
-                    onClick={() => {
-                        let { palavra, definicao } = data
-                        palavra = palavra.trim()
-                        definicao = definicao.trim()
-
-                        if (palavra.length >= 3 && definicao.length >= 5) {
-                            try {
-                                api.createWord({
-                                    palavra: palavra.trim(),
-                                    definicao: definicao.trim()
-                                })
-                                new Alert({
-                                    message: "Palavra adicionada com sucesso!",
-                                    title: "Palavra Adicionada",
-                                    onClose: () => {
-                                        setData({
-                                            palavra: "",
-                                            definicao: ""
-                                        })
-                                    }
-                                }).append(document.body)
-                            } catch (error: unknown) {
-                                new Alert({
-                                    message: (error as Error).message,
-                                    title: "Erro!"
-                                }).append(document.body)
-                            }
-                        } else {
-                            new Alert({
-                                message: "Escreva uma palavra e uma descrição válida.",
-                                title: "Erro!"
-                            }).append(document.body)
-                        }
-                    }}
-                >
+                <button className="btn" onClick={SaveWord}>
                     Adicionar
                 </button>
             </div>
