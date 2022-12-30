@@ -26,6 +26,30 @@ export function ConfigScreen() {
         frame.updateTheme()
     }
 
+    function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        const frameStyle = event.currentTarget.value as frameStyle
+        api.setFrameStyle(frameStyle)
+        setConfig({ ...config, frameStyle })
+        frame.setFrameStyle(frameStyle)
+    }
+
+    function ImportWords() {
+        try {
+            api.importWords()
+            new Alert({
+                title: "Sucesso",
+                message: "Palavras importadas com sucesso!"
+            }).append(document.body)
+        } catch (error: unknown) {
+            console.log(error)
+
+            new Alert({
+                title: "Erro",
+                message: (error as Error)?.message as string
+            }).append(document.body)
+        }
+    }
+
     return (
         <Page id="config">
             <Header title="Configurações" left={<ReturnButton />} />
@@ -43,16 +67,7 @@ export function ConfigScreen() {
                         </select>
 
                         <span>Estilo da janela</span>
-                        <select
-                            className="select"
-                            value={config.frameStyle}
-                            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                                const frameStyle = event.currentTarget.value as frameStyle
-                                api.setFrameStyle(frameStyle)
-                                setConfig({ ...config, frameStyle })
-                                frame.setFrameStyle(frameStyle)
-                            }}
-                        >
+                        <select className="select" value={config.frameStyle} onChange={HandleFrameStyleChange}>
                             <option value="windows">Windows</option>
                             <option value="macos">Macos</option>
                         </select>
@@ -84,33 +99,12 @@ export function ConfigScreen() {
                         </button>
 
                         <span>Importar palavras</span>
-                        <button className="stroke"
-                            onClick={() => {
-                                try {
-                                    api.importWords()
-                                    new Alert({
-                                        title: "Sucesso",
-                                        message: "Palavras importadas com sucesso!"
-                                    }).append(document.body)
-                                } catch (error: unknown) {
-                                    console.log(error)
-
-                                    new Alert({
-                                        title: "Erro",
-                                        message: (error as Error)?.message as string
-                                    }).append(document.body)
-                                }
-                            }}
-                        >
+                        <button className="stroke" onClick={ImportWords}>
                             Importar
                         </button>
                     </div>
                     <div className="flex-center">
-                        <button className="stroke"
-                            onClick={() => {
-                                ipcRenderer.send("open-devtolls")
-                            }}
-                        >
+                        <button className="stroke" onClick={() => ipcRenderer.send("open-devtolls")}>
                             Mostrar ferramentas de desenvolvedor
                         </button>
                     </div>
