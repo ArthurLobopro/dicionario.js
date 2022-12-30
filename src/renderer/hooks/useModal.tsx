@@ -15,6 +15,10 @@ export function useModal(props?: useModalProps) {
         },
         hide: () => setIsVisible(false),
         show: () => setIsVisible(true),
-        setContent: (component: JSX.Element) => setContent(component)
+        setContent: (content: JSX.Element) => setContent(content),
+        open(content: JSX.Element) {
+            this.setContent(content)
+            this.show()
+        },
     }
 }
