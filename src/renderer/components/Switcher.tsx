@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 export function Switcher({ onToggle, checked = false }: { onToggle: (checked: boolean) => void, checked?: boolean }) {
     const [isChecked, setIsChecked] = useState(checked)
 
+    const ref = useRef(null as unknown as HTMLInputElement)
+
     useEffect(() => {
-        const input = document.querySelector(".switch>input[type=checkbox]") as HTMLInputElement
-        input.checked = isChecked
+        ref.current.checked = isChecked
     }, [isChecked])
 
     return (
@@ -13,7 +14,7 @@ export function Switcher({ onToggle, checked = false }: { onToggle: (checked: bo
             setIsChecked(!isChecked)
             onToggle(!checked)
         }}>
-            <input type="checkbox" defaultChecked={checked} onChange={() => onToggle(!checked)} />
+            <input ref={ref} type="checkbox" defaultChecked={checked} onChange={() => onToggle(!checked)} />
             <span className="slider round"></span>
         </div>
     )
