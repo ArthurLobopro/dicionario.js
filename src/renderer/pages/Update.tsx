@@ -4,8 +4,9 @@ import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { Alert } from "../components/modals/Alert"
+import { AlertModal } from "../components/modals/Alert"
 import { useState } from "react"
+import { useModal } from "../hooks/useModal"
 
 export function UpdateScreen() {
     const { word } = useParams()
@@ -15,11 +16,24 @@ export function UpdateScreen() {
     })
 
     const navigate = useNavigate()
+    const modal = useModal()
 
-    console.log(data)
+    function UpdateWord() {
+        try {
+            api.updateWord(word as string, data)
+
+            modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
+                modal.hide()
+                navigate("/view")
+            }} />)
+        } catch (error: any) {
+            modal.open(<AlertModal title="Erro" message={error.message} onClose={modal.hide} />)
+        }
+    }
 
     return (
         <Page id="edit">
+            {modal.content}
             <Header title="Editar Palavra" left={<ReturnButton returnTo="/view" />} />
             <div className="dashed-border spacing-16 grid-fill-center gap">
                 <label>
@@ -36,25 +50,7 @@ export function UpdateScreen() {
                         value={data.definicao} onChange={e => setData({ ...data, definicao: e.target.value })}
                     ></textarea>
                 </div>
-                <button className="btn"
-                    onClick={() => {
-                        try {
-                            api.updateWord(word as string, data)
-                            new Alert({
-                                message: "Palavra atualizada com sucesso!",
-                                title: "Sucesso",
-                                onClose: () => {
-                                    navigate("/view")
-                                }
-                            }).append(document.body)
-                        } catch (error: any) {
-                            new Alert({
-                                message: error.message,
-                                title: "Erro"
-                            }).append(document.body)
-                        }
-                    }}
-                >
+                <button className="btn" onClick={UpdateWord}>
                     Atualizar
                 </button>
             </div>

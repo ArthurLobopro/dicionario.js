@@ -6,12 +6,15 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { Alert } from "../components/modals/Alert"
+import { AlertModal } from "../components/modals/Alert"
 import { useState } from "react"
 import { StoreOptions } from "../../store/Schemas"
+import { useModal } from "../hooks/useModal"
 
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options)
+
+    const modal = useModal()
 
     function ToggleTheme() {
         api.toggleDarkMode()
@@ -33,25 +36,33 @@ export function ConfigScreen() {
         frame.setFrameStyle(frameStyle)
     }
 
+    async function ExportWords() {
+        const sucess = await api.exportWords()
+
+        if (sucess === "canceled") {
+            return
+        }
+
+        if (sucess) {
+            modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
+        } else {
+            modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
+        }
+    }
+
     function ImportWords() {
         try {
             api.importWords()
-            new Alert({
-                title: "Sucesso",
-                message: "Palavras importadas com sucesso!"
-            }).append(document.body)
+            modal.open(<AlertModal title="Sucesso" message="Palavras importadas com sucesso!" onClose={modal.hide} />)
         } catch (error: unknown) {
             console.log(error)
-
-            new Alert({
-                title: "Erro",
-                message: (error as Error)?.message as string
-            }).append(document.body)
+            modal.open(<AlertModal title="Erro" message={(error as Error)?.message as string} onClose={modal.hide} />)
         }
     }
 
     return (
         <Page id="config">
+            {modal.content}
             <Header title="Configurações" left={<ReturnButton />} />
             <div className="dashed-border spacing-16">
                 <div className="flex-column gap-10">
@@ -73,28 +84,7 @@ export function ConfigScreen() {
                         </select>
 
                         <span>Exportar palavras</span>
-                        <button
-                            className="stroke"
-                            onClick={async () => {
-                                const sucess = await api.exportWords()
-
-                                if (sucess === "canceled") {
-                                    return
-                                }
-
-                                if (sucess) {
-                                    new Alert({
-                                        title: "Sucesso",
-                                        message: "Palavras exportadas com sucesso!"
-                                    }).append(document.body)
-                                } else {
-                                    new Alert({
-                                        title: "Erro",
-                                        message: "Ocorreu um erro ao exportar as palavras!"
-                                    }).append(document.body)
-                                }
-                            }}
-                        >
+                        <button className="stroke" onClick={ExportWords}>
                             Exportar
                         </button>
 

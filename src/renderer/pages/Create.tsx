@@ -3,13 +3,16 @@ import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { Alert } from "../components/modals/Alert"
+import { AlertModal } from "../components/modals/Alert"
+import { useModal } from "../hooks/useModal"
 
 export function CreateScreen() {
     const [data, setData] = useState({
         palavra: "",
         definicao: ""
     })
+
+    const modal = useModal()
 
     function SaveWord() {
         let { palavra, definicao } = data
@@ -22,32 +25,25 @@ export function CreateScreen() {
                     palavra: palavra.trim(),
                     definicao: definicao.trim()
                 })
-                new Alert({
-                    message: "Palavra adicionada com sucesso!",
-                    title: "Palavra Adicionada",
-                    onClose: () => {
-                        setData({
-                            palavra: "",
-                            definicao: ""
-                        })
-                    }
-                }).append(document.body)
+
+                modal.open(<AlertModal title="Sucesso" message="Palavra adicionada com sucesso!" onClose={() => {
+                    modal.hide()
+                    setData({
+                        palavra: "",
+                        definicao: ""
+                    })
+                }} />)
             } catch (error: unknown) {
-                new Alert({
-                    message: (error as Error).message,
-                    title: "Erro!"
-                }).append(document.body)
+                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.hide} />)
             }
         } else {
-            new Alert({
-                message: "Escreva uma palavra e uma descrição válida.",
-                title: "Erro!"
-            }).append(document.body)
+            modal.open(<AlertModal title="Erro" message="Escreva uma palavra e uma descrição válida." onClose={modal.hide} />)
         }
     }
 
     return (
         <Page id="create">
+            {modal.content}
             <Header title="Adicionar Palavra" left={<ReturnButton />} />
             <div className="dashed-border spacing-16 grid-fill-center gap">
                 <label>

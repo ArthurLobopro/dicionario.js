@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
