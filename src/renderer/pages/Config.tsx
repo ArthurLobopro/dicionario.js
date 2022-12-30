@@ -13,6 +13,19 @@ import { StoreOptions } from "../../store/Schemas"
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options)
 
+    function ToggleTheme() {
+        api.toggleDarkMode()
+        document.body.classList.toggle("dark")
+        frame.updateTheme()
+    }
+
+    function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
+        api.setFrameTheme(frameTheme)
+        setConfig({ ...config, frameTheme })
+        frame.updateTheme()
+    }
+
     return (
         <Page id="config">
             <Header title="Configurações" left={<ReturnButton />} />
@@ -20,26 +33,10 @@ export function ConfigScreen() {
                 <div className="flex-column gap-10">
                     <div className="lines">
                         <span>Modo escuro</span>
-                        <Switcher
-                            onToggle={() => {
-                                api.toggleDarkMode()
-                                document.body.classList.toggle("dark")
-                                frame.updateTheme()
-                            }}
-                            checked={api.options.darkMode as boolean}
-                        />
+                        <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
                         <span>Tema do frame</span>
-                        <select
-                            className="select"
-                            value={config.frameTheme}
-                            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-                                const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
-                                api.setFrameTheme(frameTheme)
-                                setConfig({ ...config, frameTheme })
-                                frame.updateTheme()
-                            }}
-                        >
+                        <select className="select" value={config.frameTheme} onChange={HandleFrameThemeChange}>
                             <option value="auto">Automatico</option>
                             <option value="light">Claro</option>
                             <option value="dark">Escuro</option>
