@@ -3,7 +3,7 @@ import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { Confirm } from "../components/modals/Confirm"
+import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
 import { EyeIcon } from "../components/icons/Eye"
 import { EditIcon } from "../components/icons/Edit"
@@ -20,6 +20,19 @@ export function ViewScreen() {
 
     function ShowViewModal(word: string) {
         modal.open(<ViewModal word={word} onClose={modal.hide} />)
+    }
+
+    function DeleteWord(word: string) {
+        modal.open(<ConfirmModal
+            message="Deseja realmente excluir esta palavra? Essa ação é irreversível."
+            onClose={(confirm) => {
+                if (confirm) {
+                    api.deleteWord(word)
+                    setWords(Object.entries(api.words))
+                }
+                modal.hide()
+            }}
+        />)
     }
 
     return (
@@ -49,19 +62,7 @@ export function ViewScreen() {
                                 >
                                     <EditIcon />
                                 </div>
-                                <div title="Apagar" id="delete"
-                                    onClick={() => {
-                                        new Confirm({
-                                            message: "Deseja realmente excluir esta palavra? Essa ação é irreversível.",
-                                            onClose: (confirm) => {
-                                                if (confirm) {
-                                                    api.deleteWord(word)
-                                                    setWords(Object.entries(api.words))
-                                                }
-                                            }
-                                        }).append(document.body)
-                                    }}
-                                >
+                                <div title="Apagar" id="delete" onClick={() => DeleteWord(word)}>
                                     <DeleteIcon />
                                 </div>
                             </div>
