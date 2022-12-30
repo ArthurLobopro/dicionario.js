@@ -9,20 +9,27 @@ import { EyeIcon } from "../components/icons/Eye"
 import { EditIcon } from "../components/icons/Edit"
 import { DeleteIcon } from "../components/icons/Delete"
 import { useNavigate } from "react-router-dom"
+import { useModal } from "../hooks/useModal"
 
 
 export function ViewScreen() {
     const [words, setWords] = useState(Object.entries(api.words))
 
     const navigate = useNavigate()
+    const modal = useModal()
+
+    function ShowViewModal(word: string) {
+        modal.open(<ViewModal word={word} onClose={modal.hide} />)
+    }
 
     return (
         <Page id="view">
+            {modal.content}
             <Header title="Visualizar Palavras" left={<ReturnButton />}></Header>
             <div style={{ position: "relative", marginBottom: 5 }}>
                 <div className="word-wrapper">
                     {words.map(([word, word_props]) => (
-                        <div className="word">
+                        <div className="word" key={word}>
                             <div className="content">
                                 <div className="word-header">
                                     {word}
@@ -32,17 +39,7 @@ export function ViewScreen() {
                                 </div>
                             </div>
                             <div className="controls">
-                                <div title="Visualizar"
-                                    onClick={() => {
-                                        const viewModal = ViewModal({
-                                            word: word,
-                                            onClose: () => {
-
-                                            }
-                                        })
-                                        document.body.appendChild(viewModal)
-                                    }}
-                                >
+                                <div title="Visualizar" onClick={() => ShowViewModal(word)}>
                                     <EyeIcon />
                                 </div>
                                 <div title="Editar" id="edit"
