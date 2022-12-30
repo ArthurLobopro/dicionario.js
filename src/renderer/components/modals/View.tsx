@@ -4,7 +4,7 @@ import { ModalWrapper } from "./Wrapper"
 
 interface viewModalProps {
     word: string,
-    onClose?: () => void
+    onClose: () => void
 }
 
 export function ViewModal(props: viewModalProps) {
