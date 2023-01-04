@@ -1,17 +1,16 @@
 import { ipcRenderer } from "electron"
 import { frameStyle } from "electron-frame/renderer"
+import { useState } from "react"
 import { api } from "../../store/Api"
+import { StoreOptions } from "../../store/Schemas"
 import { frame } from "../Frame"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
 import { AlertModal } from "../components/modals/Alert"
-import { useState } from "react"
-import { StoreOptions } from "../../store/Schemas"
-import { useModal } from "../hooks/useModal"
-import { ConfirmModal } from "../components/modals/Confirm"
 import { WarningModal } from "../components/modals/Warning"
+import { useModal } from "../hooks/useModal"
 
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options)
