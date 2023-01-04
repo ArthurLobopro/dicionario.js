@@ -11,6 +11,7 @@ import { Switcher } from "../components/Switcher"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
+import { WarningIcon } from "../components/icons/Warning"
 
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options)
@@ -77,11 +78,18 @@ export function ConfigScreen() {
                 modal.hide()
             }
         }}>
-            <p>
-                Essa ação é <span className="warning bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
-            </p>
-            <br />
-            <p>Ainda deseja prosseguir?</p>
+            <div className="grid-left-center">
+                <div>
+                    <WarningIcon width={50} />
+                </div>
+                <div>
+                    <p>Ainda deseja prosseguir?</p>
+                    <p>
+                        <br />
+                        Essa ação é <span className="bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
+                    </p>
+                </div>
+            </div>
         </WarningModal>)
     }
 
