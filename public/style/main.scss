@@ -197,6 +197,24 @@ button {
             height: 100%;
             resize: none;
         }
+
+        button {
+            border: 1px solid var(--blue);
+
+            &.cancel {
+                background-color: var(--red);
+                border-color: var(--red);
+            }
+
+            &.close:hover {
+                filter: brightness(1.1);
+                transition: background 200ms;
+            }
+
+            &:hover {
+                border-color: var(--main-color);
+            }
+        }
     }
 
     &#config {
@@ -223,6 +241,12 @@ button {
 
             select {
                 font-size: 14px;
+                cursor: pointer;
+
+                &:hover {
+                    padding: 3px 5px;
+                    border-width: 2px;
+                }
             }
 
             & button {
@@ -230,6 +254,11 @@ button {
                 font-size: 14px;
                 padding: 4px 6px;
                 border-radius: 4px;
+
+                &:hover {
+                    padding: 3px 5px;
+                    border-width: 2px;
+                }
             }
         }
 
@@ -311,4 +340,11 @@ select {
 
 .bold {
     font-weight: bold;
+}
+
+.grid-left-center {
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    gap: 10px;
+    align-items: center;
 }
