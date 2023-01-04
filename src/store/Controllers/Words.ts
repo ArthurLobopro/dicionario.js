@@ -111,6 +111,10 @@ export class WordsController {
         data.set("palavras", WordsController.GetWordsToSave(words))
     }
 
+    static DeleteDictionary() {
+        data.set("palavras", [])
+    }
+
     static ExportWords() {
         try {
             const folder = ipcRenderer.sendSync("get-folder")
