@@ -1,9 +1,9 @@
 import { Route, HashRouter as Router, Routes } from "react-router-dom"
-import { Home } from "./pages/Home"
 import { ConfigScreen } from "./pages/Config"
-import { ViewScreen } from "./pages/View"
 import { CreateScreen } from "./pages/Create"
+import { Home } from "./pages/Home"
 import { UpdateScreen } from "./pages/Update"
+import { ViewScreen } from "./pages/View"
 
 export function AppRoutes() {
     return (

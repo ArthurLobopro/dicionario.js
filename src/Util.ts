@@ -1,4 +1,4 @@
-import path from 'path'
+import path from 'node:path'
 import { ipcRenderer } from "electron"
 
 export const appPath = ipcRenderer.sendSync("app-path") as string

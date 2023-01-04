@@ -1,16 +1,15 @@
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
+import { DeleteIcon } from "../components/icons/Delete"
+import { EditIcon } from "../components/icons/Edit"
+import { EyeIcon } from "../components/icons/Eye"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
-import { EyeIcon } from "../components/icons/Eye"
-import { EditIcon } from "../components/icons/Edit"
-import { DeleteIcon } from "../components/icons/Delete"
-import { useNavigate } from "react-router-dom"
 import { useModal } from "../hooks/useModal"
-
 
 export function ViewScreen() {
     const [words, setWords] = useState(Object.entries(api.words))
