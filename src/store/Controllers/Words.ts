@@ -14,6 +14,16 @@ type words = {
     }
 }
 
+function GetDateToSave() {
+    const now = new Date()
+    const day = String(now.getDate()).padStart(2, "0")
+    const month = String(now.getMonth() + 1).padStart(2, "0")
+    const year = now.getFullYear()
+    const hours = now.getHours()
+    const minutes = now.getMinutes()
+    return `${day}-${month}-${year}_${hours}-${minutes}`
+}
+
 export class WordsController {
 
     static SortWords(words: words) {
@@ -123,7 +133,7 @@ export class WordsController {
                 return { status: "canceled" }
             }
 
-            const filename = path.join(folder, "dicionario.json")
+            const filename = path.join(folder, `dicionario_${GetDateToSave()}.json`)
 
             const words = data.get("palavras")
             const json = JSON.stringify(words, null, 4)
