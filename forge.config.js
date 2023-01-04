@@ -11,7 +11,6 @@ module.exports = {
             "\\.git",
             "\\.scss",
             "/build",
-            "/src",
             "/tsconfig.json",
             "/.vs-code",
             "/sass-compiler.config.js",
