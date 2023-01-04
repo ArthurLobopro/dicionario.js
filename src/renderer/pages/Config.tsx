@@ -10,6 +10,8 @@ import { AlertModal } from "../components/modals/Alert"
 import { useState } from "react"
 import { StoreOptions } from "../../store/Schemas"
 import { useModal } from "../hooks/useModal"
+import { ConfirmModal } from "../components/modals/Confirm"
+import { WarningModal } from "../components/modals/Warning"
 
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options)
@@ -67,6 +69,23 @@ export function ConfigScreen() {
         }
     }
 
+    function DeleteDictionary() {
+        modal.open(<WarningModal title="ATENÇÃO!" onClose={(result) => {
+            if (result) {
+                api.deleteDictionary()
+                modal.open(<AlertModal title="Sucesso" message="Dicionário deletado com sucesso!" onClose={modal.hide} />)
+            } else {
+                modal.hide()
+            }
+        }}>
+            <p>
+                Essa ação é <span className="warning bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
+            </p>
+            <br />
+            <p>Ainda deseja prosseguir?</p>
+        </WarningModal>)
+    }
+
     return (
         <Page id="config">
             {modal.content}
@@ -103,6 +122,17 @@ export function ConfigScreen() {
                     <div className="flex-center">
                         <button className="stroke" onClick={() => ipcRenderer.send("open-devtolls")}>
                             Mostrar ferramentas de desenvolvedor
+                        </button>
+                    </div>
+                    <div className="line-legend warning">
+                        <div className="line"></div>
+                        <span className="legend">Área de Risco</span>
+                        <div className="line"></div>
+                    </div>
+                    <div className="lines warning">
+                        <span>Deletar dicionário</span>
+                        <button className="stroke" onClick={DeleteDictionary}>
+                            Deletar
                         </button>
                     </div>
                 </div>

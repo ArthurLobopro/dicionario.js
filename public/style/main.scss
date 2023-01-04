@@ -23,7 +23,6 @@
     --scrollbar-thumb: #999;
     --scrollbar-thumb-hover: #777;
     --scrollbar-thumb-active: #555;
-
 }
 
 .dark {
@@ -237,6 +236,19 @@ button {
         & .version {
             align-self: center;
         }
+
+        .line-legend {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr max-content 1fr;
+            align-items: center;
+            gap: 10px;
+
+            .line {
+                border-bottom: 1px solid;
+                height: 1px;
+            }
+        }
     }
 
 }
@@ -286,4 +298,17 @@ select {
 
 .gap-10 {
     gap: 10px;
+}
+
+.warning {
+    color: var(--red);
+
+    button {
+        color: var(--red);
+        border-color: var(--red);
+    }
+}
+
+.bold {
+    font-weight: bold;
 }
