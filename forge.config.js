@@ -10,6 +10,7 @@ module.exports = {
         ignore: [
             "\\.git",
             "\\.scss",
+            "\\.ts",
             "/build",
             "/tsconfig.json",
             "/.vs-code",
