@@ -3,7 +3,7 @@ import { ModalWrapper } from "./Wrapper"
 interface ConfirmModalProps {
     title?: string
     message: string
-    onClose?: (confirm: boolean) => void
+    onClose: (confirm: boolean) => void
 }
 
 export function ConfirmModal(props: ConfirmModalProps) {
