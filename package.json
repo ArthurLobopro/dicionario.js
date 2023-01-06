@@ -39,5 +39,58 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.1",
     "update-electron-app": "^2.0.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "icon": "./build/icon",
+        "ignore": [
+          "\\.git",
+          "\\.scss",
+          "/build",
+          "/src",
+          "/tsconfig.json",
+          "/.vs-code"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "dicionario",
+            "setupIcon": "./build/icon.ico",
+            "setupExe": "${name}-${version}-setup.exe",
+            "iconUrl": "https://raw.githubusercontent.com/ArthurLobopro/dicionario.js/main/build/icon.ico"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ],
+      "publishers": [
+        {
+          "name": "@electron-forge/publisher-github",
+          "config": {
+            "repository": {
+              "owner": "ArthurLobopro",
+              "name": "dicionario.js"
+            },
+            "prerelease": false,
+            "draft": true
+          }
+        }
+      ]
+    }
   }
 }
