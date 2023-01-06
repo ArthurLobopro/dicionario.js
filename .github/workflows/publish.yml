@@ -19,7 +19,7 @@ jobs:
 
       - name: Install
         run: |
-          yarn install
+          yarn install --frozen-lockfile
       - name: compile-sass
         run: |
           yarn sass-compiler --compile

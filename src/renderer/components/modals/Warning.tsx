@@ -1,22 +1,22 @@
+import { PropsWithChildren } from "react"
 import { ModalWrapper } from "./Wrapper"
 
-interface ConfirmModalProps {
+interface WarningModalProps extends PropsWithChildren {
     title?: string
-    message: string
     onClose: (confirm: boolean) => void
 }
 
-export function ConfirmModal(props: ConfirmModalProps) {
-    const { title = "Atenção", message, onClose = () => { } } = props
+export function WarningModal(props: WarningModalProps) {
+    const { title = "Atenção", children, onClose = () => { } } = props
 
     return (
         <ModalWrapper>
             <div className="modal">
-                <div className="modal-header">
+                <div className="modal-header bold">
                     {title}
                 </div>
                 <div className="modal-body">
-                    {message}
+                    {children}
                 </div>
                 <div className="modal-footer">
                     <button onClick={() => {

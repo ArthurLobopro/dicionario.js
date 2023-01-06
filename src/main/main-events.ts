@@ -13,37 +13,39 @@ ipcMain.on('open-devtolls', (event) => {
     })
 })
 
-ipcMain.on('get-folder', (event) => {
-    return dialog.showOpenDialog({
-        properties: ['openDirectory'],
-        title: "Selecione uma pasta para exportar:",
-    }).then(result => {
+ipcMain.on('get-folder', async (event) => {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openDirectory'],
+            title: "Selecione uma pasta para exportar:",
+        })
         if (result.canceled) {
             event.returnValue = "canceled"
         } else {
             event.returnValue = result.filePaths[0]
         }
-    }).catch(err => {
+    } catch (err) {
         console.log(err)
-    })
+    }
 })
 
-ipcMain.on("get-file", (event) => {
-    return dialog.showOpenDialog({
-        properties: ['openFile'],
-        title: "Selecione um arquivo para importar:",
-        filters: [
-            { name: 'JSON', extensions: ['json'] }
-        ]
-    }).then(result => {
+ipcMain.on("get-file", async (event) => {
+    try {
+        const result = await dialog.showOpenDialog({
+            properties: ['openFile'],
+            title: "Selecione um arquivo para importar:",
+            filters: [
+                { name: 'JSON', extensions: ['json'] }
+            ]
+        })
         if (result.canceled) {
             event.returnValue = "canceled"
         } else {
             event.returnValue = result.filePaths[0]
         }
-    }).catch(err => {
+    } catch (err) {
         console.log(err)
-    })
+    }
 })
 
 ipcMain.on('get-version', (event) => {

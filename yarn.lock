@@ -979,6 +979,11 @@ commander@^5.0.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
   integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
+commander@^9.4.1:
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-9.4.1.tgz#d1dd8f2ce6faf93147295c0df13c7c21141cfbdd"
+  integrity sha512-5EEkTNyHNGFPD2H+c/dXXfQZYa/scCKasxWcXJaWnNJ99pnQN9Vnmqow+p+PlFPE63Q6mThaZws1T+HxfpgtPw==
+
 compare-version@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/compare-version/-/compare-version-0.1.2.tgz#0162ec2d9351f5ddd59a9202cba935366a725080"
@@ -1151,10 +1156,10 @@ dot-prop@^6.0.1:
   dependencies:
     is-obj "^2.0.0"
 
-electron-frame@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.1.5.tgz#e3cbe629845ddaf8c3151c88778d185c6484eb51"
-  integrity sha512-kEc3M8S0ag2yKDpPoooM7ntca9B/TMRCRCkbgCNFaYl+ARKmI1aNXymAA1zngR4GOGdjEFll9t+/SInGSViabg==
+electron-frame@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.2.1.tgz#8d7c0b93ae76bc7db7b233205611f257daef03f0"
+  integrity sha512-cy4UjC/M++EEBM9ONKNwAHY+/+g6KB725eOUdZ920eZOyGHTK/c0ORHr3g/0gppiuboHagNWqDJk2zRlLnyDvg==
 
 electron-installer-common@^0.10.2:
   version "0.10.3"
@@ -2931,12 +2936,13 @@ safe-buffer@~5.2.0:
   resolved "https://registry.yarnpkg.com/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sass-compiler@^1.3.0-beta:
-  version "1.3.0-beta"
-  resolved "https://registry.yarnpkg.com/sass-compiler/-/sass-compiler-1.3.0-beta.tgz#de057660cc6ab596d519c8016ac72dda26d11a8f"
-  integrity sha512-J89dkgd3iJBU5vZWk4xEMx/TS1gMAQLH9h8vqwHZ50/DRxdo54tQ6MfKY+3ZZP7Mzn0RiJsaaT9mMhMP8NIF2Q==
+sass-compiler@1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/sass-compiler/-/sass-compiler-1.3.1.tgz#7e8aacdee0d32cf7d0cbe7b7d68ca426ff7af5ef"
+  integrity sha512-BvLrT3PtzYc9xMaciA3pdSWILUmFOvra3a/YdgN70Rfma9pLRIOsrv21JfjOhj8A38RoJxHrWw10O9WqRmXyCQ==
   dependencies:
     autoprefixer "^10.4.13"
+    commander "^9.4.1"
     glob "7.1.2"
     postcss "^8.4.19"
     sass "^1.56.1"

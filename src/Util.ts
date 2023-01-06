@@ -1,18 +1,8 @@
-import fs from "fs"
-import path from 'path'
+import path from 'node:path'
 import { ipcRenderer } from "electron"
 
 export const appPath = ipcRenderer.sendSync("app-path") as string
 export const assetsPath = path.join(appPath, "assets")
-
-type propsType = {
-    content?: any
-    [key: string]: any
-}
-
-export function loadSVG(...PathSegments: string[]) {
-    return fs.readFileSync(path.resolve(...PathSegments), { encoding: "utf-8" })
-}
 
 export function formatDate(datestring: string) {
     const pad2 = (n: any) => String(n).padStart(2, '0')

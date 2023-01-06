@@ -1,5 +1,5 @@
-import { api } from "../../../store/Api"
 import { formatDate } from "../../../Util"
+import { api } from "../../../store/Api"
 import { ModalWrapper } from "./Wrapper"
 
 interface viewModalProps {

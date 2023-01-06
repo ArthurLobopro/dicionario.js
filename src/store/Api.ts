@@ -29,6 +29,10 @@ export const api = {
         WordsController.DeleteWord(word)
     },
 
+    deleteDictionary() {
+        WordsController.DeleteDictionary()
+    },
+
     async exportWords() {
         return WordsController.ExportWords()
     },

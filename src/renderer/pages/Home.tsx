@@ -1,9 +1,9 @@
-import { AddIcon } from "../components/icons/Add"
-import { EyeIcon } from "../components/icons/Eye"
-import { ConfigIcon } from "../components/icons/Config"
+import { useNavigate } from "react-router-dom"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
-import { useNavigate } from "react-router-dom"
+import { AddIcon } from "../components/icons/Add"
+import { ConfigIcon } from "../components/icons/Config"
+import { EyeIcon } from "../components/icons/Eye"
 
 function Option({ text, icon, onclick }: { text: string; icon: JSX.Element; onclick: () => void }) {
     return (
