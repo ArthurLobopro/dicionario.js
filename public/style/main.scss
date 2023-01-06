@@ -153,6 +153,11 @@ button {
         background-color: var(--main-background);
         color: var(--main-color);
         border: 1px solid;
+
+        &:hover {
+            border: 2px solid;
+            padding: 3px 11px;
+        }
     }
 }
 
