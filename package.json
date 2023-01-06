@@ -47,8 +47,8 @@
         "ignore": [
           "\\.git",
           "\\.scss",
+          "\\.ts",
           "/build",
-          "/src",
           "/tsconfig.json",
           "/.vs-code"
         ]
