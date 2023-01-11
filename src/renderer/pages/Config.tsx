@@ -1,4 +1,4 @@
-import { ipcRenderer } from "electron"
+import { ipcRenderer, shell } from "electron"
 import { frameStyle } from "electron-frame/renderer"
 import { useState } from "react"
 import { api } from "../../store/Api"
@@ -12,6 +12,9 @@ import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 import { WarningIcon } from "../components/icons/Warning"
+import { GitHubIcon } from "../components/icons/GitHub"
+
+const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options)
@@ -124,6 +127,12 @@ export function ConfigScreen() {
                         <span>Importar palavras</span>
                         <button className="stroke" onClick={ImportWords}>
                             Importar
+                        </button>
+
+                        <span>Sobre</span>
+                        <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
+                            <GitHubIcon />
+                            Github
                         </button>
                     </div>
                     <div className="flex-center">

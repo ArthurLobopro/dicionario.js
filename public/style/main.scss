@@ -264,6 +264,24 @@ button {
                     padding: 3px 5px;
                     border-width: 2px;
                 }
+
+                &:has(svg) {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-items: center;
+                    gap: 5px;
+                    padding: 5px 10px;
+                    line-height: 15px;
+
+                    &:hover {
+                        padding: 4px 9px;
+                    }
+
+                    svg {
+                        width: 18px;
+                        aspect-ratio: 1/1;
+                    }
+                }
             }
         }
 
