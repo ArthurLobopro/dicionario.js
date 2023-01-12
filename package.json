@@ -16,56 +16,6 @@
   "keywords": [],
   "author": "Arthur Lobo",
   "license": "MIT",
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "./build/icon",
-        "ignore": [
-          "\\.git",
-          "\\.scss",
-          "/build"
-        ]
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-squirrel",
-          "config": {
-            "name": "dicionario",
-            "setupIcon": "./build/icon.ico",
-            "setupExe": "${name}-${version}-setup.exe",
-            "iconUrl": "https://raw.githubusercontent.com/ArthurLobopro/dicionario.js/main/build/icon.ico"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
-        },
-        {
-          "name": "@electron-forge/maker-deb",
-          "config": {}
-        },
-        {
-          "name": "@electron-forge/maker-rpm",
-          "config": {}
-        }
-      ],
-      "publishers": [
-        {
-          "name": "@electron-forge/publisher-github",
-          "config": {
-            "repository": {
-              "owner": "ArthurLobopro",
-              "name": "dicionario.js"
-            },
-            "prerelease": false,
-            "draft": true
-          }
-        }
-      ]
-    }
-  },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.4",
     "@electron-forge/maker-deb": "^6.0.4",
