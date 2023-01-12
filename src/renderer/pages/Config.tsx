@@ -8,11 +8,10 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
+import { GithubLogo, WarningIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
-import { WarningIcon } from "../components/icons/Warning"
-import { GitHubIcon } from "../components/icons/GitHub"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -131,7 +130,7 @@ export function ConfigScreen() {
 
                         <span>Sobre</span>
                         <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
-                            <GitHubIcon />
+                            <GithubLogo />
                             Github
                         </button>
                     </div>
