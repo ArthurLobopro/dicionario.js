@@ -7,7 +7,9 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish"
+    "publish": "electron-forge publish",
+    "generate-icons": "node ./scripts/generate-icons.js",
+    "postinstall": "yarn generate-icons"
   },
   "repository": {
     "type": "git",
