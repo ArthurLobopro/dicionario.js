@@ -8,7 +8,7 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { GithubLogo, WarningIcon } from "../components/icons"
+import { DonwloadIcon, GithubLogo, UploadIcon, WarningIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
@@ -120,11 +120,13 @@ export function ConfigScreen() {
 
                         <span>Exportar palavras</span>
                         <button className="stroke" onClick={ExportWords}>
+                            <UploadIcon />
                             Exportar
                         </button>
 
                         <span>Importar palavras</span>
                         <button className="stroke" onClick={ImportWords}>
+                            <DonwloadIcon />
                             Importar
                         </button>
 
@@ -134,11 +136,13 @@ export function ConfigScreen() {
                             Github
                         </button>
                     </div>
+
                     <div className="flex-center">
                         <button className="stroke" onClick={() => ipcRenderer.send("open-devtolls")}>
                             Mostrar ferramentas de desenvolvedor
                         </button>
                     </div>
+
                     <div className="line-legend warning">
                         <div className="line"></div>
                         <span className="legend">Área de Risco</span>
