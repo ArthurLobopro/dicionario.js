@@ -1526,10 +1526,10 @@ dot-prop@^6.0.1:
   dependencies:
     is-obj "^2.0.0"
 
-electron-frame@^1.2.2:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.2.2.tgz#d3e2208393300c0941a3fa2be8394c881f074137"
-  integrity sha512-qIGh1VkMGbPTkwqP9b63JbyqN/HL/tO1dR7ku6RY175Hm9E2t0ynpzr+hzgKdi0y99ptXtXCZfxYtLjKeubZgQ==
+electron-frame@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.2.3.tgz#59f015ac0baf1c5056af5fa9d0e8d78eb67ced48"
+  integrity sha512-BwmeG2/lmDCKYoMle5speaefw3rivZqPnWbph5dfoFRlO/NP6NivFeycJfTiGsFF+fNsWyd5QnqLOCIQZ0ukzQ==
 
 electron-installer-common@^0.10.2:
   version "0.10.3"
