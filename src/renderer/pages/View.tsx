@@ -4,12 +4,10 @@ import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { DeleteIcon } from "../components/icons/Delete"
-import { EditIcon } from "../components/icons/Edit"
-import { EyeIcon } from "../components/icons/Eye"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
 import { useModal } from "../hooks/useModal"
+import { EditIcon, EyeIcon, TrashIcon } from "../components/icons"
 
 export function ViewScreen() {
     const [words, setWords] = useState(Object.entries(api.words))
@@ -62,7 +60,7 @@ export function ViewScreen() {
                                     <EditIcon />
                                 </div>
                                 <div title="Apagar" id="delete" onClick={() => DeleteWord(word)}>
-                                    <DeleteIcon />
+                                    <TrashIcon />
                                 </div>
                             </div>
                         </div>
