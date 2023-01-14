@@ -28,12 +28,8 @@ export function WarningModal(props: WarningModalProps) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button onClick={() => {
-                        onClose(true)
-                    }}>Sim</button>
-                    <button className="cancel" onClick={() => {
-                        onClose(false)
-                    }}>Não</button>
+                    <button onClick={() => onClose(true)}>Sim</button>
+                    <button className="cancel" onClick={() => onClose(false)}>Não</button>
                 </div>
             </div>
         </ModalWrapper>
