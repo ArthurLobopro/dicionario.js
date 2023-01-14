@@ -8,7 +8,7 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { DonwloadIcon, GithubLogo, UploadIcon, WarningIcon } from "../components/icons"
+import { DonwloadIcon, GithubLogo, UploadIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
@@ -80,18 +80,11 @@ export function ConfigScreen() {
                 modal.hide()
             }
         }}>
-            <div className="grid-left-center">
-                <div>
-                    <WarningIcon width={50} />
-                </div>
-                <div>
-                    <p>Ainda deseja prosseguir?</p>
-                    <p>
-                        <br />
-                        Essa ação é <span className="bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
-                    </p>
-                </div>
-            </div>
+            <p>Ainda deseja prosseguir?</p>
+            <p>
+                <br />
+                Essa ação é <span className="bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
+            </p>
         </WarningModal>)
     }
 

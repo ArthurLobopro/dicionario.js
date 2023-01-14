@@ -1,5 +1,6 @@
 import { PropsWithChildren } from "react"
 import { ModalWrapper } from "./Wrapper"
+import { WarningIcon } from "../icons"
 
 interface WarningModalProps extends PropsWithChildren {
     title?: string
@@ -16,7 +17,15 @@ export function WarningModal(props: WarningModalProps) {
                     {title}
                 </div>
                 <div className="modal-body">
-                    {children}
+                    {/* {children} */}
+                    <div className="grid-left-center">
+                        <div>
+                            <WarningIcon width={50} />
+                        </div>
+                        <div>
+                            {children}
+                        </div>
+                    </div>
                 </div>
                 <div className="modal-footer">
                     <button onClick={() => {
