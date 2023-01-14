@@ -1,6 +1,7 @@
 import { app, BrowserWindow } from 'electron'
 import path from 'node:path'
 import Store from 'electron-store'
+import { createJumpList } from "./windowsJumpList"
 
 Store.initRenderer()
 
@@ -34,6 +35,18 @@ function createWindow() {
 
     win.loadFile('public/index.html')
     win.once('ready-to-show', () => { win.show(); win.focus() })
+
+    if (process.platform === 'win32') {
+        createJumpList()
+
+        if (process.argv.includes('--add-word')) {
+            win.webContents.send('open-in', '/create')
+        }
+
+        if (process.argv.includes('--view-words')) {
+            win.webContents.send('open-in', '/view')
+        }
+    }
 }
 
 const isUnicWindow = app.requestSingleInstanceLock()
