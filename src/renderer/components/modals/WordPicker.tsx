@@ -4,6 +4,7 @@ import { ModalWrapper } from "./Wrapper"
 
 interface WordPickerProps {
     onClose: (words: string[]) => void
+    title?: string
 }
 
 export function WordPicker(props: WordPickerProps) {
@@ -22,7 +23,7 @@ export function WordPicker(props: WordPickerProps) {
         <ModalWrapper>
             <div className="modal">
                 <div className="modal-header">
-                    Selecionar Palavras
+                    {props?.title || "Exportar palavras"}
                 </div>
                 <div className="modal-body word-picker-body">
                     <label>

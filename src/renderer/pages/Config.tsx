@@ -42,22 +42,25 @@ export function ConfigScreen() {
     }
 
     async function ExportWords() {
-        modal.open(<WordPicker onClose={(words) => {
-            if (words.length === 0) {
-                return modal.hide()
-            }
-            const { status } = api.exportWords(words)
+        modal.open(<WordPicker
+            title="Selecione as palavras para exportar"
+            onClose={(words) => {
+                if (words.length === 0) {
+                    return modal.hide()
+                }
+                const { status } = api.exportWords(words)
 
-            if (status === "canceled") {
-                return
-            }
+                if (status === "canceled") {
+                    return
+                }
 
-            if (status === "success") {
-                modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
-            } else {
-                modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
-            }
-        }} />)
+                if (status === "success") {
+                    modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
+                } else {
+                    modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
+                }
+            }}
+        />)
     }
 
     function ImportWords() {
