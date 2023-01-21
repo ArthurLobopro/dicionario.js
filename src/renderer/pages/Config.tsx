@@ -12,6 +12,7 @@ import { DonwloadIcon, GithubLogo, UploadIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
+import { WordPicker } from "../components/modals/WordPicker"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -41,17 +42,22 @@ export function ConfigScreen() {
     }
 
     async function ExportWords() {
-        const { status } = await api.exportWords()
+        modal.open(<WordPicker onClose={(words) => {
+            if (words.length === 0) {
+                return modal.hide()
+            }
+            const { status } = api.exportWords(words)
 
-        if (status === "canceled") {
-            return
-        }
+            if (status === "canceled") {
+                return
+            }
 
-        if (status === "success") {
-            modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
-        } else {
-            modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
-        }
+            if (status === "success") {
+                modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
+            } else {
+                modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
+            }
+        }} />)
     }
 
     function ImportWords() {
