@@ -154,7 +154,7 @@ button {
         color: var(--main-color);
         border: 1px solid;
 
-        &:hover {
+        &:hover:not(.cancel) {
             border: 2px solid;
             padding: 3px 11px;
         }

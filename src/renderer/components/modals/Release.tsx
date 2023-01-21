@@ -16,7 +16,7 @@ export function ReleaseModal(props: releaseModalProps) {
                 </div>
                 <div className="modal-footer">
                     <button onClick={() => props.onClose(true)}>Reiniciar Agora</button>
-                    <button className="stroke" onClick={() => props.onClose(false)}>Atualizar Depois</button>
+                    <button className="cancel stroke" onClick={() => props.onClose(false)}>Atualizar Depois</button>
                 </div>
             </div>
         </ModalWrapper>

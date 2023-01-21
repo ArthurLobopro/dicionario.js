@@ -132,7 +132,7 @@
                 font-size: 12px;
                 border: 1px solid var(--blue);
 
-                &.cancel {
+                &.cancel:not(.stroke) {
                     background-color: var(--red);
                     border-color: var(--red);
                 }
