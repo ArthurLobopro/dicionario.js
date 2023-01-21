@@ -1,10 +1,16 @@
 import { useState } from "react"
+import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { AlertModal } from "../components/modals/Alert"
 import { useModal } from "../hooks/useModal"
+
+const create_word_schema = z.object({
+    palavra: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
+    definicao: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
+})
 
 export function CreateScreen() {
     const [data, setData] = useState({
@@ -15,29 +21,31 @@ export function CreateScreen() {
     const modal = useModal()
 
     function SaveWord() {
-        let { palavra, definicao } = data
-        palavra = palavra.trim()
-        definicao = definicao.trim()
+        try {
+            let { palavra, definicao } = create_word_schema.parse(data)
 
-        if (palavra.length >= 3 && definicao.length >= 5) {
-            try {
-                api.createWord({
-                    palavra: palavra.trim(),
-                    definicao: definicao.trim()
+            api.createWord({
+                palavra: palavra,
+                definicao: definicao
+            })
+
+            modal.open(<AlertModal title="Sucesso" message="Palavra adicionada com sucesso!" onClose={() => {
+                modal.hide()
+                setData({
+                    palavra: "",
+                    definicao: ""
                 })
-
-                modal.open(<AlertModal title="Sucesso" message="Palavra adicionada com sucesso!" onClose={() => {
-                    modal.hide()
-                    setData({
-                        palavra: "",
-                        definicao: ""
-                    })
-                }} />)
-            } catch (error: unknown) {
+            }} />)
+        } catch (error: unknown) {
+            if (error instanceof ZodError) {
+                const zod_error = error as ZodError
+                modal.open(<AlertModal
+                    title="Erro" onClose={modal.hide}
+                    message={zod_error.issues.map(issue => issue.message).join("\n")}
+                />)
+            } else {
                 modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.hide} />)
             }
-        } else {
-            modal.open(<AlertModal title="Erro" message="Escreva uma palavra e uma descrição válida." onClose={modal.hide} />)
         }
     }
 

@@ -1,11 +1,17 @@
 import { useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { AlertModal } from "../components/modals/Alert"
 import { useModal } from "../hooks/useModal"
+
+const update_word_schema = z.object({
+    palavra: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
+    definicao: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
+})
 
 export function UpdateScreen() {
     const { word } = useParams()
@@ -19,14 +25,24 @@ export function UpdateScreen() {
 
     function UpdateWord() {
         try {
-            api.updateWord(word as string, data)
+            const send_data = update_word_schema.parse(data)
+
+            api.updateWord(word as string, send_data)
 
             modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.hide()
                 navigate("/view")
             }} />)
         } catch (error: any) {
-            modal.open(<AlertModal title="Erro" message={error.message} onClose={modal.hide} />)
+            if (error instanceof ZodError) {
+                const zod_error = error as ZodError
+                modal.open(<AlertModal
+                    title="Erro" onClose={modal.hide}
+                    message={zod_error.issues.map(issue => issue.message).join("\n")}
+                />)
+            } else {
+                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.hide} />)
+            }
         }
     }
 
