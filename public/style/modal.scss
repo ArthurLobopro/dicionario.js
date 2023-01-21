@@ -3,22 +3,25 @@
     top: 30px;
     left: 0;
     width: 100vw;
-    min-height: 100vh;
+    height: calc(100vh - 30px);
     background: rgba(0, 0, 0, 0.5);
     z-index: 9999;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 
     >.modal {
         width: auto;
+        max-height: 100%;
+        height: max-content;
         max-width: 80vw;
         min-width: 400px;
         background: var(--modal-background);
         border-radius: 5px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: max-content 1fr max-content;
         align-items: center;
         font-family: "Poppins", sans-serif;
         user-select: none;
@@ -73,9 +76,43 @@
         .modal-body {
             text-align: left;
             width: 100%;
+            height: 100%;
+            overflow-y: auto;
             border: solid var(--main-color);
             border-width: 1px 0;
             padding: 20px 14px;
+            flex-shrink: 1;
+        }
+
+        .word-picker-body {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+
+            label {
+                display: flex;
+                width: 100%;
+                gap: 5px;
+                align-items: center;
+
+                &:first-of-type {
+                    margin-bottom: 10px;
+                }
+
+                input {
+                    width: 14px;
+                    height: 14px;
+                }
+
+                span {
+                    font-size: 16px;
+                    line-height: 16px;
+
+                    &::first-letter {
+                        text-transform: uppercase;
+                    }
+                }
+            }
         }
 
         .modal-footer {
@@ -100,13 +137,15 @@
                     border-color: var(--red);
                 }
 
-                &.close:hover {
-                    filter: brightness(1.1);
-                    transition: background 200ms;
-                }
+                &:not(.disable) {
+                    &.close:hover {
+                        filter: brightness(1.1);
+                        transition: background 200ms;
+                    }
 
-                &:hover {
-                    border-color: var(--main-color);
+                    &:hover {
+                        border-color: var(--main-color);
+                    }
                 }
             }
         }
