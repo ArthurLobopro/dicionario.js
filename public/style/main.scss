@@ -240,7 +240,7 @@ button {
             gap: 10px;
             align-items: center;
 
-            & .switch {
+            .switch {
                 justify-self: right;
             }
 
@@ -254,7 +254,7 @@ button {
                 }
             }
 
-            & button {
+            button {
                 width: 100%;
                 font-size: 14px;
                 padding: 4px 6px;
@@ -286,7 +286,7 @@ button {
             }
         }
 
-        & .version {
+        .version {
             align-self: center;
         }
 
@@ -306,7 +306,7 @@ button {
 
 }
 
-input,
+input:not([type="checkbox"]),
 textarea {
     width: 100%;
     font-family: "Nunito", sans-serif;
