@@ -125,7 +125,7 @@ export class WordsController {
         data.set("palavras", [])
     }
 
-    static ExportWords() {
+    static ExportWords(wordList: string[]) {
         try {
             const folder = ipcRenderer.sendSync("get-folder")
 
@@ -135,7 +135,7 @@ export class WordsController {
 
             const filename = path.join(folder, `dicionario_${GetDateToSave()}.json`)
 
-            const words = data.get("palavras")
+            const words = data.get("palavras").filter(word => wordList.includes(word.palavra))
             const json = JSON.stringify(words, null, 4)
 
             fs.writeFileSync(filename, json)

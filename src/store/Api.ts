@@ -33,8 +33,8 @@ export const api = {
         WordsController.DeleteDictionary()
     },
 
-    async exportWords() {
-        return WordsController.ExportWords()
+    exportWords(words: string[]) {
+        return WordsController.ExportWords(words)
     },
 
     importWords() {
