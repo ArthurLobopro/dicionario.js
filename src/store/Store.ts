@@ -1,10 +1,13 @@
 import ElectronStore from 'electron-store'
 import { StoreOptions, StoreWord, optionsSchema, wordsSchema } from "./Schemas"
+import { WordsMigrations } from "./Migrations"
 
-export const data = new ElectronStore<{ palavras: StoreWord[] }>({
+export const data = new ElectronStore<{ words: StoreWord[] }>({
     name: "data",
     watch: true,
-    schema: wordsSchema
+    schema: wordsSchema,
+    //@ts-ignore
+    migrations: WordsMigrations,
 })
 
 export const options = new ElectronStore<StoreOptions>({
@@ -13,4 +16,4 @@ export const options = new ElectronStore<StoreOptions>({
     schema: optionsSchema
 })
 
-data.get("palavras") ? null : data.store.palavras = []
+// data.get("words") ? null : data.store.words = []

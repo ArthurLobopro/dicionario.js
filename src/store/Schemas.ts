@@ -1,31 +1,31 @@
 import ElectronStore from "electron-store"
 
 export type StoreWord = {
-    palavra: string,
-    definicao: string,
-    registro: string,
-    ultimaEdicao?: string
+    word: string,
+    definition: string,
+    register: string,
+    lastEdit?: string
 }
 
-export const wordsSchema: ElectronStore.Schema<{ palavras: StoreWord[] }> = {
-    palavras: {
+export const wordsSchema: ElectronStore.Schema<{ words: StoreWord[] }> = {
+    words: {
         type: "array",
         default: [],
         items: {
             type: "object",
-            required: ["palavra", "definicao", "registro"],
+            required: ["word", "definition", "register"],
             properties: {
-                palavra: {
+                word: {
                     type: "string"
                 },
-                definicao: {
+                definition: {
                     type: "string"
                 },
-                registro: {
+                register: {
                     type: "string",
                     format: "date-time"
                 },
-                ultimaEdicao: {
+                lastEdit: {
                     type: "string",
                     format: "date-time"
                 }
