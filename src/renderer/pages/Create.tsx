@@ -8,32 +8,29 @@ import { AlertModal } from "../components/modals/Alert"
 import { useModal } from "../hooks/useModal"
 
 const create_word_schema = z.object({
-    palavra: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
-    definicao: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
+    word: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
+    definition: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
 })
 
 export function CreateScreen() {
     const [data, setData] = useState({
-        palavra: "",
-        definicao: ""
+        word: "",
+        definition: ""
     })
 
     const modal = useModal()
 
     function SaveWord() {
         try {
-            let { palavra, definicao } = create_word_schema.parse(data)
+            const send_data = create_word_schema.parse(data)
 
-            api.createWord({
-                palavra: palavra,
-                definicao: definicao
-            })
+            api.createWord(send_data)
 
             modal.open(<AlertModal title="Sucesso" message="Palavra adicionada com sucesso!" onClose={() => {
                 modal.hide()
                 setData({
-                    palavra: "",
-                    definicao: ""
+                    word: "",
+                    definition: ""
                 })
             }} />)
         } catch (error: unknown) {
@@ -58,14 +55,14 @@ export function CreateScreen() {
                     Palavra
                     <input
                         type="text" id="word" placeholder="Palavra" minLength={3}
-                        value={data.palavra} onChange={e => setData({ ...data, palavra: e.target.value })}
+                        value={data.word} onChange={e => setData({ ...data, word: e.target.value })}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
                         id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
-                        value={data.definicao} onChange={e => setData({ ...data, definicao: e.target.value })}
+                        value={data.definition} onChange={e => setData({ ...data, definition: e.target.value })}
                     ></textarea>
                 </div>
                 <button className="btn" onClick={SaveWord}>

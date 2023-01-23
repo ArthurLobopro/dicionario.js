@@ -17,12 +17,12 @@ export const api = {
         return WordsController.GetWords()
     },
 
-    updateWord(word: string, { palavra, definicao }: { palavra: string, definicao: string }) {
-        WordsController.UpdateWord(word, { palavra, definicao })
+    updateWord(word: string, { newWord, definition }: { newWord: string, definition: string }) {
+        WordsController.UpdateWord(word, { newWord, definition })
     },
 
-    createWord({ palavra, definicao }: { palavra: string, definicao: string }) {
-        WordsController.SaveWord({ palavra, definicao })
+    createWord({ word, definition }: { word: string, definition: string }) {
+        WordsController.SaveWord({ word, definition })
     },
 
     deleteWord(word: string) {

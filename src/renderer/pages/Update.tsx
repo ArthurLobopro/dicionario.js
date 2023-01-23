@@ -9,15 +9,15 @@ import { AlertModal } from "../components/modals/Alert"
 import { useModal } from "../hooks/useModal"
 
 const update_word_schema = z.object({
-    palavra: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
-    definicao: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
+    word: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
+    definition: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
 })
 
 export function UpdateScreen() {
     const { word } = useParams()
     const [data, setData] = useState({
-        palavra: word as string,
-        definicao: api.words[word as keyof typeof api.words].definicao
+        word: word as string,
+        definition: api.words[word as keyof typeof api.words].definition
     })
 
     const navigate = useNavigate()
@@ -27,7 +27,7 @@ export function UpdateScreen() {
         try {
             const send_data = update_word_schema.parse(data)
 
-            api.updateWord(word as string, send_data)
+            api.updateWord(word as string, { ...send_data, newWord: send_data.word, })
 
             modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.hide()
@@ -55,14 +55,14 @@ export function UpdateScreen() {
                     Palavra
                     <input
                         type="text" id="word" placeholder="Palavra" minLength={3}
-                        value={data.palavra} onChange={e => setData({ ...data, palavra: e.target.value })}
+                        value={data.word} onChange={e => setData({ ...data, word: e.target.value })}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
                         id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
-                        value={data.definicao} onChange={e => setData({ ...data, definicao: e.target.value })}
+                        value={data.definition} onChange={e => setData({ ...data, definition: e.target.value })}
                     ></textarea>
                 </div>
                 <button className="btn" onClick={UpdateWord}>

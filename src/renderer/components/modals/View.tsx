@@ -20,17 +20,17 @@ export function ViewModal(props: viewModalProps) {
                     </div>
                     <div>
                         <div>Significado</div>
-                        <textarea rows={3} readOnly={true} className="info big" >{word_data.definicao}</textarea>
+                        <textarea rows={3} readOnly={true} className="info big" >{word_data.definition}</textarea>
                     </div>
                     <div className="date-wrapper">
                         <div>
                             <span>Data de registro</span>
-                            <span className="info">{formatDate(word_data.registro.toISOString())}</span>
+                            <span className="info">{formatDate(word_data.register.toISOString())}</span>
                         </div>
-                        {word_data.ultimaEdicao ?
+                        {word_data.lastEdit ?
                             <div>
                                 <span>Última edição</span>
-                                <span className="info">{formatDate(word_data.ultimaEdicao.toISOString())}</span>
+                                <span className="info">{formatDate(word_data.lastEdit.toISOString())}</span>
                             </div> : null
                         }
                     </div>
