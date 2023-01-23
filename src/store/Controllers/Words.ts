@@ -8,9 +8,9 @@ import { data } from "../Store"
 
 type words = {
     [s: string]: {
-        definicao: string
-        registro: Date
-        ultimaEdicao?: Date
+        definition: string
+        register: Date
+        lastEdit?: Date
     }
 }
 
@@ -33,15 +33,15 @@ export class WordsController {
     }
 
     static GetWords() {
-        return Object.fromEntries(data.get("palavras").map(palavra => {
-            const { definicao, registro, ultimaEdicao = null } = palavra
+        return Object.fromEntries(data.get("words").map(word => {
+            const { definition, register, lastEdit = null } = word
             return [
-                palavra.palavra,
+                word.word,
                 {
-                    definicao,
-                    registro: new Date(registro),
-                    ...(ultimaEdicao ? {
-                        ultimaEdicao: new Date(palavra.ultimaEdicao as string)
+                    definition,
+                    register: new Date(register),
+                    ...(lastEdit ? {
+                        lastEdit: new Date(word.lastEdit as string)
                     } : {})
                 }
             ]
@@ -50,17 +50,17 @@ export class WordsController {
 
     static GetWordsToSave(words: words) {
         return Object.entries(WordsController.SortWords(words))
-            .map(([palavra, { definicao, registro, ultimaEdicao = null }]) => {
+            .map(([word, { definition, register, lastEdit = null }]) => {
                 return {
-                    palavra,
-                    definicao,
-                    registro: registro.toISOString(),
-                    ...((ultimaEdicao && { ultimaEdicao: ultimaEdicao.toISOString() }) || {})
+                    word,
+                    definition,
+                    register: register.toISOString(),
+                    ...(lastEdit && { lastEdit: lastEdit.toISOString() })
                 }
             })
     }
 
-    static SaveWord({ palavra: word, definicao }: { palavra: string, definicao: string }) {
+    static SaveWord({ word, definition }: { word: string, definition: string }) {
         word = word.trim().toLowerCase()
 
         const words = WordsController.GetWords()
@@ -70,14 +70,14 @@ export class WordsController {
         }
 
         words[word] = {
-            definicao,
-            registro: new Date()
+            definition,
+            register: new Date()
         }
 
-        data.set("palavras", WordsController.GetWordsToSave(words))
+        data.set("words", WordsController.GetWordsToSave(words))
     }
 
-    static UpdateWord(word: string, { palavra: newWord, definicao }: { palavra: string, definicao: string }) {
+    static UpdateWord(word: string, { newWord, definition }: { newWord: string, definition: string }) {
         newWord = newWord.trim().toLowerCase()
 
         const words = WordsController.GetWords()
@@ -91,22 +91,22 @@ export class WordsController {
                 throw new Error("Palavra já existe")
             }
 
-            const new_palavra = words[word]
+            const new_word = words[word]
             delete words[word]
             words[newWord] = {
-                ...new_palavra,
-                definicao,
-                ultimaEdicao: new Date()
+                ...new_word,
+                definition,
+                lastEdit: new Date()
             }
         } else {
             words[word] = {
                 ...words[word],
-                definicao,
-                ultimaEdicao: new Date()
+                definition,
+                lastEdit: new Date()
             }
         }
 
-        data.set("palavras", WordsController.GetWordsToSave(words))
+        data.set("words", WordsController.GetWordsToSave(words))
     }
 
     static DeleteWord(word: string) {
@@ -118,11 +118,11 @@ export class WordsController {
 
         delete words[word]
 
-        data.set("palavras", WordsController.GetWordsToSave(words))
+        data.set("words", WordsController.GetWordsToSave(words))
     }
 
     static DeleteDictionary() {
-        data.set("palavras", [])
+        data.set("words", [])
     }
 
     static ExportWords(wordList: string[]) {
@@ -135,7 +135,7 @@ export class WordsController {
 
             const filename = path.join(folder, `dicionario_${GetDateToSave()}.json`)
 
-            const words = data.get("palavras").filter(word => wordList.includes(word.palavra))
+            const words = data.get("words").filter(word => wordList.includes(word.word))
             const json = JSON.stringify(words, null, 4)
 
             fs.writeFileSync(filename, json)
@@ -160,7 +160,7 @@ export class WordsController {
         const validator = ajvFormats(new ajv({
             allErrors: true,
             strictRequired: true
-        })).compile(wordsSchema.palavras)
+        })).compile(wordsSchema.words)
 
         const valid = validator(json)
 
@@ -174,20 +174,20 @@ export class WordsController {
     }
 
     static MergeWords(words: StoreWord[]) {
-        const store_keys = data.store.palavras.map(p => p.palavra)
+        const store_keys = data.store.words.map(p => p.word)
 
-        const new_words = data.store.palavras
+        const new_words = data.store.words
 
         words.forEach(word => {
-            if (!(word.palavra in store_keys)) {
+            if (!(word.word in store_keys)) {
                 new_words.push(word)
             }
         })
 
         new_words.sort((a, b) => {
-            return a.palavra.localeCompare(b.palavra)
+            return a.word.localeCompare(b.word)
         })
 
-        data.set("palavras", new_words)
+        data.set("words", new_words)
     }
 }

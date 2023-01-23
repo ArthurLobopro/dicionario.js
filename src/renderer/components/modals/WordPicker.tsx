@@ -8,7 +8,7 @@ interface WordPickerProps {
 }
 
 export function WordPicker(props: WordPickerProps) {
-    const words = WordsController.GetWordsToSave(WordsController.GetWords()).map(word => word.palavra)
+    const words = WordsController.GetWordsToSave(WordsController.GetWords()).map(word => word.word)
     const [wordsToSave, setWordsToSave] = useState([] as string[])
 
     function HandleSelectAll() {

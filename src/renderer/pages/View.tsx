@@ -45,7 +45,7 @@ export function ViewScreen() {
                                     {word}
                                 </div>
                                 <div className="word-definition">
-                                    {word_props.definicao}
+                                    {word_props.definition}
                                 </div>
                             </div>
                             <div className="controls">
