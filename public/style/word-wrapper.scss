@@ -7,7 +7,6 @@
 div:has(> .word-wrapper) {
 	position: relative;
 	margin-bottom: 5px;
-	margin-right: -5px;
 }
 
 .word-wrapper {
@@ -19,8 +18,7 @@ div:has(> .word-wrapper) {
 	width: 100%;
 	position: absolute;
 	scroll-behavior: smooth;
-	padding-right: 5px;
-	margin-right: -5px;
+	padding: 0 5px;
 
 	.word {
 		display: flex;
