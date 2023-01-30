@@ -65,14 +65,17 @@ export function ConfigScreen() {
 
     function ImportWords() {
         try {
-            const { status } = api.importWords()
+            const { status, count = 0 } = api.importWords()
 
             if (status === "canceled") {
                 return
             }
 
             if (status === "success") {
-                modal.open(<AlertModal title="Sucesso" message="Palavras importadas com sucesso!" onClose={modal.hide} />)
+                const message = count === 0 ?
+                    "Nenhuma palavra foi importada." :
+                    `${count} palavra${count > 1 ? "s" : ""} importada${count > 1 ? "s" : ""} com sucesso!`
+                modal.open(<AlertModal title="Sucesso" message={message} onClose={modal.hide} />)
             }
         } catch (error: unknown) {
             console.log(error)

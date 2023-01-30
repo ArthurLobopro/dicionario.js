@@ -5,6 +5,7 @@ import fs from "node:fs"
 import path from "node:path"
 import { StoreWord, wordsSchema } from "../Schemas"
 import { data } from "../Store"
+import { z } from "zod"
 
 type words = {
     [s: string]: {
@@ -13,6 +14,20 @@ type words = {
         lastEdit?: Date
     }
 }
+
+const words_schema_v_1_8_1 = z.array(z.object({
+    palavra: z.string(),
+    definicao: z.string(),
+    registro: z.string().datetime(),
+    ultimaEdicao: z.string().datetime().optional()
+}))
+
+const words_schema = z.array(z.object({
+    word: z.string(),
+    definition: z.string(),
+    register: z.string().datetime(),
+    lastEdit: z.string().datetime().optional()
+}))
 
 function GetDateToSave() {
     const now = new Date()
@@ -157,30 +172,43 @@ export class WordsController {
         const jsonString = fs.readFileSync(file).toString()
         const json = JSON.parse(jsonString)
 
-        const validator = ajvFormats(new ajv({
-            allErrors: true,
-            strictRequired: true
-        })).compile(wordsSchema.words)
+        const is_old_version = words_schema_v_1_8_1.safeParse(json)
 
-        const valid = validator(json)
+        if (is_old_version.success) {
+            const words = is_old_version.data.map(word => {
+                return {
+                    word: word.palavra,
+                    definition: word.definicao,
+                    register: word.registro,
+                    ...(word.ultimaEdicao && { lastEdit: word.ultimaEdicao })
+                }
+            })
 
-        if (valid) {
-            WordsController.MergeWords(json as unknown as StoreWord[])
-            return { status: "success" }
+            const count = WordsController.MergeWords(words as unknown as StoreWord[])
+            return { status: "success", count }
+        }
+
+        const is_new_version = words_schema.safeParse(json)
+
+        if (is_new_version.success) {
+            const count = WordsController.MergeWords(json as unknown as StoreWord[])
+            return { status: "success", count }
         } else {
-            console.log(validator.errors)
+            console.log(is_new_version.error)
             throw new Error("Arquivo de importação inválido")
         }
     }
 
     static MergeWords(words: StoreWord[]) {
         const store_keys = data.store.words.map(p => p.word)
-
         const new_words = data.store.words
+
+        let count = 0
 
         words.forEach(word => {
             if (!(word.word in store_keys)) {
                 new_words.push(word)
+                count++
             }
         })
 
@@ -189,5 +217,7 @@ export class WordsController {
         })
 
         data.set("words", new_words)
+
+        return count
     }
 }
