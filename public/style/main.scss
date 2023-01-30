@@ -157,8 +157,7 @@ button {
         border: 1px solid;
 
         &:hover:not(.cancel) {
-            border: 2px solid;
-            padding: 3px 11px;
+            box-shadow: inset 0 0 0 1px var(--main-color);
         }
     }
 }
@@ -251,8 +250,7 @@ button {
                 cursor: pointer;
 
                 &:hover {
-                    padding: 3px 5px;
-                    border-width: 2px;
+                    box-shadow: inset 0 0 0 1px var(--main-color);
                 }
             }
 
@@ -263,8 +261,7 @@ button {
                 border-radius: 4px;
 
                 &:hover {
-                    padding: 3px 5px;
-                    border-width: 2px;
+                    box-shadow: inset 0 0 0 1px currentColor;
                 }
 
                 &:has(svg) {
@@ -274,10 +271,6 @@ button {
                     gap: 5px;
                     padding: 5px 10px;
                     line-height: 15px;
-
-                    &:hover {
-                        padding: 4px 9px;
-                    }
 
                     svg {
                         width: 18px;
