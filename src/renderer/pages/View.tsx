@@ -36,7 +36,7 @@ export function ViewScreen() {
         <Page id="view">
             {modal.content}
             <Header title="Visualizar Palavras" left={<ReturnButton />}></Header>
-            <div style={{ position: "relative", marginBottom: 5 }}>
+            <div>
                 <div className="word-wrapper">
                     {words.map(([word, word_props]) => (
                         <div className="word" key={word}>
