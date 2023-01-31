@@ -109,6 +109,7 @@ body {
     padding: 25px 0;
     cursor: pointer;
     border-radius: 16px;
+    user-select: none;
 
     &>div {
         @extend .flex-center;
