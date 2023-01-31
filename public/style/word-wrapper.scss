@@ -1,78 +1,91 @@
 %flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+div:has(> .word-wrapper) {
+	position: relative;
+	margin-bottom: 5px;
+	margin-left: -5px;
 }
 
 .word-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    overflow-y: auto;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    scroll-behavior: smooth;
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	overflow-y: auto;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	scroll-behavior: smooth;
+	padding: 0 5px;
 
-    .word {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: "Nunito";
+	.word {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		font-family: "Nunito";
+		padding: 2px 4px;
+		border-radius: 8px;
 
-        .content {
-            flex-shrink: 1;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            overflow: hidden;
+		&:hover {
+			background-color: var(--main-hover-background);
+		}
 
-            .word-header {
-                font-weight: bold;
-                font-size: 20px;
-                text-transform: capitalize;
-                flex: 1;
-            }
+		.content {
+			flex-shrink: 1;
+			display: flex;
+			flex-direction: column;
+			flex: 1;
+			overflow: hidden;
 
-            .word-definition {
-                font-size: 16px;
-                line-height: 16px;
-                width: 100%;
-                text-overflow: ellipsis;
-                flex: 1;
-                white-space: nowrap;
-                overflow: hidden;
-            }
-        }
+			.word-header {
+				font-weight: bold;
+				font-size: 20px;
+				text-transform: capitalize;
+				flex: 1;
+			}
 
-        .controls {
-            @extend %flex-center;
+			.word-definition {
+				font-size: 16px;
+				line-height: 16px;
+				width: 100%;
+				text-overflow: ellipsis;
+				flex: 1;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
 
-            >div {
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                cursor: pointer;
+		.controls {
+			@extend %flex-center;
 
-                @extend %flex-center;
+			>div {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				cursor: pointer;
 
-                &:hover {
-                    background-color: rgba(119, 108, 108, 0.226);
-                }
+				@extend %flex-center;
 
-                svg {
-                    max-width: 100%;
-                    max-height: 100%;
+				&:hover {
+					background-color: rgba(119, 108, 108, 0.226);
+				}
 
-                    [stroke]:not([stroke="none"]) {
-                        stroke: var(--main-color);
-                    }
+				svg {
+					max-width: 100%;
+					max-height: 100%;
 
-                    [fill]:not([fill="none"]) {
-                        fill: var(--main-color);
-                    }
-                }
-            }
-        }
-    }
+					[stroke]:not([stroke="none"]) {
+						stroke: var(--main-color);
+					}
+
+					[fill]:not([fill="none"]) {
+						fill: var(--main-color);
+					}
+				}
+			}
+		}
+	}
 }
