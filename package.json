@@ -1,6 +1,6 @@
 {
   "name": "dicionario",
-  "version": "1.9.2",
+  "version": "1.9.1",
   "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
   "main": "./dist/main/main.js",
   "scripts": {
@@ -33,7 +33,7 @@
     "typescript": "^4.9.5"
   },
   "dependencies": {
-    "electron-frame": "^1.2.5",
+    "electron-frame": "^1.2.6",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "react": "^18.2.0",
