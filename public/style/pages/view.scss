@@ -1,0 +1,35 @@
+#view {
+    display: grid;
+    gap: 10px;
+    padding-bottom: 0;
+
+    :hover {
+        &#delete {
+            --main-color: var(--red);
+        }
+
+        &#edit {
+            --main-color: var(--blue);
+        }
+    }
+
+    .empty {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+        text-align: center;
+        user-select: none;
+
+        >.empty-text {
+            font-family: "Nunito", sans-serif;
+        }
+
+        button {
+            align-self: center;
+        }
+    }
+}

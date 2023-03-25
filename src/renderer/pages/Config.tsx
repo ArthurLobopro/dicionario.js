@@ -17,26 +17,26 @@ import { WordPicker } from "../components/modals/WordPicker"
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
 export function ConfigScreen() {
-    const [config, setConfig] = useState<StoreOptions>(api.options)
+    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
 
     const modal = useModal()
 
     function ToggleTheme() {
-        api.toggleDarkMode()
+        api.options.toggleDarkMode()
         document.body.classList.toggle("dark")
         frame.updateTheme()
     }
 
     function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
-        api.setFrameTheme(frameTheme)
+        api.options.setFrameTheme(frameTheme)
         setConfig({ ...config, frameTheme })
         frame.updateTheme()
     }
 
     function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const frameStyle = event.currentTarget.value as frameStyle
-        api.setFrameStyle(frameStyle)
+        api.options.setFrameStyle(frameStyle)
         setConfig({ ...config, frameStyle })
         frame.setFrameStyle(frameStyle)
     }
@@ -48,7 +48,7 @@ export function ConfigScreen() {
                 if (words.length === 0) {
                     return modal.hide()
                 }
-                const { status } = api.exportWords(words)
+                const { status } = api.words.ExportWords(words)
 
                 if (status === "canceled") {
                     return
@@ -65,7 +65,7 @@ export function ConfigScreen() {
 
     function ImportWords() {
         try {
-            const { status, count = 0 } = api.importWords()
+            const { status, count = 0 } = api.words.ImportWords()
 
             if (status === "canceled") {
                 return
@@ -84,19 +84,19 @@ export function ConfigScreen() {
     }
 
     function DeleteDictionary() {
-        modal.open(<WarningModal title="ATENÇÃO!" onClose={(result) => {
+        modal.open(<WarningModal title="Você tem certeza?" onClose={(result) => {
             if (result) {
-                api.deleteDictionary()
+                api.words.DeleteDictionary()
                 modal.open(<AlertModal title="Sucesso" message="Dicionário deletado com sucesso!" onClose={modal.hide} />)
             } else {
                 modal.hide()
             }
         }}>
-            <p>Ainda deseja prosseguir?</p>
             <p>
-                <br />
-                Essa ação é <span className="bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
+                Essa ação é <span className="bold">irreversível</span>, todo conteúdo será <span className="bold">deletado!</span>
             </p>
+            <br />
+            <p>Ainda deseja prosseguir?</p>
         </WarningModal>)
     }
 

@@ -63,6 +63,16 @@ export class WordsController {
         }))
     }
 
+    static GetWord(word: string) {
+        const wordToReturn = this.GetWords()[word]
+
+        if (!wordToReturn) {
+            throw new Error("Palavra não encontrada")
+        }
+
+        return wordToReturn
+    }
+
     static GetWordsToSave(words: words) {
         return Object.entries(WordsController.SortWords(words))
             .map(([word, { definition, register, lastEdit = null }]) => {

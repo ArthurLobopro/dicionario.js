@@ -17,7 +17,7 @@ export function UpdateScreen() {
     const { word } = useParams()
     const [data, setData] = useState({
         word: word as string,
-        definition: api.words[word as keyof typeof api.words].definition
+        definition: api.words.GetWord(word as string).definition
     })
 
     const navigate = useNavigate()
@@ -27,7 +27,7 @@ export function UpdateScreen() {
         try {
             const send_data = update_word_schema.parse(data)
 
-            api.updateWord(word as string, { ...send_data, newWord: send_data.word, })
+            api.words.UpdateWord(word as string, { ...send_data, newWord: send_data.word, })
 
             modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.hide()

@@ -8,7 +8,7 @@ interface viewModalProps {
 }
 
 export function ViewModal(props: viewModalProps) {
-    const word_data = api.words[props.word]
+    const word_data = api.words.GetWord(props.word)
 
     return (
         <ModalWrapper>

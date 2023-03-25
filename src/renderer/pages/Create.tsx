@@ -24,7 +24,7 @@ export function CreateScreen() {
         try {
             const send_data = create_word_schema.parse(data)
 
-            api.createWord(send_data)
+            api.words.SaveWord(send_data)
 
             modal.open(<AlertModal title="Sucesso" message="Palavra adicionada com sucesso!" onClose={() => {
                 modal.hide()

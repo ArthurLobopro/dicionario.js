@@ -17,7 +17,6 @@ export function WarningModal(props: WarningModalProps) {
                     {title}
                 </div>
                 <div className="modal-body">
-                    {/* {children} */}
                     <div className="grid-left-center">
                         <div>
                             <WarningIcon height={35} width={35} style={{ margin: 10 }} />
