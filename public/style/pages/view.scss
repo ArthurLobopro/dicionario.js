@@ -16,12 +16,13 @@
     .empty {
         display: flex;
         flex-direction: column;
-        gap: 10px;
+        gap: 16px;
         align-items: center;
         justify-content: center;
         height: 100%;
         width: 100%;
         text-align: center;
+        user-select: none;
 
         >.empty-text {
             font-family: "Nunito", sans-serif;
@@ -29,11 +30,6 @@
 
         button {
             align-self: center;
-        }
-
-        >svg {
-            width: 150px;
-            height: 150px;
         }
     }
 }
