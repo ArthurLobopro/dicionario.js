@@ -38,13 +38,5 @@ export const api = {
 
     importWords() {
         return WordsController.ImportWords()
-    },
-
-    setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {
-        OptionsController.setFrameTheme(frameTheme)
-    },
-
-    setFrameStyle(frameStyle: StoreOptions["frameStyle"]) {
-        OptionsController.setFrameStyle(frameStyle)
     }
 }

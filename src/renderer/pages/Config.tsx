@@ -29,7 +29,7 @@ export function ConfigScreen() {
 
     function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
-        api.setFrameTheme(frameTheme)
+        api.options.setFrameTheme(frameTheme)
         setConfig({ ...config, frameTheme })
         frame.updateTheme()
     }
