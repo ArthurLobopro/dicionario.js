@@ -2,6 +2,7 @@ import { ipcRenderer } from "electron"
 import { WordsController } from "./Controllers/Words"
 import { StoreOptions } from "./Schemas"
 import { options } from "./Store"
+import { OptionsController } from "./Controllers/Options"
 
 
 export const api = {
@@ -42,14 +43,14 @@ export const api = {
     },
 
     toggleDarkMode() {
-        options.set('darkMode', !options.store.darkMode)
+        OptionsController.toggleDarkMode()
     },
 
     setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {
-        options.set('frameTheme', frameTheme)
+        OptionsController.setFrameTheme(frameTheme)
     },
 
     setFrameStyle(frameStyle: StoreOptions["frameStyle"]) {
-        options.set('frameStyle', frameStyle)
+        OptionsController.setFrameStyle(frameStyle)
     }
 }
