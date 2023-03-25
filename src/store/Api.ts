@@ -16,29 +16,5 @@ export const api = {
 
     get words() {
         return WordsController
-    },
-
-    updateWord(word: string, { newWord, definition }: { newWord: string, definition: string }) {
-        WordsController.UpdateWord(word, { newWord, definition })
-    },
-
-    createWord({ word, definition }: { word: string, definition: string }) {
-        WordsController.SaveWord({ word, definition })
-    },
-
-    deleteWord(word: string) {
-        WordsController.DeleteWord(word)
-    },
-
-    deleteDictionary() {
-        WordsController.DeleteDictionary()
-    },
-
-    exportWords(words: string[]) {
-        return WordsController.ExportWords(words)
-    },
-
-    importWords() {
-        return WordsController.ImportWords()
     }
 }

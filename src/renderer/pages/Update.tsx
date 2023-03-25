@@ -27,7 +27,7 @@ export function UpdateScreen() {
         try {
             const send_data = update_word_schema.parse(data)
 
-            api.updateWord(word as string, { ...send_data, newWord: send_data.word, })
+            api.words.UpdateWord(word as string, { ...send_data, newWord: send_data.word, })
 
             modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.hide()

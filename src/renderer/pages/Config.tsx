@@ -48,7 +48,7 @@ export function ConfigScreen() {
                 if (words.length === 0) {
                     return modal.hide()
                 }
-                const { status } = api.exportWords(words)
+                const { status } = api.words.ExportWords(words)
 
                 if (status === "canceled") {
                     return
@@ -65,7 +65,7 @@ export function ConfigScreen() {
 
     function ImportWords() {
         try {
-            const { status, count = 0 } = api.importWords()
+            const { status, count = 0 } = api.words.ImportWords()
 
             if (status === "canceled") {
                 return
@@ -86,7 +86,7 @@ export function ConfigScreen() {
     function DeleteDictionary() {
         modal.open(<WarningModal title="ATENÇÃO!" onClose={(result) => {
             if (result) {
-                api.deleteDictionary()
+                api.words.DeleteDictionary()
                 modal.open(<AlertModal title="Sucesso" message="Dicionário deletado com sucesso!" onClose={modal.hide} />)
             } else {
                 modal.hide()

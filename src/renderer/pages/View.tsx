@@ -24,7 +24,7 @@ export function ViewScreen() {
             message="Deseja realmente excluir esta palavra? Essa ação é irreversível."
             onClose={(confirm) => {
                 if (confirm) {
-                    api.deleteWord(word)
+                    api.words.DeleteWord(word)
                     setWords(Object.entries(api.words))
                 }
                 modal.hide()
