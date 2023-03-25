@@ -10,10 +10,12 @@ export const api = {
         return ipcRenderer.sendSync("get-version")
     },
 
-    options: OptionsController,
+    get options() {
+        return OptionsController
+    },
 
     get words() {
-        return WordsController.GetWords()
+        return WordsController
     },
 
     updateWord(word: string, { newWord, definition }: { newWord: string, definition: string }) {

@@ -17,7 +17,7 @@ export function UpdateScreen() {
     const { word } = useParams()
     const [data, setData] = useState({
         word: word as string,
-        definition: api.words[word as keyof typeof api.words].definition
+        definition: api.words.GetWord(word as string).definition
     })
 
     const navigate = useNavigate()

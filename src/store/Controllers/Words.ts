@@ -64,8 +64,13 @@ export class WordsController {
     }
 
     static GetWord(word: string) {
-        return data.get("words")
-            .find(value => value.word === word)
+        const wordToReturn = this.GetWords()[word]
+
+        if (!wordToReturn) {
+            throw new Error("Palavra não encontrada")
+        }
+
+        return wordToReturn
     }
 
     static GetWordsToSave(words: words) {

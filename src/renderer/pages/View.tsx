@@ -10,7 +10,7 @@ import { useModal } from "../hooks/useModal"
 import { EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
 
 export function ViewScreen() {
-    const [words, setWords] = useState(Object.entries(api.words))
+    const [words, setWords] = useState(Object.entries(api.words.GetWords()))
 
     const navigate = useNavigate()
     const modal = useModal()
