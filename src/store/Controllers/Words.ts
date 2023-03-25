@@ -63,6 +63,11 @@ export class WordsController {
         }))
     }
 
+    static GetWord(word: string) {
+        return data.get("words")
+            .find(value => value.word === word)
+    }
+
     static GetWordsToSave(words: words) {
         return Object.entries(WordsController.SortWords(words))
             .map(([word, { definition, register, lastEdit = null }]) => {
