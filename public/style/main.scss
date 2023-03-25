@@ -171,22 +171,6 @@ button {
     height: 100%;
     padding: 5px;
 
-    &#view {
-        display: grid;
-        gap: 10px;
-        padding-bottom: 0;
-
-        & :hover {
-            &#delete {
-                --main-color: var(--red);
-            }
-
-            &#edit {
-                --main-color: var(--blue);
-            }
-        }
-    }
-
     &#create,
     &#edit {
         font-family: "Nunito", sans-serif;
@@ -368,3 +352,5 @@ select {
     gap: 10px;
     align-items: center;
 }
+
+@import url(./pages/view.css);
