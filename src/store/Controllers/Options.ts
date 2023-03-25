@@ -27,15 +27,19 @@ export class OptionsController {
         options.set('frameStyle', value)
     }
 
+    static getOptions() {
+        return options.store
+    }
+
     static toggleDarkMode() {
         this.darkMode = !this.darkMode
     }
 
     static setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {
-        options.set('frameTheme', frameTheme)
+        this.frameTheme = frameTheme
     }
 
     static setFrameStyle(frameStyle: StoreOptions["frameStyle"]) {
-        options.set('frameStyle', frameStyle)
+        this.frameStyle = frameStyle
     }
 }

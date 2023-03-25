@@ -17,7 +17,7 @@ import { WordPicker } from "../components/modals/WordPicker"
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
 export function ConfigScreen() {
-    const [config, setConfig] = useState<StoreOptions>(api.options)
+    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
 
     const modal = useModal()
 
@@ -36,7 +36,7 @@ export function ConfigScreen() {
 
     function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
         const frameStyle = event.currentTarget.value as frameStyle
-        api.setFrameStyle(frameStyle)
+        api.options.setFrameStyle(frameStyle)
         setConfig({ ...config, frameStyle })
         frame.setFrameStyle(frameStyle)
     }
