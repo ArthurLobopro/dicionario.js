@@ -6,8 +6,16 @@ on:
 
 jobs:
   publish:
-    runs-on: [windows-latest, ubuntu-latest]
-    steps:
+    name: Publish on ${{ matrix.os }}
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:   
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -20,12 +28,15 @@ jobs:
       - name: Install
         run: |
           yarn install --frozen-lockfile
+
       - name: compile-sass
         run: |
           yarn sass-compiler --compile
+          
       - name: compile typescript
         run: |
           yarn tsc
+          
       - name: Publish
         run: |
           yarn run publish
