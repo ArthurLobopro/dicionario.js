@@ -21,7 +21,8 @@ export function ViewScreen() {
 
     function DeleteWord(word: string) {
         modal.open(<ConfirmModal
-            message="Deseja realmente excluir esta palavra? Essa ação é irreversível."
+            message="Essa ação é irreversível. Deseja realmente excluir esta palavra?"
+            title="Você tem certeza?"
             onClose={(confirm) => {
                 if (confirm) {
                     api.words.DeleteWord(word)

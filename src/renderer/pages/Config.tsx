@@ -84,7 +84,7 @@ export function ConfigScreen() {
     }
 
     function DeleteDictionary() {
-        modal.open(<WarningModal title="ATENÇÃO!" onClose={(result) => {
+        modal.open(<WarningModal title="Você tem certeza?" onClose={(result) => {
             if (result) {
                 api.words.DeleteDictionary()
                 modal.open(<AlertModal title="Sucesso" message="Dicionário deletado com sucesso!" onClose={modal.hide} />)
@@ -92,11 +92,11 @@ export function ConfigScreen() {
                 modal.hide()
             }
         }}>
-            <p>Ainda deseja prosseguir?</p>
             <p>
-                <br />
-                Essa ação é <span className="bold">IRREVERSÍVEL, TODO CONTEÚDO SERÁ DELETADO!</span>
+                Essa ação é <span className="bold">irreversível</span>, todo conteúdo será <span className="bold">deletado!</span>
             </p>
+            <br />
+            <p>Ainda deseja prosseguir?</p>
         </WarningModal>)
     }
 
