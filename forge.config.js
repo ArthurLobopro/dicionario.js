@@ -1,6 +1,7 @@
 const { version } = require("./package.json")
 const { execSync } = require("child_process")
 const { generateIcons } = require("./scripts/generate-icons.js")
+const path = require("path")
 
 module.exports = {
     packagerConfig: {
@@ -18,9 +19,9 @@ module.exports = {
             name: "@electron-forge/maker-squirrel",
             config: {
                 name: "dicionario",
-                "setupIcon": "./build/icon.ico",
-                "setupExe": `dicionario-${version}-setup.exe`,
-                "iconUrl": "https://raw.githubusercontent.com/ArthurLobopro/dicionario.js/main/build/icon.ico"
+                setupIcon: "./build/icon.ico",
+                setupExe: `dicionario-${version}-setup.exe`,
+                iconUrl: "https://raw.githubusercontent.com/ArthurLobopro/dicionario.js/main/build/icon.ico"
             }
         },
         {
@@ -31,11 +32,29 @@ module.exports = {
         },
         {
             name: "@electron-forge/maker-deb",
-            config: {}
+            config: {
+                name: "dicionario.js",
+                productName: "Dicionario.js",
+                categories: [
+                    "Utility",
+                    "Education"
+                ],
+                description: "Dicionário onde você cadastra suas próprias palavras e definições.",
+                genericName: "Dicionario.js",
+                icon: path.resolve(__dirname, "./assets/icon.png"),
+                options: {
+                    maintainer: 'Arthur Lobo',
+                    homepage: 'https://github.com/ArthurLobopro/dicionario.js#readme'
+                }
+            },
+            platforms: [
+                "linux"
+            ]
         },
         {
             name: "@electron-forge/maker-rpm",
-            config: {}
+            config: {},
+            platforms: []
         }
     ],
     publishers: [
