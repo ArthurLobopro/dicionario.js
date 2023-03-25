@@ -22,7 +22,7 @@ export function ConfigScreen() {
     const modal = useModal()
 
     function ToggleTheme() {
-        api.toggleDarkMode()
+        api.options.toggleDarkMode()
         document.body.classList.toggle("dark")
         frame.updateTheme()
     }

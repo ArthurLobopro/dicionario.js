@@ -40,10 +40,6 @@ export const api = {
         return WordsController.ImportWords()
     },
 
-    toggleDarkMode() {
-        OptionsController.toggleDarkMode()
-    },
-
     setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {
         OptionsController.setFrameTheme(frameTheme)
     },
