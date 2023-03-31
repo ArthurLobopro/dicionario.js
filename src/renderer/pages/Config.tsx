@@ -1,6 +1,6 @@
 import { ipcRenderer, shell } from "electron"
 import { frameStyle } from "electron-frame/renderer"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { api } from "../../store/Api"
 import { StoreOptions } from "../../store/Schemas"
 import { frame } from "../Frame"
@@ -17,10 +17,26 @@ import { LineTitle } from "../components/LineTitle"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
+const isLinux = process.platform === "linux"
+
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
 
     const modal = useModal()
+
+    const useSystemTitleBar = api.options.linux.useSystemTitleBar
+
+    const wrapperRef = useRef<HTMLDivElement>(null)
+
+    const [hasSrollbar, setHasScrollbar] = useState(false)
+
+    useEffect(() => {
+        const new_hasScrollbar = !!wrapperRef.current && wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight
+
+        if (hasSrollbar !== new_hasScrollbar) {
+            setHasScrollbar(new_hasScrollbar)
+        }
+    }, [wrapperRef])
 
     function ToggleTheme() {
         api.options.toggleDarkMode()
@@ -105,25 +121,67 @@ export function ConfigScreen() {
         <Page id="config">
             {modal.content}
             <Header title="Configurações" left={<ReturnButton />} />
-            <div className="dashed-border spacing-16">
+            <div className="dashed-border">
                 <div style={{ height: "100%", position: "relative" }}>
-                    <div className="config-wrapper">
+                    <div
+                        className={`config-wrapper ${hasSrollbar ? "has-scrollbar" : ""}`}
+                        ref={wrapperRef}
+                    >
                         <div className="lines">
                             <span>Modo escuro</span>
                             <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
-                            <span>Tema do frame</span>
-                            <select className="select" value={config.frameTheme} onChange={HandleFrameThemeChange}>
+                            <LineTitle title="Janela" />
+
+                            {
+                                isLinux && (
+                                    <>
+                                        <span>Usar titlebar do sistema</span>
+                                        <Switcher
+                                            onToggle={() => {
+                                                api.options.toggleSystemTitleBar()
+                                                ipcRenderer.send("relaunch")
+                                            }}
+                                            checked={useSystemTitleBar}
+                                        />
+                                    </>
+                                )
+                            }
+
+                            <span>Estilo da titlebar</span>
+                            <select
+                                className="select"
+                                value={config.frameStyle}
+                                onChange={HandleFrameStyleChange}
+                                disabled={useSystemTitleBar}
+                                title={
+                                    useSystemTitleBar ?
+                                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
+                                        "Alterar o estilo da titlebar"
+                                }
+                            >
+                                <option value="windows">Windows</option>
+                                <option value="macos">Macos</option>
+                            </select>
+
+                            <span>Tema da titlebar</span>
+                            <select
+                                className="select"
+                                value={config.frameTheme}
+                                onChange={HandleFrameThemeChange}
+                                disabled={useSystemTitleBar}
+                                title={
+                                    useSystemTitleBar ?
+                                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
+                                        "Alterar o tema da titlebar"
+                                }
+                            >
                                 <option value="auto">Automatico</option>
                                 <option value="light">Claro</option>
                                 <option value="dark">Escuro</option>
                             </select>
 
-                            <span>Estilo da janela</span>
-                            <select className="select" value={config.frameStyle} onChange={HandleFrameStyleChange}>
-                                <option value="windows">Windows</option>
-                                <option value="macos">Macos</option>
-                            </select>
+                            <LineTitle title="Outros" />
 
                             <span>Exportar palavras</span>
                             <button className="stroke" onClick={ExportWords}>
@@ -158,7 +216,7 @@ export function ConfigScreen() {
                         <span className="version">{`Versão ${api.version}`}</span>
                     </div>
                 </div>
-            </div>
-        </Page>
+            </div >
+        </Page >
     )
 }

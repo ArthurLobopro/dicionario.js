@@ -222,6 +222,12 @@ button {
             justify-content: space-between;
             font-family: "Nunito", sans-serif;
             height: 100%;
+            padding: 16px;
+            margin: 16px;
+
+            &:has(.has-scrollbar) {
+                padding-right: 6px;
+            }
         }
 
         .config-wrapper {
@@ -230,8 +236,20 @@ button {
             justify-content: space-between;
             gap: 10px;
             height: 100%;
-        }
 
+            position: absolute;
+            width: 100%;
+
+            overflow-y: auto;
+
+            &.has-scrollbar {
+                padding-right: 4px;
+            }
+
+            &::-webkit-scrollbar {
+                width: 8px;
+            }
+        }
 
         .lines {
             font-size: 18px;

@@ -52,6 +52,13 @@ ipcMain.on('get-version', (event) => {
     event.returnValue = app.getVersion()
 })
 
+ipcMain.on('relaunch', (event) => {
+    app.relaunch({
+        args: process.argv.slice(1).concat(['--relaunch'])
+    })
+    app.quit()
+})
+
 autoUpdater.on("update-downloaded", (...props) => {
     const [event, releaseNotes, releaseName, releaseDate, updateUrl] = props
     ipcMain.emit("update-downloaded", event, releaseNotes, releaseName, releaseDate, updateUrl)
