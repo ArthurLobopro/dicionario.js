@@ -3,6 +3,8 @@ import path from 'node:path'
 import Store from 'electron-store'
 import { createJumpList } from "./windowsJumpList"
 
+import { options } from "../store/Store"
+
 Store.initRenderer()
 
 require('electron-frame/main')
@@ -10,6 +12,8 @@ require("./main-events")
 require("update-electron-app")({
     notifyUser: false
 })
+
+const isLinux = process.platform === 'linux'
 
 const appPath = app.getAppPath()
 
@@ -19,7 +23,7 @@ function createWindow() {
         height: 600,
         minWidth: 800,
         minHeight: 600,
-        frame: false,
+        frame: isLinux && options.store.linux.useSystemTitleBar,
         autoHideMenuBar: true,
         show: false,
         icon: path.join(appPath, 'assets', 'icon.png'),

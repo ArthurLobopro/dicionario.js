@@ -38,6 +38,9 @@ export type StoreOptions = {
     darkMode: boolean
     frameStyle: "windows" | "macos"
     frameTheme: "light" | "dark" | "auto"
+    linux: {
+        useSystemTitleBar: boolean
+    }
 }
 
 export const optionsSchema: ElectronStore.Schema<StoreOptions> = {
@@ -54,5 +57,17 @@ export const optionsSchema: ElectronStore.Schema<StoreOptions> = {
         type: "string",
         enum: ["light", "dark", "auto"],
         default: "auto"
+    },
+    linux: {
+        type: "object",
+        properties: {
+            useSystemTitleBar: {
+                type: "boolean"
+            }
+        },
+        default: {
+            useSystemTitleBar: false
+        },
+        required: ["useSystemTitleBar"]
     }
 }
