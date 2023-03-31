@@ -13,6 +13,7 @@ import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 import { WordPicker } from "../components/modals/WordPicker"
+import { LineTitle } from "../components/LineTitle"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -105,62 +106,58 @@ export function ConfigScreen() {
             {modal.content}
             <Header title="Configurações" left={<ReturnButton />} />
             <div className="dashed-border spacing-16">
-                <div className="flex-column gap-10">
-                    <div className="lines">
-                        <span>Modo escuro</span>
-                        <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
+                <div style={{ height: "100%", position: "relative" }}>
+                    <div className="config-wrapper">
+                        <div className="lines">
+                            <span>Modo escuro</span>
+                            <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
-                        <span>Tema do frame</span>
-                        <select className="select" value={config.frameTheme} onChange={HandleFrameThemeChange}>
-                            <option value="auto">Automatico</option>
-                            <option value="light">Claro</option>
-                            <option value="dark">Escuro</option>
-                        </select>
+                            <span>Tema do frame</span>
+                            <select className="select" value={config.frameTheme} onChange={HandleFrameThemeChange}>
+                                <option value="auto">Automatico</option>
+                                <option value="light">Claro</option>
+                                <option value="dark">Escuro</option>
+                            </select>
 
-                        <span>Estilo da janela</span>
-                        <select className="select" value={config.frameStyle} onChange={HandleFrameStyleChange}>
-                            <option value="windows">Windows</option>
-                            <option value="macos">Macos</option>
-                        </select>
+                            <span>Estilo da janela</span>
+                            <select className="select" value={config.frameStyle} onChange={HandleFrameStyleChange}>
+                                <option value="windows">Windows</option>
+                                <option value="macos">Macos</option>
+                            </select>
 
-                        <span>Exportar palavras</span>
-                        <button className="stroke" onClick={ExportWords}>
-                            <UploadIcon />
-                            Exportar
-                        </button>
+                            <span>Exportar palavras</span>
+                            <button className="stroke" onClick={ExportWords}>
+                                <UploadIcon />
+                                Exportar
+                            </button>
 
-                        <span>Importar palavras</span>
-                        <button className="stroke" onClick={ImportWords}>
-                            <DonwloadIcon />
-                            Importar
-                        </button>
+                            <span>Importar palavras</span>
+                            <button className="stroke" onClick={ImportWords}>
+                                <DonwloadIcon />
+                                Importar
+                            </button>
 
-                        <span>Sobre</span>
-                        <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
-                            <GithubLogo />
-                            Github
-                        </button>
-                    </div>
+                            <span>Sobre</span>
+                            <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
+                                <GithubLogo />
+                                Github
+                            </button>
 
-                    <div className="flex-center">
-                        <button className="stroke" onClick={() => ipcRenderer.send("open-devtolls")}>
-                            Mostrar ferramentas de desenvolvedor
-                        </button>
-                    </div>
+                            <button className="stroke fill-center" onClick={() => ipcRenderer.send("open-devtolls")}>
+                                Mostrar ferramentas de desenvolvedor
+                            </button>
 
-                    <div className="line-legend warning">
-                        <div className="line"></div>
-                        <span className="legend">Área de Risco</span>
-                        <div className="line"></div>
-                    </div>
-                    <div className="lines warning">
-                        <span>Deletar dicionário</span>
-                        <button className="stroke" onClick={DeleteDictionary}>
-                            Deletar
-                        </button>
+                            <LineTitle title="Área de Risco" className="warning" />
+
+                            <span className="warning">Deletar dicionário</span>
+                            <button className="stroke warning" onClick={DeleteDictionary}>
+                                Deletar
+                            </button>
+                        </div>
+
+                        <span className="version">{`Versão ${api.version}`}</span>
                     </div>
                 </div>
-                <span className="version">{`Versão ${api.version}`}</span>
             </div>
         </Page>
     )

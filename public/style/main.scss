@@ -211,21 +211,39 @@ button {
 
     &#config {
         user-select: none;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
 
-        & .dashed-border {
+        .dashed-border {
             display: flex;
             flex-direction: column;
             gap: 10px;
             justify-content: space-between;
             font-family: "Nunito", sans-serif;
+            height: 100%;
         }
 
-        & .lines {
+        .config-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            height: 100%;
+        }
+
+
+        .lines {
             font-size: 18px;
             display: grid;
             grid-template-columns: auto max-content;
             gap: 10px;
             align-items: center;
+
+            .fill-center {
+                grid-column: 1/3;
+                width: max-content;
+            }
 
             .line-title {
                 grid-column: 1/3;
