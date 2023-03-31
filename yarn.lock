@@ -191,6 +191,13 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@electron-fonts/open-sans@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/open-sans/-/open-sans-1.0.3.tgz#e0953e7a55e8e4f571a37146cc2ddb3375504299"
+  integrity sha512-4o72LW7eRYr0Fe7zdf4f0VhdqGZkEhFLo0XWlhYMCh0aRFdI62Mby9B5I03IS0w6owlmpbopmT5P9Txy+zYffQ==
+  dependencies:
+    electron-css-injector "^1.0.0"
+
 "@electron-forge/cli@^6.0.5":
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/@electron-forge/cli/-/cli-6.0.5.tgz#b34b3e6a1a58ef62860b565c76af9e06f0d4fba6"
@@ -1502,6 +1509,11 @@ dot-prop@^6.0.1:
   integrity sha512-tE7ztYzXHIeyvc7N+hR3oi7FIbf/NIjVP9hmAt3yMXzrQ072/fpjGLx2GxNxGxUl5V73MEqYzioOMoVhGMJ5cA==
   dependencies:
     is-obj "^2.0.0"
+
+electron-css-injector@^1.0.0:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.0.1.tgz#d55bc1354fa170e67a360d22dc7d62605301725e"
+  integrity sha512-FF+qKmzqVBNmM46Ws3XZpdczwT0zvgY8klAwoHOYS5axsFpv/Ob/MzlHRXvnMWtzYDNqX7Mf5NUBNNUBmyYTWA==
 
 electron-frame@^1.2.6:
   version "1.2.6"
