@@ -8,7 +8,7 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { DonwloadIcon, GithubLogo, UploadIcon } from "../components/icons"
+import { DonwloadIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
@@ -209,6 +209,7 @@ export function ConfigScreen() {
 
                             <span className="warning">Deletar dicionário</span>
                             <button className="stroke warning" onClick={DeleteDictionary}>
+                                <TrashIcon className="use-main-colors" />
                                 Deletar
                             </button>
                         </div>
