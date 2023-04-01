@@ -15,5 +15,4 @@ export const options = new ElectronStore<StoreOptions>({
     watch: true,
     schema: optionsSchema
 })
-
 // data.get("words") ? null : data.store.words = []

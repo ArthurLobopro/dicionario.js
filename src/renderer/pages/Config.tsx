@@ -1,6 +1,6 @@
 import { ipcRenderer, shell } from "electron"
 import { frameStyle } from "electron-frame/renderer"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { api } from "../../store/Api"
 import { StoreOptions } from "../../store/Schemas"
 import { frame } from "../Frame"
@@ -8,18 +8,35 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { DonwloadIcon, GithubLogo, UploadIcon } from "../components/icons"
+import { DonwloadIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 import { WordPicker } from "../components/modals/WordPicker"
+import { LineTitle } from "../components/LineTitle"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
+
+const isLinux = process.platform === "linux"
 
 export function ConfigScreen() {
     const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
 
     const modal = useModal()
+
+    const useSystemTitleBar = api.options.linux.useSystemTitleBar
+
+    const wrapperRef = useRef<HTMLDivElement>(null)
+
+    const [hasSrollbar, setHasScrollbar] = useState(false)
+
+    useEffect(() => {
+        const new_hasScrollbar = !!wrapperRef.current && wrapperRef.current?.scrollHeight > wrapperRef.current?.clientHeight
+
+        if (hasSrollbar !== new_hasScrollbar) {
+            setHasScrollbar(new_hasScrollbar)
+        }
+    }, [wrapperRef])
 
     function ToggleTheme() {
         api.options.toggleDarkMode()
@@ -104,64 +121,103 @@ export function ConfigScreen() {
         <Page id="config">
             {modal.content}
             <Header title="Configurações" left={<ReturnButton />} />
-            <div className="dashed-border spacing-16">
-                <div className="flex-column gap-10">
-                    <div className="lines">
-                        <span>Modo escuro</span>
-                        <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
+            <div className="dashed-border">
+                <div style={{ height: "100%", position: "relative" }}>
+                    <div
+                        className={`config-wrapper ${hasSrollbar ? "has-scrollbar" : ""}`}
+                        ref={wrapperRef}
+                    >
+                        <div className="lines">
+                            <span>Modo escuro</span>
+                            <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
-                        <span>Tema do frame</span>
-                        <select className="select" value={config.frameTheme} onChange={HandleFrameThemeChange}>
-                            <option value="auto">Automatico</option>
-                            <option value="light">Claro</option>
-                            <option value="dark">Escuro</option>
-                        </select>
+                            <LineTitle title="Janela" />
 
-                        <span>Estilo da janela</span>
-                        <select className="select" value={config.frameStyle} onChange={HandleFrameStyleChange}>
-                            <option value="windows">Windows</option>
-                            <option value="macos">Macos</option>
-                        </select>
+                            {
+                                isLinux && (
+                                    <>
+                                        <span>Usar titlebar do sistema</span>
+                                        <Switcher
+                                            onToggle={() => {
+                                                api.options.toggleSystemTitleBar()
+                                                ipcRenderer.send("relaunch")
+                                            }}
+                                            checked={useSystemTitleBar}
+                                        />
+                                    </>
+                                )
+                            }
 
-                        <span>Exportar palavras</span>
-                        <button className="stroke" onClick={ExportWords}>
-                            <UploadIcon />
-                            Exportar
-                        </button>
+                            <span>Estilo da titlebar</span>
+                            <select
+                                className="select"
+                                value={config.frameStyle}
+                                onChange={HandleFrameStyleChange}
+                                disabled={useSystemTitleBar}
+                                title={
+                                    useSystemTitleBar ?
+                                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
+                                        "Alterar o estilo da titlebar"
+                                }
+                            >
+                                <option value="windows">Windows</option>
+                                <option value="macos">Macos</option>
+                            </select>
 
-                        <span>Importar palavras</span>
-                        <button className="stroke" onClick={ImportWords}>
-                            <DonwloadIcon />
-                            Importar
-                        </button>
+                            <span>Tema da titlebar</span>
+                            <select
+                                className="select"
+                                value={config.frameTheme}
+                                onChange={HandleFrameThemeChange}
+                                disabled={useSystemTitleBar}
+                                title={
+                                    useSystemTitleBar ?
+                                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
+                                        "Alterar o tema da titlebar"
+                                }
+                            >
+                                <option value="auto">Automatico</option>
+                                <option value="light">Claro</option>
+                                <option value="dark">Escuro</option>
+                            </select>
 
-                        <span>Sobre</span>
-                        <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
-                            <GithubLogo />
-                            Github
-                        </button>
-                    </div>
+                            <LineTitle title="Outros" />
 
-                    <div className="flex-center">
-                        <button className="stroke" onClick={() => ipcRenderer.send("open-devtolls")}>
-                            Mostrar ferramentas de desenvolvedor
-                        </button>
-                    </div>
+                            <span>Exportar palavras</span>
+                            <button className="stroke" onClick={ExportWords}>
+                                <UploadIcon />
+                                Exportar
+                            </button>
 
-                    <div className="line-legend warning">
-                        <div className="line"></div>
-                        <span className="legend">Área de Risco</span>
-                        <div className="line"></div>
-                    </div>
-                    <div className="lines warning">
-                        <span>Deletar dicionário</span>
-                        <button className="stroke" onClick={DeleteDictionary}>
-                            Deletar
-                        </button>
+                            <span>Importar palavras</span>
+                            <button className="stroke" onClick={ImportWords}>
+                                <DonwloadIcon />
+                                Importar
+                            </button>
+
+                            <span>Sobre</span>
+                            <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
+                                <GithubLogo />
+                                Github
+                            </button>
+
+                            <button className="stroke fill-center" onClick={() => ipcRenderer.send("open-devtolls")}>
+                                Mostrar ferramentas de desenvolvedor
+                            </button>
+
+                            <LineTitle title="Área de Risco" className="warning" />
+
+                            <span className="warning">Deletar dicionário</span>
+                            <button className="stroke warning" onClick={DeleteDictionary}>
+                                <TrashIcon className="use-main-colors" />
+                                Deletar
+                            </button>
+                        </div>
+
+                        <span className="version">{`Versão ${api.version}`}</span>
                     </div>
                 </div>
-                <span className="version">{`Versão ${api.version}`}</span>
-            </div>
-        </Page>
+            </div >
+        </Page >
     )
 }

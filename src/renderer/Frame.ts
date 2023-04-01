@@ -31,6 +31,11 @@ const frameApi = {
     }
 }
 
-frame.insert()
+const isLinux = process.platform === "linux"
+
+if (!isLinux || !api.options.getOptions().linux.useSystemTitleBar) {
+    frame.insert()
+}
+
 
 export { frameApi as frame }

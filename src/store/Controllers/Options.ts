@@ -3,6 +3,10 @@ import { options } from "../Store"
 
 export class OptionsController {
 
+    static get linux() {
+        return options.get("linux")
+    }
+
     static get darkMode() {
         return options.get('darkMode')
     }
@@ -33,6 +37,10 @@ export class OptionsController {
 
     static toggleDarkMode() {
         this.darkMode = !this.darkMode
+    }
+
+    static toggleSystemTitleBar() {
+        options.set("linux", { useSystemTitleBar: !this.linux.useSystemTitleBar })
     }
 
     static setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {

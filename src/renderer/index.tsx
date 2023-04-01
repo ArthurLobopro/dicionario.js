@@ -41,3 +41,4 @@ root.render(
 )
 
 require("./Frame")
+require("./Fonts")

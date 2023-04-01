@@ -4,6 +4,7 @@
 @import url(./scroll.css);
 @import url(./header.css);
 @import url(./word-wrapper.css);
+@import url(./linetitle.css);
 
 :root {
     --blue: #296dd3;
@@ -210,21 +211,61 @@ button {
 
     &#config {
         user-select: none;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
 
-        & .dashed-border {
+        .dashed-border {
             display: flex;
             flex-direction: column;
             gap: 10px;
             justify-content: space-between;
             font-family: "Nunito", sans-serif;
+            height: 100%;
+            padding: 16px;
+            margin: 16px;
+
+            &:has(.has-scrollbar) {
+                padding-right: 6px;
+            }
         }
 
-        & .lines {
+        .config-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 10px;
+            height: 100%;
+
+            position: absolute;
+            width: 100%;
+
+            overflow-y: auto;
+
+            &.has-scrollbar {
+                padding-right: 4px;
+            }
+
+            &::-webkit-scrollbar {
+                width: 8px;
+            }
+        }
+
+        .lines {
             font-size: 18px;
             display: grid;
             grid-template-columns: auto max-content;
             gap: 10px;
             align-items: center;
+
+            .fill-center {
+                grid-column: 1/3;
+                width: max-content;
+            }
+
+            .line-title {
+                grid-column: 1/3;
+            }
 
             .switch {
                 justify-self: right;
@@ -234,7 +275,7 @@ button {
                 font-size: 14px;
                 cursor: pointer;
 
-                &:hover {
+                &:hover:not(:disabled) {
                     box-shadow: inset 0 0 0 1px var(--main-color);
                 }
             }
@@ -261,6 +302,18 @@ button {
                         width: 18px;
                         height: 18px;
                         aspect-ratio: 1/1;
+
+                        &.use-main-colors {
+                            * {
+                                &[stroke]:not([stroke="none"]) {
+                                    stroke: var(--main-color);
+                                }
+
+                                &[fill]:not([fill="none"]) {
+                                    fill: var(--main-color);
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -268,19 +321,6 @@ button {
 
         .version {
             align-self: center;
-        }
-
-        .line-legend {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr max-content 1fr;
-            align-items: center;
-            gap: 10px;
-
-            .line {
-                border-bottom: 1px solid;
-                height: 1px;
-            }
         }
     }
 
@@ -334,6 +374,7 @@ select {
 }
 
 .warning {
+    --main-color: var(--red);
     color: var(--red);
 
     button {
