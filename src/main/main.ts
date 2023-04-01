@@ -38,7 +38,11 @@ function createWindow() {
     }
 
     win.loadFile('public/index.html')
-    win.once('ready-to-show', () => { win.show(); win.focus() })
+    win.once('ready-to-show', () => {
+        win.show()
+        win.center()
+        win.focus()
+    })
 
     if (process.argv.includes('--relaunch')) {
         win.webContents.send('open-in', '/config')
