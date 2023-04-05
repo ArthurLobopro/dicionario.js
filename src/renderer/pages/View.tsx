@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
@@ -7,10 +7,13 @@ import { ReturnButton } from "../components/ReturnButton"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
 import { useModal } from "../hooks/useModal"
-import { EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
+import { AddIcon, EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
+import { SelectDictionary } from "../components/selects/Dictionary"
 
 export function ViewScreen() {
-    const [words, setWords] = useState(Object.entries(api.words.GetWords()))
+    const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
+
+    const [words, setWords] = useState(Object.entries(dictionary.Words.words))
 
     const navigate = useNavigate()
     const modal = useModal()
@@ -25,8 +28,8 @@ export function ViewScreen() {
             title="Você tem certeza?"
             onClose={(confirm) => {
                 if (confirm) {
-                    api.words.DeleteWord(word)
-                    setWords(Object.entries(api.words))
+                    dictionary.Words.deleteWord(word)
+                    setWords(Object.entries(dictionary.Words.words))
                 }
                 modal.hide()
             }}
@@ -54,7 +57,7 @@ export function ViewScreen() {
                                     </div>
                                     <div title="Editar" id="edit"
                                         onClick={() => {
-                                            navigate(`/update/${word}`)
+                                            navigate(`/update/${dictionary.name}/${word}`)
                                         }}
                                     >
                                         <EditIcon />
@@ -87,10 +90,26 @@ export function ViewScreen() {
         }
     }
 
+    const atual_location = window.location.href.split("#")[1]
+
+    const add_button = (
+        <Link
+            className="add-button"
+            to={`/create/${dictionary.name}?return_to=${atual_location}`}
+            title="Adicionar palavra"
+        >
+            <AddIcon />
+        </Link>
+    )
+
     return (
         <Page id="view">
             {modal.content}
-            <Header title="Visualizar Palavras" left={<ReturnButton />}></Header>
+            <Header
+                title={<SelectDictionary titleMode={true} />}
+                left={<ReturnButton />}
+                right={add_button}
+            />
             {words.length > 0 ? contents.words : contents.empty}
         </Page>
     )

@@ -14,10 +14,13 @@ const update_word_schema = z.object({
 })
 
 export function UpdateScreen() {
-    const { word } = useParams()
+    const { word, dictionary: dictionary_name } = useParams()
+
+    const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
+
     const [data, setData] = useState({
         word: word as string,
-        definition: api.words.GetWord(word as string).definition
+        definition: dictionary.Words.getWord(word as string).definition
     })
 
     const navigate = useNavigate()
@@ -27,12 +30,13 @@ export function UpdateScreen() {
         try {
             const send_data = update_word_schema.parse(data)
 
-            api.words.UpdateWord(word as string, { ...send_data, newWord: send_data.word, })
+            dictionary.Words.updateWord(word as string, { ...send_data, new_word: send_data.word, })
 
             modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.hide()
                 navigate("/view")
             }} />)
+
         } catch (error: any) {
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError

@@ -183,7 +183,7 @@ export function ConfigScreen() {
 
                             <LineTitle title="Outros" />
 
-                            <span>Exportar palavras</span>
+                            {/* <span>Exportar palavras</span>
                             <button className="stroke" onClick={ExportWords}>
                                 <UploadIcon />
                                 Exportar
@@ -193,7 +193,7 @@ export function ConfigScreen() {
                             <button className="stroke" onClick={ImportWords}>
                                 <DonwloadIcon />
                                 Importar
-                            </button>
+                            </button> */}
 
                             <span>Sobre</span>
                             <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
@@ -205,13 +205,13 @@ export function ConfigScreen() {
                                 Mostrar ferramentas de desenvolvedor
                             </button>
 
-                            <LineTitle title="Área de Risco" className="warning" />
+                            {/* <LineTitle title="Área de Risco" className="warning" />
 
                             <span className="warning">Deletar dicionário</span>
                             <button className="stroke warning" onClick={DeleteDictionary}>
                                 <TrashIcon className="use-main-colors" />
                                 Deletar
-                            </button>
+                            </button> */}
                         </div>
 
                         <span className="version">{`Versão ${api.version}`}</span>
