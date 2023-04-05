@@ -172,7 +172,6 @@ button {
     height: 100%;
     padding: 5px;
 
-    &#create,
     &#edit {
         font-family: "Nunito", sans-serif;
 
@@ -332,7 +331,7 @@ textarea {
     font-family: "Nunito", sans-serif;
     border: 2px solid var(--border-color);
     border-radius: 8px;
-    padding: 8px 8px;
+    padding: 8px;
     display: block;
     background-color: var(--main-background);
     color: var(--main-color);
@@ -395,3 +394,4 @@ select {
 }
 
 @import url(./pages/view.css);
+@import url(./pages/create.css);

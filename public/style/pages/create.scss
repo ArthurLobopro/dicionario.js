@@ -1,0 +1,48 @@
+.page#create {
+    height: 100%;
+    padding: 5px;
+
+    font-family: "Nunito", sans-serif;
+    grid-template-rows: max-content auto;
+
+
+    :not(input, textarea) {
+        user-select: none;
+    }
+
+    >.dashed-border {
+        grid-template-rows: max-content max-content auto max-content;
+    }
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        resize: none;
+    }
+
+    label>select {
+        display: block;
+        padding: 8px;
+        border-width: 2px;
+        width: 100%;
+        border-radius: 8px;
+    }
+
+    button {
+        border: 1px solid var(--blue);
+
+        &.cancel {
+            background-color: var(--red);
+            border-color: var(--red);
+        }
+
+        &.close:hover {
+            filter: brightness(1.1);
+            transition: background 200ms;
+        }
+
+        &:hover {
+            border-color: var(--main-color);
+        }
+    }
+}
