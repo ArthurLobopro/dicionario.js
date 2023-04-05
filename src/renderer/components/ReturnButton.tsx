@@ -7,10 +7,8 @@ interface buttonProps {
 
 export function ReturnButton({ returnTo = "/" }: buttonProps) {
     return (
-        <Link to={returnTo}>
-            <div className="left" title="Voltar">
-                <LeftArrow />
-            </div>
+        <Link to={returnTo} title="Voltar">
+            <LeftArrow />
         </Link>
     )
 }
