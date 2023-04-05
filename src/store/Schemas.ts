@@ -71,3 +71,63 @@ export const optionsSchema: ElectronStore.Schema<StoreOptions> = {
         required: ["useSystemTitleBar"]
     }
 }
+
+export type dictionary = {
+    name: string,
+    words: StoreWord[]
+}
+
+const dictionarySchema: ElectronStore.Schema<dictionary> = {
+    name: {
+        type: "string",
+        default: "Default"
+    },
+    words: {
+        type: "array",
+        default: [],
+        items: {
+            type: "object",
+            required: ["word", "definition", "register"],
+            properties: {
+                word: {
+                    type: "string"
+                },
+                definition: {
+                    type: "string"
+                },
+                register: {
+                    type: "string",
+                    format: "date-time"
+                },
+                lastEdit: {
+                    type: "string",
+                    format: "date-time"
+                }
+            }
+        }
+    }
+}
+
+export type StoreDictionaries = {
+    dictionaries: dictionary[]
+    defaultDictionary: string
+}
+
+export const dictionariesSchema: ElectronStore.Schema<StoreDictionaries> = {
+    dictionaries: {
+        type: "array",
+        default: [{
+            name: "Dicionário Padrão",
+            isDefault: true,
+            words: []
+        }],
+        items: {
+            type: "object",
+            properties: dictionarySchema
+        }
+    },
+    defaultDictionary: {
+        type: "string",
+        default: "Dicionário Padrão"
+    }
+}
