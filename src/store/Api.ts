@@ -3,6 +3,7 @@ import { WordsController } from "./Controllers/Words"
 import { StoreOptions } from "./Schemas"
 import { options } from "./Store"
 import { OptionsController } from "./Controllers/Options"
+import { DictionariesController } from "./Controllers/Dictionaries"
 
 
 export const api = {
@@ -16,5 +17,9 @@ export const api = {
 
     get words() {
         return WordsController
+    },
+
+    get dictionaries() {
+        return DictionariesController
     }
 }
