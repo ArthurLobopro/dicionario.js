@@ -1,4 +1,6 @@
 import Store from "electron-store"
+import { StoreDictionaries } from "./Schemas"
+import { data } from "./Store"
 
 type versions_types = {
     "1.8.1": {
@@ -8,7 +10,15 @@ type versions_types = {
             registro: string,
             ultimaEdicao?: string
         }[]
-    }
+    },
+    "1.10.0": {
+        words: {
+            word: string,
+            definition: string,
+            register: string,
+            lastEdit?: string
+        }[]
+    },
 }
 
 
@@ -26,6 +36,30 @@ export const WordsMigrations = {
             })
             store.delete("palavras")
             store.set("words", new_data)
+        }
+    }
+}
+
+export const DictionariesMigrations = {
+    "2.0.0": (store: Store<StoreDictionaries>) => {
+        const dictionaries = store.get("dictionaries")
+        const defaultName = store.get("defaultDictionary")
+
+        const defaultDictionary = dictionaries.find(dictionary => dictionary.name === defaultName)
+
+        if (defaultDictionary && defaultDictionary.words.length === 0) {
+            defaultDictionary.words = data.get("words")
+
+            store.set(
+                "dictionaries",
+                dictionaries.map(dictionary => {
+                    if (dictionary.name === defaultName) {
+                        return defaultDictionary
+                    } else {
+                        return dictionary
+                    }
+                })
+            )
         }
     }
 }
