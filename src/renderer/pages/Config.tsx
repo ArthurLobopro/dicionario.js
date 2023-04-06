@@ -16,17 +16,14 @@ import { WordPicker } from "../components/modals/WordPicker"
 import { LineTitle } from "../components/LineTitle"
 import { AddDictionaryModal } from "../components/modals/AddDictionary"
 import { DeleteDictionaryModal } from "../components/modals/DeleteDictionary"
+import { EditDictionaryModal } from "../components/modals/EditDictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
 const isLinux = process.platform === "linux"
 
 export function ConfigScreen() {
-    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
-
     const modal = useModal()
-
-    const useSystemTitleBar = api.options.linux.useSystemTitleBar
 
     const wrapperRef = useRef<HTMLDivElement>(null)
 
@@ -46,19 +43,6 @@ export function ConfigScreen() {
         frame.updateTheme()
     }
 
-    function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
-        api.options.setFrameTheme(frameTheme)
-        setConfig({ ...config, frameTheme })
-        frame.updateTheme()
-    }
-
-    function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const frameStyle = event.currentTarget.value as frameStyle
-        api.options.setFrameStyle(frameStyle)
-        setConfig({ ...config, frameStyle })
-        frame.setFrameStyle(frameStyle)
-    }
 
     async function ExportWords() {
         modal.open(<WordPicker
@@ -102,14 +86,6 @@ export function ConfigScreen() {
         }
     }
 
-    function DeleteDictionary() {
-        modal.open(<DeleteDictionaryModal onClose={modal.hide} />)
-    }
-
-    function HandleAddDictionary() {
-        modal.open(<AddDictionaryModal onClose={modal.hide} />)
-    }
-
     return (
         <Page id="config">
             {modal.content}
@@ -124,76 +100,9 @@ export function ConfigScreen() {
                             <span>Modo escuro</span>
                             <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
-                            <LineTitle title="Janela" />
+                            <WindowSection modal={modal} />
 
-                            {
-                                isLinux && (
-                                    <>
-                                        <span>Usar titlebar do sistema</span>
-                                        <Switcher
-                                            onToggle={() => {
-                                                api.options.toggleSystemTitleBar()
-                                                ipcRenderer.send("relaunch")
-                                            }}
-                                            checked={useSystemTitleBar}
-                                        />
-                                    </>
-                                )
-                            }
-
-                            <span>Estilo da titlebar</span>
-                            <select
-                                className="select"
-                                value={config.frameStyle}
-                                onChange={HandleFrameStyleChange}
-                                disabled={useSystemTitleBar}
-                                title={
-                                    useSystemTitleBar ?
-                                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
-                                        "Alterar o estilo da titlebar"
-                                }
-                            >
-                                <option value="windows">Windows</option>
-                                <option value="macos">Macos</option>
-                            </select>
-
-                            <span>Tema da titlebar</span>
-                            <select
-                                className="select"
-                                value={config.frameTheme}
-                                onChange={HandleFrameThemeChange}
-                                disabled={useSystemTitleBar}
-                                title={
-                                    useSystemTitleBar ?
-                                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
-                                        "Alterar o tema da titlebar"
-                                }
-                            >
-                                <option value="auto">Automatico</option>
-                                <option value="light">Claro</option>
-                                <option value="dark">Escuro</option>
-                            </select>
-
-                            <LineTitle title="Dicionários" />
-
-                            <span>Adicionar dicionário</span>
-                            <button className="stroke" onClick={HandleAddDictionary} >
-                                <AddIcon className="use-main-colors" />
-                                Adicionar
-                            </button>
-
-                            <span>Editar dicionário</span>
-                            <button className="stroke">
-                                <EditIcon className="use-main-colors" />
-                                Editar
-                            </button>
-
-                            <span className="warning">Deletar dicionário</span>
-                            <button className="stroke warning" onClick={DeleteDictionary}>
-                                <TrashIcon className="use-main-colors" />
-                                Deletar
-                            </button>
-
+                            <DictionarySection modal={modal} />
 
                             <LineTitle title="Outros" />
 
@@ -233,5 +142,127 @@ export function ConfigScreen() {
                 </div>
             </div >
         </Page >
+    )
+}
+
+interface sectionProps {
+    modal: ReturnType<typeof useModal>
+}
+
+function WindowSection(props: sectionProps) {
+    const { modal } = props
+
+    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
+
+    const useSystemTitleBar = api.options.linux.useSystemTitleBar
+
+    function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
+        api.options.setFrameTheme(frameTheme)
+        setConfig({ ...config, frameTheme })
+        frame.updateTheme()
+    }
+
+    function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        const frameStyle = event.currentTarget.value as frameStyle
+        api.options.setFrameStyle(frameStyle)
+        setConfig({ ...config, frameStyle })
+        frame.setFrameStyle(frameStyle)
+    }
+
+    return (
+        <>
+            <LineTitle title="Janela" />
+
+            {
+                isLinux && (
+                    <>
+                        <span>Usar titlebar do sistema</span>
+                        <Switcher
+                            onToggle={() => {
+                                api.options.toggleSystemTitleBar()
+                                ipcRenderer.send("relaunch")
+                            }}
+                            checked={useSystemTitleBar}
+                        />
+                    </>
+                )
+            }
+
+            <span>Estilo da titlebar</span>
+            <select
+                className="select"
+                value={config.frameStyle}
+                onChange={HandleFrameStyleChange}
+                disabled={useSystemTitleBar}
+                title={
+                    useSystemTitleBar ?
+                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
+                        "Alterar o estilo da titlebar"
+                }
+            >
+                <option value="windows">Windows</option>
+                <option value="macos">Macos</option>
+            </select>
+
+            <span>Tema da titlebar</span>
+            <select
+                className="select"
+                value={config.frameTheme}
+                onChange={HandleFrameThemeChange}
+                disabled={useSystemTitleBar}
+                title={
+                    useSystemTitleBar ?
+                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
+                        "Alterar o tema da titlebar"
+                }
+            >
+                <option value="auto">Automatico</option>
+                <option value="light">Claro</option>
+                <option value="dark">Escuro</option>
+            </select>
+        </>
+    )
+}
+
+interface DictionarySectionsProps extends sectionProps { }
+
+function DictionarySection(props: DictionarySectionsProps) {
+    const { modal } = props
+
+    function HandleAddDictionary() {
+        modal.open(<AddDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleEditDictionary() {
+        modal.open(<EditDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleDeleteDictionary() {
+        modal.open(<DeleteDictionaryModal onClose={modal.close} />)
+    }
+
+    return (
+        <>
+            <LineTitle title="Dicionários" />
+
+            <span>Adicionar dicionário</span>
+            <button className="stroke" onClick={HandleAddDictionary} >
+                <AddIcon className="use-main-colors" />
+                Adicionar
+            </button>
+
+            <span>Editar dicionário</span>
+            <button className="stroke" onClick={HandleEditDictionary}>
+                <EditIcon className="use-main-colors" />
+                Editar
+            </button>
+
+            <span className="warning">Deletar dicionário</span>
+            <button className="stroke warning" onClick={HandleDeleteDictionary}>
+                <TrashIcon className="use-main-colors" />
+                Deletar
+            </button>
+        </>
     )
 }
