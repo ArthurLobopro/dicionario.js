@@ -47,6 +47,10 @@ class WordsController {
         return this.getWords()
     }
 
+    get length() {
+        return this.dictionary.words.length
+    }
+
     getWords() {
         return Object.fromEntries(this.dictionary.words.map(word => {
             const { definition, register, lastEdit = null } = word
