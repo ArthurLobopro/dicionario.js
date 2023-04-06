@@ -50,4 +50,43 @@ export class DictionariesController {
 
         dictionaryStore.set("dictionaries", dictionaries)
     }
+
+    static addDictionary(name: string, setDefault: boolean = false) {
+        const dictionaries = dictionaryStore.get("dictionaries")
+
+        dictionaries.push({
+            name,
+            words: []
+        })
+
+        dictionaryStore.set("dictionaries", dictionaries)
+
+        if (setDefault) {
+            dictionaryStore.set("defaultDictionary", name)
+        }
+    }
+
+    static editDictionary(oldName: string, { newName, setDefault }: { newName: string, setDefault: boolean }) {
+        const dictionaries = dictionaryStore.get("dictionaries")
+
+        const index = dictionaries.findIndex(dictionary => dictionary.name === oldName)
+
+        if (index === -1) {
+            throw new Error("Dictionary not found")
+        }
+
+        dictionaries[index].name = newName
+
+        dictionaryStore.set("dictionaries", dictionaries)
+
+        if (setDefault) {
+            dictionaryStore.set("defaultDictionary", newName)
+        }
+    }
+
+    static removeDictionary(name: string) {
+        const dictionaries = dictionaryStore.get("dictionaries").filter(dictionary => dictionary.name !== name)
+
+        dictionaryStore.set("dictionaries", dictionaries)
+    }
 }
