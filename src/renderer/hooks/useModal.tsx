@@ -20,5 +20,9 @@ export function useModal(props?: useModalProps) {
             this.setContent(content)
             this.show()
         },
+        close() {
+            this.hide()
+            this.setContent(<></>)
+        }
     }
 }
