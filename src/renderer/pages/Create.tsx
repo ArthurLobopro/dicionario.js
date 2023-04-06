@@ -93,6 +93,7 @@ export function CreateScreen() {
                 <label>
                     Salvar em
                     <SelectDictionary
+                        disabled={has_dictionary}
                         default_value={dictionary.name}
                         onChange={handleChangeDictionary}
                     />

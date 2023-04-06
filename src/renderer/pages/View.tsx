@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
@@ -13,7 +13,13 @@ import { SelectDictionary } from "../components/selects/Dictionary"
 export function ViewScreen() {
     const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
 
-    const [words, setWords] = useState(Object.entries(dictionary.Words.words))
+    const getWords = () => Object.entries(dictionary.Words.words)
+
+    const [words, setWords] = useState(getWords())
+
+    useEffect(() => {
+        setWords(getWords())
+    }, [dictionary])
 
     const navigate = useNavigate()
     const modal = useModal()
@@ -82,7 +88,7 @@ export function ViewScreen() {
                         Você ainda não cadastrou nenhuma palavra. Que tal começar agora?
                     </div>
 
-                    <button onClick={() => navigate("/create")}>
+                    <button onClick={() => navigate(`/create/${dictionary.name}?return_to=${atual_location}`)}>
                         Cadastrar Palavra
                     </button>
                 </div>
@@ -106,7 +112,13 @@ export function ViewScreen() {
         <Page id="view">
             {modal.content}
             <Header
-                title={<SelectDictionary titleMode={true} />}
+                title={<SelectDictionary titleMode={true}
+                    onChange={(name: string) => {
+                        if (name !== dictionary.name) {
+                            setDictionary(api.dictionaries.getDictionary(name))
+                        }
+                    }} />
+                }
                 left={<ReturnButton />}
                 right={add_button}
             />

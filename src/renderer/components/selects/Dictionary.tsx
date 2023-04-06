@@ -36,13 +36,11 @@ export function SelectDictionary(props: select_props) {
     return (
         <select
             className={titleMode ? "select-title" : ""}
-            disabled={isDisabled} value={selected} onChange={e => setSelected(e.target.value)}
+            disabled={disabled} value={selected} onChange={e => setSelected(e.target.value)}
             title={
-                disabled ? "Só é possível utilizar esse dicionário." :
-                    isDisabled ? "Você não pode alterar o dicionário pois só existe um." : "Selecione um dicionario"
+                disabled ? "Você já selecionou este dicionário ou ele é o único dicionário existente." : "Selecione um dicionario"
             }
         >
-            <option value={0}>"Selecione um dicionario"</option>
             {names.map(name => (
                 <option key={name} value={name}>{name}</option>
             ))}
