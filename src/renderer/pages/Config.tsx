@@ -8,12 +8,14 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { DonwloadIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
+import { AddIcon, DonwloadIcon, EditIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 import { WordPicker } from "../components/modals/WordPicker"
 import { LineTitle } from "../components/LineTitle"
+import { AddDictionaryModal } from "../components/modals/AddDictionary"
+import { DeleteDictionaryModal } from "../components/modals/DeleteDictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -101,20 +103,11 @@ export function ConfigScreen() {
     }
 
     function DeleteDictionary() {
-        modal.open(<WarningModal title="Você tem certeza?" onClose={(result) => {
-            if (result) {
-                api.words.DeleteDictionary()
-                modal.open(<AlertModal title="Sucesso" message="Dicionário deletado com sucesso!" onClose={modal.hide} />)
-            } else {
-                modal.hide()
-            }
-        }}>
-            <p>
-                Essa ação é <span className="bold">irreversível</span>, todo conteúdo será <span className="bold">deletado!</span>
-            </p>
-            <br />
-            <p>Ainda deseja prosseguir?</p>
-        </WarningModal>)
+        modal.open(<DeleteDictionaryModal onClose={modal.hide} />)
+    }
+
+    function HandleAddDictionary() {
+        modal.open(<AddDictionaryModal onClose={modal.hide} />)
     }
 
     return (
@@ -180,6 +173,27 @@ export function ConfigScreen() {
                                 <option value="light">Claro</option>
                                 <option value="dark">Escuro</option>
                             </select>
+
+                            <LineTitle title="Dicionários" />
+
+                            <span>Adicionar dicionário</span>
+                            <button className="stroke" onClick={HandleAddDictionary} >
+                                <AddIcon className="use-main-colors" />
+                                Adicionar
+                            </button>
+
+                            <span>Editar dicionário</span>
+                            <button className="stroke">
+                                <EditIcon className="use-main-colors" />
+                                Editar
+                            </button>
+
+                            <span className="warning">Deletar dicionário</span>
+                            <button className="stroke warning" onClick={DeleteDictionary}>
+                                <TrashIcon className="use-main-colors" />
+                                Deletar
+                            </button>
+
 
                             <LineTitle title="Outros" />
 

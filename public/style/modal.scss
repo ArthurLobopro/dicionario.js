@@ -153,5 +153,23 @@
         ul {
             padding-left: 20px;
         }
+
+        &#add-dictionary {
+            label {
+                display: flex;
+                align-items: center;
+
+                gap: 8px;
+
+                input[type="checkbox"] {
+                    height: 16px;
+                    width: 16px;
+                    border-radius: 4px;
+
+                    margin: 0 5px 0 0;
+                    cursor: pointer;
+                }
+            }
+        }
     }
 }
