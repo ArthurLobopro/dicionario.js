@@ -67,4 +67,12 @@ header {
             background-color: rgba(0, 0, 0, 0.171);
         }
     }
+
+    &:has(.left:not(:empty))>.right:empty {
+        width: 30px;
+    }
+
+    &:has(.right:not(:empty))>.left:empty {
+        width: 30px;
+    }
 }
