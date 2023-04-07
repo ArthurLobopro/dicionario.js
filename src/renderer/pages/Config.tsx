@@ -100,7 +100,7 @@ export function ConfigScreen() {
                             <span>Modo escuro</span>
                             <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
-                            <WindowSection modal={modal} />
+                            <WindowSection />
 
                             <DictionarySection modal={modal} />
 
@@ -127,14 +127,6 @@ export function ConfigScreen() {
                             <button className="stroke fill-center" onClick={() => ipcRenderer.send("open-devtolls")}>
                                 Mostrar ferramentas de desenvolvedor
                             </button>
-
-                            {/* <LineTitle title="Área de Risco" className="warning" />
-
-                            <span className="warning">Deletar dicionário</span>
-                            <button className="stroke warning" onClick={DeleteDictionary}>
-                                <TrashIcon className="use-main-colors" />
-                                Deletar
-                            </button> */}
                         </div>
 
                         <span className="version">{`Versão ${api.version}`}</span>
@@ -149,9 +141,7 @@ interface sectionProps {
     modal: ReturnType<typeof useModal>
 }
 
-function WindowSection(props: sectionProps) {
-    const { modal } = props
-
+function WindowSection() {
     const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
 
     const useSystemTitleBar = api.options.linux.useSystemTitleBar
