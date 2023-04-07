@@ -1,8 +1,6 @@
 header {
     font-family: 'Open Sans', sans-serif;
-    // position: relative;
     height: 30px;
-    padding: 0 4px;
 
     display: flex;
     flex-direction: row;
@@ -27,12 +25,8 @@ header {
     }
 
     .title {
-        // position: absolute;
-        // right: 50%;
-        // left: 50%;
         top: 0;
         width: max-content;
-        // transform: translateX(-50%);
         user-select: none;
 
         h1 {
@@ -42,14 +36,10 @@ header {
     }
 
     .left,
-    .rigth {
-        padding: 0 4px 0 0;
-        cursor: pointer;
+    .right {
         border-radius: 50%;
-
         width: 30px;
         height: 30px;
-
         display: flex;
         justify-content: center;
         align-items: center;
@@ -57,9 +47,15 @@ header {
         svg {
             width: 70%;
             height: 70%;
+            cursor: pointer;
 
             * {
                 stroke: var(--main-color);
+            }
+
+            &.add-button {
+                width: 26px;
+                height: 26px;
             }
         }
 

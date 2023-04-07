@@ -301,18 +301,6 @@ button {
                         width: 18px;
                         height: 18px;
                         aspect-ratio: 1/1;
-
-                        &.use-main-colors {
-                            * {
-                                &[stroke]:not([stroke="none"]) {
-                                    stroke: var(--main-color);
-                                }
-
-                                &[fill]:not([fill="none"]) {
-                                    fill: var(--main-color);
-                                }
-                            }
-                        }
                     }
                 }
             }
@@ -323,6 +311,18 @@ button {
         }
     }
 
+}
+
+svg.use-main-colors {
+    * {
+        &[stroke]:not([stroke="none"]) {
+            stroke: var(--main-color);
+        }
+
+        &[fill]:not([fill="none"]) {
+            fill: var(--main-color);
+        }
+    }
 }
 
 input:not([type="checkbox"]),
