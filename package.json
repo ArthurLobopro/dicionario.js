@@ -33,6 +33,7 @@
     "typescript": "^5.0.3"
   },
   "dependencies": {
+    "@electron-fonts/nunito": "^1.0.5",
     "@electron-fonts/open-sans": "^1.0.3",
     "electron-frame": "^1.2.6",
     "electron-squirrel-startup": "^1.0.0",

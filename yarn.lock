@@ -191,6 +191,13 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@electron-fonts/nunito@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/nunito/-/nunito-1.0.5.tgz#edb98d55bc2bdc199650b30aba1e1d876e285251"
+  integrity sha512-hYlEo2X2mFNRhI1gX3PXVkl0dHsJScyHaWfczZYpevfJKGXCAhyMIWgv1NzeZVKUrlj2xLgr1Auewq3qev1WfA==
+  dependencies:
+    electron-css-injector "^1.0.0"
+
 "@electron-fonts/open-sans@^1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@electron-fonts/open-sans/-/open-sans-1.0.3.tgz#e0953e7a55e8e4f571a37146cc2ddb3375504299"
