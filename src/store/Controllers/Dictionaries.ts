@@ -1,4 +1,7 @@
-import { StoreWord, dictionary } from "../Schemas"
+import { ipcRenderer } from "electron"
+import * as fs from "node:fs"
+import * as path from "node:path"
+import { dictionary } from "../Schemas"
 import { dictionaries as dictionaryStore } from "../Store"
 import { DictionaryController } from "./Dictionary"
 
@@ -88,5 +91,27 @@ export class DictionariesController {
         const dictionaries = dictionaryStore.get("dictionaries").filter(dictionary => dictionary.name !== name)
 
         dictionaryStore.set("dictionaries", dictionaries)
+    }
+
+    static exportDictionary(name: string, folder: string) {
+        const dictionary = DictionariesController.getDictionary(name)
+
+        const content = dictionary.export()
+
+        const exportName = name.replace(/ /g, "_").toLowerCase()
+        const currentDateTime = new Date()
+            .toLocaleDateString("pt-BR", {
+                day: "2-digit",
+                month: "2-digit",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            })
+            .replace(/\//g, "-")
+            .replace(/, /g, "_")
+
+        const filePath = path.resolve(folder, `${exportName}_${currentDateTime}.json`)
+
+        fs.writeFileSync(filePath, content)
     }
 }

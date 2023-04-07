@@ -21,6 +21,10 @@ export class DictionaryController {
         DictionariesController.saveDictionary(this.dictionary)
     }
 
+    export() {
+        return JSON.stringify(this.dictionary, null, 4)
+    }
+
 }
 
 type words = {

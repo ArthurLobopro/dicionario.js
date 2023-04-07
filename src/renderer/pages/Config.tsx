@@ -17,6 +17,7 @@ import { LineTitle } from "../components/LineTitle"
 import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionary"
 import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
 import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
+import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -205,6 +206,10 @@ function DictionarySection(props: DictionarySectionsProps) {
         modal.open(<DeleteDictionaryModal onClose={modal.close} />)
     }
 
+    async function ExportDictionary() {
+        modal.open(<ExportDictionaryModal onClose={modal.close} />)
+    }
+
     return (
         <>
             <LineTitle title="Dicionários" />
@@ -225,6 +230,12 @@ function DictionarySection(props: DictionarySectionsProps) {
             <button className="stroke warning" onClick={HandleDeleteDictionary} title="Deletar um dicionário">
                 <TrashIcon className="use-main-colors" />
                 Deletar
+            </button>
+
+            <span>Exportar palavras</span>
+            <button className="stroke" onClick={ExportDictionary}>
+                <UploadIcon />
+                Exportar
             </button>
         </>
     )
