@@ -99,13 +99,11 @@ export function ViewScreen() {
     const atual_location = window.location.href.split("#")[1]
 
     const add_button = (
-        <Link
-            className="add-button"
-            to={`/create/${dictionary.name}?return_to=${atual_location}`}
+        <AddIcon
+            onClick={() => navigate(`/create/${dictionary.name}?return_to=${atual_location}`)}
             title="Adicionar palavra"
-        >
-            <AddIcon />
-        </Link>
+            className="add-button"
+        />
     )
 
     return (
