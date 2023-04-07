@@ -7,36 +7,36 @@ header {
     align-items: center;
     justify-content: space-between;
 
-    .select-title {
-        font-size: 28px;
-        width: max-content;
-        border: none;
-        text-align: center;
-        opacity: 1;
-        cursor: pointer;
-
-        option {
-            font-size: 16px;
-        }
-
-        &:hover {
-            background-color: var(--main-hover-background);
-        }
-    }
-
-    .title {
+    >.title {
         top: 0;
         width: max-content;
         user-select: none;
 
-        h1 {
+        >.select-title {
+            font-size: 28px;
+            width: max-content;
+            border: none;
+            text-align: center;
+            opacity: 1;
+            cursor: pointer;
+
+            option {
+                font-size: 16px;
+            }
+
+            &:hover {
+                background-color: var(--main-hover-background);
+            }
+        }
+
+        >h1 {
             font-size: 30px;
             line-height: 30px;
         }
     }
 
-    .left,
-    .right {
+    >.left,
+    >.right {
         border-radius: 50%;
         width: 30px;
         height: 30px;
