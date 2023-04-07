@@ -237,19 +237,19 @@ function DictionarySection(props: DictionarySectionsProps) {
             <LineTitle title="Dicionários" />
 
             <span>Adicionar dicionário</span>
-            <button className="stroke" onClick={HandleAddDictionary} >
+            <button className="stroke" onClick={HandleAddDictionary} title="Adicionar um dicionário" >
                 <AddIcon className="use-main-colors" />
                 Adicionar
             </button>
 
             <span>Editar dicionário</span>
-            <button className="stroke" onClick={HandleEditDictionary}>
+            <button className="stroke" onClick={HandleEditDictionary} title="Editar um dicionário">
                 <EditIcon className="use-main-colors" />
                 Editar
             </button>
 
             <span className="warning">Deletar dicionário</span>
-            <button className="stroke warning" onClick={HandleDeleteDictionary}>
+            <button className="stroke warning" onClick={HandleDeleteDictionary} title="Deletar um dicionário">
                 <TrashIcon className="use-main-colors" />
                 Deletar
             </button>
