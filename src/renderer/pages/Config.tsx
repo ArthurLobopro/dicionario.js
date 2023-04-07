@@ -14,9 +14,9 @@ import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 import { WordPicker } from "../components/modals/WordPicker"
 import { LineTitle } from "../components/LineTitle"
-import { AddDictionaryModal } from "../components/modals/AddDictionary"
-import { DeleteDictionaryModal } from "../components/modals/DeleteDictionary"
-import { EditDictionaryModal } from "../components/modals/EditDictionary"
+import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionary"
+import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
+import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 

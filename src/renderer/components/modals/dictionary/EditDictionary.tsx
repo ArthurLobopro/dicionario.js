@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
-import { ModalWrapper } from "./Wrapper"
-import { api } from "../../../store/Api"
-import { SelectDictionary } from "../selects/Dictionary"
-import { dictionary } from "../../../store/Schemas"
+import { ModalWrapper } from "../Wrapper"
+import { api } from "../../../../store/Api"
+import { SelectDictionary } from "../../selects/Dictionary"
+import { dictionary } from "../../../../store/Schemas"
 
 interface editDictionaryProps {
     onClose: () => void

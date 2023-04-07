@@ -1,10 +1,10 @@
 import { useState } from "react"
-import { SelectDictionary } from "../selects/Dictionary"
-import { ModalWrapper } from "./Wrapper"
-import { useModal } from "../../hooks/useModal"
-import { WarningModal } from "./Warning"
-import { api } from "../../../store/Api"
-import { AlertModal } from "./Alert"
+import { SelectDictionary } from "../../selects/Dictionary"
+import { ModalWrapper } from "../Wrapper"
+import { useModal } from "../../../hooks/useModal"
+import { WarningModal } from "../Warning"
+import { api } from "../../../../store/Api"
+import { AlertModal } from "../Alert"
 
 interface modal_props {
     onClose: () => void

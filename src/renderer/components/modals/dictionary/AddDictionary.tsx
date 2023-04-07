@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { ModalWrapper } from "./Wrapper"
-import { api } from "../../../store/Api"
+import { ModalWrapper } from "../Wrapper"
+import { api } from "../../../../store/Api"
 
 interface addDictionaryProps {
     onClose: () => void
