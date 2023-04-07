@@ -43,29 +43,6 @@ export function ConfigScreen() {
         frame.updateTheme()
     }
 
-
-    async function ExportWords() {
-        modal.open(<WordPicker
-            title="Selecione as palavras para exportar"
-            onClose={(words) => {
-                if (words.length === 0) {
-                    return modal.hide()
-                }
-                const { status } = api.words.ExportWords(words)
-
-                if (status === "canceled") {
-                    return
-                }
-
-                if (status === "success") {
-                    modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
-                } else {
-                    modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
-                }
-            }}
-        />)
-    }
-
     function ImportWords() {
         try {
             const { status, count = 0 } = api.words.ImportWords()
@@ -106,11 +83,7 @@ export function ConfigScreen() {
 
                             <LineTitle title="Outros" />
 
-                            {/* <span>Exportar palavras</span>
-                            <button className="stroke" onClick={ExportWords}>
-                                <UploadIcon />
-                                Exportar
-                            </button>
+                            {/* 
 
                             <span>Importar palavras</span>
                             <button className="stroke" onClick={ImportWords}>
