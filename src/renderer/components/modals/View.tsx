@@ -34,7 +34,7 @@ export function ViewModal(props: viewModalProps) {
                             </div> : null
                         }
                     </div>
-                    <button className="btn" onClick={props.onClose}>Ok</button>
+                    <button onClick={props.onClose}>Ok</button>
                 </div>
             </div>
         </ModalWrapper>
