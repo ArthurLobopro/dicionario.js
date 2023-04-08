@@ -18,6 +18,7 @@ import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionar
 import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
 import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
 import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
+import { ImportDictionaryModal } from "../components/modals/dictionary/ImportDictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -83,14 +84,6 @@ export function ConfigScreen() {
                             <DictionarySection modal={modal} />
 
                             <LineTitle title="Outros" />
-
-                            {/* 
-
-                            <span>Importar palavras</span>
-                            <button className="stroke" onClick={ImportWords}>
-                                <DonwloadIcon />
-                                Importar
-                            </button> */}
 
                             <span>Sobre</span>
                             <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
@@ -206,8 +199,12 @@ function DictionarySection(props: DictionarySectionsProps) {
         modal.open(<DeleteDictionaryModal onClose={modal.close} />)
     }
 
-    async function ExportDictionary() {
+    function HandleExportDictionary() {
         modal.open(<ExportDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleImportDictionary() {
+        modal.open(<ImportDictionaryModal onClose={modal.close} />)
     }
 
     return (
@@ -232,10 +229,16 @@ function DictionarySection(props: DictionarySectionsProps) {
                 Deletar
             </button>
 
-            <span>Exportar palavras</span>
-            <button className="stroke" onClick={ExportDictionary}>
+            <span>Exportar dicionário</span>
+            <button className="stroke" onClick={HandleExportDictionary}>
                 <UploadIcon />
                 Exportar
+            </button>
+
+            <span>Importar dicionário</span>
+            <button className="stroke" onClick={HandleImportDictionary}>
+                <DonwloadIcon />
+                Importar
             </button>
         </>
     )
