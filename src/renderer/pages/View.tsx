@@ -25,7 +25,11 @@ export function ViewScreen() {
     const modal = useModal()
 
     function ShowViewModal(word: string) {
-        modal.open(<ViewModal word={word} onClose={modal.hide} />)
+        modal.open(<ViewModal
+            onClose={modal.hide}
+            dictionary={dictionary}
+            word={word}
+        />)
     }
 
     function DeleteWord(word: string) {
