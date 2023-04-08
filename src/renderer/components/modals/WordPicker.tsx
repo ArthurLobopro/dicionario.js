@@ -50,7 +50,7 @@ export function WordPicker(props: WordPickerProps) {
                         title={wordsToSave.length === 0 ?
                             "Selecione pelo menos uma palavra" : "Exportar as palavras selecionadas."
                         }
-                        className={wordsToSave.length === 0 ? "disable" : ""}
+                        className={wordsToSave.length === 0 ? "disabled" : ""}
                         onClick={wordsToSave.length === 0 ? undefined : () => props.onClose(wordsToSave)}
                     >
                         Exportar

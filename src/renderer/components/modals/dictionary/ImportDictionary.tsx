@@ -112,7 +112,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                         ...readyToImport ? {
                             onClick: HandleSubmit
                         } : {
-                            className: "disable",
+                            className: "disabled",
                             title: "Selecione um arquivo válido"
                         }
                     }>

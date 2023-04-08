@@ -137,7 +137,7 @@
                     border-color: var(--red);
                 }
 
-                &:not(.disable) {
+                &:not(.disabled) {
                     &.close:hover {
                         filter: brightness(1.1);
                         transition: background 200ms;
