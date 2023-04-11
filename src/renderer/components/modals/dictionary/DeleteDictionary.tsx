@@ -5,6 +5,7 @@ import { useModal } from "../../../hooks/useModal"
 import { WarningModal } from "../Warning"
 import { api } from "../../../../store/Api"
 import { AlertModal } from "../Alert"
+import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 
 interface modal_props {
     onClose: () => void
@@ -17,6 +18,14 @@ export function DeleteDictionaryModal(props: modal_props) {
 
     async function HandleDelete() {
         if (dictionary === "") {
+            return
+        }
+
+        if (dictionary === DictionariesController.getDefaultDictionary().name) {
+            modal.open(<AlertModal
+                title="Erro" onClose={modal.close}
+                message={`Você não pode deletar o dicionário padrão`}
+            />)
             return
         }
 

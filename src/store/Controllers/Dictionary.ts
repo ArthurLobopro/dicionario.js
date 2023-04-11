@@ -1,4 +1,4 @@
-import { dictionary } from "../Schemas"
+import { StoreWord, dictionary } from "../Schemas"
 import { data } from "../Store"
 import { DictionariesController } from "./Dictionaries"
 
@@ -151,5 +151,30 @@ class WordsController {
 
     clearWords() {
         this.dictionary.words = []
+    }
+
+    mergeWords(words: StoreWord[]) {
+
+        const new_words = this.words
+        const keys = Object.entries(new_words).map(([key]) => key)
+
+        words.forEach(word => {
+            if (!keys.includes(word.word)) {
+                new_words[word.word] = {
+                    definition: word.definition,
+                    register: new Date(word.register),
+                    ...(word.lastEdit ? {
+                        lastEdit: new Date(word.lastEdit)
+                    } : {})
+                }
+            }
+        })
+
+        console.log(words)
+        console.log(new_words)
+
+        this.dictionary.words = this.getWordsToSave(this.sortWords(new_words))
+
+        this.#dictionary.save()
     }
 }

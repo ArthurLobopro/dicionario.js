@@ -6,6 +6,7 @@ import { dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
 import { AlertModal } from "../Alert"
 import { ModalWrapper } from "../Wrapper"
+import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 
 function CheckFileContent(filePath: string) {
     const fileContent = fs.readFileSync(filePath, "utf-8")
@@ -33,7 +34,12 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
     const modal = useModal()
 
-    const readyToImport = selectedFile.path && selectedFile.content.words
+    const readyToImport = selectedFile.path && selectedFile.content.words.length > 0
+
+    const alreadyExists = readyToImport && DictionariesController.getDictionariesNames().includes(selectedFile.content.name)
+
+    const [action, setAction] = useState<"merge" | "rename">("rename")
+    const [newName, setNewName] = useState("")
 
     function HandlePickFile() {
         setSelectedFile({
@@ -61,7 +67,38 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
     }
 
     function HandleSubmit() {
+        if (!readyToImport) {
+            return
+        }
 
+        if (alreadyExists) {
+            if (action === "merge") {
+                DictionariesController.mergeDictionary(selectedFile.content)
+
+                return modal.open(<AlertModal
+                    title="Sucesso" message="Dicionário mesclado com sucesso"
+                    onClose={props.onClose}
+                />)
+            }
+
+
+            DictionariesController.importDictionary({
+                ...selectedFile.content,
+                name: newName
+            })
+
+            return modal.open(<AlertModal
+                title="Sucesso" message="Dicionário importado com sucesso"
+                onClose={props.onClose}
+            />)
+        } else {
+            DictionariesController.importDictionary(selectedFile.content)
+
+            modal.open(<AlertModal
+                title="Sucesso" message="Dicionário importado com sucesso"
+                onClose={props.onClose}
+            />)
+        }
     }
 
     return (
@@ -86,7 +123,42 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                         </div>
 
                         {
-                            selectedFile.path && selectedFile.content.words ? (
+                            alreadyExists ? (
+                                <div className="flex-column gap">
+                                    <p>
+                                        Já existe um dicionário com o nome "{selectedFile.content.name}".
+                                    </p>
+
+                                    <div className="flex gap-10 align-center">
+                                        O que deseja fazer?
+                                        <select onChange={(event) => {
+                                            setAction(event.target.value as "merge" | "rename")
+                                        }} value={action}>
+                                            <option value="rename">Renomear</option>
+                                            <option value="merge">Mesclar</option>
+                                        </select>
+                                    </div>
+
+                                    {
+                                        action === "rename" ? (
+                                            <div className="flex-column gap-10 align-center">
+                                                <span>Novo nome:</span>
+                                                <input
+                                                    type="text" className="simple"
+                                                    value={newName} onChange={(event) => {
+                                                        setNewName(event.target.value)
+                                                    }}
+                                                />
+                                            </div>
+                                        ) : <span>As palavras que ainda não existirem serão cadastradas</span>
+                                    }
+
+                                </div>
+                            ) : <></>
+                        }
+
+                        {
+                            selectedFile.path && selectedFile.content.words && !alreadyExists ? (
                                 <div className="flex-column gap-10">
                                     <p>
                                         Foi encontrado um dicionário com as seguintes informações:
@@ -104,9 +176,8 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                             ) : <></>
                         }
                     </div>
-
-
                 </div>
+
                 <div className="modal-footer">
                     <button {
                         ...readyToImport ? {
@@ -116,7 +187,11 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                             title: "Selecione um arquivo válido"
                         }
                     }>
-                        Importar
+                        {
+                            alreadyExists ?
+                                (action === "merge" ? "Mesclar" : "Importar")
+                                : "Importar"
+                        }
                     </button>
                     <button className="cancel" onClick={props.onClose}>
                         Cancelar

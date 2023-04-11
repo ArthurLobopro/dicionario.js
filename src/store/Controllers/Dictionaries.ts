@@ -114,4 +114,25 @@ export class DictionariesController {
 
         fs.writeFileSync(filePath, content)
     }
+
+    static importDictionary(dicionary: dictionary) {
+        const dictionaries = dictionaryStore.get("dictionaries")
+
+        const names = dictionaries.map(dictionary => dictionary.name)
+
+        if (names.includes(dicionary.name)) {
+            throw new Error("Dictionary already exists")
+        }
+
+        dictionaries.push(dicionary)
+
+        dictionaryStore.set("dictionaries", dictionaries)
+
+    }
+
+    static mergeDictionary(dictionary: dictionary) {
+        const current_dictionary = DictionariesController.getDictionary(dictionary.name)
+
+        current_dictionary.Words.mergeWords(dictionary.words)
+    }
 }
