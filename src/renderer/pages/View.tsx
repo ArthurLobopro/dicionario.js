@@ -1,5 +1,5 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
@@ -7,16 +7,29 @@ import { ReturnButton } from "../components/ReturnButton"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
 import { useModal } from "../hooks/useModal"
-import { EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
+import { AddIcon, EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
+import { SelectDictionary } from "../components/selects/Dictionary"
 
 export function ViewScreen() {
-    const [words, setWords] = useState(Object.entries(api.words.GetWords()))
+    const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
+
+    const getWords = () => Object.entries(dictionary.Words.words)
+
+    const [words, setWords] = useState(getWords())
+
+    useEffect(() => {
+        setWords(getWords())
+    }, [dictionary])
 
     const navigate = useNavigate()
     const modal = useModal()
 
     function ShowViewModal(word: string) {
-        modal.open(<ViewModal word={word} onClose={modal.hide} />)
+        modal.open(<ViewModal
+            onClose={modal.hide}
+            dictionary={dictionary}
+            word={word}
+        />)
     }
 
     function DeleteWord(word: string) {
@@ -25,8 +38,8 @@ export function ViewScreen() {
             title="Você tem certeza?"
             onClose={(confirm) => {
                 if (confirm) {
-                    api.words.DeleteWord(word)
-                    setWords(Object.entries(api.words))
+                    dictionary.Words.deleteWord(word)
+                    setWords(Object.entries(dictionary.Words.words))
                 }
                 modal.hide()
             }}
@@ -54,7 +67,7 @@ export function ViewScreen() {
                                     </div>
                                     <div title="Editar" id="edit"
                                         onClick={() => {
-                                            navigate(`/update/${word}`)
+                                            navigate(`/update/${dictionary.name}/${word}`)
                                         }}
                                     >
                                         <EditIcon />
@@ -79,7 +92,7 @@ export function ViewScreen() {
                         Você ainda não cadastrou nenhuma palavra. Que tal começar agora?
                     </div>
 
-                    <button onClick={() => navigate("/create")}>
+                    <button onClick={() => navigate(`/create/${dictionary.name}?return_to=${atual_location}`)}>
                         Cadastrar Palavra
                     </button>
                 </div>
@@ -87,10 +100,30 @@ export function ViewScreen() {
         }
     }
 
+    const atual_location = window.location.href.split("#")[1]
+
+    const add_button = (
+        <AddIcon
+            onClick={() => navigate(`/create/${dictionary.name}?return_to=${atual_location}`)}
+            title="Adicionar palavra"
+            className="add-button"
+        />
+    )
+
     return (
         <Page id="view">
             {modal.content}
-            <Header title="Visualizar Palavras" left={<ReturnButton />}></Header>
+            <Header
+                title={<SelectDictionary titleMode={true}
+                    onChange={(name: string) => {
+                        if (name !== dictionary.name) {
+                            setDictionary(api.dictionaries.getDictionary(name))
+                        }
+                    }} />
+                }
+                left={<ReturnButton />}
+                right={add_button}
+            />
             {words.length > 0 ? contents.words : contents.empty}
         </Page>
     )

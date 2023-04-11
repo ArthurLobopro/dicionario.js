@@ -32,7 +32,8 @@ async function generateIcons() {
                 exportType: "named",
                 namedExport: component_name,
                 typescript: true,
-                jsx: true
+                jsx: true,
+                titleProp: true,
             },
             { componentName: component_name }
         )

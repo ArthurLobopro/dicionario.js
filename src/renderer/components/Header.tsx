@@ -1,13 +1,21 @@
 interface HeaderProps {
-    title: string,
+    title: string | JSX.Element,
     left?: JSX.Element
+    right?: JSX.Element
 }
 
 export function Header(props: HeaderProps) {
     return (
-        <header className="grid-fill-center gap">
-            {props.left}
-            <h1>{props.title}</h1>
+        <header>
+            <div className="left">{props.left}</div>
+            <div className="title">
+                {
+                    typeof props.title === "string" ?
+                        <h1>{props.title}</h1> :
+                        props.title
+                }
+            </div>
+            <div className="right">{props.right}</div>
         </header>
     )
 }

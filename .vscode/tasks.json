@@ -1,0 +1,21 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "tsc: watch",
+            "command": "yarn tsc --watch",
+            "type": "shell",
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        },
+        {
+            "label": "sass: watch",
+            "command": "yarn sass-compiler --watch",
+            "type": "shell",
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}

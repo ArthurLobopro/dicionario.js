@@ -1,0 +1,102 @@
+.page#config {
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    .dashed-border {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        justify-content: space-between;
+        font-family: "Nunito", sans-serif;
+        height: 100%;
+        padding: 16px;
+        margin: 16px;
+
+        &:has(.has-scrollbar) {
+            padding-right: 6px;
+        }
+    }
+
+    .config-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+        height: 100%;
+
+        position: absolute;
+        width: 100%;
+
+        overflow-y: auto;
+
+        &.has-scrollbar {
+            padding-right: 4px;
+        }
+
+        &::-webkit-scrollbar {
+            width: 8px;
+        }
+    }
+
+    .lines {
+        font-size: 18px;
+        display: grid;
+        grid-template-columns: auto max-content;
+        gap: 10px;
+        align-items: center;
+
+        .fill-center {
+            grid-column: 1/3;
+            width: max-content;
+        }
+
+        .line-title {
+            grid-column: 1/3;
+        }
+
+        .switch {
+            justify-self: right;
+        }
+
+        select {
+            font-size: 14px;
+            cursor: pointer;
+
+            &:hover:not(:disabled) {
+                box-shadow: inset 0 0 0 1px var(--main-color);
+            }
+        }
+
+        button {
+            width: 100%;
+            font-size: 14px;
+            padding: 4px 6px;
+            border-radius: 4px;
+
+            &:hover {
+                box-shadow: inset 0 0 0 1px currentColor;
+            }
+
+            &:has(svg) {
+                display: flex;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 5px;
+                padding: 5px 10px;
+                line-height: 15px;
+
+                svg {
+                    width: 18px;
+                    height: 18px;
+                    aspect-ratio: 1/1;
+                }
+            }
+        }
+    }
+
+    .version {
+        align-self: center;
+    }
+}

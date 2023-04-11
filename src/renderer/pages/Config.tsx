@@ -8,23 +8,24 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { DonwloadIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
+import { AddIcon, DonwloadIcon, EditIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
 import { AlertModal } from "../components/modals/Alert"
 import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 import { WordPicker } from "../components/modals/WordPicker"
 import { LineTitle } from "../components/LineTitle"
+import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionary"
+import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
+import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
+import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
+import { ImportDictionaryModal } from "../components/modals/dictionary/ImportDictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
 const isLinux = process.platform === "linux"
 
 export function ConfigScreen() {
-    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
-
     const modal = useModal()
-
-    const useSystemTitleBar = api.options.linux.useSystemTitleBar
 
     const wrapperRef = useRef<HTMLDivElement>(null)
 
@@ -42,42 +43,6 @@ export function ConfigScreen() {
         api.options.toggleDarkMode()
         document.body.classList.toggle("dark")
         frame.updateTheme()
-    }
-
-    function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
-        api.options.setFrameTheme(frameTheme)
-        setConfig({ ...config, frameTheme })
-        frame.updateTheme()
-    }
-
-    function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const frameStyle = event.currentTarget.value as frameStyle
-        api.options.setFrameStyle(frameStyle)
-        setConfig({ ...config, frameStyle })
-        frame.setFrameStyle(frameStyle)
-    }
-
-    async function ExportWords() {
-        modal.open(<WordPicker
-            title="Selecione as palavras para exportar"
-            onClose={(words) => {
-                if (words.length === 0) {
-                    return modal.hide()
-                }
-                const { status } = api.words.ExportWords(words)
-
-                if (status === "canceled") {
-                    return
-                }
-
-                if (status === "success") {
-                    modal.open(<AlertModal title="Sucesso" message="Palavras exportadas com sucesso!" onClose={modal.hide} />)
-                } else {
-                    modal.open(<AlertModal title="Erro" message="Não foi possível exportar as palavras." onClose={modal.hide} />)
-                }
-            }}
-        />)
     }
 
     function ImportWords() {
@@ -100,23 +65,6 @@ export function ConfigScreen() {
         }
     }
 
-    function DeleteDictionary() {
-        modal.open(<WarningModal title="Você tem certeza?" onClose={(result) => {
-            if (result) {
-                api.words.DeleteDictionary()
-                modal.open(<AlertModal title="Sucesso" message="Dicionário deletado com sucesso!" onClose={modal.hide} />)
-            } else {
-                modal.hide()
-            }
-        }}>
-            <p>
-                Essa ação é <span className="bold">irreversível</span>, todo conteúdo será <span className="bold">deletado!</span>
-            </p>
-            <br />
-            <p>Ainda deseja prosseguir?</p>
-        </WarningModal>)
-    }
-
     return (
         <Page id="config">
             {modal.content}
@@ -131,69 +79,11 @@ export function ConfigScreen() {
                             <span>Modo escuro</span>
                             <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
 
-                            <LineTitle title="Janela" />
+                            <WindowSection />
 
-                            {
-                                isLinux && (
-                                    <>
-                                        <span>Usar titlebar do sistema</span>
-                                        <Switcher
-                                            onToggle={() => {
-                                                api.options.toggleSystemTitleBar()
-                                                ipcRenderer.send("relaunch")
-                                            }}
-                                            checked={useSystemTitleBar}
-                                        />
-                                    </>
-                                )
-                            }
-
-                            <span>Estilo da titlebar</span>
-                            <select
-                                className="select"
-                                value={config.frameStyle}
-                                onChange={HandleFrameStyleChange}
-                                disabled={useSystemTitleBar}
-                                title={
-                                    useSystemTitleBar ?
-                                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
-                                        "Alterar o estilo da titlebar"
-                                }
-                            >
-                                <option value="windows">Windows</option>
-                                <option value="macos">Macos</option>
-                            </select>
-
-                            <span>Tema da titlebar</span>
-                            <select
-                                className="select"
-                                value={config.frameTheme}
-                                onChange={HandleFrameThemeChange}
-                                disabled={useSystemTitleBar}
-                                title={
-                                    useSystemTitleBar ?
-                                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
-                                        "Alterar o tema da titlebar"
-                                }
-                            >
-                                <option value="auto">Automatico</option>
-                                <option value="light">Claro</option>
-                                <option value="dark">Escuro</option>
-                            </select>
+                            <DictionarySection modal={modal} />
 
                             <LineTitle title="Outros" />
-
-                            <span>Exportar palavras</span>
-                            <button className="stroke" onClick={ExportWords}>
-                                <UploadIcon />
-                                Exportar
-                            </button>
-
-                            <span>Importar palavras</span>
-                            <button className="stroke" onClick={ImportWords}>
-                                <DonwloadIcon />
-                                Importar
-                            </button>
 
                             <span>Sobre</span>
                             <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
@@ -204,14 +94,6 @@ export function ConfigScreen() {
                             <button className="stroke fill-center" onClick={() => ipcRenderer.send("open-devtolls")}>
                                 Mostrar ferramentas de desenvolvedor
                             </button>
-
-                            <LineTitle title="Área de Risco" className="warning" />
-
-                            <span className="warning">Deletar dicionário</span>
-                            <button className="stroke warning" onClick={DeleteDictionary}>
-                                <TrashIcon className="use-main-colors" />
-                                Deletar
-                            </button>
                         </div>
 
                         <span className="version">{`Versão ${api.version}`}</span>
@@ -219,5 +101,145 @@ export function ConfigScreen() {
                 </div>
             </div >
         </Page >
+    )
+}
+
+interface sectionProps {
+    modal: ReturnType<typeof useModal>
+}
+
+function WindowSection() {
+    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
+
+    const useSystemTitleBar = api.options.linux.useSystemTitleBar
+
+    function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
+        api.options.setFrameTheme(frameTheme)
+        setConfig({ ...config, frameTheme })
+        frame.updateTheme()
+    }
+
+    function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+        const frameStyle = event.currentTarget.value as frameStyle
+        api.options.setFrameStyle(frameStyle)
+        setConfig({ ...config, frameStyle })
+        frame.setFrameStyle(frameStyle)
+    }
+
+    return (
+        <>
+            <LineTitle title="Janela" />
+
+            {
+                isLinux && (
+                    <>
+                        <span>Usar titlebar do sistema</span>
+                        <Switcher
+                            onToggle={() => {
+                                api.options.toggleSystemTitleBar()
+                                ipcRenderer.send("relaunch")
+                            }}
+                            checked={useSystemTitleBar}
+                        />
+                    </>
+                )
+            }
+
+            <span>Estilo da titlebar</span>
+            <select
+                className="select"
+                value={config.frameStyle}
+                onChange={HandleFrameStyleChange}
+                disabled={useSystemTitleBar}
+                title={
+                    useSystemTitleBar ?
+                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
+                        "Alterar o estilo da titlebar"
+                }
+            >
+                <option value="windows">Windows</option>
+                <option value="macos">Macos</option>
+            </select>
+
+            <span>Tema da titlebar</span>
+            <select
+                className="select"
+                value={config.frameTheme}
+                onChange={HandleFrameThemeChange}
+                disabled={useSystemTitleBar}
+                title={
+                    useSystemTitleBar ?
+                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
+                        "Alterar o tema da titlebar"
+                }
+            >
+                <option value="auto">Automatico</option>
+                <option value="light">Claro</option>
+                <option value="dark">Escuro</option>
+            </select>
+        </>
+    )
+}
+
+interface DictionarySectionsProps extends sectionProps { }
+
+function DictionarySection(props: DictionarySectionsProps) {
+    const { modal } = props
+
+    function HandleAddDictionary() {
+        modal.open(<AddDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleEditDictionary() {
+        modal.open(<EditDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleDeleteDictionary() {
+        modal.open(<DeleteDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleExportDictionary() {
+        modal.open(<ExportDictionaryModal onClose={modal.close} />)
+    }
+
+    function HandleImportDictionary() {
+        modal.open(<ImportDictionaryModal onClose={modal.close} />)
+    }
+
+    return (
+        <>
+            <LineTitle title="Dicionários" />
+
+            <span>Adicionar dicionário</span>
+            <button className="stroke" onClick={HandleAddDictionary} title="Adicionar um dicionário" >
+                <AddIcon className="use-main-colors" />
+                Adicionar
+            </button>
+
+            <span>Editar dicionário</span>
+            <button className="stroke" onClick={HandleEditDictionary} title="Editar um dicionário">
+                <EditIcon className="use-main-colors" />
+                Editar
+            </button>
+
+            <span className="warning">Deletar dicionário</span>
+            <button className="stroke warning" onClick={HandleDeleteDictionary} title="Deletar um dicionário">
+                <TrashIcon className="use-main-colors" />
+                Deletar
+            </button>
+
+            <span>Exportar dicionário</span>
+            <button className="stroke" onClick={HandleExportDictionary}>
+                <UploadIcon />
+                Exportar
+            </button>
+
+            <span>Importar dicionário</span>
+            <button className="stroke" onClick={HandleImportDictionary}>
+                <DonwloadIcon />
+                Importar
+            </button>
+        </>
     )
 }

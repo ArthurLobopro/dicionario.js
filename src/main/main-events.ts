@@ -14,8 +14,9 @@ ipcMain.on('open-devtolls', (event) => {
 })
 
 ipcMain.on('get-folder', async (event) => {
+    const win = BrowserWindow.fromId(event.sender.id) as BrowserWindow
     try {
-        const result = await dialog.showOpenDialog({
+        const result = await dialog.showOpenDialog(win, {
             properties: ['openDirectory'],
             title: "Selecione uma pasta para exportar:",
         })

@@ -1,4 +1,5 @@
-import OṕenSans from "@electron-fonts/open-sans"
+import Nunito from "@electron-fonts/nunito"
+import OpenSans from "@electron-fonts/open-sans"
 
-
-OṕenSans.inject()
+Nunito.inject()
+OpenSans.inject()

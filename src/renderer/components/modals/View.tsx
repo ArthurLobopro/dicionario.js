@@ -1,14 +1,15 @@
 import { formatDate } from "../../../Util"
-import { api } from "../../../store/Api"
+import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { ModalWrapper } from "./Wrapper"
 
 interface viewModalProps {
+    dictionary: DictionaryController,
     word: string,
     onClose: () => void
 }
 
 export function ViewModal(props: viewModalProps) {
-    const word_data = api.words.GetWord(props.word)
+    const word_data = props.dictionary.Words.getWords()[props.word]
 
     return (
         <ModalWrapper>
@@ -34,7 +35,7 @@ export function ViewModal(props: viewModalProps) {
                             </div> : null
                         }
                     </div>
-                    <button className="btn" onClick={props.onClose}>Ok</button>
+                    <button onClick={props.onClose}>Ok</button>
                 </div>
             </div>
         </ModalWrapper>
