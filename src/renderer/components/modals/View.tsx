@@ -13,15 +13,15 @@ export function ViewModal(props: viewModalProps) {
 
     return (
         <ModalWrapper>
-            <div className="modal">
-                <div className="dashed-border spacing-16 grid-fill-center gap">
+            <div className="modal full" id="view-word">
+                <div className="dashed-border spacing-16">
                     <div>
                         <div>Palavra</div>
-                        <textarea readOnly={true} rows={1} className="info big">{props.word}</textarea>
+                        <textarea readOnly={true} rows={1} className="info big" value={props.word}></textarea>
                     </div>
-                    <div>
+                    <div className="flex-column">
                         <div>Significado</div>
-                        <textarea rows={3} readOnly={true} className="info big" >{word_data.definition}</textarea>
+                        <textarea rows={3} readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
                     </div>
                     <div className="date-wrapper">
                         <div>
