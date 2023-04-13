@@ -1,4 +1,5 @@
 export * from "./all-icons/AddIcon"
+export * from "./all-icons/CheckIcon"
 export * from "./all-icons/ConfigIcon"
 export * from "./all-icons/DonwloadIcon"
 export * from "./all-icons/EditIcon"

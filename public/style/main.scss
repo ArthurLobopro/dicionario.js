@@ -141,6 +141,10 @@ select {
     gap: 20px;
 }
 
+.gap-4 {
+    gap: 4px;
+}
+
 .option {
     @extend .dashed-border;
 
