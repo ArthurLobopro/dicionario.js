@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react"
-import { ModalWrapper } from "../Wrapper"
 import { api } from "../../../../store/Api"
+import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
-import { dictionary } from "../../../../store/Schemas"
+import { SucessModal } from "../Success"
+import { ModalWrapper } from "../Wrapper"
 
 interface editDictionaryProps {
     onClose: () => void
@@ -14,6 +15,8 @@ export function EditDictionaryModal(props: editDictionaryProps) {
     const default_dictionary = api.dictionaries.getDefaultDictionary()
 
     const editing_default = currentDictionary.name === default_dictionary.name
+
+    const modal = useModal()
 
     const [data, setData] = useState<{ newName: string, setDefault: boolean }>({
         newName: currentDictionary.name,
@@ -33,12 +36,14 @@ export function EditDictionaryModal(props: editDictionaryProps) {
         }
 
         api.dictionaries.editDictionary(currentDictionary.name, data)
-        props.onClose()
+
+        modal.open(<SucessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
     }
 
     return (
         <ModalWrapper>
             <div className="modal" id="add-dictionary">
+                {modal.content}
                 <div className="modal-header">
                     Adicionar Dicionário
                 </div>

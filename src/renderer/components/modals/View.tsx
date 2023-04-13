@@ -21,7 +21,7 @@ export function ViewModal(props: viewModalProps) {
                     </div>
                     <div className="flex-column">
                         <div>Significado</div>
-                        <textarea rows={3} readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
+                        <textarea readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
                     </div>
                     <div className="date-wrapper">
                         <div>
