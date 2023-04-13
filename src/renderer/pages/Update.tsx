@@ -7,6 +7,7 @@ import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { AlertModal } from "../components/modals/Alert"
 import { useModal } from "../hooks/useModal"
+import { SuccessModal } from "../components/modals/Success"
 
 const update_word_schema = z.object({
     word: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
@@ -32,7 +33,7 @@ export function UpdateScreen() {
 
             dictionary.Words.updateWord(word as string, { ...send_data, new_word: send_data.word, })
 
-            modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
+            modal.open(<SuccessModal message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.hide()
                 navigate("/view")
             }} />)

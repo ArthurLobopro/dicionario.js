@@ -6,6 +6,7 @@ import { WarningModal } from "../Warning"
 import { api } from "../../../../store/Api"
 import { AlertModal } from "../Alert"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
+import { SuccessModal } from "../Success"
 
 interface modal_props {
     onClose: () => void
@@ -37,8 +38,8 @@ export function DeleteDictionaryModal(props: modal_props) {
         function deleteDictionary() {
             try {
                 api.dictionaries.removeDictionary(dictionary)
-                modal.open(<AlertModal
-                    title="Sucesso" onClose={HandleClose}
+                modal.open(<SuccessModal
+                    onClose={HandleClose}
                     message={`Dicionário "${dictionary}" deletado com sucesso`}
                 />)
             } catch (error) {

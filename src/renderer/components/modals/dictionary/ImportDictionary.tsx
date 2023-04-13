@@ -7,6 +7,7 @@ import { useModal } from "../../../hooks/useModal"
 import { AlertModal } from "../Alert"
 import { ModalWrapper } from "../Wrapper"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
+import { SuccessModal } from "../Success"
 
 function CheckFileContent(filePath: string) {
     const fileContent = fs.readFileSync(filePath, "utf-8")
@@ -75,8 +76,8 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
             if (action === "merge") {
                 DictionariesController.mergeDictionary(selectedFile.content)
 
-                return modal.open(<AlertModal
-                    title="Sucesso" message="Dicionário mesclado com sucesso"
+                return modal.open(<SuccessModal
+                    message="Dicionário mesclado com sucesso"
                     onClose={props.onClose}
                 />)
             }
@@ -87,15 +88,15 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                 name: newName
             })
 
-            return modal.open(<AlertModal
-                title="Sucesso" message="Dicionário importado com sucesso"
+            return modal.open(<SuccessModal
+                message="Dicionário importado com sucesso"
                 onClose={props.onClose}
             />)
         } else {
             DictionariesController.importDictionary(selectedFile.content)
 
-            modal.open(<AlertModal
-                title="Sucesso" message="Dicionário importado com sucesso"
+            modal.open(<SuccessModal
+                message="Dicionário importado com sucesso"
                 onClose={props.onClose}
             />)
         }

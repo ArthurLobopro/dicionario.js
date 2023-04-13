@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
-import { SucessModal } from "../Success"
+import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
 
 interface editDictionaryProps {
@@ -37,7 +37,7 @@ export function EditDictionaryModal(props: editDictionaryProps) {
 
         api.dictionaries.editDictionary(currentDictionary.name, data)
 
-        modal.open(<SucessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
+        modal.open(<SuccessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
     }
 
     return (

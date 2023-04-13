@@ -15,7 +15,7 @@ const DefaultTitle = () => (
     </div>
 )
 
-export function SucessModal(props: alertProps) {
+export function SuccessModal(props: alertProps) {
 
     const {
         title = <DefaultTitle />,

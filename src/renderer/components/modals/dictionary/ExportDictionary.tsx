@@ -1,10 +1,11 @@
-import { useState } from "react"
-import { SelectDictionary } from "../../selects/Dictionary"
-import { ModalWrapper } from "../Wrapper"
 import { ipcRenderer } from "electron"
+import { useState } from "react"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
+import { SelectDictionary } from "../../selects/Dictionary"
 import { AlertModal } from "../Alert"
+import { ModalWrapper } from "../Wrapper"
+import { SuccessModal } from "../Success"
 
 interface ExportDictionaryModalProps {
     onClose: () => void
@@ -34,8 +35,8 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
         api.dictionaries.exportDictionary(data.dictionary, data.path)
 
-        modal.open(<AlertModal
-            title="Sucesso" onClose={props.onClose}
+        modal.open(<SuccessModal
+            onClose={props.onClose}
             message="Dicionário exportado com sucesso!"
         />)
     }

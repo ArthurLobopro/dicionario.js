@@ -19,6 +19,7 @@ import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDic
 import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
 import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
 import { ImportDictionaryModal } from "../components/modals/dictionary/ImportDictionary"
+import { SuccessModal } from "../components/modals/Success"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -57,7 +58,7 @@ export function ConfigScreen() {
                 const message = count === 0 ?
                     "Nenhuma palavra foi importada." :
                     `${count} palavra${count > 1 ? "s" : ""} importada${count > 1 ? "s" : ""} com sucesso!`
-                modal.open(<AlertModal title="Sucesso" message={message} onClose={modal.hide} />)
+                modal.open(<SuccessModal message={message} onClose={modal.hide} />)
             }
         } catch (error: unknown) {
             console.log(error)

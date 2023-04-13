@@ -8,6 +8,7 @@ import { AlertModal } from "../components/modals/Alert"
 import { useModal } from "../hooks/useModal"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useParams, useLocation } from "react-router-dom"
+import { SuccessModal } from "../components/modals/Success"
 
 const create_word_schema = z.object({
     word: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
@@ -59,13 +60,16 @@ export function CreateScreen() {
 
             api.dictionaries.getDictionary(dictionary.name).Words.addWord(send_data)
 
-            modal.open(<AlertModal title="Sucesso" message="Palavra adicionada com sucesso!" onClose={() => {
-                modal.hide()
-                setData({
-                    word: "",
-                    definition: ""
-                })
-            }} />)
+            modal.open(<SuccessModal
+                message="Palavra adicionada com sucesso!"
+                onClose={() => {
+                    modal.hide()
+                    setData({
+                        word: "",
+                        definition: ""
+                    })
+                }}
+            />)
 
         } catch (error: unknown) {
             if (error instanceof ZodError) {
