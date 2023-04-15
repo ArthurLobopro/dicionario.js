@@ -52,7 +52,7 @@ export function ViewScreen() {
                 <div>
                     <div className="word-wrapper">
                         {words.map(([word, word_props]) => (
-                            <div className="word" key={word}>
+                            <div className="word" key={word} onDoubleClick={() => ShowViewModal(word)}>
                                 <div className="content">
                                     <div className="word-header">
                                         {word}
