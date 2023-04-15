@@ -5,20 +5,17 @@ import { api } from "../../store/Api"
 import { StoreOptions } from "../../store/Schemas"
 import { frame } from "../Frame"
 import { Header } from "../components/Header"
+import { LineTitle } from "../components/LineTitle"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
 import { AddIcon, DonwloadIcon, EditIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
-import { AlertModal } from "../components/modals/Alert"
-import { WarningModal } from "../components/modals/Warning"
-import { useModal } from "../hooks/useModal"
-import { WordPicker } from "../components/modals/WordPicker"
-import { LineTitle } from "../components/LineTitle"
 import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionary"
 import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
 import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
 import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
 import { ImportDictionaryModal } from "../components/modals/dictionary/ImportDictionary"
+import { useModal } from "../hooks/useModal"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -43,26 +40,6 @@ export function ConfigScreen() {
         api.options.toggleDarkMode()
         document.body.classList.toggle("dark")
         frame.updateTheme()
-    }
-
-    function ImportWords() {
-        try {
-            const { status, count = 0 } = api.words.ImportWords()
-
-            if (status === "canceled") {
-                return
-            }
-
-            if (status === "success") {
-                const message = count === 0 ?
-                    "Nenhuma palavra foi importada." :
-                    `${count} palavra${count > 1 ? "s" : ""} importada${count > 1 ? "s" : ""} com sucesso!`
-                modal.open(<AlertModal title="Sucesso" message={message} onClose={modal.hide} />)
-            }
-        } catch (error: unknown) {
-            console.log(error)
-            modal.open(<AlertModal title="Erro" message={(error as Error)?.message as string} onClose={modal.hide} />)
-        }
     }
 
     return (

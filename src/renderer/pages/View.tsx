@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
+import { AddIcon, EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
-import { useModal } from "../hooks/useModal"
-import { AddIcon, EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
 import { SelectDictionary } from "../components/selects/Dictionary"
+import { useModal } from "../hooks/useModal"
 
 export function ViewScreen() {
     const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
@@ -26,7 +26,7 @@ export function ViewScreen() {
 
     function ShowViewModal(word: string) {
         modal.open(<ViewModal
-            onClose={modal.hide}
+            onClose={modal.close}
             dictionary={dictionary}
             word={word}
         />)
@@ -41,7 +41,7 @@ export function ViewScreen() {
                     dictionary.Words.deleteWord(word)
                     setWords(Object.entries(dictionary.Words.words))
                 }
-                modal.hide()
+                modal.close()
             }}
         />)
     }
@@ -52,7 +52,7 @@ export function ViewScreen() {
                 <div>
                     <div className="word-wrapper">
                         {words.map(([word, word_props]) => (
-                            <div className="word" key={word}>
+                            <div className="word" key={word} onDoubleClick={() => ShowViewModal(word)}>
                                 <div className="content">
                                     <div className="word-header">
                                         {word}

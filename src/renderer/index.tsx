@@ -19,7 +19,7 @@ function App() {
                 if (value) {
                     ipcRenderer.send("install-update")
                 }
-                modal.hide()
+                modal.close()
             }} />)
         })
     }, [])

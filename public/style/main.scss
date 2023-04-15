@@ -101,6 +101,10 @@ select {
     }
 }
 
+.full-heigth {
+    height: 100%;
+}
+
 .align-center {
     align-items: center;
 }
@@ -135,6 +139,10 @@ select {
 
 .gap {
     gap: 20px;
+}
+
+.gap-4 {
+    gap: 4px;
 }
 
 .option {
@@ -204,9 +212,13 @@ button {
         color: var(--main-color);
         border: 1px solid;
 
-        &:hover:not(.cancel) {
-            box-shadow: inset 0 0 0 1px var(--main-color);
-        }
+        // &:hover:not(.cancel) {
+        //     box-shadow: inset 0 0 0 1px var(--main-color);
+        // }
+    }
+
+    &:hover {
+        box-shadow: inset 0 0 0 1px currentColor;
     }
 }
 

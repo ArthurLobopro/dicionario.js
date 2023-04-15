@@ -6,19 +6,22 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { AlertModal } from "../components/modals/Alert"
+import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
 
 const update_word_schema = z.object({
-    word: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
-    definition: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
+    word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres."),
+    definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.")
 })
+
+type UpdateWordData = z.infer<typeof update_word_schema>
 
 export function UpdateScreen() {
     const { word, dictionary: dictionary_name } = useParams()
 
     const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
 
-    const [data, setData] = useState({
+    const [data, setData] = useState<UpdateWordData>({
         word: word as string,
         definition: dictionary.Words.getWord(word as string).definition
     })
@@ -32,8 +35,8 @@ export function UpdateScreen() {
 
             dictionary.Words.updateWord(word as string, { ...send_data, new_word: send_data.word, })
 
-            modal.open(<AlertModal title="Sucesso" message="Palavra atualizada com sucesso!" onClose={() => {
-                modal.hide()
+            modal.open(<SuccessModal message="Palavra atualizada com sucesso!" onClose={() => {
+                modal.close()
                 navigate("/view")
             }} />)
 
@@ -41,11 +44,11 @@ export function UpdateScreen() {
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
                 modal.open(<AlertModal
-                    title="Erro" onClose={modal.hide}
+                    title="Erro" onClose={modal.close}
                     message={zod_error.issues.map(issue => issue.message).join("\n")}
                 />)
             } else {
-                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.hide} />)
+                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.close} />)
             }
         }
     }
