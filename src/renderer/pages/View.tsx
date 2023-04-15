@@ -26,7 +26,7 @@ export function ViewScreen() {
 
     function ShowViewModal(word: string) {
         modal.open(<ViewModal
-            onClose={modal.hide}
+            onClose={modal.close}
             dictionary={dictionary}
             word={word}
         />)
@@ -41,7 +41,7 @@ export function ViewScreen() {
                     dictionary.Words.deleteWord(word)
                     setWords(Object.entries(dictionary.Words.words))
                 }
-                modal.hide()
+                modal.close()
             }}
         />)
     }
