@@ -1,68 +1,87 @@
-import { useState } from "react"
-import { ModalWrapper } from "../Wrapper"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 import { api } from "../../../../store/Api"
+import { useModal } from "../../../hooks/useModal"
+import { AlertModal } from "../Alert"
+import { SuccessModal } from "../Success"
+import { ModalWrapper } from "../Wrapper"
 
 interface addDictionaryProps {
     onClose: () => void
 }
 
+const create_dictionary_schema = z.object({
+    name: z.string().min(3, "O nome deve ter pelo menos 3 caracteres."),
+    setDefault: z.boolean().default(false)
+})
+
+type createDictionaryProps = z.infer<typeof create_dictionary_schema>
+
 export function AddDictionaryModal(props: addDictionaryProps) {
-    const [data, setData] = useState<{ name: string, setDefault: boolean }>({
-        name: "",
-        setDefault: false
+    const { register, handleSubmit } = useForm<createDictionaryProps>({
+        resolver: zodResolver(create_dictionary_schema),
+        defaultValues: {
+            name: "",
+            setDefault: false
+        }
     })
 
-    function HandleSubmit() {
-        if (data.name === "") {
-            return
-        }
+    const modal = useModal()
 
-        api.dictionaries.addDictionary(data.name, data.setDefault)
-        props.onClose()
+    function onSubmit(data: createDictionaryProps) {
+        try {
+            api.dictionaries.addDictionary(data.name, data.setDefault)
+
+            modal.open(<SuccessModal
+                onClose={props.onClose}
+                message="Dicionário criado com sucesso"
+            />)
+        } catch (error) {
+            if (error instanceof Error) {
+                modal.open(<AlertModal
+                    title="Erro" message={error.message}
+                    onClose={modal.close}
+                />)
+            }
+        }
     }
 
     return (
         <ModalWrapper>
-            <div className="modal" id="add-dictionary">
+            <form
+                className="modal" id="add-dictionary"
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 <div className="modal-header">
                     Adicionar Dicionário
                 </div>
                 <div className="modal-body">
+                    {modal.content}
                     <div className="input-wrapper gap-10 flex-column">
                         <label>
                             Nome
                             <input
-                                type="text" value={data.name}
-                                onChange={e => {
-                                    setData({ ...data, name: e.target.value })
-                                }}
+                                type="text" placeholder="Nome do dicionário"
+                                {...register("name")}
                             />
                         </label>
 
-
                         <label>
                             <span>Tornar padrão </span>
-                            <input
-                                type="checkbox" checked={data.setDefault}
-                                onChange={e => {
-                                    setData({ ...data, setDefault: e.target.checked })
-                                }}
-                            />
+                            <input type="checkbox" {...register("setDefault")} />
                         </label>
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button onClick={HandleSubmit}>
+                    <button type="submit">
                         Adicionar
                     </button>
-                    <button
-                        className="cancel"
-                        onClick={() => props.onClose()}
-                    >
+                    <button className="cancel" onClick={props.onClose}>
                         Cancelar
                     </button>
                 </div>
-            </div>
+            </form>
         </ModalWrapper>
     )
 }

@@ -4,10 +4,20 @@ import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
+import { z } from "zod"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 interface editDictionaryProps {
     onClose: () => void
 }
+
+const edit_dictionary_schema = z.object({
+    newName: z.string().min(3, "O nome deve ter pelo menos 3 caracteres."),
+    setDefault: z.boolean()
+})
+
+type edit_dictionary_props = z.infer<typeof edit_dictionary_schema>
 
 export function EditDictionaryModal(props: editDictionaryProps) {
     const [currentDictionary, setCurrentDictionary] = useState(api.dictionaries.getDictionaries()[0])
@@ -18,31 +28,32 @@ export function EditDictionaryModal(props: editDictionaryProps) {
 
     const modal = useModal()
 
-    const [data, setData] = useState<{ newName: string, setDefault: boolean }>({
-        newName: currentDictionary.name,
-        setDefault: editing_default
+    const { register, handleSubmit, resetField, setValue } = useForm<edit_dictionary_props>({
+        resolver: zodResolver(edit_dictionary_schema),
+        defaultValues: {
+            newName: currentDictionary.name,
+            setDefault: false
+        }
     })
 
     useEffect(() => {
-        setData({
-            newName: currentDictionary.name,
-            setDefault: false
-        })
+        const name = currentDictionary.name
+
+        setValue("newName", name)
+        if (currentDictionary.name === default_dictionary.name) {
+            setValue("setDefault", false)
+        }
     }, [currentDictionary])
 
-    function HandleSubmit() {
-        if (data.newName === "") {
-            return
-        }
+    function onSubmit(data: edit_dictionary_props) {
+        // api.dictionaries.editDictionary(currentDictionary.name, data)
 
-        api.dictionaries.editDictionary(currentDictionary.name, data)
-
-        modal.open(<SuccessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
+        // modal.open(<SuccessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
     }
 
     return (
         <ModalWrapper>
-            <div className="modal" id="add-dictionary">
+            <form className="modal" id="add-dictionary" onSubmit={handleSubmit(onSubmit)}>
                 {modal.content}
                 <div className="modal-header">
                     Adicionar Dicionário
@@ -59,13 +70,9 @@ export function EditDictionaryModal(props: editDictionaryProps) {
                         <label>
                             Nome
                             <input
-                                type="text" value={data.newName}
-                                onChange={e => {
-                                    setData({ ...data, newName: e.target.value })
-                                }}
+                                type="text" {...register("newName")}
                             />
                         </label>
-
 
                         {
                             editing_default ?
@@ -73,17 +80,14 @@ export function EditDictionaryModal(props: editDictionaryProps) {
                                 <label>
                                     <span>Definir como padrão </span>
                                     <input
-                                        type="checkbox" checked={data.setDefault}
-                                        onChange={e => {
-                                            setData({ ...data, setDefault: e.target.checked })
-                                        }}
+                                        type="checkbox" {...register("setDefault")}
                                     />
                                 </label>
                         }
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button onClick={HandleSubmit}>
+                    <button type="submit">
                         Editar
                     </button>
                     <button
@@ -93,7 +97,7 @@ export function EditDictionaryModal(props: editDictionaryProps) {
                         Cancelar
                     </button>
                 </div>
-            </div>
+            </form>
         </ModalWrapper >
     )
 }
