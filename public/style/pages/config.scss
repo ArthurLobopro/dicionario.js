@@ -75,10 +75,6 @@
             padding: 4px 6px;
             border-radius: 4px;
 
-            &:hover {
-                box-shadow: inset 0 0 0 1px currentColor;
-            }
-
             &:has(svg) {
                 display: flex;
                 justify-content: flex-start;
