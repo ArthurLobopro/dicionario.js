@@ -57,6 +57,12 @@ export class DictionariesController {
     static addDictionary(name: string, setDefault: boolean = false) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
+        const hasDictionary = dictionaries.some(dictionary => dictionary.name === name)
+
+        if (hasDictionary) {
+            throw new Error("Já existe um dicionário com esse nome")
+        }
+
         dictionaries.push({
             name,
             words: []
