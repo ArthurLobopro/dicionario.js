@@ -9,21 +9,32 @@ import { useModal } from "../hooks/useModal"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useParams, useLocation } from "react-router-dom"
 import { SuccessModal } from "../components/modals/Success"
+import { FieldErrors, useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const create_word_schema = z.object({
-    word: z.string().trim().min(3, "A palavra deve ter pelo menos 3 caracteres."),
-    definition: z.string().trim().min(5, "A definição deve ter pelo menos 5 caracteres.")
+    word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres."),
+    definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.")
 })
+
+type CreateWordData = z.infer<typeof create_word_schema>
 
 export function CreateScreen() {
 
     const { search } = useLocation()
 
-    const has_return_to = search.includes("return_to=")
+    const { dictionary: dictionary_name } = useParams()
 
+    const has_return_to = search.includes("return_to=")
     const return_to = has_return_to ? search.split("=")[1] : "/"
 
-    const { dictionary: dictionary_name } = useParams()
+    const { register, handleSubmit, resetField } = useForm<CreateWordData>({
+        resolver: zodResolver(create_word_schema),
+        defaultValues: {
+            word: "",
+            definition: ""
+        }
+    })
 
     const has_dictionary = (
         () => {
@@ -43,34 +54,30 @@ export function CreateScreen() {
             api.dictionaries.getDefaultDictionary()
     )
 
-    const [data, setData] = useState({
-        word: "",
-        definition: ""
-    })
-
     const modal = useModal()
 
     function handleChangeDictionary(name: string) {
         setDictionary(api.dictionaries.getDictionary(name))
     }
 
-    function SaveWord() {
-        try {
-            const send_data = create_word_schema.parse(data)
+    function onError(errors: FieldErrors) {
+        console.log(errors)
+        const message = Object.values(errors).map(error => error?.message).join("\n")
+        modal.open(<AlertModal title="Erro" message={message} onClose={modal.hide} />)
+    }
 
-            api.dictionaries.getDictionary(dictionary.name).Words.addWord(send_data)
+    function onSubmit(data: CreateWordData) {
+        try {
+            api.dictionaries.getDictionary(dictionary.name).Words.addWord(data)
 
             modal.open(<SuccessModal
                 message="Palavra adicionada com sucesso!"
                 onClose={() => {
                     modal.hide()
-                    setData({
-                        word: "",
-                        definition: ""
-                    })
+                    resetField("word")
+                    resetField("definition")
                 }}
             />)
-
         } catch (error: unknown) {
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
@@ -93,7 +100,10 @@ export function CreateScreen() {
                     returnTo={has_return_to ? return_to : "/"}
                 />}
             />
-            <div className="dashed-border spacing-16 grid-fill-center gap">
+            <form
+                className="dashed-border spacing-16 grid-fill-center gap"
+                onSubmit={handleSubmit(onSubmit, onError)}
+            >
                 <label>
                     Salvar em
                     <SelectDictionary
@@ -105,21 +115,21 @@ export function CreateScreen() {
                 <label>
                     Palavra
                     <input
-                        type="text" id="word" placeholder="Palavra" minLength={3}
-                        value={data.word} onChange={e => setData({ ...data, word: e.target.value })}
+                        type="text" id="word" placeholder="Palavra"
+                        {...register("word")}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
                         id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
-                        value={data.definition} onChange={e => setData({ ...data, definition: e.target.value })}
+                        {...register("definition")}
                     ></textarea>
                 </div>
-                <button className="btn" onClick={SaveWord}>
+                <button type="submit">
                     Adicionar
                 </button>
-            </div>
+            </form>
         </Page>
     )
 }
