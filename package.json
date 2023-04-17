@@ -1,7 +1,7 @@
 {
   "name": "dicionario",
-  "version": "2.0.1",
-  "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
+  "version": "2.0.2",
+  "description": "Dicionário simples onde você pode cadastrar as palavras que você aprendeu recentemente, fácil e prático.",
   "main": "./dist/main/main.js",
   "scripts": {
     "start": "electron-forge start",
@@ -33,10 +33,10 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
-    "@electron-fonts/nunito": "^1.0.5",
-    "@electron-fonts/open-sans": "^1.0.3",
+    "@electron-fonts/nunito": "^1.1.0",
+    "@electron-fonts/open-sans": "^1.1.0",
     "@hookform/resolvers": "^3.0.1",
-    "electron-frame": "^1.2.6",
+    "electron-frame": "^1.3.0",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "react": "^18.2.0",

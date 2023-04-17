@@ -8,10 +8,12 @@ import { ReturnButton } from "../components/ReturnButton"
 import { AlertModal } from "../components/modals/Alert"
 import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
 
 const update_word_schema = z.object({
     word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres."),
-    definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.")
+    definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.").transform(value => value.toLowerCase())
 })
 
 type UpdateWordData = z.infer<typeof update_word_schema>
@@ -19,21 +21,29 @@ type UpdateWordData = z.infer<typeof update_word_schema>
 export function UpdateScreen() {
     const { word, dictionary: dictionary_name } = useParams()
 
-    const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
-
-    const [data, setData] = useState<UpdateWordData>({
-        word: word as string,
-        definition: dictionary.Words.getWord(word as string).definition
+    const { register, handleSubmit } = useForm<UpdateWordData>({
+        resolver: zodResolver(update_word_schema),
+        defaultValues: {
+            word: word as string,
+            definition: api.dictionaries.getDictionary(dictionary_name as string).Words.getWord(word as string)?.definition
+        }
     })
+
+    const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
 
     const navigate = useNavigate()
     const modal = useModal()
 
-    function UpdateWord() {
+    function UpdateWord(data: UpdateWordData) {
         try {
-            const send_data = update_word_schema.parse(data)
 
-            dictionary.Words.updateWord(word as string, { ...send_data, new_word: send_data.word, })
+            dictionary.Words.updateWord(
+                word as string,
+                {
+                    ...data,
+                    new_word: data.word
+                }
+            )
 
             modal.open(<SuccessModal message="Palavra atualizada com sucesso!" onClose={() => {
                 modal.close()
@@ -41,6 +51,7 @@ export function UpdateScreen() {
             }} />)
 
         } catch (error: any) {
+            console.log(error)
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
                 modal.open(<AlertModal
@@ -57,25 +68,28 @@ export function UpdateScreen() {
         <Page id="edit">
             {modal.content}
             <Header title="Editar Palavra" left={<ReturnButton returnTo="/view" />} />
-            <div className="dashed-border spacing-16 grid-fill-center gap">
+            <form
+                className="dashed-border spacing-16 grid-fill-center gap"
+                onSubmit={handleSubmit(UpdateWord)}
+            >
                 <label>
                     Palavra
                     <input
                         type="text" id="word" placeholder="Palavra" minLength={3}
-                        value={data.word} onChange={e => setData({ ...data, word: e.target.value })}
+                        {...register("word")}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
                         id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
-                        value={data.definition} onChange={e => setData({ ...data, definition: e.target.value })}
+                        {...register("definition")}
                     ></textarea>
                 </div>
-                <button className="btn" onClick={UpdateWord}>
+                <button type="submit">
                     Atualizar
                 </button>
-            </div>
+            </form>
         </Page>
     )
 }
