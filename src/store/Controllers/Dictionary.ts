@@ -72,7 +72,7 @@ class WordsController {
     }
 
     getWord(word: string) {
-        return this.words[word]
+        return this.words[word] || null
     }
 
     getWordsToSave(words: words) {
@@ -125,7 +125,7 @@ class WordsController {
             delete words[word]
         }
 
-        words[word] = {
+        words[new_word] = {
             ...wordData,
             definition,
             lastEdit: new Date()
