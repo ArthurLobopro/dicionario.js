@@ -1,7 +1,7 @@
 {
   "name": "dicionario",
   "version": "2.0.1",
-  "description": "Um dicionário simples em que você pode adicionar palavras e suas respectivas definições.",
+  "description": "Dicionário simples onde você pode cadastrar as palavras que você aprendeu recentemente, fácil e prático.",
   "main": "./dist/main/main.js",
   "scripts": {
     "start": "electron-forge start",

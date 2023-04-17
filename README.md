@@ -7,11 +7,12 @@ Dicionário simples onde você pode cadastrar as palavras que você aprendeu rec
 ## Plataformas
 
 * Windows.
+* Linux.
 
 ## Funcionalidades
 
-* Cadastar e posteriormente visualizar palavras e seus significados.
-* Atualização automática.
+* Adição, Edição e Visualização de palavras/termos e seus significados.
+* Atualização automática (Windows).
 * Tema claro/escuro.
 * Customização do estilo de janela.
 
