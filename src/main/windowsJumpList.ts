@@ -1,7 +1,8 @@
 import { app } from "electron"
-import path from "node:path"
 
 export function createJumpList() {
+    if (process.platform !== "win32") return
+
     app.setJumpList([
         {
             type: "tasks",

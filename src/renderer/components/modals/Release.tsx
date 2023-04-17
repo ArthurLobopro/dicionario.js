@@ -7,7 +7,7 @@ interface releaseModalProps {
 export function ReleaseModal(props: releaseModalProps) {
     return (
         <ModalWrapper>
-            <div className="modal">
+            <div className="modal release-modal">
                 <div className="modal-header">
                     Atualização disponível
                 </div>

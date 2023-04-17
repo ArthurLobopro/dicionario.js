@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu, MenuItem } from 'electron'
 import path from 'node:path'
 import Store from 'electron-store'
 import { createJumpList } from "./windowsJumpList"
@@ -16,6 +16,30 @@ require("update-electron-app")({
 const isLinux = process.platform === 'linux'
 
 const appPath = app.getAppPath()
+
+function setSpellCheck(win: BrowserWindow) {
+    win.webContents.on("context-menu", (e, params) => {
+        if (params.misspelledWord) {
+            const menu = new Menu()
+
+            for (const suggestion of params.dictionarySuggestions) {
+                menu.append(new MenuItem({
+                    label: suggestion,
+                    click: () => win.webContents.replaceMisspelling(suggestion)
+                }))
+            }
+
+            menu.append(
+                new MenuItem({
+                    label: `Adicionar "${params.misspelledWord}" ao dicionário`,
+                    click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+                })
+            )
+            menu.popup()
+
+        }
+    })
+}
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -38,26 +62,27 @@ function createWindow() {
     }
 
     win.loadFile('public/index.html')
+
     win.once('ready-to-show', () => {
         win.show()
         win.center()
         win.focus()
     })
 
-    if (process.argv.includes('--relaunch')) {
-        win.webContents.send('open-in', '/config')
+    setSpellCheck(win)
+
+    createJumpList()
+
+    if (process.argv.includes('--add-word')) {
+        win.webContents.send('open-in', '/create')
     }
 
-    if (process.platform === 'win32') {
-        createJumpList()
+    if (process.argv.includes('--view-words')) {
+        win.webContents.send('open-in', '/view')
+    }
 
-        if (process.argv.includes('--add-word')) {
-            win.webContents.send('open-in', '/create')
-        }
-
-        if (process.argv.includes('--view-words')) {
-            win.webContents.send('open-in', '/view')
-        }
+    if (process.argv.includes('--relaunch')) {
+        win.webContents.send('open-in', '/config')
     }
 }
 
