@@ -19,23 +19,24 @@ const appPath = app.getAppPath()
 
 function setSpellCheck(win: BrowserWindow) {
     win.webContents.on("context-menu", (e, params) => {
-        const menu = new Menu()
+        if (params.misspelledWord) {
+            const menu = new Menu()
 
-        for (const suggestion of params.dictionarySuggestions) {
-            menu.append(new MenuItem({
-                label: suggestion,
-                click: () => win.webContents.replaceMisspelling(suggestion)
-            }))
-        }
+            for (const suggestion of params.dictionarySuggestions) {
+                menu.append(new MenuItem({
+                    label: suggestion,
+                    click: () => win.webContents.replaceMisspelling(suggestion)
+                }))
+            }
 
-        if (menu.items.length > 0) {
             menu.append(
                 new MenuItem({
-                    label: 'Adicionar ao dicionário',
+                    label: `Adicionar "${params.misspelledWord}" ao dicionário`,
                     click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
                 })
             )
             menu.popup()
+
         }
     })
 }
