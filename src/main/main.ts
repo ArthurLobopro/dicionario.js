@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, Menu, MenuItem } from 'electron'
 import path from 'node:path'
 import Store from 'electron-store'
 import { createJumpList } from "./windowsJumpList"
@@ -16,6 +16,29 @@ require("update-electron-app")({
 const isLinux = process.platform === 'linux'
 
 const appPath = app.getAppPath()
+
+function setSpellCheck(win: BrowserWindow) {
+    win.webContents.on("context-menu", (e, params) => {
+        const menu = new Menu()
+
+        for (const suggestion of params.dictionarySuggestions) {
+            menu.append(new MenuItem({
+                label: suggestion,
+                click: () => win.webContents.replaceMisspelling(suggestion)
+            }))
+        }
+
+        if (menu.items.length > 0) {
+            menu.append(
+                new MenuItem({
+                    label: 'Adicionar ao dicionário',
+                    click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
+                })
+            )
+            menu.popup()
+        }
+    })
+}
 
 function createWindow() {
     const win = new BrowserWindow({
@@ -47,6 +70,7 @@ function createWindow() {
     if (process.argv.includes('--relaunch')) {
         win.webContents.send('open-in', '/config')
     }
+    setSpellCheck(win)
 
     if (process.platform === 'win32') {
         createJumpList()
