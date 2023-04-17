@@ -1,15 +1,15 @@
-import { useState } from "react"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
+import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { AlertModal } from "../components/modals/Alert"
 import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
-import { useForm } from "react-hook-form"
-import { zodResolver } from "@hookform/resolvers/zod"
 
 const update_word_schema = z.object({
     word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres."),
@@ -68,7 +68,7 @@ export function UpdateScreen() {
         <Page id="edit">
             {modal.content}
             <Header title="Editar Palavra" left={<ReturnButton returnTo="/view" />} />
-            <form
+            <Form
                 className="dashed-border spacing-16 grid-fill-center gap"
                 onSubmit={handleSubmit(UpdateWord)}
             >
@@ -89,7 +89,7 @@ export function UpdateScreen() {
                 <button type="submit">
                     Atualizar
                 </button>
-            </form>
+            </Form>
         </Page>
     )
 }
