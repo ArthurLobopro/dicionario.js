@@ -198,12 +198,19 @@
   dependencies:
     electron-css-injector "^1.0.0"
 
-"@electron-fonts/open-sans@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@electron-fonts/open-sans/-/open-sans-1.0.3.tgz#e0953e7a55e8e4f571a37146cc2ddb3375504299"
-  integrity sha512-4o72LW7eRYr0Fe7zdf4f0VhdqGZkEhFLo0XWlhYMCh0aRFdI62Mby9B5I03IS0w6owlmpbopmT5P9Txy+zYffQ==
+"@electron-fonts/nunito@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/nunito/-/nunito-1.1.0.tgz#4027735ad04a6500322b2956b485afa5fa26c619"
+  integrity sha512-MceBt+ktvaYJlJnX1Zcg+kkWX00m9N+z+I9bEhjjeMlXpBGg+t48nzWKpiJZoLNDznXu6D7KxfY+ShJhtKBf3Q==
   dependencies:
-    electron-css-injector "^1.0.0"
+    electron-css-injector "1.2.0"
+
+"@electron-fonts/open-sans@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/open-sans/-/open-sans-1.1.0.tgz#83c156ec562c494d6aa500b365a5b7def9ce5f23"
+  integrity sha512-UmcDEK4nTgQKqpIl8rvHbGTlrnxEbR5sjEF/HXVce9mK4zjZllj3zxTTevi2//SJXMwCk8IYXEAQZ5l/MR0VDw==
+  dependencies:
+    electron-css-injector "1.2.0"
 
 "@electron-forge/cli@^6.1.1":
   version "6.1.1"
@@ -1542,15 +1549,23 @@ dot-prop@^6.0.1:
   dependencies:
     is-obj "^2.0.0"
 
+electron-css-injector@1.2.0, electron-css-injector@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.2.0.tgz#248b5aed5c11b3c52dc8785357da53b371140d87"
+  integrity sha512-oON1RYcD+XTNhe5KxkKgKnqSvWbu1dkvlJG2xTiMf30YpuaRSXKQHOgXnF6R6EsSNjSvIeGwIBxZyfzIu+2eIw==
+
 electron-css-injector@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.0.1.tgz#d55bc1354fa170e67a360d22dc7d62605301725e"
   integrity sha512-FF+qKmzqVBNmM46Ws3XZpdczwT0zvgY8klAwoHOYS5axsFpv/Ob/MzlHRXvnMWtzYDNqX7Mf5NUBNNUBmyYTWA==
 
-electron-frame@^1.2.6:
-  version "1.2.6"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.2.6.tgz#223205fdeea9fe13a7867ce09647e238b373d229"
-  integrity sha512-85fqQY6aivucdjQDF6QD5U0Ele+3HMNhasWBmKDQts2hoAYxJgzuaLzyU20B+N2ffhPsWtkWCY0PIess3YBcNA==
+electron-frame@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.3.0.tgz#13eed7d2d19d9b6d41d20c8f2c55eda52e6b15b6"
+  integrity sha512-kwmgXdajlVL/plFV7X30EWSTil0SRzrv1lZbMc5HVkOhXbTMDslFx/8xSWIfBadh5yJiWhhZVlfi5/TY3FXQ6Q==
+  dependencies:
+    "@electron-fonts/nunito" "^1.0.5"
+    electron-css-injector "^1.2.0"
 
 electron-installer-common@^0.10.2:
   version "0.10.3"
