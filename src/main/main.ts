@@ -61,27 +61,27 @@ function createWindow() {
     }
 
     win.loadFile('public/index.html')
+
     win.once('ready-to-show', () => {
         win.show()
         win.center()
         win.focus()
     })
 
-    if (process.argv.includes('--relaunch')) {
-        win.webContents.send('open-in', '/config')
-    }
     setSpellCheck(win)
 
-    if (process.platform === 'win32') {
-        createJumpList()
+    createJumpList()
 
-        if (process.argv.includes('--add-word')) {
-            win.webContents.send('open-in', '/create')
-        }
+    if (process.argv.includes('--add-word')) {
+        win.webContents.send('open-in', '/create')
+    }
 
-        if (process.argv.includes('--view-words')) {
-            win.webContents.send('open-in', '/view')
-        }
+    if (process.argv.includes('--view-words')) {
+        win.webContents.send('open-in', '/view')
+    }
+
+    if (process.argv.includes('--relaunch')) {
+        win.webContents.send('open-in', '/config')
     }
 }
 
