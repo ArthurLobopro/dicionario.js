@@ -16,7 +16,7 @@ export function Switcher({ onToggle, checked = false }: { onToggle: (checked: bo
 
     return (
         <div className="switch" onClick={HandleClick}>
-            <input ref={ref} type="checkbox" defaultChecked={checked} onChange={() => onToggle(!checked)} />
+            <input ref={ref} type="checkbox" defaultChecked={checked} onChange={() => onToggle(!checked)} tabIndex={-1} />
             <span className="slider round"></span>
         </div>
     )
