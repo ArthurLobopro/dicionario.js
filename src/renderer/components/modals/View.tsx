@@ -1,4 +1,4 @@
-import { formatDate } from "../../../Util"
+import { formatDate } from "../../Util"
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { ModalWrapper } from "./Wrapper"
 

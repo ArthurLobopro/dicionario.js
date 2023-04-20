@@ -18,7 +18,9 @@ export function AlertModal(props: alertProps) {
                     {props.message}
                 </div>
                 <div className="modal-footer">
-                    <button onClick={props.onClose}>Ok</button>
+                    <button onClick={props.onClose} autoFocus={true}>
+                        Ok
+                    </button>
                 </div>
             </div>
         </ModalWrapper>
