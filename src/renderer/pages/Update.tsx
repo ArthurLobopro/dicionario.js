@@ -32,7 +32,10 @@ export function UpdateScreen() {
     const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
 
     const navigate = useNavigate()
+
     const modal = useModal()
+
+    const hasModal = !!modal.content
 
     function UpdateWord(data: UpdateWordData) {
         try {
@@ -76,17 +79,19 @@ export function UpdateScreen() {
                     Palavra
                     <input
                         type="text" id="word" placeholder="Palavra" minLength={3}
-                        {...register("word")}
+                        tabIndex={hasModal ? -1 : 1} {...register("word")}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
-                        id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
+                        id="sig" minLength={5}
+                        tabIndex={hasModal ? -1 : 2}
+                        placeholder="Escreva os significados que a palavra pode ter."
                         {...register("definition")}
                     ></textarea>
                 </div>
-                <button type="submit">
+                <button type="submit" tabIndex={hasModal ? -1 : 3}>
                     Atualizar
                 </button>
             </Form>
