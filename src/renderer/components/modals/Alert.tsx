@@ -1,12 +1,12 @@
 import { ModalWrapper } from "./Wrapper"
 
-interface alertProps {
+export interface AlertModalProps {
     title: string | JSX.Element
     message: string
     onClose: () => void
 }
 
-export function AlertModal(props: alertProps) {
+export function AlertModal(props: AlertModalProps) {
 
     return (
         <ModalWrapper>

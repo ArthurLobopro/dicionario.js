@@ -1,10 +1,10 @@
 import { ModalWrapper } from "./Wrapper"
 
-interface releaseModalProps {
+interface ReleaseModalProps {
     onClose: (v: boolean) => void
 }
 
-export function ReleaseModal(props: releaseModalProps) {
+export function ReleaseModal(props: ReleaseModalProps) {
     return (
         <ModalWrapper>
             <div className="modal release-modal">

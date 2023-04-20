@@ -1,12 +1,5 @@
 import { CheckIcon } from "../icons"
-import { AlertModal } from "./Alert"
-import { ModalWrapper } from "./Wrapper"
-
-interface alertProps {
-    title?: string | JSX.Element
-    message: string
-    onClose: () => void
-}
+import { AlertModal, AlertModalProps } from "./Alert"
 
 const DefaultTitle = () => (
     <div className="flex gap-4 align-center">
@@ -15,8 +8,9 @@ const DefaultTitle = () => (
     </div>
 )
 
-export function SuccessModal(props: alertProps) {
+type SuccessModalProps = Omit<AlertModalProps, "title"> & Partial<Pick<AlertModalProps, "title">>
 
+export function SuccessModal(props: SuccessModalProps) {
     const {
         title = <DefaultTitle />,
         message,

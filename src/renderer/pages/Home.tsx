@@ -3,7 +3,14 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { AddIcon, ConfigIcon, EyeIcon } from "../components/icons"
 
-function Option({ text, icon, onclick }: { text: string; icon: JSX.Element; onclick: () => void }) {
+interface OptionProps {
+    text: string
+    icon: JSX.Element
+    onclick: () => void
+}
+
+function Option(props: OptionProps) {
+    const { text, icon, onclick } = props
     return (
         <div className="option" onClick={onclick}>
             <span>{text}</span>

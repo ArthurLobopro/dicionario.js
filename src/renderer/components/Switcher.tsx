@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 
-export function Switcher({ onToggle, checked = false }: { onToggle: (checked: boolean) => void, checked?: boolean }) {
+interface SwitcherProps {
+    onToggle: (checked: boolean) => void
+    checked?: boolean
+}
+
+export function Switcher(props: SwitcherProps) {
+    const { onToggle, checked = false } = props
+
     const [isChecked, setIsChecked] = useState(checked)
 
     const ref = useRef(null as unknown as HTMLInputElement)
