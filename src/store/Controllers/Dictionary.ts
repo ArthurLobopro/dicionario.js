@@ -100,7 +100,7 @@ class WordsController {
         const words = this.words
 
         if (word in words) {
-            throw new Error("Word already exists")
+            throw new Error("A palavra já foi registrada")
         }
 
         words[word] = {
@@ -116,7 +116,7 @@ class WordsController {
         const words = this.words
 
         if (!(word in words)) {
-            throw new Error("Word doesn't exist")
+            throw new Error("A palavra não foi registrada")
         }
 
         const wordData = words[word]
@@ -139,7 +139,7 @@ class WordsController {
         const words = this.words
 
         if (!(word in words)) {
-            throw new Error("Word doesn't exist")
+            throw new Error("Palavra não encontrada")
         }
 
         delete words[word]

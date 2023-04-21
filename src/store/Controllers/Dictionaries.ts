@@ -14,7 +14,7 @@ export class DictionariesController {
         const defaultDictionary = dictionaries.find(dictionary => dictionary.name === defaultName)
 
         if (!defaultDictionary) {
-            throw new Error("Default dictionary not found")
+            throw new Error("Dicionário padrão não encontrado")
         }
 
         return new DictionaryController(defaultDictionary)
@@ -26,7 +26,7 @@ export class DictionariesController {
         const dictionary = dictionaries.find(dictionary => dictionary.name === name)
 
         if (!dictionary) {
-            throw new Error("Dictionary not found")
+            throw new Error("Dicionário não encontrado")
         }
 
         return new DictionaryController(dictionary)
@@ -46,7 +46,7 @@ export class DictionariesController {
         const index = dictionaries.findIndex(d => d.name === dictionary.name)
 
         if (index === -1) {
-            throw new Error("Dictionary not found")
+            throw new Error("Dicionário não encontrado")
         }
 
         dictionaries[index] = dictionary
@@ -81,7 +81,7 @@ export class DictionariesController {
         const index = dictionaries.findIndex(dictionary => dictionary.name === oldName)
 
         if (index === -1) {
-            throw new Error("Dictionary not found")
+            throw new Error("Dicionário não encontrado")
         }
 
         dictionaries[index].name = newName
@@ -127,7 +127,7 @@ export class DictionariesController {
         const names = dictionaries.map(dictionary => dictionary.name)
 
         if (names.includes(dicionary.name)) {
-            throw new Error("Dictionary already exists")
+            throw new Error("Já existe um dicionário com esse nome")
         }
 
         dictionaries.push(dicionary)
