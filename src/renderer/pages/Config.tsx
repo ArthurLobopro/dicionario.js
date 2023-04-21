@@ -10,13 +10,24 @@ import { LineTitle } from "../components/LineTitle"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { AddIcon, DonwloadIcon, EditIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
-import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionary"
-import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
-import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
-import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
-import { ImportDictionaryModal } from "../components/modals/dictionary/ImportDictionary"
 import { useModal } from "../hooks/useModal"
+
+import {
+    AddIcon,
+    DonwloadIcon,
+    EditIcon,
+    GithubLogo,
+    TrashIcon,
+    UploadIcon
+} from "../components/icons"
+
+import {
+    AddDictionaryModal,
+    DeleteDictionaryModal,
+    EditDictionaryModal,
+    ExportDictionaryModal,
+    ImportDictionaryModal
+} from "../components/modals/dictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
