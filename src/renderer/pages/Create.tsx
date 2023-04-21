@@ -45,7 +45,6 @@ export function CreateScreen() {
             } catch (error) {
                 return false
             }
-
         }
     )()
 
@@ -56,8 +55,6 @@ export function CreateScreen() {
     )
 
     const modal = useModal()
-
-    const hasModal = !!modal.content
 
     function handleChangeDictionary(name: string) {
         setDictionary(api.dictionaries.getDictionary(name))
@@ -121,20 +118,20 @@ export function CreateScreen() {
                     <input
                         type="text" id="word" placeholder="Palavra"
                         {...register("word")}
-                        tabIndex={hasModal ? -1 : 1}
+                        tabIndex={modal.isVisible ? -1 : 1}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
                         id="sig" minLength={5}
-                        tabIndex={hasModal ? -1 : 2}
+                        tabIndex={modal.isVisible ? -1 : 2}
                         placeholder="Escreva os significados que a palavra pode ter."
                         {...register("definition")}
                     ></textarea>
                 </div>
                 <button type="submit"
-                    tabIndex={hasModal ? -1 : 3}
+                    tabIndex={modal.isVisible ? -1 : 3}
                 >
                     Adicionar
                 </button>
