@@ -17,6 +17,7 @@ import {
     DonwloadIcon,
     EditIcon,
     GithubLogo,
+    MinifiedTrashIcon,
     TrashIcon,
     UploadIcon
 } from "../components/icons"
@@ -236,7 +237,7 @@ function DictionarySection(props: DictionarySectionsProps) {
                 className="stroke warning" title="Deletar um dicionário"
                 onClick={HandleDeleteDictionary} onMouseEnter={hoverFocus}
             >
-                <TrashIcon className="use-main-colors" />
+                <MinifiedTrashIcon className="use-main-colors" />
                 Deletar
             </button>
 
