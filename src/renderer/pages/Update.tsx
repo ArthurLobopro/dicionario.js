@@ -7,7 +7,7 @@ import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { AlertModal } from "../components/modals/Alert"
+import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
 
@@ -37,7 +37,6 @@ export function UpdateScreen() {
 
     function UpdateWord(data: UpdateWordData) {
         try {
-
             dictionary.Words.updateWord(
                 word as string,
                 {
@@ -46,21 +45,25 @@ export function UpdateScreen() {
                 }
             )
 
-            modal.open(<SuccessModal message="Palavra atualizada com sucesso!" onClose={() => {
+            function handleClose() {
                 modal.close()
                 navigate("/view")
-            }} />)
+            }
+
+            modal.open(<SuccessModal
+                message="Palavra atualizada com sucesso!"
+                onClose={handleClose}
+            />)
 
         } catch (error: any) {
             console.log(error)
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
-                modal.open(<AlertModal
-                    title="Erro" onClose={modal.close}
-                    message={zod_error.issues.map(issue => issue.message).join("\n")}
-                />)
+                const message = zod_error.issues.map(issue => issue.message).join("\n")
+                modal.open(<ErrorModal onClose={modal.close} message={message} />)
             } else {
-                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.close} />)
+                const message = (error as Error).message
+                modal.open(<ErrorModal message={message} onClose={modal.close} />)
             }
         }
     }
