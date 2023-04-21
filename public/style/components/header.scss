@@ -59,7 +59,7 @@ header {
             }
         }
 
-        &:hover {
+        &:hover:not(:empty) {
             background-color: rgba(0, 0, 0, 0.171);
         }
     }
