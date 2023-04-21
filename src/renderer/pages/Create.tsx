@@ -8,7 +8,7 @@ import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { AlertModal } from "../components/modals/Alert"
+import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
@@ -61,9 +61,8 @@ export function CreateScreen() {
     }
 
     function onError(errors: FieldErrors) {
-        console.log(errors)
         const message = Object.values(errors).map(error => error?.message).join("\n")
-        modal.open(<AlertModal title="Erro" message={message} onClose={modal.close} />)
+        modal.open(<ErrorModal message={message} onClose={modal.close} />)
     }
 
     function onSubmit(data: CreateWordData) {
@@ -80,12 +79,11 @@ export function CreateScreen() {
         } catch (error: unknown) {
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
-                modal.open(<AlertModal
-                    title="Erro" onClose={modal.close}
-                    message={zod_error.issues.map(issue => issue.message).join("\n")}
-                />)
+                const message = zod_error.issues.map(issue => issue.message).join("\n")
+                modal.open(<ErrorModal onClose={modal.close} message={message} />)
             } else {
-                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.close} />)
+                const message = (error as Error).message
+                modal.open(<ErrorModal message={message} onClose={modal.close} />)
             }
         }
     }

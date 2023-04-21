@@ -10,7 +10,7 @@ const DefaultTitle = () => (
 
 type ErrorModalProps = Omit<AlertModalProps, "title"> & Partial<Pick<AlertModalProps, "title">>
 
-export function SuccessModal(props: ErrorModalProps) {
+export function ErrorModal(props: ErrorModalProps) {
     const {
         title = <DefaultTitle />,
         message,
