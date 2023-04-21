@@ -26,3 +26,40 @@ export function AlertModal(props: AlertModalProps) {
         </ModalWrapper>
     )
 }
+
+interface AlertWithIconProps {
+    title: string | JSX.Element
+    icon: JSX.Element
+    children: string | JSX.Element
+    onClose: () => void
+}
+
+export function AlertModalWithIcon(props: AlertWithIconProps) {
+
+    const { title, icon, children, onClose } = props
+
+    return (
+        <ModalWrapper>
+            <div className="modal">
+                <div className="modal-header">
+                    {title}
+                </div>
+                <div className="modal-body">
+                    <div className="grid-left-center">
+                        <div className="icon-wrapper">
+                            {icon}
+                        </div>
+                        <div>
+                            {children}
+                        </div>
+                    </div>
+                </div>
+                <div className="modal-footer">
+                    <button onClick={onClose} autoFocus={true}>
+                        Ok
+                    </button>
+                </div>
+            </div>
+        </ModalWrapper>
+    )
+}
