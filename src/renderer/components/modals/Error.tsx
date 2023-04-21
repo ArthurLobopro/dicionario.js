@@ -1,23 +1,19 @@
 import { ErrorIcon } from "../icons"
-import { AlertModal, AlertModalProps } from "./Alert"
-
-const DefaultTitle = () => (
-    <div className="flex gap-4 align-center">
-        Erro
-        <ErrorIcon />
-    </div>
-)
+import { AlertModalProps, AlertModalWithIcon } from "./Alert"
 
 type ErrorModalProps = Omit<AlertModalProps, "title"> & Partial<Pick<AlertModalProps, "title">>
 
 export function ErrorModal(props: ErrorModalProps) {
     const {
-        title = <DefaultTitle />,
+        title = "Erro",
         message,
         onClose
     } = props
 
     return (
-        <AlertModal title={title} message={message} onClose={onClose} />
+        <AlertModalWithIcon
+            title={title} children={message}
+            onClose={onClose} icon={<ErrorIcon />}
+        />
     )
 }

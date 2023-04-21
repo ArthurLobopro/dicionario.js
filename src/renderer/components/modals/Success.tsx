@@ -1,23 +1,20 @@
-import { CheckIcon } from "../icons"
-import { AlertModal, AlertModalProps } from "./Alert"
-
-const DefaultTitle = () => (
-    <div className="flex gap-4 align-center">
-        Sucesso
-        <CheckIcon />
-    </div>
-)
+import { SuccessIcon } from "../icons"
+import { AlertModalProps, AlertModalWithIcon } from "./Alert"
 
 type SuccessModalProps = Omit<AlertModalProps, "title"> & Partial<Pick<AlertModalProps, "title">>
 
 export function SuccessModal(props: SuccessModalProps) {
     const {
-        title = <DefaultTitle />,
+        title = "Sucesso",
         message,
         onClose
     } = props
 
     return (
-        <AlertModal title={title} message={message} onClose={onClose} />
+        <AlertModalWithIcon
+            title={title} children={message}
+            onClose={onClose}
+            icon={<SuccessIcon />}
+        />
     )
 }
