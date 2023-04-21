@@ -4,11 +4,18 @@ import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { AddIcon, EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
+
+import {
+    AddIcon,
+    EditIcon,
+    EyeIcon,
+    GrayEmptyBookIcon,
+    TrashIcon
+} from "../components/icons"
 
 export function ViewScreen() {
     const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
