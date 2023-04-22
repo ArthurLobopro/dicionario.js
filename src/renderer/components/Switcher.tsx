@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 
-export function Switcher({ onToggle, checked = false }: { onToggle: (checked: boolean) => void, checked?: boolean }) {
+interface SwitcherProps {
+    onToggle: (checked: boolean) => void
+    checked?: boolean
+}
+
+export function Switcher(props: SwitcherProps) {
+    const { onToggle, checked = false } = props
+
     const [isChecked, setIsChecked] = useState(checked)
 
     const ref = useRef(null as unknown as HTMLInputElement)
@@ -16,7 +23,7 @@ export function Switcher({ onToggle, checked = false }: { onToggle: (checked: bo
 
     return (
         <div className="switch" onClick={HandleClick}>
-            <input ref={ref} type="checkbox" defaultChecked={checked} onChange={() => onToggle(!checked)} />
+            <input ref={ref} type="checkbox" defaultChecked={checked} onChange={() => onToggle(!checked)} tabIndex={-1} />
             <span className="slider round"></span>
         </div>
     )

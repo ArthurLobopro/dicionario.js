@@ -18,3 +18,10 @@ export function formatDate(datestring: string) {
 
     return `${day}/${month}/${year} ${hours}:${minutes}`
 }
+
+export function hoverFocus(event: React.MouseEvent<HTMLButtonElement | HTMLSelectElement, MouseEvent>) {
+    event.currentTarget.focus()
+
+    event.stopPropagation()
+    event.preventDefault()
+}

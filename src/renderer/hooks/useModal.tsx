@@ -11,12 +11,14 @@ export function useModal(props?: useModalProps) {
 
     const hide = () => setIsVisible(false)
     const show = () => setIsVisible(true)
+
     const open = (content: JSX.Element) => {
         setContent(content)
         show()
     }
+
     const close = () => {
-        setContent(<></>)
+        setContent(null)
         hide()
     }
 
@@ -24,10 +26,14 @@ export function useModal(props?: useModalProps) {
         get content() {
             return isVisible ? content : null
         },
+        get isVisible() {
+            return isVisible
+        },
+
         setContent: (content: JSX.Element) => setContent(content),
         hide,
         show,
         open,
-        close
+        close,
     }
 }

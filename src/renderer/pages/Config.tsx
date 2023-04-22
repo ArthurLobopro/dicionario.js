@@ -4,18 +4,31 @@ import { useEffect, useRef, useState } from "react"
 import { api } from "../../store/Api"
 import { StoreOptions } from "../../store/Schemas"
 import { frame } from "../Frame"
+import { hoverFocus } from "../Util"
 import { Header } from "../components/Header"
 import { LineTitle } from "../components/LineTitle"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
-import { AddIcon, DonwloadIcon, EditIcon, GithubLogo, TrashIcon, UploadIcon } from "../components/icons"
-import { AddDictionaryModal } from "../components/modals/dictionary/AddDictionary"
-import { DeleteDictionaryModal } from "../components/modals/dictionary/DeleteDictionary"
-import { EditDictionaryModal } from "../components/modals/dictionary/EditDictionary"
-import { ExportDictionaryModal } from "../components/modals/dictionary/ExportDictionary"
-import { ImportDictionaryModal } from "../components/modals/dictionary/ImportDictionary"
 import { useModal } from "../hooks/useModal"
+
+import {
+    AddIcon,
+    DonwloadIcon,
+    EditIcon,
+    GithubLogo,
+    MinifiedTrashIcon,
+    TrashIcon,
+    UploadIcon
+} from "../components/icons"
+
+import {
+    AddDictionaryModal,
+    DeleteDictionaryModal,
+    EditDictionaryModal,
+    ExportDictionaryModal,
+    ImportDictionaryModal
+} from "../components/modals/dictionary"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 
@@ -42,6 +55,9 @@ export function ConfigScreen() {
         frame.updateTheme()
     }
 
+    const openGithub = () => shell.openExternal(GITHUB_LINK)
+    const openDevtools = () => ipcRenderer.send("open-devtolls")
+
     return (
         <Page id="config">
             {modal.content}
@@ -63,12 +79,18 @@ export function ConfigScreen() {
                             <LineTitle title="Outros" />
 
                             <span>Sobre</span>
-                            <button className="stroke" title="Abrir GitHub" onClick={() => shell.openExternal(GITHUB_LINK)}>
+                            <button
+                                className="stroke" title="Abrir GitHub"
+                                onClick={openGithub} onMouseEnter={hoverFocus}
+                            >
                                 <GithubLogo />
                                 Github
                             </button>
 
-                            <button className="stroke fill-center" onClick={() => ipcRenderer.send("open-devtolls")}>
+                            <button
+                                className="stroke fill-center" title="Abrir ferramentas de desenvolvedor"
+                                onClick={openDevtools} onMouseEnter={hoverFocus}
+                            >
                                 Mostrar ferramentas de desenvolvedor
                             </button>
                         </div>
@@ -104,6 +126,11 @@ function WindowSection() {
         frame.setFrameStyle(frameStyle)
     }
 
+    function HandleToggleSystemTitlebar() {
+        api.options.toggleSystemTitleBar()
+        ipcRenderer.send("relaunch")
+    }
+
     return (
         <>
             <LineTitle title="Janela" />
@@ -113,10 +140,7 @@ function WindowSection() {
                     <>
                         <span>Usar titlebar do sistema</span>
                         <Switcher
-                            onToggle={() => {
-                                api.options.toggleSystemTitleBar()
-                                ipcRenderer.send("relaunch")
-                            }}
+                            onToggle={HandleToggleSystemTitlebar}
                             checked={useSystemTitleBar}
                         />
                     </>
@@ -127,8 +151,9 @@ function WindowSection() {
             <select
                 className="select"
                 value={config.frameStyle}
-                onChange={HandleFrameStyleChange}
                 disabled={useSystemTitleBar}
+                onChange={HandleFrameStyleChange}
+                onMouseEnter={hoverFocus}
                 title={
                     useSystemTitleBar ?
                         "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
@@ -143,8 +168,9 @@ function WindowSection() {
             <select
                 className="select"
                 value={config.frameTheme}
-                onChange={HandleFrameThemeChange}
                 disabled={useSystemTitleBar}
+                onChange={HandleFrameThemeChange}
+                onMouseEnter={hoverFocus}
                 title={
                     useSystemTitleBar ?
                         "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
@@ -189,31 +215,46 @@ function DictionarySection(props: DictionarySectionsProps) {
             <LineTitle title="Dicionários" />
 
             <span>Adicionar dicionário</span>
-            <button className="stroke" onClick={HandleAddDictionary} title="Adicionar um dicionário" >
+            <button
+                className="stroke" title="Adicionar um dicionário"
+                onClick={HandleAddDictionary} onMouseEnter={hoverFocus}
+            >
                 <AddIcon className="use-main-colors" />
                 Adicionar
             </button>
 
             <span>Editar dicionário</span>
-            <button className="stroke" onClick={HandleEditDictionary} title="Editar um dicionário">
+            <button
+                className="stroke" title="Editar um dicionário"
+                onClick={HandleEditDictionary} onMouseEnter={hoverFocus}
+            >
                 <EditIcon className="use-main-colors" />
                 Editar
             </button>
 
             <span className="warning">Deletar dicionário</span>
-            <button className="stroke warning" onClick={HandleDeleteDictionary} title="Deletar um dicionário">
-                <TrashIcon className="use-main-colors" />
+            <button
+                className="stroke warning" title="Deletar um dicionário"
+                onClick={HandleDeleteDictionary} onMouseEnter={hoverFocus}
+            >
+                <MinifiedTrashIcon className="use-main-colors" />
                 Deletar
             </button>
 
             <span>Exportar dicionário</span>
-            <button className="stroke" onClick={HandleExportDictionary}>
+            <button
+                className="stroke"
+                onClick={HandleExportDictionary} onMouseEnter={hoverFocus}
+            >
                 <UploadIcon />
                 Exportar
             </button>
 
             <span>Importar dicionário</span>
-            <button className="stroke" onClick={HandleImportDictionary}>
+            <button
+                className="stroke"
+                onClick={HandleImportDictionary} onMouseEnter={hoverFocus}
+            >
                 <DonwloadIcon />
                 Importar
             </button>

@@ -4,11 +4,113 @@ import { api } from "../../store/Api"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { AddIcon, EditIcon, EyeIcon, GrayEmptyBookIcon, TrashIcon } from "../components/icons"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
+
+import { DictionaryController } from "../../store/Controllers/Dictionary"
+import { StoreWord } from "../../store/Schemas"
+import {
+    AddIcon,
+    EditIcon,
+    EyeIcon,
+    GrayEmptyBookIcon,
+    TrashIcon
+} from "../components/icons"
+
+interface EmptyPageProps {
+    link: string
+}
+
+function EmptyPage(props: EmptyPageProps) {
+    const { link } = props
+
+    const navigate = useNavigate()
+
+    return (
+        <div className="empty">
+
+            <GrayEmptyBookIcon />
+
+            <div className="empty-text">
+                Você ainda não cadastrou nenhuma palavra. Que tal começar agora?
+            </div>
+
+            <button onClick={() => navigate(link)}>
+                Cadastrar Palavra
+            </button>
+        </div>
+    )
+}
+
+interface WordProps {
+    word: {
+        lastEdit?: Date | undefined
+        definition: string
+        register: Date,
+        word: string
+    }
+    modal: ReturnType<typeof useModal>
+    dictionary: DictionaryController
+    reload: () => void
+}
+
+function Word(props: WordProps) {
+    const { modal, word, dictionary, reload } = props
+
+    function ShowViewModal() {
+        modal.open(<ViewModal
+            onClose={modal.close}
+            dictionary={dictionary}
+            word={word.word}
+        />)
+    }
+
+    function DeleteWord() {
+        modal.open(<ConfirmModal
+            message="Essa ação é irreversível. Deseja realmente excluir esta palavra?"
+            title="Você tem certeza?"
+            onClose={(confirm) => {
+                if (confirm) {
+                    dictionary.Words.deleteWord(word.word)
+                    reload()
+                }
+                modal.close()
+            }}
+        />)
+    }
+
+    const navigate = useNavigate()
+
+    return (
+        <div className="word" key={word.word} onDoubleClick={ShowViewModal}>
+            <div className="content">
+                <div className="word-header">
+                    {word.word}
+                </div>
+                <div className="word-definition">
+                    {word.definition}
+                </div>
+            </div>
+            <div className="controls">
+                <div title="Visualizar" onClick={ShowViewModal}>
+                    <EyeIcon />
+                </div>
+                <div title="Editar" id="edit"
+                    onClick={() => {
+                        navigate(`/update/${dictionary.name}/${word.word}`)
+                    }}
+                >
+                    <EditIcon />
+                </div>
+                <div title="Apagar" id="delete" onClick={DeleteWord}>
+                    <TrashIcon />
+                </div>
+            </div>
+        </div>
+    )
+}
 
 export function ViewScreen() {
     const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
@@ -24,26 +126,8 @@ export function ViewScreen() {
     const navigate = useNavigate()
     const modal = useModal()
 
-    function ShowViewModal(word: string) {
-        modal.open(<ViewModal
-            onClose={modal.close}
-            dictionary={dictionary}
-            word={word}
-        />)
-    }
-
-    function DeleteWord(word: string) {
-        modal.open(<ConfirmModal
-            message="Essa ação é irreversível. Deseja realmente excluir esta palavra?"
-            title="Você tem certeza?"
-            onClose={(confirm) => {
-                if (confirm) {
-                    dictionary.Words.deleteWord(word)
-                    setWords(Object.entries(dictionary.Words.words))
-                }
-                modal.close()
-            }}
-        />)
+    function reloadWords() {
+        setWords(Object.entries(dictionary.Words.words))
     }
 
     const contents = {
@@ -52,31 +136,12 @@ export function ViewScreen() {
                 <div>
                     <div className="word-wrapper">
                         {words.map(([word, word_props]) => (
-                            <div className="word" key={word} onDoubleClick={() => ShowViewModal(word)}>
-                                <div className="content">
-                                    <div className="word-header">
-                                        {word}
-                                    </div>
-                                    <div className="word-definition">
-                                        {word_props.definition}
-                                    </div>
-                                </div>
-                                <div className="controls">
-                                    <div title="Visualizar" onClick={() => ShowViewModal(word)}>
-                                        <EyeIcon />
-                                    </div>
-                                    <div title="Editar" id="edit"
-                                        onClick={() => {
-                                            navigate(`/update/${dictionary.name}/${word}`)
-                                        }}
-                                    >
-                                        <EditIcon />
-                                    </div>
-                                    <div title="Apagar" id="delete" onClick={() => DeleteWord(word)}>
-                                        <TrashIcon />
-                                    </div>
-                                </div>
-                            </div>
+                            <Word
+                                word={{ ...word_props, word }}
+                                reload={reloadWords}
+                                dictionary={dictionary}
+                                modal={modal}
+                            />
                         ))}
                     </div>
                 </div>
@@ -84,27 +149,17 @@ export function ViewScreen() {
         },
         get empty() {
             return (
-                <div className="empty">
-
-                    <GrayEmptyBookIcon />
-
-                    <div className="empty-text">
-                        Você ainda não cadastrou nenhuma palavra. Que tal começar agora?
-                    </div>
-
-                    <button onClick={() => navigate(`/create/${dictionary.name}?return_to=${atual_location}`)}>
-                        Cadastrar Palavra
-                    </button>
-                </div>
+                <EmptyPage link={link} />
             )
         }
     }
 
     const atual_location = window.location.href.split("#")[1]
+    const link = `/create/${dictionary.name}?return_to=${atual_location}`
 
     const add_button = (
         <AddIcon
-            onClick={() => navigate(`/create/${dictionary.name}?return_to=${atual_location}`)}
+            onClick={() => navigate(link)}
             title="Adicionar palavra"
             className="add-button"
         />

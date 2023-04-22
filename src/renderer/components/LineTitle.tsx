@@ -1,4 +1,9 @@
-export function LineTitle(props: { title: string, className?: string }) {
+interface LineTitleProps {
+    title: string
+    className?: string
+}
+
+export function LineTitle(props: LineTitleProps) {
     return (
         <div
             className={["line-title", props?.className].join(" ")}

@@ -8,7 +8,7 @@ import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { AlertModal } from "../components/modals/Alert"
+import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
@@ -29,7 +29,7 @@ export function CreateScreen() {
     const has_return_to = search.includes("return_to=")
     const return_to = has_return_to ? search.split("=")[1] : "/"
 
-    const { register, handleSubmit, resetField } = useForm<CreateWordData>({
+    const { register, handleSubmit, reset } = useForm<CreateWordData>({
         resolver: zodResolver(create_word_schema),
         defaultValues: {
             word: "",
@@ -45,7 +45,6 @@ export function CreateScreen() {
             } catch (error) {
                 return false
             }
-
         }
     )()
 
@@ -62,9 +61,8 @@ export function CreateScreen() {
     }
 
     function onError(errors: FieldErrors) {
-        console.log(errors)
         const message = Object.values(errors).map(error => error?.message).join("\n")
-        modal.open(<AlertModal title="Erro" message={message} onClose={modal.close} />)
+        modal.open(<ErrorModal message={message} onClose={modal.close} />)
     }
 
     function onSubmit(data: CreateWordData) {
@@ -75,19 +73,17 @@ export function CreateScreen() {
                 message="Palavra adicionada com sucesso!"
                 onClose={() => {
                     modal.close()
-                    resetField("word")
-                    resetField("definition")
+                    reset()
                 }}
             />)
         } catch (error: unknown) {
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
-                modal.open(<AlertModal
-                    title="Erro" onClose={modal.close}
-                    message={zod_error.issues.map(issue => issue.message).join("\n")}
-                />)
+                const message = zod_error.issues.map(issue => issue.message).join("\n")
+                modal.open(<ErrorModal onClose={modal.close} message={message} />)
             } else {
-                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.close} />)
+                const message = (error as Error).message
+                modal.open(<ErrorModal message={message} onClose={modal.close} />)
             }
         }
     }
@@ -119,16 +115,21 @@ export function CreateScreen() {
                     <input
                         type="text" id="word" placeholder="Palavra"
                         {...register("word")}
+                        tabIndex={modal.isVisible ? -1 : 1}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
-                        id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
+                        id="sig" minLength={5}
+                        tabIndex={modal.isVisible ? -1 : 2}
+                        placeholder="Escreva os significados que a palavra pode ter."
                         {...register("definition")}
                     ></textarea>
                 </div>
-                <button type="submit">
+                <button type="submit"
+                    tabIndex={modal.isVisible ? -1 : 3}
+                >
                     Adicionar
                 </button>
             </Form>

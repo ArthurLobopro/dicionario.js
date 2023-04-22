@@ -46,9 +46,9 @@ export function EditDictionaryModal(props: editDictionaryProps) {
     }, [currentDictionary])
 
     function onSubmit(data: edit_dictionary_props) {
-        // api.dictionaries.editDictionary(currentDictionary.name, data)
+        api.dictionaries.editDictionary(currentDictionary.name, data)
 
-        // modal.open(<SuccessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
+        modal.open(<SuccessModal message="Dicionário editado com sucesso!" onClose={props.onClose} />)
     }
 
     return (
@@ -70,6 +70,7 @@ export function EditDictionaryModal(props: editDictionaryProps) {
                         <label>
                             Nome
                             <input
+                                className="simple"
                                 type="text" {...register("newName")}
                             />
                         </label>

@@ -56,7 +56,8 @@ export function DeleteDictionaryModal(props: modal_props) {
             return deleteDictionary()
         } else {
             modal.open(<WarningModal
-                title="Você tem certeza?" onClose={(confirmed) => {
+                title="Você tem certeza?"
+                onClose={(confirmed) => {
                     if (confirmed) {
                         deleteDictionary()
                     } else {
@@ -64,7 +65,8 @@ export function DeleteDictionaryModal(props: modal_props) {
                     }
                 }}
             >
-                O dicionário <strong>"{dictionary}"</strong> possui <strong>{word_count}</strong> palavras, deseja apagá-lo mesmo assim? Não é possível desfazer essa ação.
+                O dicionário <strong>"{dictionary}"</strong> possui <strong>{word_count}</strong> palavra{word_count > 1 ? "s" : ""}, deseja apagá-lo mesmo assim? <br />
+                Lembre-se: Esta ação não pode ser desfeita.
             </WarningModal>)
         }
     }

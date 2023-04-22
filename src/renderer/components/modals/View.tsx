@@ -1,14 +1,14 @@
-import { formatDate } from "../../../Util"
+import { formatDate } from "../../Util"
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { ModalWrapper } from "./Wrapper"
 
-interface viewModalProps {
+interface ViewModalProps {
     dictionary: DictionaryController,
     word: string,
     onClose: () => void
 }
 
-export function ViewModal(props: viewModalProps) {
+export function ViewModal(props: ViewModalProps) {
     const word_data = props.dictionary.Words.getWords()[props.word]
 
     return (

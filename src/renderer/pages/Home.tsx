@@ -3,9 +3,18 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { AddIcon, ConfigIcon, EyeIcon } from "../components/icons"
 
-function Option({ text, icon, onclick }: { text: string; icon: JSX.Element; onclick: () => void }) {
+interface OptionProps {
+    text: string
+    icon: JSX.Element
+    goTo: string
+}
+
+function Option(props: OptionProps) {
+    const { text, icon, goTo } = props
+    const navigate = useNavigate()
+
     return (
-        <div className="option" onClick={onclick}>
+        <div className="option" onClick={() => navigate(goTo)}>
             <span>{text}</span>
             <div style={{ width: "30px", height: "30px" }}>
                 {icon}
@@ -15,15 +24,14 @@ function Option({ text, icon, onclick }: { text: string; icon: JSX.Element; oncl
 }
 
 export function Home() {
-    const navigate = useNavigate()
 
     return (
         <Page id="home">
             <Header title="Dicionário Pessoal" />
             <div className="option-wrapper">
-                <Option text="Adicionar" icon={<AddIcon />} onclick={() => navigate("create")} />
-                <Option text="Visualizar" icon={<EyeIcon />} onclick={() => navigate("view")} />
-                <Option text="Configurações" icon={<ConfigIcon />} onclick={() => navigate("config")} />
+                <Option text="Adicionar" icon={<AddIcon />} goTo={"create"} />
+                <Option text="Visualizar" icon={<EyeIcon />} goTo={"view"} />
+                <Option text="Configurações" icon={<ConfigIcon />} goTo={"config"} />
             </div>
         </Page>
     )

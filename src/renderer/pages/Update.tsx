@@ -7,7 +7,7 @@ import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { AlertModal } from "../components/modals/Alert"
+import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
 
@@ -32,11 +32,11 @@ export function UpdateScreen() {
     const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
 
     const navigate = useNavigate()
+
     const modal = useModal()
 
     function UpdateWord(data: UpdateWordData) {
         try {
-
             dictionary.Words.updateWord(
                 word as string,
                 {
@@ -45,21 +45,25 @@ export function UpdateScreen() {
                 }
             )
 
-            modal.open(<SuccessModal message="Palavra atualizada com sucesso!" onClose={() => {
+            function handleClose() {
                 modal.close()
                 navigate("/view")
-            }} />)
+            }
+
+            modal.open(<SuccessModal
+                message="Palavra atualizada com sucesso!"
+                onClose={handleClose}
+            />)
 
         } catch (error: any) {
             console.log(error)
             if (error instanceof ZodError) {
                 const zod_error = error as ZodError
-                modal.open(<AlertModal
-                    title="Erro" onClose={modal.close}
-                    message={zod_error.issues.map(issue => issue.message).join("\n")}
-                />)
+                const message = zod_error.issues.map(issue => issue.message).join("\n")
+                modal.open(<ErrorModal onClose={modal.close} message={message} />)
             } else {
-                modal.open(<AlertModal title="Erro" message={(error as Error).message} onClose={modal.close} />)
+                const message = (error as Error).message
+                modal.open(<ErrorModal message={message} onClose={modal.close} />)
             }
         }
     }
@@ -76,17 +80,19 @@ export function UpdateScreen() {
                     Palavra
                     <input
                         type="text" id="word" placeholder="Palavra" minLength={3}
-                        {...register("word")}
+                        tabIndex={modal.isVisible ? -1 : 1} {...register("word")}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
-                        id="sig" minLength={5} placeholder="Escreva os significados que a palavra pode ter."
+                        id="sig" minLength={5}
+                        tabIndex={modal.isVisible ? -1 : 2}
+                        placeholder="Escreva os significados que a palavra pode ter."
                         {...register("definition")}
                     ></textarea>
                 </div>
-                <button type="submit">
+                <button type="submit" tabIndex={modal.isVisible ? -1 : 3}>
                     Atualizar
                 </button>
             </Form>
