@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom"
-import { LeftArrow } from "./icons"
+import { ReturnIcon } from "./icons"
 
 interface ReturnButtonProps {
     returnTo?: string
@@ -8,6 +8,6 @@ interface ReturnButtonProps {
 export function ReturnButton({ returnTo = "/" }: ReturnButtonProps) {
     const navigate = useNavigate()
     return (
-        <LeftArrow title="Voltar" onClick={() => navigate(returnTo)} />
+        <ReturnIcon title="Voltar" onClick={() => navigate(returnTo)} />
     )
 }
