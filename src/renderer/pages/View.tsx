@@ -16,8 +16,10 @@ import {
     EditIcon,
     EyeIcon,
     GrayEmptyBookIcon,
+    InfoIcon,
     TrashIcon
 } from "../components/icons"
+import { DictionaryInfoModal } from "../components/modals/dictionary/InfoModal"
 
 interface EmptyPageProps {
     link: string
@@ -130,6 +132,13 @@ export function ViewScreen() {
         setWords(Object.entries(dictionary.Words.words))
     }
 
+    function showInfo() {
+        modal.open(<DictionaryInfoModal
+            dictionary={dictionary}
+            onClose={modal.close}
+        />)
+    }
+
     const contents = {
         get words() {
             return (
@@ -157,12 +166,22 @@ export function ViewScreen() {
     const atual_location = window.location.href.split("#")[1]
     const link = `/create/${dictionary.name}?return_to=${atual_location}`
 
-    const add_button = (
-        <AddIcon
-            onClick={() => navigate(link)}
-            title="Adicionar palavra"
-            className="add-button"
-        />
+    const right_content = (
+        <div className="flex gap-4">
+            <div>
+                <InfoIcon
+                    onClick={showInfo}
+                    title="Informações do dicionário"
+                />
+            </div>
+            <div>
+                <AddIcon
+                    onClick={() => navigate(link)}
+                    title="Adicionar palavra"
+                    className="add-button"
+                />
+            </div>
+        </div>
     )
 
     return (
@@ -177,7 +196,7 @@ export function ViewScreen() {
                     }} />
                 }
                 left={<ReturnButton />}
-                right={add_button}
+                right={right_content}
             />
             {words.length > 0 ? contents.words : contents.empty}
         </Page>
