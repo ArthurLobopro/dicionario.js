@@ -221,7 +221,7 @@ button {
 
     &:hover,
     &:focus {
-        box-shadow: inset 0 0 0 1px currentColor;
+        box-shadow: inset 0 0 0 1px var(--main-color);
     }
 }
 
@@ -292,7 +292,7 @@ button.simple {
     border-radius: 4px;
 
     &:hover {
-        box-shadow: 0 0 0 1px var(--main-color) inset;
+        box-shadow: 0 0 0 1px currentColor inset;
     }
 }
 

@@ -95,7 +95,7 @@
             align-items: center;
             font-size: 16px;
             line-height: 24px;
-            padding: 14px;
+            padding: 8px 14px;
             width: 100%;
         }
 
@@ -109,6 +109,10 @@
             padding: 20px 14px;
             flex-shrink: 1;
             white-space: break-spaces;
+
+            p {
+                margin-bottom: 8px;
+            }
         }
 
         .icon-wrapper {
@@ -164,7 +168,7 @@
             justify-content: end;
             align-items: center;
             width: 100%;
-            padding: 14px;
+            padding: 8px 14px;
             gap: 20px;
 
             &:has(>button:only-child) {
