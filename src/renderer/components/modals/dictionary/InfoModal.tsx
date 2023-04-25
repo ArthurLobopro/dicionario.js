@@ -1,4 +1,5 @@
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
+import { formatDate } from "../../../Util"
 import { BlueInfoIcon } from "../../icons"
 import { AlertModalWithIcon } from "../Alert"
 
@@ -12,6 +13,9 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
     const newerWord = props.dictionary.Words.getNewerWord()
     const olderWord = props.dictionary.Words.getOlderWord()
 
+    const newerRegister = newerWord?.register && formatDate(newerWord.register.toISOString())
+    const olderRegister = olderWord?.register && formatDate(olderWord.register.toISOString())
+
     return (
         <AlertModalWithIcon
             title={`Informações de: ${props.dictionary.name}`}
@@ -20,12 +24,20 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
                 <p>
                     Quantidade de palavras: {wordsCount} palavra{wordsCount > 1 ? "s" : ""}
                 </p>
-                <p>
-                    Primeira palavra cadastrada: {newerWord}
-                </p>
-                <p>
-                    Última palavra cadastrada: {olderWord}
-                </p>
+                {
+                    newerWord &&
+                    <p className="flex gap-4 align-center">
+                        Primeira palavra cadastrada:
+                        <span className="info">{newerWord.word} ({newerRegister})</span>
+                    </p>
+                }
+                {
+                    olderWord &&
+                    <p className="flex gap-4 align-center">
+                        Última palavra cadastrada:
+                        <span className="info">{olderWord.word} ({olderRegister})</span>
+                    </p>
+                }
             </>}
             icon={<BlueInfoIcon />}
         />

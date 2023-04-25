@@ -113,25 +113,35 @@ class WordsController {
     }
 
     getNewerWord() {
-        const words = this.words
+        const words = Object.entries(this.words)
 
-        const newerWord = Object.entries(words)
+        if (!words.length) return null
+
+        const newerWord = words
             .sort((a, b) => {
                 return b[1].register.getTime() - a[1].register.getTime()
             })[0]
 
-        return newerWord?.[0]
+        return {
+            word: newerWord?.[0],
+            ...newerWord?.[1]
+        }
     }
 
     getOlderWord() {
-        const words = this.words
+        const words = Object.entries(this.words)
 
-        const olderWord = Object.entries(words)
+        if (!words.length) return null
+
+        const olderWord = words
             .sort((a, b) => {
                 return a[1].register.getTime() - b[1].register.getTime()
             })[0]
 
-        return olderWord?.[0]
+        return {
+            word: olderWord?.[0],
+            ...olderWord?.[1]
+        }
     }
 
     updateWord(word: string, { new_word, definition }: { new_word: string, definition: string }) {
