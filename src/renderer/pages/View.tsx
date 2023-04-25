@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
+import { DictionaryController } from "../../store/Controllers/Dictionary"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { ConfirmModal } from "../components/modals/Confirm"
 import { ViewModal } from "../components/modals/View"
+import { DictionaryInfoModal } from "../components/modals/dictionary"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
 
-import { DictionaryController } from "../../store/Controllers/Dictionary"
-import { StoreWord } from "../../store/Schemas"
 import {
     AddIcon,
     EditIcon,
@@ -19,7 +19,6 @@ import {
     InfoIcon,
     TrashIcon
 } from "../components/icons"
-import { DictionaryInfoModal } from "../components/modals/dictionary/InfoModal"
 
 interface EmptyPageProps {
     link: string
