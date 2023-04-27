@@ -115,6 +115,7 @@ export class DictionariesController {
             })
             .replace(/\//g, "-")
             .replace(/, /g, "_")
+            .replace(/:/g, "-")
 
         const filePath = path.resolve(folder, `${exportName}_${currentDateTime}.json`)
 
