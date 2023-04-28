@@ -24,12 +24,12 @@ export function ViewModal(props: ViewModalProps) {
                         <textarea readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
                     </div>
                     <div className="date-wrapper">
-                        <div>
+                        <div className="flex-column gap-10">
                             <span>Data de registro</span>
                             <span className="info">{formatDate(word_data.register.toISOString())}</span>
                         </div>
                         {word_data.lastEdit ?
-                            <div>
+                            <div className="flex-column gap-10">
                                 <span>Última edição</span>
                                 <span className="info">{formatDate(word_data.lastEdit.toISOString())}</span>
                             </div> : null
