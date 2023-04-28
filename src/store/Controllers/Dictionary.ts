@@ -112,7 +112,7 @@ class WordsController {
         this.#dictionary.save()
     }
 
-    getNewerWord() {
+    getOlderWord() {
         const words = Object.entries(this.words)
 
         if (!words.length) return null
@@ -128,7 +128,7 @@ class WordsController {
         }
     }
 
-    getOlderWord() {
+    getNewerWord() {
         const words = Object.entries(this.words)
 
         if (!words.length) return null
