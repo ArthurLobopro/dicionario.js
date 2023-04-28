@@ -8,6 +8,8 @@ interface ReturnButtonProps {
 export function ReturnButton({ returnTo = "/" }: ReturnButtonProps) {
     const navigate = useNavigate()
     return (
-        <ReturnIcon title="Voltar" onClick={() => navigate(returnTo)} />
+        <div>
+            <ReturnIcon title="Voltar" onClick={() => navigate(returnTo)} />
+        </div>
     )
 }

@@ -29,7 +29,7 @@ export function CreateScreen() {
     const has_return_to = search.includes("return_to=")
     const return_to = has_return_to ? search.split("=")[1] : "/"
 
-    const { register, handleSubmit, reset } = useForm<CreateWordData>({
+    const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateWordData>({
         resolver: zodResolver(create_word_schema),
         defaultValues: {
             word: "",
@@ -114,8 +114,9 @@ export function CreateScreen() {
                     Palavra
                     <input
                         type="text" id="word" placeholder="Palavra"
-                        {...register("word")}
                         tabIndex={modal.isVisible ? -1 : 1}
+                        {...register("word")}
+                        title={errors.word?.message || "Palavra a ser cadastrada"}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
@@ -123,7 +124,7 @@ export function CreateScreen() {
                     <textarea
                         id="sig" minLength={5}
                         tabIndex={modal.isVisible ? -1 : 2}
-                        placeholder="Escreva os significados que a palavra pode ter."
+                        placeholder="Ssignificados que a palavra tem."
                         {...register("definition")}
                     ></textarea>
                 </div>

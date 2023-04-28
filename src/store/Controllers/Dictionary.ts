@@ -112,6 +112,38 @@ class WordsController {
         this.#dictionary.save()
     }
 
+    getNewerWord() {
+        const words = Object.entries(this.words)
+
+        if (!words.length) return null
+
+        const newerWord = words
+            .sort((a, b) => {
+                return b[1].register.getTime() - a[1].register.getTime()
+            })[0]
+
+        return {
+            word: newerWord?.[0],
+            ...newerWord?.[1]
+        }
+    }
+
+    getOlderWord() {
+        const words = Object.entries(this.words)
+
+        if (!words.length) return null
+
+        const olderWord = words
+            .sort((a, b) => {
+                return a[1].register.getTime() - b[1].register.getTime()
+            })[0]
+
+        return {
+            word: olderWord?.[0],
+            ...olderWord?.[1]
+        }
+    }
+
     updateWord(word: string, { new_word, definition }: { new_word: string, definition: string }) {
         const words = this.words
 

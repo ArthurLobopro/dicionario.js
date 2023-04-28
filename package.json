@@ -1,6 +1,6 @@
 {
   "name": "dicionario",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Dicionário simples onde você pode cadastrar as palavras que você aprendeu recentemente, fácil e prático.",
   "main": "./dist/main/main.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "@svgr/core": "^6.5.1",
     "@types/react": "^18.0.31",
     "@types/react-dom": "^18.0.11",
-    "electron": "^24.1.2",
+    "electron": "^24.1.3",
     "sass-compiler": "1.3.1",
     "typescript": "^5.0.4"
   },
