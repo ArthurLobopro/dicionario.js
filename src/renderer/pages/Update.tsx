@@ -88,7 +88,7 @@ export function UpdateScreen() {
                     <textarea
                         id="sig" minLength={5}
                         tabIndex={modal.isVisible ? -1 : 2}
-                        placeholder="Escreva os significados que a palavra pode ter."
+                        placeholder="Significados que a palavra pode ter"
                         {...register("definition")}
                     ></textarea>
                 </div>

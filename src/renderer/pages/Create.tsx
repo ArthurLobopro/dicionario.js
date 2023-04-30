@@ -124,7 +124,7 @@ export function CreateScreen() {
                     <textarea
                         id="sig" minLength={5}
                         tabIndex={modal.isVisible ? -1 : 2}
-                        placeholder="Ssignificados que a palavra tem."
+                        placeholder="Significados que a palavra pode ter"
                         {...register("definition")}
                     ></textarea>
                 </div>
