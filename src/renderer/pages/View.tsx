@@ -17,6 +17,7 @@ import {
     EyeIcon,
     GrayEmptyBookIcon,
     InfoIcon,
+    SearchIcon,
     TrashIcon
 } from "../components/icons"
 
@@ -120,6 +121,10 @@ export function ViewScreen() {
 
     const [words, setWords] = useState(getWords())
 
+    const [inputVisibility, setInputVisibility] = useState(false)
+
+    const [filter, setFilter] = useState(/^/)
+
     useEffect(() => {
         setWords(getWords())
     }, [dictionary])
@@ -138,17 +143,22 @@ export function ViewScreen() {
         />)
     }
 
+    const filtered_words = words.filter(([word]) => {
+        return filter.test(word)
+    })
+
     const contents = {
         get words() {
             return (
                 <div>
                     <div className="word-wrapper">
-                        {words.map(([word, word_props]) => (
+                        {filtered_words.map(([word, word_props]) => (
                             <Word
                                 word={{ ...word_props, word }}
                                 reload={reloadWords}
                                 dictionary={dictionary}
                                 modal={modal}
+                                key={word}
                             />
                         ))}
                     </div>
@@ -165,8 +175,33 @@ export function ViewScreen() {
     const atual_location = window.location.href.split("#")[1]
     const link = `/create/${dictionary.name}?return_to=${atual_location}`
 
+    const search_input = (
+        <input
+            type="search" className="simple" placeholder="Pesquisar"
+            onChange={(e) => {
+                setFilter(new RegExp(`^${e?.target.value}`))
+            }}
+            onBlur={(event) => {
+                if (event.target.value === "") {
+                    setInputVisibility(false)
+                }
+            }}
+            autoFocus
+        />
+    )
+
     const right_content = (
         <div className="flex gap-4">
+            <div className="flex align-center">
+                {
+                    inputVisibility ?
+                        search_input :
+                        <SearchIcon
+                            title="Mostrar barra de pesquisa"
+                            onClick={() => setInputVisibility(true)}
+                        />
+                }
+            </div>
             <div>
                 <InfoIcon
                     onClick={showInfo}
