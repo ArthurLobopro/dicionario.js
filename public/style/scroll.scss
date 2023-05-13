@@ -9,6 +9,7 @@ textarea::-webkit-scrollbar {
 ::-webkit-scrollbar-thumb {
     background-color: var(--scrollbar-thumb);
     border-radius: 10px;
+    min-height: 40px;
 
     &:hover {
         background-color: var(--scrollbar-thumb-hover);
