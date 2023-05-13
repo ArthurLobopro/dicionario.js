@@ -70,3 +70,7 @@ autoUpdater.on("update-downloaded", (...props) => {
 ipcMain.on("install-update", () => {
     autoUpdater.quitAndInstall()
 })
+
+ipcMain.on("isDev", event => {
+    event.returnValue = app.isPackaged
+})
