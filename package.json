@@ -1,6 +1,6 @@
 {
   "name": "dicionario",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "description": "Dicionário simples onde você pode cadastrar as palavras que você aprendeu recentemente, fácil e prático.",
   "main": "./dist/main/main.js",
   "scripts": {
@@ -36,7 +36,7 @@
     "@electron-fonts/nunito": "^1.1.0",
     "@electron-fonts/open-sans": "^1.1.0",
     "@hookform/resolvers": "^3.1.0",
-    "electron-frame": "^1.4.0",
+    "electron-frame": "^1.4.1",
     "electron-squirrel-startup": "^1.0.0",
     "electron-store": "^8.1.0",
     "react": "^18.2.0",
