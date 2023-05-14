@@ -9,6 +9,7 @@ export function CircleButton(props: CircleButtonProps) {
         <button
             className="circle-button"
             onClick={props.onClick} title={props.title}
+            tabIndex={-1}
         >
             {props.children}
         </button>
