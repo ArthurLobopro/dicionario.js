@@ -142,6 +142,11 @@ function WindowSection() {
                         <Switcher
                             onToggle={HandleToggleSystemTitlebar}
                             checked={useSystemTitleBar}
+                            title={
+                                useSystemTitleBar ?
+                                    "Desativar titlebar do sistema" :
+                                    "Ativar titlebar do sistema"
+                            }
                         />
                     </>
                 )
@@ -244,6 +249,7 @@ function DictionarySection(props: DictionarySectionsProps) {
             <span>Exportar dicionário</span>
             <button
                 className="stroke"
+                title="Exportar um dicionário"
                 onClick={HandleExportDictionary} onMouseEnter={hoverFocus}
             >
                 <UploadIcon />
@@ -253,6 +259,7 @@ function DictionarySection(props: DictionarySectionsProps) {
             <span>Importar dicionário</span>
             <button
                 className="stroke"
+                title="Importar um dicionário"
                 onClick={HandleImportDictionary} onMouseEnter={hoverFocus}
             >
                 <DonwloadIcon />

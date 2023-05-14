@@ -63,32 +63,6 @@ header {
         display: flex;
         justify-content: center;
         align-items: center;
-
-        div:has(>svg) {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-
-            &:hover:not(:empty) {
-                background-color: var(--main-hover-background);
-            }
-        }
-
-        svg {
-            cursor: pointer;
-
-            * {
-                &[stroke]:not([stroke="none"]) {
-                    stroke: var(--main-color);
-                }
-
-                &[fill]:not([fill="none"]) {
-                    fill: var(--main-color);
-                }
-            }
-        }
     }
 
     &:has(.left:not(:empty))>.right:empty {

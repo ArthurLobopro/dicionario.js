@@ -1,0 +1,32 @@
+.circle-button {
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    box-shadow: none !important;
+    padding: 0;
+    background-color: inherit;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 50%;
+
+    &:hover {
+        background-color: var(--main-hover-background);
+    }
+
+    svg {
+        cursor: pointer;
+
+        * {
+            &[stroke]:not([stroke="none"]) {
+                stroke: var(--main-color);
+            }
+
+            &[fill]:not([fill="none"]) {
+                fill: var(--main-color);
+            }
+        }
+    }
+}

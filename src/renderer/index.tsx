@@ -24,11 +24,15 @@ function App() {
         })
     }, [])
 
+    const Wrapper =
+        ipcRenderer.sendSync("isDev") ? React.StrictMode : React.Fragment
+    // React.Fragment
+
     return (
-        <React.StrictMode>
+        <Wrapper>
             {modal.content}
             <AppRoutes />
-        </React.StrictMode>
+        </Wrapper>
     )
 }
 

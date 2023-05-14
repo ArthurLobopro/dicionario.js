@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { ReturnIcon } from "./icons"
+import { CircleButton } from "./CircleButton"
 
 interface ReturnButtonProps {
     returnTo?: string
@@ -8,8 +9,8 @@ interface ReturnButtonProps {
 export function ReturnButton({ returnTo = "/" }: ReturnButtonProps) {
     const navigate = useNavigate()
     return (
-        <div>
-            <ReturnIcon title="Voltar" onClick={() => navigate(returnTo)} />
-        </div>
+        <CircleButton title="Voltar" onClick={() => navigate(returnTo)} >
+            <ReturnIcon />
+        </CircleButton>
     )
 }
