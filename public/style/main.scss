@@ -1,9 +1,5 @@
-@import url(./components/modal.css);
-@import url(./components/switch.css);
 @import url(./scroll.css);
-@import url(./components/header.css);
 @import url(./word-wrapper.css);
-@import url(./components/linetitle.css);
 
 :root {
     --blue: #296dd3;
@@ -306,6 +302,12 @@ button.simple {
     gap: 10px;
     align-items: center;
 }
+
+@import url(./components/modal.css);
+@import url(./components/switch.css);
+@import url(./components/header.css);
+@import url(./components/linetitle.css);
+@import url(./components/circle-button.css);
 
 @import url(./pages/view.css);
 @import url(./pages/create.css);

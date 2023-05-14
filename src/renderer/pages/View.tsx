@@ -20,6 +20,7 @@ import {
     SearchIcon,
     TrashIcon
 } from "../components/icons"
+import { CircleButton } from "../components/CircleButton"
 
 interface EmptyPageProps {
     link: string
@@ -96,19 +97,19 @@ function Word(props: WordProps) {
                 </div>
             </div>
             <div className="controls">
-                <div title="Visualizar" onClick={ShowViewModal}>
+                <CircleButton title="Visualizar" onClick={ShowViewModal}>
                     <EyeIcon />
-                </div>
-                <div title="Editar" id="edit"
+                </CircleButton>
+                <CircleButton title="Editar"
                     onClick={() => {
                         navigate(`/update/${dictionary.name}/${word.word}`)
                     }}
                 >
-                    <EditIcon />
-                </div>
-                <div title="Apagar" id="delete" onClick={DeleteWord}>
-                    <TrashIcon />
-                </div>
+                    <EditIcon id="edit" />
+                </CircleButton>
+                <CircleButton title="Apagar" onClick={DeleteWord}>
+                    <TrashIcon id="delete" />
+                </CircleButton>
             </div>
         </div>
     )
@@ -196,25 +197,26 @@ export function ViewScreen() {
                 {
                     inputVisibility ?
                         search_input :
-                        <SearchIcon
+                        <CircleButton
                             title="Mostrar barra de pesquisa"
                             onClick={() => setInputVisibility(true)}
-                        />
+                        >
+                            <SearchIcon />
+                        </CircleButton>
                 }
             </div>
-            <div>
-                <InfoIcon
-                    onClick={showInfo}
-                    title="Informações do dicionário"
-                />
-            </div>
-            <div>
-                <AddIcon
-                    onClick={() => navigate(link)}
-                    title="Adicionar palavra"
-                    className="add-button"
-                />
-            </div>
+            <CircleButton
+                onClick={showInfo}
+                title="Informações do dicionário"
+            >
+                <InfoIcon />
+            </CircleButton>
+            <CircleButton
+                onClick={() => navigate(link)}
+                title="Adicionar palavra"
+            >
+                <AddIcon className="add-button" />
+            </CircleButton>
         </div>
     )
 
