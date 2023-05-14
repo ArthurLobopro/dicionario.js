@@ -22,19 +22,19 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
             onClose={props.onClose}
             children={<>
                 <p>
-                    Quantidade de palavras: {wordsCount} palavra{wordsCount > 1 ? "s" : ""}
+                    Palavras cadastradas: {wordsCount} palavra{wordsCount > 1 ? "s" : ""}
                 </p>
                 {
                     newerWord &&
                     <p className="flex gap-4 align-center">
-                        Primeira palavra cadastrada:
+                        Primeiro Registro:
                         <span className="info">{newerWord.word} ({newerRegister})</span>
                     </p>
                 }
                 {
                     olderWord &&
                     <p className="flex gap-4 align-center">
-                        Última palavra cadastrada:
+                        Último Registro:
                         <span className="info">{olderWord.word} ({olderRegister})</span>
                     </p>
                 }
