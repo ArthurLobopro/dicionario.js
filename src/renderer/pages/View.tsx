@@ -9,6 +9,7 @@ import { Word } from "../components/Word"
 import { DictionaryInfoModal } from "../components/modals/dictionary"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
+import { InputChangeEvent, InputFocusEvent } from "../types"
 
 import {
     AddIcon,
@@ -65,22 +66,20 @@ export function ViewScreen() {
 
     const [words, setWords] = useState(getWords())
 
+    function reloadWords() {
+        setWords(Object.entries(dictionary.Words.words))
+    }
+
+    useEffect(reloadWords, [dictionary])
+
     const [inputVisibility, setInputVisibility] = useState(false)
 
     const [search, setSearch] = useState("")
 
     const filter = new RegExp(`^${search}`)
 
-    useEffect(() => {
-        setWords(getWords())
-    }, [dictionary])
-
     const navigate = useNavigate()
     const modal = useModal()
-
-    function reloadWords() {
-        setWords(Object.entries(dictionary.Words.words))
-    }
 
     function showInfo() {
         modal.open(<DictionaryInfoModal
@@ -89,9 +88,7 @@ export function ViewScreen() {
         />)
     }
 
-    const filtered_words = words.filter(([word]) => {
-        return filter.test(word)
-    })
+    const filtered_words = words.filter(([word]) => filter.test(word))
 
     const contents = {
         get words() {
@@ -123,17 +120,16 @@ export function ViewScreen() {
     const atual_location = window.location.href.split("#")[1]
     const link = `/create/${dictionary.name}?return_to=${atual_location}`
 
+    const handle_search_input_change = (e: InputChangeEvent) => setSearch(e?.target.value)
+    const handle_search_input_blur = (e: InputFocusEvent) => {
+        e?.target.value === "" && setInputVisibility(false)
+    }
+
     const search_input = (
         <input
             type="search" className="simple" placeholder="Pesquisar"
-            onChange={(e) => {
-                setSearch(e?.target.value)
-            }}
-            onBlur={(event) => {
-                if (event.target.value === "") {
-                    setInputVisibility(false)
-                }
-            }}
+            onChange={handle_search_input_change}
+            onBlur={handle_search_input_blur}
             autoFocus
         />
     )
