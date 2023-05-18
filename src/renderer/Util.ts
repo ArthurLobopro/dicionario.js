@@ -1,5 +1,5 @@
-import path from 'node:path'
 import { ipcRenderer } from "electron"
+import path from 'node:path'
 
 export const appPath = ipcRenderer.sendSync("app-path") as string
 export const assetsPath = path.join(appPath, "assets")

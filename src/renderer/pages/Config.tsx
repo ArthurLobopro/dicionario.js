@@ -18,7 +18,6 @@ import {
     EditIcon,
     GithubLogo,
     MinifiedTrashIcon,
-    TrashIcon,
     UploadIcon
 } from "../components/icons"
 

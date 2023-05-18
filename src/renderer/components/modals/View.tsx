@@ -1,5 +1,5 @@
-import { formatDate } from "../../Util"
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
+import { formatDate } from "../../Util"
 import { ModalWrapper } from "./Wrapper"
 
 interface ViewModalProps {
