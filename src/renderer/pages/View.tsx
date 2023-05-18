@@ -17,6 +17,7 @@ import {
     EyeIcon,
     GrayEmptyBookIcon,
     InfoIcon,
+    NotFoundIcon,
     SearchIcon,
     TrashIcon
 } from "../components/icons"
@@ -115,6 +116,21 @@ function Word(props: WordProps) {
     )
 }
 
+interface EmptySearchProps {
+    search: string
+}
+
+function EmptySearch(props: EmptySearchProps) {
+    return (
+        <div className="empty">
+            <div>
+                <NotFoundIcon />
+            </div>
+            A pesquisa "{props.search}" não encontrou nenhum resultado.
+        </div>
+    )
+}
+
 export function ViewScreen() {
     const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
 
@@ -124,7 +140,9 @@ export function ViewScreen() {
 
     const [inputVisibility, setInputVisibility] = useState(false)
 
-    const [filter, setFilter] = useState(/^/)
+    const [search, setSearch] = useState("")
+
+    const filter = new RegExp(`^${search}`)
 
     useEffect(() => {
         setWords(getWords())
@@ -150,7 +168,7 @@ export function ViewScreen() {
 
     const contents = {
         get words() {
-            return (
+            return filtered_words.length ? (
                 <div>
                     <div className="word-wrapper">
                         {filtered_words.map(([word, word_props]) => (
@@ -164,6 +182,8 @@ export function ViewScreen() {
                         ))}
                     </div>
                 </div>
+            ) : (
+                <EmptySearch search={search} />
             )
         },
         get empty() {
@@ -180,7 +200,7 @@ export function ViewScreen() {
         <input
             type="search" className="simple" placeholder="Pesquisar"
             onChange={(e) => {
-                setFilter(new RegExp(`^${e?.target.value}`))
+                setSearch(e?.target.value)
             }}
             onBlur={(event) => {
                 if (event.target.value === "") {
@@ -195,14 +215,16 @@ export function ViewScreen() {
         <div className="flex gap-4">
             <div className="flex align-center">
                 {
-                    inputVisibility ?
-                        search_input :
-                        <CircleButton
-                            title="Mostrar barra de pesquisa"
-                            onClick={() => setInputVisibility(true)}
-                        >
-                            <SearchIcon />
-                        </CircleButton>
+                    words.length > 0 && (
+                        inputVisibility ?
+                            search_input :
+                            <CircleButton
+                                title="Mostrar barra de pesquisa"
+                                onClick={() => setInputVisibility(true)}
+                            >
+                                <SearchIcon />
+                            </CircleButton>
+                    )
                 }
             </div>
             <CircleButton
