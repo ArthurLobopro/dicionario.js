@@ -12,20 +12,17 @@ const frameApi = {
     setFrameStyle(frameStyle: frameStyle) {
         frame.setFrameStyle(frameStyle)
     },
+
     updateTheme() {
         const frameIsDark = frame.darkmode
 
         const { darkMode, frameTheme } = options()
 
-        if (frameTheme === "auto" && darkMode !== frameIsDark) {
-            return frame.toggleDarkMode()
-        }
+        const should_toggle_darkmode = frameIsDark && frameTheme === "light"
+            || !frameIsDark && frameTheme === "dark"
+            || frameTheme === "auto" && darkMode !== frameIsDark
 
-        if (frameIsDark && frameTheme === "light") {
-            frame.toggleDarkMode()
-        }
-
-        if (!frameIsDark && frameTheme === "dark") {
+        if (should_toggle_darkmode) {
             frame.toggleDarkMode()
         }
     }
@@ -36,6 +33,5 @@ const isLinux = process.platform === "linux"
 if (!isLinux || !api.options.getOptions().linux.useSystemTitleBar) {
     frame.insert()
 }
-
 
 export { frameApi as frame }

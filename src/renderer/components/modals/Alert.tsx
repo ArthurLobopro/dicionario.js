@@ -1,3 +1,5 @@
+import { CircleButton } from "../CircleButton"
+import { CloseIcon } from "../icons"
 import { ModalWrapper } from "./Wrapper"
 
 export interface AlertModalProps {
@@ -43,6 +45,9 @@ export function AlertModalWithIcon(props: AlertWithIconProps) {
             <div className="modal">
                 <div className="modal-header">
                     {title}
+                    <CircleButton title="Fechar" onClick={onClose}>
+                        <CloseIcon />
+                    </CircleButton>
                 </div>
                 <div className="modal-body">
                     <div className="grid-left-center">

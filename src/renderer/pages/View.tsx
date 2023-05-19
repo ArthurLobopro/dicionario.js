@@ -1,26 +1,23 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
-import { DictionaryController } from "../../store/Controllers/Dictionary"
+import { CircleButton } from "../components/CircleButton"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { ConfirmModal } from "../components/modals/Confirm"
-import { ViewModal } from "../components/modals/View"
+import { Word } from "../components/Word"
 import { DictionaryInfoModal } from "../components/modals/dictionary"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
+import { InputChangeEvent, InputFocusEvent } from "../types"
 
 import {
     AddIcon,
-    EditIcon,
-    EyeIcon,
     GrayEmptyBookIcon,
     InfoIcon,
-    SearchIcon,
-    TrashIcon
+    NotFoundIcon,
+    SearchIcon
 } from "../components/icons"
-import { CircleButton } from "../components/CircleButton"
 
 interface EmptyPageProps {
     link: string
@@ -47,70 +44,17 @@ function EmptyPage(props: EmptyPageProps) {
     )
 }
 
-interface WordProps {
-    word: {
-        lastEdit?: Date | undefined
-        definition: string
-        register: Date,
-        word: string
-    }
-    modal: ReturnType<typeof useModal>
-    dictionary: DictionaryController
-    reload: () => void
+interface EmptySearchProps {
+    search: string
 }
 
-function Word(props: WordProps) {
-    const { modal, word, dictionary, reload } = props
-
-    function ShowViewModal() {
-        modal.open(<ViewModal
-            onClose={modal.close}
-            dictionary={dictionary}
-            word={word.word}
-        />)
-    }
-
-    function DeleteWord() {
-        modal.open(<ConfirmModal
-            message="Essa ação é irreversível. Deseja realmente excluir esta palavra?"
-            title="Você tem certeza?"
-            onClose={(confirm) => {
-                if (confirm) {
-                    dictionary.Words.deleteWord(word.word)
-                    reload()
-                }
-                modal.close()
-            }}
-        />)
-    }
-
-    const navigate = useNavigate()
-
+function EmptySearch(props: EmptySearchProps) {
     return (
-        <div className="word" key={word.word} onDoubleClick={ShowViewModal}>
-            <div className="content">
-                <div className="word-header">
-                    {word.word}
-                </div>
-                <div className="word-definition">
-                    {word.definition}
-                </div>
+        <div className="empty">
+            <div>
+                <NotFoundIcon />
             </div>
-            <div className="controls">
-                <CircleButton title="Visualizar" onClick={ShowViewModal}>
-                    <EyeIcon />
-                </CircleButton>
-                <CircleButton title="Editar"
-                    onClick={() => {
-                        navigate(`/update/${dictionary.name}/${word.word}`)
-                    }}
-                >
-                    <EditIcon id="edit" />
-                </CircleButton>
-                <CircleButton title="Apagar" onClick={DeleteWord}>
-                    <TrashIcon id="delete" />
-                </CircleButton>
-            </div>
+            A pesquisa "{props.search}" não encontrou nenhum resultado.
         </div>
     )
 }
@@ -122,20 +66,20 @@ export function ViewScreen() {
 
     const [words, setWords] = useState(getWords())
 
-    const [inputVisibility, setInputVisibility] = useState(false)
-
-    const [filter, setFilter] = useState(/^/)
-
-    useEffect(() => {
-        setWords(getWords())
-    }, [dictionary])
-
-    const navigate = useNavigate()
-    const modal = useModal()
-
     function reloadWords() {
         setWords(Object.entries(dictionary.Words.words))
     }
+
+    useEffect(reloadWords, [dictionary])
+
+    const [inputVisibility, setInputVisibility] = useState(false)
+
+    const [search, setSearch] = useState("")
+
+    const filter = new RegExp(`^${search}`)
+
+    const navigate = useNavigate()
+    const modal = useModal()
 
     function showInfo() {
         modal.open(<DictionaryInfoModal
@@ -144,13 +88,11 @@ export function ViewScreen() {
         />)
     }
 
-    const filtered_words = words.filter(([word]) => {
-        return filter.test(word)
-    })
+    const filtered_words = words.filter(([word]) => filter.test(word))
 
     const contents = {
         get words() {
-            return (
+            return filtered_words.length ? (
                 <div>
                     <div className="word-wrapper">
                         {filtered_words.map(([word, word_props]) => (
@@ -164,6 +106,8 @@ export function ViewScreen() {
                         ))}
                     </div>
                 </div>
+            ) : (
+                <EmptySearch search={search} />
             )
         },
         get empty() {
@@ -176,17 +120,16 @@ export function ViewScreen() {
     const atual_location = window.location.href.split("#")[1]
     const link = `/create/${dictionary.name}?return_to=${atual_location}`
 
+    const handle_search_input_change = (e: InputChangeEvent) => setSearch(e?.target.value)
+    const handle_search_input_blur = (e: InputFocusEvent) => {
+        e?.target.value === "" && setInputVisibility(false)
+    }
+
     const search_input = (
         <input
             type="search" className="simple" placeholder="Pesquisar"
-            onChange={(e) => {
-                setFilter(new RegExp(`^${e?.target.value}`))
-            }}
-            onBlur={(event) => {
-                if (event.target.value === "") {
-                    setInputVisibility(false)
-                }
-            }}
+            onChange={handle_search_input_change}
+            onBlur={handle_search_input_blur}
             autoFocus
         />
     )
@@ -195,14 +138,16 @@ export function ViewScreen() {
         <div className="flex gap-4">
             <div className="flex align-center">
                 {
-                    inputVisibility ?
-                        search_input :
-                        <CircleButton
-                            title="Mostrar barra de pesquisa"
-                            onClick={() => setInputVisibility(true)}
-                        >
-                            <SearchIcon />
-                        </CircleButton>
+                    words.length > 0 && (
+                        inputVisibility ?
+                            search_input :
+                            <CircleButton
+                                title="Mostrar barra de pesquisa"
+                                onClick={() => setInputVisibility(true)}
+                            >
+                                <SearchIcon />
+                            </CircleButton>
+                    )
                 }
             </div>
             <CircleButton

@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react"
-import { ModalWrapper } from "./Wrapper"
 import { WarningIcon } from "../icons"
+import { ModalWrapper } from "./Wrapper"
 
 interface WarningModalProps extends PropsWithChildren {
     title?: string
