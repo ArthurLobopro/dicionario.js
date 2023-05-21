@@ -1,5 +1,4 @@
 import { StoreWord, dictionary } from "../Schemas"
-import { data } from "../Store"
 import { DictionariesController } from "./Dictionaries"
 
 export class DictionaryController {
@@ -34,7 +33,6 @@ type words = {
         lastEdit?: Date
     }
 }
-
 
 class WordsController {
     #dictionary: DictionaryController

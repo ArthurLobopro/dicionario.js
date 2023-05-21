@@ -35,8 +35,8 @@ function setSpellCheck(win: BrowserWindow) {
                     click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
                 })
             )
-            menu.popup()
 
+            menu.popup()
         }
     })
 }
