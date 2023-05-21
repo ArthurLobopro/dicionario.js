@@ -76,7 +76,7 @@ export function ViewScreen() {
 
     const [search, setSearch] = useState("")
 
-    const filter = new RegExp(`^${search}`)
+    const filter = new RegExp(`^${search.trim()}`)
 
     const navigate = useNavigate()
     const modal = useModal()
