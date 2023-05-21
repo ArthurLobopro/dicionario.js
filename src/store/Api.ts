@@ -3,7 +3,6 @@ import { DictionariesController } from "./Controllers/Dictionaries"
 import { OptionsController } from "./Controllers/Options"
 import { WordsController } from "./Controllers/Words"
 
-
 export const api = {
     get version() {
         return ipcRenderer.sendSync("get-version")
