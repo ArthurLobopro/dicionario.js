@@ -1,13 +1,13 @@
 import { ipcRenderer } from "electron"
 import fs from "node:fs"
 import { useState } from "react"
+import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import { dictionary } from "../../../../store/Schemas"
 import { dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
 import { AlertModal } from "../Alert"
-import { ModalWrapper } from "../Wrapper"
-import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import { SuccessModal } from "../Success"
+import { ModalWrapper } from "../Wrapper"
 
 function CheckFileContent(filePath: string) {
     const fileContent = fs.readFileSync(filePath, "utf-8")
