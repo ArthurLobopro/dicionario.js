@@ -1,11 +1,12 @@
 import { ipcRenderer } from "electron"
-import path from 'node:path'
+import path from "node:path"
+import { ReactMouseEvent } from "./types"
 
 export const appPath = ipcRenderer.sendSync("app-path") as string
 export const assetsPath = path.join(appPath, "assets")
 
 export function formatDate(datestring: string) {
-    const pad2 = (n: any) => String(n).padStart(2, '0')
+    const pad2 = (n: any) => String(n).padStart(2, "0")
 
     const date = new Date(datestring)
 
@@ -19,9 +20,8 @@ export function formatDate(datestring: string) {
     return `${day}/${month}/${year} ${hours}:${minutes}`
 }
 
-export function hoverFocus(event: React.MouseEvent<HTMLButtonElement | HTMLSelectElement, MouseEvent>) {
+export function hoverFocus(event: ReactMouseEvent<HTMLButtonElement | HTMLSelectElement>) {
     event.currentTarget.focus()
-
     event.stopPropagation()
     event.preventDefault()
 }
