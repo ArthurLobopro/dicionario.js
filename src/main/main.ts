@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, MenuItem } from 'electron'
-import path from 'node:path'
 import Store from 'electron-store'
+import path from 'node:path'
 import { createJumpList } from "./windowsJumpList"
 
 import { options } from "../store/Store"
@@ -31,7 +31,7 @@ function setSpellCheck(win: BrowserWindow) {
 
             menu.append(
                 new MenuItem({
-                    label: `Adicionar "${params.misspelledWord}" ao dicionário`,
+                    label: `Adicionar "${params.misspelledWord}" ao dicionário ortográfico`,
                     click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
                 })
             )
