@@ -22,9 +22,9 @@ type edit_dictionary_props = z.infer<typeof edit_dictionary_schema>
 export function EditDictionaryModal(props: editDictionaryProps) {
     const [currentDictionary, setCurrentDictionary] = useState(api.dictionaries.getDictionaries()[0])
 
-    const default_dictionary = api.dictionaries.getDefaultDictionary()
+    const default_dictionary_name = api.dictionaries.getDefaultDictionary().name
 
-    const editing_default = currentDictionary.name === default_dictionary.name
+    const editing_default = currentDictionary.name === default_dictionary_name
 
     const modal = useModal()
 
@@ -40,7 +40,7 @@ export function EditDictionaryModal(props: editDictionaryProps) {
         const name = currentDictionary.name
 
         setValue("newName", name)
-        if (currentDictionary.name === default_dictionary.name) {
+        if (name === default_dictionary_name) {
             setValue("setDefault", false)
         }
     }, [currentDictionary])
@@ -93,7 +93,7 @@ export function EditDictionaryModal(props: editDictionaryProps) {
                     </button>
                     <button
                         className="cancel"
-                        onClick={() => props.onClose()}
+                        onClick={props.onClose}
                     >
                         Cancelar
                     </button>

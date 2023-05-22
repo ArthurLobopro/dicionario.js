@@ -57,8 +57,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
         const check = CheckFileContent(file)
 
         if (!check.isValid) {
-            modal.open(<AlertModal title="Erro" message="Arquivo inválido" onClose={modal.close} />)
-            return
+            return modal.open(<AlertModal title="Erro" message="Arquivo inválido" onClose={modal.close} />)
         }
 
         setSelectedFile({

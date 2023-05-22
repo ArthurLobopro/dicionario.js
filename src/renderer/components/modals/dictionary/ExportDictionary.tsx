@@ -26,11 +26,10 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
     function HandleExport() {
         if (data.path === "") {
-            modal.open(<AlertModal
+            return modal.open(<AlertModal
                 title="Erro" onClose={modal.close}
                 message="Escolha um local para exportar o dicionário"
             />)
-            return
         }
 
         api.dictionaries.exportDictionary(data.dictionary, data.path)

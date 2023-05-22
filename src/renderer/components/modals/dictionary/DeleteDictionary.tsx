@@ -23,11 +23,10 @@ export function DeleteDictionaryModal(props: modal_props) {
         }
 
         if (dictionary === DictionariesController.getDefaultDictionary().name) {
-            modal.open(<AlertModal
+            return modal.open(<AlertModal
                 title="Erro" onClose={modal.close}
                 message={`Você não pode deletar o dicionário padrão`}
             />)
-            return
         }
 
         function HandleClose() {
