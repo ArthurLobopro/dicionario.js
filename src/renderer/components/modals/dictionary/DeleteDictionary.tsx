@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { SelectDictionary } from "../../selects/Dictionary"
-import { ModalWrapper } from "../Wrapper"
-import { useModal } from "../../../hooks/useModal"
-import { WarningModal } from "../Warning"
 import { api } from "../../../../store/Api"
-import { AlertModal } from "../Alert"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
+import { useModal } from "../../../hooks/useModal"
+import { SelectDictionary } from "../../selects/Dictionary"
+import { AlertModal } from "../Alert"
 import { SuccessModal } from "../Success"
+import { WarningModal } from "../Warning"
+import { ModalWrapper } from "../Wrapper"
 
 interface modal_props {
     onClose: () => void
@@ -23,11 +23,10 @@ export function DeleteDictionaryModal(props: modal_props) {
         }
 
         if (dictionary === DictionariesController.getDefaultDictionary().name) {
-            modal.open(<AlertModal
+            return modal.open(<AlertModal
                 title="Erro" onClose={modal.close}
                 message={`Você não pode deletar o dicionário padrão`}
             />)
-            return
         }
 
         function HandleClose() {

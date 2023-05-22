@@ -79,14 +79,15 @@ export function UpdateScreen() {
                 <label>
                     Palavra
                     <input
-                        type="text" id="word" placeholder="Palavra" minLength={3}
-                        tabIndex={modal.isVisible ? -1 : 1} {...register("word")}
+                        type="text" placeholder="Palavra" minLength={3}
+                        tabIndex={modal.isVisible ? -1 : 1}
+                        {...register("word")}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
-                        id="sig" minLength={5}
+                        minLength={5}
                         tabIndex={modal.isVisible ? -1 : 2}
                         placeholder="Significados que a palavra pode ter"
                         {...register("definition")}

@@ -1,6 +1,6 @@
 import ElectronStore from 'electron-store'
-import { StoreOptions, StoreWord, dictionariesSchema, optionsSchema, wordsSchema } from "./Schemas"
 import { DictionariesMigrations, WordsMigrations } from "./Migrations"
+import { StoreOptions, StoreWord, dictionariesSchema, optionsSchema, wordsSchema } from "./Schemas"
 
 export const data = new ElectronStore<{ words: StoreWord[] }>({
     name: "data",
@@ -22,5 +22,3 @@ export const dictionaries = new ElectronStore({
     //@ts-ignore
     migrations: DictionariesMigrations
 })
-
-// data.get("words") ? null : data.store.words = []

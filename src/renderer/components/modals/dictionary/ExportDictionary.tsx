@@ -4,8 +4,8 @@ import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
 import { AlertModal } from "../Alert"
-import { ModalWrapper } from "../Wrapper"
 import { SuccessModal } from "../Success"
+import { ModalWrapper } from "../Wrapper"
 
 interface ExportDictionaryModalProps {
     onClose: () => void
@@ -26,11 +26,10 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
     function HandleExport() {
         if (data.path === "") {
-            modal.open(<AlertModal
+            return modal.open(<AlertModal
                 title="Erro" onClose={modal.close}
                 message="Escolha um local para exportar o dicionário"
             />)
-            return
         }
 
         api.dictionaries.exportDictionary(data.dictionary, data.path)
@@ -51,7 +50,6 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
     return (
         <ModalWrapper>
-
             <div className="modal">
                 <div className="modal-header">
                     Exportar dicionário

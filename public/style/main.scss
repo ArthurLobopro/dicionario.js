@@ -261,6 +261,10 @@ svg.use-main-colors {
     gap: 10px;
 }
 
+.capitalize {
+    text-transform: capitalize;
+}
+
 .warning {
     --main-color: var(--red);
     color: var(--red);

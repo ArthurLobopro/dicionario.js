@@ -1,9 +1,21 @@
-import { ipcRenderer } from "electron"
 import * as fs from "node:fs"
 import * as path from "node:path"
 import { dictionary } from "../Schemas"
 import { dictionaries as dictionaryStore } from "../Store"
 import { DictionaryController } from "./Dictionary"
+
+function getDateToSave() {
+    const now = new Date()
+
+    const day = String(now.getDate()).padStart(2, "0")
+    const month = String(now.getMonth() + 1).padStart(2, "0")
+    const year = String(now.getFullYear())
+
+    const hour = String(now.getHours()).padStart(2, "0")
+    const minute = String(now.getMinutes()).padStart(2, "0")
+
+    return `${year}-${month}-${day}_${hour}-${minute}`
+}
 
 export class DictionariesController {
     static getDefaultDictionary() {
@@ -105,19 +117,8 @@ export class DictionariesController {
         const content = dictionary.export()
 
         const exportName = name.replace(/ /g, "_").toLowerCase()
-        const currentDateTime = new Date()
-            .toLocaleDateString("pt-BR", {
-                day: "2-digit",
-                month: "2-digit",
-                year: "numeric",
-                hour: "2-digit",
-                minute: "2-digit"
-            })
-            .replace(/\//g, "-")
-            .replace(/, /g, "_")
-            .replace(/:/g, "-")
 
-        const filePath = path.resolve(folder, `${exportName}_${currentDateTime}.json`)
+        const filePath = path.resolve(folder, `${exportName}_${getDateToSave()}.json`)
 
         fs.writeFileSync(filePath, content)
     }
@@ -134,7 +135,6 @@ export class DictionariesController {
         dictionaries.push(dicionary)
 
         dictionaryStore.set("dictionaries", dictionaries)
-
     }
 
     static mergeDictionary(dictionary: dictionary) {

@@ -1,10 +1,7 @@
 import { ipcRenderer } from "electron"
-import { WordsController } from "./Controllers/Words"
-import { StoreOptions } from "./Schemas"
-import { options } from "./Store"
-import { OptionsController } from "./Controllers/Options"
 import { DictionariesController } from "./Controllers/Dictionaries"
-
+import { OptionsController } from "./Controllers/Options"
+import { WordsController } from "./Controllers/Words"
 
 export const api = {
     get version() {

@@ -15,14 +15,10 @@ export function ViewModal(props: ViewModalProps) {
         <ModalWrapper>
             <div className="modal full" id="view-word">
                 <div className="dashed-border spacing-16">
-                    <div>
-                        <div>Palavra</div>
-                        <textarea readOnly={true} rows={1} className="info big" value={props.word}></textarea>
-                    </div>
-                    <div className="flex-column">
-                        <div>Significado</div>
-                        <textarea readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
-                    </div>
+                    <h1 className="flex-center capitalize">
+                        {props.word}
+                    </h1>
+                    <textarea readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
                     <div className="date-wrapper">
                         <div className="flex-column gap-10">
                             <span>Data de registro</span>

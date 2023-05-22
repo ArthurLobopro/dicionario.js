@@ -2,4 +2,5 @@
 node_modules/
 out/
 dist/
-src/renderer/components/all-icons/
+src/renderer/components/icons/*
+!src/renderer/components/icons/index.ts

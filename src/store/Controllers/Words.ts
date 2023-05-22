@@ -1,11 +1,5 @@
-import ajv from "ajv"
-import ajvFormats from "ajv-formats"
-import { ipcRenderer } from "electron"
-import fs from "node:fs"
-import path from "node:path"
-import { StoreWord, wordsSchema } from "../Schemas"
-import { data } from "../Store"
-import { z } from "zod"
+import { StoreWord } from "../Schemas"
+import { DictionaryController } from "./Dictionary"
 
 type words = {
     [s: string]: {
@@ -14,41 +8,27 @@ type words = {
         lastEdit?: Date
     }
 }
-
-const words_schema_v_1_8_1 = z.array(z.object({
-    palavra: z.string(),
-    definicao: z.string(),
-    registro: z.string().datetime(),
-    ultimaEdicao: z.string().datetime().optional()
-}))
-
-const words_schema = z.array(z.object({
-    word: z.string(),
-    definition: z.string(),
-    register: z.string().datetime(),
-    lastEdit: z.string().datetime().optional()
-}))
-
-function GetDateToSave() {
-    const now = new Date()
-    const day = String(now.getDate()).padStart(2, "0")
-    const month = String(now.getMonth() + 1).padStart(2, "0")
-    const year = now.getFullYear()
-    const hours = now.getHours()
-    const minutes = now.getMinutes()
-    return `${day}-${month}-${year}_${hours}-${minutes}`
-}
-
 export class WordsController {
+    #dictionary: DictionaryController
 
-    static SortWords(words: words) {
-        return Object.fromEntries(Object.entries(words).sort((a, b) => {
-            return a[0].localeCompare(b[0])
-        }))
+    get dictionary() {
+        return this.#dictionary.dictionary
     }
 
-    static GetWords() {
-        return Object.fromEntries(data.get("words").map(word => {
+    constructor(dictionary: DictionaryController) {
+        this.#dictionary = dictionary
+    }
+
+    get words() {
+        return this.getWords()
+    }
+
+    get length() {
+        return this.dictionary.words.length
+    }
+
+    getWords() {
+        return Object.fromEntries(this.dictionary.words.map(word => {
             const { definition, register, lastEdit = null } = word
             return [
                 word.word,
@@ -63,18 +43,12 @@ export class WordsController {
         }))
     }
 
-    static GetWord(word: string) {
-        const wordToReturn = this.GetWords()[word]
-
-        if (!wordToReturn) {
-            throw new Error("Palavra não encontrada")
-        }
-
-        return wordToReturn
+    getWord(word: string) {
+        return this.words[word] || null
     }
 
-    static GetWordsToSave(words: words) {
-        return Object.entries(WordsController.SortWords(words))
+    getWordsToSave(words: words) {
+        return Object.entries(this.sortWords(words))
             .map(([word, { definition, register, lastEdit = null }]) => {
                 return {
                     word,
@@ -85,13 +59,20 @@ export class WordsController {
             })
     }
 
-    static SaveWord({ word, definition }: { word: string, definition: string }) {
-        word = word.trim().toLowerCase()
+    sortWords(words: words) {
+        return Object.fromEntries(
+            Object.entries(words)
+                .sort((a, b) => {
+                    return a[0].localeCompare(b[0])
+                })
+        )
+    }
 
-        const words = WordsController.GetWords()
+    addWord({ word, definition }: { word: string; definition: string }) {
+        const words = this.words
 
         if (word in words) {
-            throw new Error(`A palavra ${word} já existe!`)
+            throw new Error("A palavra já foi registrada")
         }
 
         words[word] = {
@@ -99,43 +80,67 @@ export class WordsController {
             register: new Date()
         }
 
-        data.set("words", WordsController.GetWordsToSave(words))
+        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
+        this.#dictionary.save()
     }
 
-    static UpdateWord(word: string, { newWord, definition }: { newWord: string, definition: string }) {
-        newWord = newWord.trim().toLowerCase()
+    getOlderWord() {
+        const words = Object.entries(this.words)
 
-        const words = WordsController.GetWords()
+        if (!words.length) return null
+
+        const newerWord = words
+            .sort((a, b) => {
+                return b[1].register.getTime() - a[1].register.getTime()
+            })[0]
+
+        return {
+            word: newerWord?.[0],
+            ...newerWord?.[1]
+        }
+    }
+
+    getNewerWord() {
+        const words = Object.entries(this.words)
+
+        if (!words.length) return null
+
+        const olderWord = words
+            .sort((a, b) => {
+                return a[1].register.getTime() - b[1].register.getTime()
+            })[0]
+
+        return {
+            word: olderWord?.[0],
+            ...olderWord?.[1]
+        }
+    }
+
+    updateWord(word: string, { new_word, definition }: { new_word: string; definition: string }) {
+        const words = this.words
 
         if (!(word in words)) {
-            throw new Error("Palavra não encontrada")
+            throw new Error("A palavra não foi registrada")
         }
 
-        if (word !== newWord) {
-            if (newWord in words) {
-                throw new Error("Palavra já existe")
-            }
+        const wordData = words[word]
 
-            const new_word = words[word]
+        if (word !== new_word) {
             delete words[word]
-            words[newWord] = {
-                ...new_word,
-                definition,
-                lastEdit: new Date()
-            }
-        } else {
-            words[word] = {
-                ...words[word],
-                definition,
-                lastEdit: new Date()
-            }
         }
 
-        data.set("words", WordsController.GetWordsToSave(words))
+        words[new_word] = {
+            ...wordData,
+            definition,
+            lastEdit: new Date()
+        }
+
+        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
+        this.#dictionary.save()
     }
 
-    static DeleteWord(word: string) {
-        const words = WordsController.GetWords()
+    deleteWord(word: string) {
+        const words = this.words
 
         if (!(word in words)) {
             throw new Error("Palavra não encontrada")
@@ -143,91 +148,37 @@ export class WordsController {
 
         delete words[word]
 
-        data.set("words", WordsController.GetWordsToSave(words))
+        this.dictionary.words = this.getWordsToSave(words)
+
+        this.#dictionary.save()
     }
 
-    static DeleteDictionary() {
-        data.set("words", [])
+    clearWords() {
+        this.dictionary.words = []
     }
 
-    static ExportWords(wordList: string[]) {
-        try {
-            const folder = ipcRenderer.sendSync("get-folder")
+    mergeWords(words: StoreWord[]) {
 
-            if (folder === "canceled") {
-                return { status: "canceled" }
-            }
-
-            const filename = path.join(folder, `dicionario_${GetDateToSave()}.json`)
-
-            const words = data.get("words").filter(word => wordList.includes(word.word))
-            const json = JSON.stringify(words, null, 4)
-
-            fs.writeFileSync(filename, json)
-
-            return { status: "success" }
-        } catch (error) {
-            console.error(error)
-            return { status: "error" }
-        }
-    }
-
-    static ImportWords() {
-        const file = ipcRenderer.sendSync("get-file")
-
-        if (file === "canceled") {
-            return { status: "canceled" }
-        }
-
-        const jsonString = fs.readFileSync(file).toString()
-        const json = JSON.parse(jsonString)
-
-        const is_old_version = words_schema_v_1_8_1.safeParse(json)
-
-        if (is_old_version.success) {
-            const words = is_old_version.data.map(word => {
-                return {
-                    word: word.palavra,
-                    definition: word.definicao,
-                    register: word.registro,
-                    ...(word.ultimaEdicao && { lastEdit: word.ultimaEdicao })
-                }
-            })
-
-            const count = WordsController.MergeWords(words as unknown as StoreWord[])
-            return { status: "success", count }
-        }
-
-        const is_new_version = words_schema.safeParse(json)
-
-        if (is_new_version.success) {
-            const count = WordsController.MergeWords(json as unknown as StoreWord[])
-            return { status: "success", count }
-        } else {
-            console.log(is_new_version.error)
-            throw new Error("Arquivo de importação inválido")
-        }
-    }
-
-    static MergeWords(words: StoreWord[]) {
-        const store_keys = data.store.words.map(p => p.word)
-        const new_words = data.store.words
-
-        let count = 0
+        const new_words = this.words
+        const keys = Object.entries(new_words).map(([key]) => key)
 
         words.forEach(word => {
-            if (!(word.word in store_keys)) {
-                new_words.push(word)
-                count++
+            if (!keys.includes(word.word)) {
+                new_words[word.word] = {
+                    definition: word.definition,
+                    register: new Date(word.register),
+                    ...(word.lastEdit ? {
+                        lastEdit: new Date(word.lastEdit)
+                    } : {})
+                }
             }
         })
 
-        new_words.sort((a, b) => {
-            return a.word.localeCompare(b.word)
-        })
+        console.log(words)
+        console.log(new_words)
 
-        data.set("words", new_words)
+        this.dictionary.words = this.getWordsToSave(this.sortWords(new_words))
 
-        return count
+        this.#dictionary.save()
     }
 }

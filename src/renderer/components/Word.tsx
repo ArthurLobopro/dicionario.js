@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { DictionaryController } from "../../store/Controllers/Dictionary"
-import { CircleButton } from "./CircleButton"
-import { ConfirmModal } from "./modals/Confirm"
-import { ViewModal } from "./modals/View"
 import { useModal } from "../hooks/useModal"
+import { CircleButton } from "./CircleButton"
 import {
     EditIcon,
     EyeIcon, TrashIcon
 } from "./icons"
+import { ConfirmModal } from "./modals/Confirm"
+import { ViewModal } from "./modals/View"
 
 interface WordProps {
     word: {
@@ -48,7 +48,7 @@ export function Word(props: WordProps) {
     return (
         <div className="word" key={word.word} onDoubleClick={ShowViewModal}>
             <div className="content">
-                <div className="word-header">
+                <div className="word-header capitalize">
                     {word.word}
                 </div>
                 <div className="word-definition">
