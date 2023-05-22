@@ -29,9 +29,9 @@ export function Home() {
         <Page id="home">
             <Header title="Dicionário Pessoal" />
             <div className="option-wrapper">
-                <Option text="Adicionar" icon={<AddIcon />} goTo={"create"} />
-                <Option text="Visualizar" icon={<EyeIcon />} goTo={"view"} />
-                <Option text="Configurações" icon={<ConfigIcon />} goTo={"config"} />
+                <Option text="Adicionar" icon={<AddIcon />} goTo="create" />
+                <Option text="Visualizar" icon={<EyeIcon />} goTo="view" />
+                <Option text="Configurações" icon={<ConfigIcon />} goTo="config" />
             </div>
         </Page>
     )

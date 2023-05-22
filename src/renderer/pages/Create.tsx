@@ -37,16 +37,14 @@ export function CreateScreen() {
         }
     })
 
-    const has_dictionary = (
-        () => {
-            try {
-                api.dictionaries.getDictionary(dictionary_name as string)
-                return true
-            } catch (error) {
-                return false
-            }
+    const has_dictionary = (() => {
+        try {
+            api.dictionaries.getDictionary(dictionary_name as string)
+            return true
+        } catch (error) {
+            return false
         }
-    )()
+    })()
 
     const [dictionary, setDictionary] = useState(
         has_dictionary ?
@@ -100,7 +98,6 @@ export function CreateScreen() {
             <Form
                 className="dashed-border spacing-16 grid-fill-center gap"
                 onSubmit={handleSubmit(onSubmit, onError)}
-
             >
                 <label>
                     Salvar em
@@ -113,7 +110,7 @@ export function CreateScreen() {
                 <label>
                     Palavra
                     <input
-                        type="text" id="word" placeholder="Palavra"
+                        type="text" placeholder="Palavra"
                         tabIndex={modal.isVisible ? -1 : 1}
                         {...register("word")}
                         title={errors.word?.message || "Palavra a ser cadastrada"}
@@ -122,7 +119,7 @@ export function CreateScreen() {
                 <div className="t-wrapper grid-fill-bottom">
                     Significado
                     <textarea
-                        id="sig" minLength={5}
+                        minLength={5}
                         tabIndex={modal.isVisible ? -1 : 2}
                         placeholder="Significados que a palavra pode ter"
                         {...register("definition")}

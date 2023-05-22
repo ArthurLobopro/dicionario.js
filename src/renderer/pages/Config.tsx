@@ -134,26 +134,23 @@ function WindowSection() {
         <>
             <LineTitle title="Janela" />
 
-            {
-                isLinux && (
-                    <>
-                        <span>Usar titlebar do sistema</span>
-                        <Switcher
-                            onToggle={HandleToggleSystemTitlebar}
-                            checked={useSystemTitleBar}
-                            title={
-                                useSystemTitleBar ?
-                                    "Desativar titlebar do sistema" :
-                                    "Ativar titlebar do sistema"
-                            }
-                        />
-                    </>
-                )
-            }
+            {isLinux && (
+                <>
+                    <span>Usar titlebar do sistema</span>
+                    <Switcher
+                        onToggle={HandleToggleSystemTitlebar}
+                        checked={useSystemTitleBar}
+                        title={
+                            useSystemTitleBar ?
+                                "Desativar titlebar do sistema" :
+                                "Ativar titlebar do sistema"
+                        }
+                    />
+                </>
+            )}
 
             <span>Estilo da titlebar</span>
             <select
-                className="select"
                 value={config.frameStyle}
                 disabled={useSystemTitleBar}
                 onChange={HandleFrameStyleChange}
@@ -170,7 +167,6 @@ function WindowSection() {
 
             <span>Tema da titlebar</span>
             <select
-                className="select"
                 value={config.frameTheme}
                 disabled={useSystemTitleBar}
                 onChange={HandleFrameThemeChange}
