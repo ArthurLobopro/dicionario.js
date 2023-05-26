@@ -1,8 +1,10 @@
-import ElectronStore from 'electron-store'
+import ZodElectronStore from "zod-electron-store"
 import { DictionariesMigrations, WordsMigrations } from "./Migrations"
-import { StoreOptions, StoreWord, dictionariesSchema, optionsSchema, wordsSchema } from "./Schemas"
+import { StoreDictionaries, dictionariesSchema } from "./ZodSchemas/dictionaries"
+import { StoreOptions, optionsSchema } from "./ZodSchemas/options"
+import { StoreWords, wordsSchema } from "./ZodSchemas/word"
 
-export const data = new ElectronStore<{ words: StoreWord[] }>({
+export const data = new ZodElectronStore<StoreWords>({
     name: "data",
     watch: true,
     schema: wordsSchema,
@@ -10,13 +12,13 @@ export const data = new ElectronStore<{ words: StoreWord[] }>({
     migrations: WordsMigrations,
 })
 
-export const options = new ElectronStore<StoreOptions>({
+export const options = new ZodElectronStore<StoreOptions>({
     name: "options",
     watch: true,
     schema: optionsSchema
 })
 
-export const dictionaries = new ElectronStore({
+export const dictionaries = new ZodElectronStore<StoreDictionaries>({
     schema: dictionariesSchema,
     name: "dictionaries",
     //@ts-ignore

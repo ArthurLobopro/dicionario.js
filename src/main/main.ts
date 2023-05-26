@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, MenuItem } from 'electron'
-import Store from 'electron-store'
 import path from 'node:path'
+import Store from 'zod-electron-store'
 import { createJumpList } from "./windowsJumpList"
 
 import { options } from "../store/Store"
