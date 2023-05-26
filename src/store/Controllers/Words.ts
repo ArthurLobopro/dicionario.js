@@ -174,9 +174,6 @@ export class WordsController {
             }
         })
 
-        console.log(words)
-        console.log(new_words)
-
         this.dictionary.words = this.getWordsToSave(this.sortWords(new_words))
 
         this.#dictionary.save()
