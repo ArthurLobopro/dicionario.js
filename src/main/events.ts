@@ -1,6 +1,8 @@
-import { ipcMain, app, dialog, BrowserWindow, autoUpdater } from 'electron'
+import { BrowserWindow, app, autoUpdater, dialog, ipcMain } from 'electron'
 
 const appPath = app.getAppPath()
+
+// Main events
 
 ipcMain.on('app-path', (event) => {
     event.returnValue = appPath
@@ -60,6 +62,11 @@ ipcMain.on('relaunch', (event) => {
     app.quit()
 })
 
+ipcMain.on("isDev", event => {
+    event.returnValue = app.isPackaged
+})
+
+// Update events
 autoUpdater.on("update-downloaded", (...props) => {
     const [event, releaseNotes, releaseName, releaseDate, updateUrl] = props
     ipcMain.emit("update-downloaded", event, releaseNotes, releaseName, releaseDate, updateUrl)
@@ -69,8 +76,4 @@ autoUpdater.on("update-downloaded", (...props) => {
 
 ipcMain.on("install-update", () => {
     autoUpdater.quitAndInstall()
-})
-
-ipcMain.on("isDev", event => {
-    event.returnValue = app.isPackaged
 })
