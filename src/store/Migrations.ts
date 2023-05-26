@@ -1,6 +1,6 @@
-import Store from "electron-store"
-import { StoreDictionaries } from "./Schemas"
+import Store from "zod-electron-store"
 import { data } from "./Store"
+import { StoreDictionaries } from "./ZodSchemas/dictionaries"
 
 type versions_types = {
     "1.8.1": {

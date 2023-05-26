@@ -1,4 +1,4 @@
-import { dictionary } from "../Schemas"
+import { dictionary } from "../ZodSchemas/dictionary"
 import { DictionariesController } from "./Dictionaries"
 import { WordsController } from "./Words"
 

@@ -1,8 +1,6 @@
 import { ipcRenderer, shell } from "electron"
-import { frameStyle } from "electron-frame/renderer"
 import { useEffect, useRef, useState } from "react"
 import { api } from "../../store/Api"
-import { StoreOptions } from "../../store/Schemas"
 import { frame } from "../Frame"
 import { hoverFocus } from "../Util"
 import { Header } from "../components/Header"
@@ -10,28 +8,12 @@ import { LineTitle } from "../components/LineTitle"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
+import { DictionarySection } from "../components/config-sections/DictionarySections"
+import { WindowSection } from "../components/config-sections/Window"
+import { GithubLogo } from "../components/icons"
 import { useModal } from "../hooks/useModal"
 
-import {
-    AddIcon,
-    DonwloadIcon,
-    EditIcon,
-    GithubLogo,
-    MinifiedTrashIcon,
-    UploadIcon
-} from "../components/icons"
-
-import {
-    AddDictionaryModal,
-    DeleteDictionaryModal,
-    EditDictionaryModal,
-    ExportDictionaryModal,
-    ImportDictionaryModal
-} from "../components/modals/dictionary"
-
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
-
-const isLinux = process.platform === "linux"
 
 export function ConfigScreen() {
     const modal = useModal()
@@ -99,167 +81,5 @@ export function ConfigScreen() {
                 </div>
             </div >
         </Page >
-    )
-}
-
-interface sectionProps {
-    modal: ReturnType<typeof useModal>
-}
-
-function WindowSection() {
-    const [config, setConfig] = useState<StoreOptions>(api.options.getOptions())
-
-    const useSystemTitleBar = api.options.linux.useSystemTitleBar
-
-    function HandleFrameThemeChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const frameTheme = event.currentTarget.value as "auto" | "light" | "dark"
-        api.options.setFrameTheme(frameTheme)
-        setConfig({ ...config, frameTheme })
-        frame.updateTheme()
-    }
-
-    function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-        const frameStyle = event.currentTarget.value as frameStyle
-        api.options.setFrameStyle(frameStyle)
-        setConfig({ ...config, frameStyle })
-        frame.setFrameStyle(frameStyle)
-    }
-
-    function HandleToggleSystemTitlebar() {
-        api.options.toggleSystemTitleBar()
-        ipcRenderer.send("relaunch")
-    }
-
-    return (
-        <>
-            <LineTitle title="Janela" />
-
-            {isLinux && (
-                <>
-                    <span>Usar titlebar do sistema</span>
-                    <Switcher
-                        onToggle={HandleToggleSystemTitlebar}
-                        checked={useSystemTitleBar}
-                        title={
-                            useSystemTitleBar ?
-                                "Desativar titlebar do sistema" :
-                                "Ativar titlebar do sistema"
-                        }
-                    />
-                </>
-            )}
-
-            <span>Estilo da titlebar</span>
-            <select
-                value={config.frameStyle}
-                disabled={useSystemTitleBar}
-                onChange={HandleFrameStyleChange}
-                onMouseEnter={hoverFocus}
-                title={
-                    useSystemTitleBar ?
-                        "Desative a opção 'Usar titlebar do sistema' para alterar o estilo da titlebar" :
-                        "Alterar o estilo da titlebar"
-                }
-            >
-                <option value="windows">Windows</option>
-                <option value="macos">Macos</option>
-            </select>
-
-            <span>Tema da titlebar</span>
-            <select
-                value={config.frameTheme}
-                disabled={useSystemTitleBar}
-                onChange={HandleFrameThemeChange}
-                onMouseEnter={hoverFocus}
-                title={
-                    useSystemTitleBar ?
-                        "Desative a opção 'Usar titlebar do sistema' para alterar o tema da titlebar" :
-                        "Alterar o tema da titlebar"
-                }
-            >
-                <option value="auto">Automatico</option>
-                <option value="light">Claro</option>
-                <option value="dark">Escuro</option>
-            </select>
-        </>
-    )
-}
-
-interface DictionarySectionsProps extends sectionProps { }
-
-function DictionarySection(props: DictionarySectionsProps) {
-    const { modal } = props
-
-    function HandleAddDictionary() {
-        modal.open(<AddDictionaryModal onClose={modal.close} />)
-    }
-
-    function HandleEditDictionary() {
-        modal.open(<EditDictionaryModal onClose={modal.close} />)
-    }
-
-    function HandleDeleteDictionary() {
-        modal.open(<DeleteDictionaryModal onClose={modal.close} />)
-    }
-
-    function HandleExportDictionary() {
-        modal.open(<ExportDictionaryModal onClose={modal.close} />)
-    }
-
-    function HandleImportDictionary() {
-        modal.open(<ImportDictionaryModal onClose={modal.close} />)
-    }
-
-    return (
-        <>
-            <LineTitle title="Dicionários" />
-
-            <span>Adicionar dicionário</span>
-            <button
-                className="stroke" title="Adicionar um dicionário"
-                onClick={HandleAddDictionary} onMouseEnter={hoverFocus}
-            >
-                <AddIcon className="use-main-colors" />
-                Adicionar
-            </button>
-
-            <span>Editar dicionário</span>
-            <button
-                className="stroke" title="Editar um dicionário"
-                onClick={HandleEditDictionary} onMouseEnter={hoverFocus}
-            >
-                <EditIcon className="use-main-colors" />
-                Editar
-            </button>
-
-            <span className="warning">Deletar dicionário</span>
-            <button
-                className="stroke warning" title="Deletar um dicionário"
-                onClick={HandleDeleteDictionary} onMouseEnter={hoverFocus}
-            >
-                <MinifiedTrashIcon className="use-main-colors" />
-                Deletar
-            </button>
-
-            <span>Exportar dicionário</span>
-            <button
-                className="stroke"
-                title="Exportar um dicionário"
-                onClick={HandleExportDictionary} onMouseEnter={hoverFocus}
-            >
-                <UploadIcon />
-                Exportar
-            </button>
-
-            <span>Importar dicionário</span>
-            <button
-                className="stroke"
-                title="Importar um dicionário"
-                onClick={HandleImportDictionary} onMouseEnter={hoverFocus}
-            >
-                <DonwloadIcon />
-                Importar
-            </button>
-        </>
     )
 }

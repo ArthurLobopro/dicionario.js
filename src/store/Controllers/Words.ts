@@ -1,4 +1,4 @@
-import { StoreWord } from "../Schemas"
+import { StoreWord } from "../ZodSchemas/word"
 import { DictionaryController } from "./Dictionary"
 
 type words = {
@@ -173,9 +173,6 @@ export class WordsController {
                 }
             }
         })
-
-        console.log(words)
-        console.log(new_words)
 
         this.dictionary.words = this.getWordsToSave(this.sortWords(new_words))
 
