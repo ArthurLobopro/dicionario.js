@@ -12,8 +12,8 @@ import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
 
 const update_word_schema = z.object({
-    word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres."),
-    definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.").transform(value => value.toLowerCase())
+    word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres.").transform(value => value.toLowerCase()),
+    definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.")
 })
 
 type UpdateWordData = z.infer<typeof update_word_schema>
