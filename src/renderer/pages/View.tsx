@@ -122,19 +122,23 @@ export function ViewScreen() {
     const atual_location = window.location.href.split("#")[1]
     const link = `/create/${dictionary.name}?return_to=${atual_location}`
 
-    const handle_search_input_change = (e: InputChangeEvent) => setSearch(e?.target.value)
-    const handle_search_input_blur = (e: InputFocusEvent) => {
-        e?.target.value === "" && setInputVisibility(false)
-    }
+    const search_input = useMemo(() => {
+        const handle_change = (e: InputChangeEvent) => setSearch(e?.target.value)
 
-    const search_input = (
-        <input
-            type="search" className="simple" placeholder="Pesquisar"
-            onChange={handle_search_input_change}
-            onBlur={handle_search_input_blur}
-            autoFocus
-        />
-    )
+        const handle_blur = (e: InputFocusEvent) => {
+            e?.target.value === "" && setInputVisibility(false)
+        }
+
+        return (
+            <input
+                type="search" className="simple" placeholder="Pesquisar"
+                onChange={handle_change}
+                onBlur={handle_blur}
+                value={search}
+                autoFocus
+            />
+        )
+    }, [search])
 
     const right_content = (
         <div className="flex gap-4">
