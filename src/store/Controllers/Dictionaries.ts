@@ -1,7 +1,7 @@
 import * as fs from "node:fs"
 import * as path from "node:path"
-import { dictionary } from "../Schemas"
 import { dictionaries as dictionaryStore } from "../Store"
+import { dictionary } from "../ZodSchemas/dictionary"
 import { DictionaryController } from "./Dictionary"
 
 function getDateToSave() {

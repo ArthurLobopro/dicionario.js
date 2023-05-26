@@ -1,4 +1,4 @@
-import { StoreWord } from "../Schemas"
+import { StoreWord } from "../ZodSchemas/word"
 import { DictionaryController } from "./Dictionary"
 
 type words = {
