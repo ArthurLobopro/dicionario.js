@@ -6,3 +6,10 @@ export const wordSchema = z.object({
     register: z.string().datetime(),
     lastEdit: z.string().datetime().optional()
 })
+
+export const wordsSchema = z.object({
+    words: z.array(wordSchema).default([])
+})
+
+export type StoreWord = z.infer<typeof wordSchema>
+export type StoreWords = z.infer<typeof wordsSchema>
