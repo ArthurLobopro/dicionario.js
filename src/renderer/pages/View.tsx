@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { CircleButton } from "../components/CircleButton"
@@ -76,7 +76,7 @@ export function ViewScreen() {
 
     const [search, setSearch] = useState("")
 
-    const filter = new RegExp(`^${search.trim()}`)
+    const filter = useMemo(() => new RegExp(`^${search.trim()}`), [search])
 
     const navigate = useNavigate()
     const modal = useModal()
@@ -88,7 +88,9 @@ export function ViewScreen() {
         />)
     }
 
-    const filtered_words = words.filter(([word]) => filter.test(word))
+    const filtered_words = useMemo(() => {
+        return words.filter(([word]) => filter.test(word))
+    }, [filter, words])
 
     const contents = {
         get words() {
