@@ -3680,10 +3680,10 @@ svg-parser@^2.0.4:
   resolved "https://registry.yarnpkg.com/svg-parser/-/svg-parser-2.0.4.tgz#fdc2e29e13951736140b76cb122c8ee6630eb6b5"
   integrity sha512-e4hG1hRwoOdRb37cIMSgzNsxyzKfayW6VOflrwvR+/bzrkyxY/31WkbgnQpgtrNp1SdpJvpUAGTa/ZoiPNDuRQ==
 
-svg-react-icon@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/svg-react-icon/-/svg-react-icon-1.0.1.tgz#0a84321a712b4e89bcdd6a674054370687e04267"
-  integrity sha512-gcsEY+PbgDH+vuBGKhajrWY23i158une89MV+LjPavpDMOLvKBFnE5EL20uLfuJCrBWp19r6Eb7Bv901qaLKaA==
+svg-react-icon@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/svg-react-icon/-/svg-react-icon-1.0.2.tgz#9a420f3fa1fb3b7948d75dd5d6e1cc09631d7d4a"
+  integrity sha512-5OC83opgaCVAJwluZpCQyHWLSPBek5lGfHigvbaa5H6SbYsk5PDZE6O1SscRQwQJvjXiqUqYbRnVlwa4re8KNQ==
   dependencies:
     "@svgr/core" "6.5.1"
 
