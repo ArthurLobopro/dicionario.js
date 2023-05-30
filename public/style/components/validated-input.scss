@@ -1,0 +1,27 @@
+div.validated-input {
+    display: flex;
+    gap: 10px;
+
+    border: 2px solid var(--main-color);
+    border-radius: 8px;
+
+
+    &:focus-within {
+        border-color: var(--hover-blue);
+    }
+
+    &[data-error="true"] {
+        border-color: red !important;
+    }
+
+    >input {
+        border: none !important;
+        border-radius: none !important;
+        height: 100%;
+    }
+
+    >.error {
+        margin: 8px;
+        display: flex;
+    }
+}
