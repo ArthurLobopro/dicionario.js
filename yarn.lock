@@ -1562,10 +1562,10 @@ electron-css-injector@^1.2.1:
   resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.2.1.tgz#e7bd4efc779e56c1d88721157cdb1643755295bf"
   integrity sha512-yLrZgQ6ksy0LmHmGfH3dUeaA6MYEclCzeeq6yyw7QYfQpLGBK3p4HopiRstD2qGkR+UFHQZnHf38ps1uRThNqQ==
 
-electron-frame@^1.4.1:
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.4.1.tgz#920f8ea9676456c9f557f4fcc2a9d5046ae4a128"
-  integrity sha512-oFG6voDpg71ssNmdDNtAvkCun/Xaa1XtFlFS7s++YzYe+DHbtAD1WSBKTdo7870bpnIBOWq/50OQX0YPXy36fg==
+electron-frame@^1.4.4:
+  version "1.4.4"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.4.4.tgz#8122edad6fcd0acdad04210593c5eb1b294e1df0"
+  integrity sha512-a0dTWDyjG0t+eDxzIQWnTdnrNtIiCkFl5aFz8HdoOLmkVtBeGkcWpjFp7kNjVbOL0jwO31SnWUBIOiG0tX+z9A==
   dependencies:
     "@electron-fonts/nunito" "^1.1.0"
     electron-css-injector "^1.2.1"
