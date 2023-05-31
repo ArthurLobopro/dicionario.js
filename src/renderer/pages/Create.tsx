@@ -1,14 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import { useLocation, useParams } from "react-router-dom"
 import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
+import { frame } from "../Frame"
 import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { ValidatedInput } from "../components/ValidatedInput"
+import { ConfirmModal } from "../components/modals/Confirm"
 import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { SelectDictionary } from "../components/selects/Dictionary"
@@ -48,9 +50,34 @@ export function CreateScreen() {
         }
     })
 
-    const { word } = watch()
+    const { word, definition } = watch()
 
     const word_already_exists = !!dictionary.Words.getWord(word)
+
+    useEffect(() => {
+
+        const callback = async (): Promise<boolean> => {
+            return new Promise(resolve => {
+                if (word.length || definition.length) {
+                    modal.open(<ConfirmModal
+                        message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
+                        onClose={(value) => {
+                            resolve(value)
+                            modal.close()
+                        }}
+                    />)
+                } else {
+                    resolve(true)
+                }
+            })
+        }
+
+        frame.instance.setBeforeCloseCallback(callback)
+
+        return () => {
+            frame.instance.setBeforeCloseCallback()
+        }
+    }, [word.length + definition.length > 0])
 
     const modal = useModal()
 
