@@ -92,9 +92,12 @@ export function ViewScreen() {
         return words.filter(([word]) => filter.test(word))
     }, [filter, words])
 
-    const contents = {
-        get words() {
-            return filtered_words.length ? (
+    const word_list = useMemo(() => {
+        console.log("rendering word list")
+
+        return (
+            filtered_words.length === 0 ?
+                <EmptySearch search={search} /> :
                 <div>
                     <div className="word-wrapper">
                         {filtered_words.map(([word, word_props]) => (
@@ -108,16 +111,8 @@ export function ViewScreen() {
                         ))}
                     </div>
                 </div>
-            ) : (
-                <EmptySearch search={search} />
-            )
-        },
-        get empty() {
-            return (
-                <EmptyPage link={link} />
-            )
-        }
-    }
+        )
+    }, [filtered_words])
 
     const atual_location = window.location.href.split("#")[1]
     const link = `/create/${dictionary.name}?return_to=${atual_location}`
@@ -185,7 +180,7 @@ export function ViewScreen() {
                 left={<ReturnButton />}
                 right={right_content}
             />
-            {words.length > 0 ? contents.words : contents.empty}
+            {words.length > 0 ? word_list : <EmptyPage link={link} />}
         </Page>
     )
 }
