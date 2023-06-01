@@ -38,24 +38,24 @@ export function UpdateScreen() {
 
     const modal = useModal()
 
-    useEffect(() => {
-        const callback = async (): Promise<boolean> => {
-            return new Promise((resolve) => {
-                if (dirtyFields.definition || dirtyFields.word) {
-                    modal.open(<ConfirmModal
-                        message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
-                        onClose={value => {
-                            modal.close()
-                            resolve(value)
-                        }}
-                    />)
-                } else {
-                    resolve(true)
-                }
-            })
-        }
+    const closeCallback = async (): Promise<boolean> => {
+        return new Promise((resolve) => {
+            if (dirtyFields.definition || dirtyFields.word) {
+                modal.open(<ConfirmModal
+                    message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
+                    onClose={value => {
+                        modal.close()
+                        resolve(value)
+                    }}
+                />)
+            } else {
+                resolve(true)
+            }
+        })
+    }
 
-        frame.instance.setBeforeCloseCallback(callback)
+    useEffect(() => {
+        frame.instance.setBeforeCloseCallback(closeCallback)
 
         return () => {
             frame.instance.setBeforeCloseCallback()
@@ -98,7 +98,9 @@ export function UpdateScreen() {
     return (
         <Page id="edit">
             {modal.content}
-            <Header title="Editar Palavra" left={<ReturnButton returnTo="/view" />} />
+            <Header title="Editar Palavra"
+                left={<ReturnButton returnTo="/view" onClick={closeCallback} />}
+            />
             <Form
                 className="dashed-border spacing-16 grid-fill-center gap"
                 onSubmit={handleSubmit(UpdateWord)}

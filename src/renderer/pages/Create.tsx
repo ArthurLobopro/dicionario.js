@@ -54,25 +54,24 @@ export function CreateScreen() {
 
     const word_already_exists = !!dictionary.Words.getWord(word)
 
+    const closeCallback = async (): Promise<boolean> => {
+        return new Promise(resolve => {
+            if (word.length || definition.length) {
+                modal.open(<ConfirmModal
+                    message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
+                    onClose={(value) => {
+                        resolve(value)
+                        modal.close()
+                    }}
+                />)
+            } else {
+                resolve(true)
+            }
+        })
+    }
+
     useEffect(() => {
-
-        const callback = async (): Promise<boolean> => {
-            return new Promise(resolve => {
-                if (word.length || definition.length) {
-                    modal.open(<ConfirmModal
-                        message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
-                        onClose={(value) => {
-                            resolve(value)
-                            modal.close()
-                        }}
-                    />)
-                } else {
-                    resolve(true)
-                }
-            })
-        }
-
-        frame.instance.setBeforeCloseCallback(callback)
+        frame.instance.setBeforeCloseCallback(closeCallback)
 
         return () => {
             frame.instance.setBeforeCloseCallback()
@@ -120,6 +119,7 @@ export function CreateScreen() {
                 title="Adicionar Palavra"
                 left={<ReturnButton
                     returnTo={has_return_to ? return_to : "/"}
+                    onClick={closeCallback}
                 />}
             />
             <Form
