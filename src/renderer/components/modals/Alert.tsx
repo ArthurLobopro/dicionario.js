@@ -45,7 +45,7 @@ export function AlertModalWithIcon(props: AlertWithIconProps) {
             <div className="modal">
                 <div className="modal-header">
                     {title}
-                    <CircleButton title="Fechar" onClick={onClose}>
+                    <CircleButton title="Fechar" small onClick={onClose}>
                         <CloseIcon />
                     </CircleButton>
                 </div>

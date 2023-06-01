@@ -1,12 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
+import { frame } from "../Frame"
 import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
+import { ConfirmModal } from "../components/modals/Confirm"
 import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { useModal } from "../hooks/useModal"
@@ -21,7 +24,7 @@ type UpdateWordData = z.infer<typeof update_word_schema>
 export function UpdateScreen() {
     const { word, dictionary: dictionary_name } = useParams()
 
-    const { register, handleSubmit } = useForm<UpdateWordData>({
+    const { register, handleSubmit, watch, formState: { dirtyFields } } = useForm<UpdateWordData>({
         resolver: zodResolver(update_word_schema),
         defaultValues: {
             word: word as string,
@@ -34,6 +37,30 @@ export function UpdateScreen() {
     const navigate = useNavigate()
 
     const modal = useModal()
+
+    const closeCallback = async (): Promise<boolean> => {
+        return new Promise((resolve) => {
+            if (dirtyFields.definition || dirtyFields.word) {
+                modal.open(<ConfirmModal
+                    message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
+                    onClose={value => {
+                        modal.close()
+                        resolve(value)
+                    }}
+                />)
+            } else {
+                resolve(true)
+            }
+        })
+    }
+
+    useEffect(() => {
+        frame.instance.setBeforeCloseCallback(closeCallback)
+
+        return () => {
+            frame.instance.setBeforeCloseCallback()
+        }
+    }, [dirtyFields])
 
     function UpdateWord(data: UpdateWordData) {
         try {
@@ -71,7 +98,9 @@ export function UpdateScreen() {
     return (
         <Page id="edit">
             {modal.content}
-            <Header title="Editar Palavra" left={<ReturnButton returnTo="/view" />} />
+            <Header title="Editar Palavra"
+                left={<ReturnButton returnTo="/view" onClick={closeCallback} />}
+            />
             <Form
                 className="dashed-border spacing-16 grid-fill-center gap"
                 onSubmit={handleSubmit(UpdateWord)}

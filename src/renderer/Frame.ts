@@ -25,6 +25,10 @@ const frameApi = {
         if (should_toggle_darkmode) {
             frame.toggleDarkMode()
         }
+    },
+
+    get instance() {
+        return frame
     }
 }
 

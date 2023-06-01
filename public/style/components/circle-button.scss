@@ -1,4 +1,6 @@
 .circle-button {
+    max-width: 30px;
+    max-height: 30px;
     width: 30px;
     height: 30px;
 
@@ -14,6 +16,12 @@
 
     &:hover {
         background-color: var(--main-hover-background);
+    }
+
+    &.small {
+        width: auto;
+        height: auto;
+        padding: 6px;
     }
 
     svg {

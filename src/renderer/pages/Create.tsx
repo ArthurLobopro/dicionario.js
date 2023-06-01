@@ -1,20 +1,25 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import { useLocation, useParams } from "react-router-dom"
 import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
+import { frame } from "../Frame"
 import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
+import { ValidatedInput } from "../components/ValidatedInput"
+import { ConfirmModal } from "../components/modals/Confirm"
 import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
 
 const create_word_schema = z.object({
-    word: z.string().trim().min(2, "A palavra deve ter pelo menos 2 caracteres.").transform(value => value.toLowerCase()),
+    word: z.string({
+        required_error: "Você deve fornecer uma palavra."
+    }).trim().min(2, "A palavra deve ter pelo menos 2 caracteres.").transform(value => value.toLowerCase()),
     definition: z.string().trim().min(5, "Forneça uma definição com pelo menos 5 caracteres.")
 })
 
@@ -24,12 +29,12 @@ export function CreateScreen() {
 
     const { search } = useLocation()
 
-    const { dictionary: dictionary_name } = useParams()
+    const { dictionary: dictionary_name = "" } = useParams()
 
     const has_return_to = search.includes("return_to=")
     const return_to = has_return_to ? search.split("=")[1] : "/"
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<CreateWordData>({
+    const { register, handleSubmit, reset, watch } = useForm<CreateWordData>({
         resolver: zodResolver(create_word_schema),
         defaultValues: {
             word: "",
@@ -37,20 +42,41 @@ export function CreateScreen() {
         }
     })
 
-    const has_dictionary = (() => {
+    const [dictionary, setDictionary] = useState(() => {
         try {
-            api.dictionaries.getDictionary(dictionary_name as string)
-            return true
+            return api.dictionaries.getDictionary(dictionary_name as string)
         } catch (error) {
-            return false
+            return api.dictionaries.getDefaultDictionary()
         }
-    })()
+    })
 
-    const [dictionary, setDictionary] = useState(
-        has_dictionary ?
-            api.dictionaries.getDictionary(dictionary_name as string) :
-            api.dictionaries.getDefaultDictionary()
-    )
+    const { word, definition } = watch()
+
+    const word_already_exists = !!dictionary.Words.getWord(word)
+
+    const closeCallback = async (): Promise<boolean> => {
+        return new Promise(resolve => {
+            if (word.length || definition.length) {
+                modal.open(<ConfirmModal
+                    message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
+                    onClose={(value) => {
+                        resolve(value)
+                        modal.close()
+                    }}
+                />)
+            } else {
+                resolve(true)
+            }
+        })
+    }
+
+    useEffect(() => {
+        frame.instance.setBeforeCloseCallback(closeCallback)
+
+        return () => {
+            frame.instance.setBeforeCloseCallback()
+        }
+    }, [word.length + definition.length > 0])
 
     const modal = useModal()
 
@@ -93,6 +119,7 @@ export function CreateScreen() {
                 title="Adicionar Palavra"
                 left={<ReturnButton
                     returnTo={has_return_to ? return_to : "/"}
+                    onClick={closeCallback}
                 />}
             />
             <Form
@@ -102,18 +129,25 @@ export function CreateScreen() {
                 <label>
                     Salvar em
                     <SelectDictionary
-                        disabled={has_dictionary}
+                        disabled={!!dictionary_name}
                         default_value={dictionary.name}
                         onChange={handleChangeDictionary}
                     />
                 </label>
                 <label>
                     Palavra
-                    <input
-                        type="text" placeholder="Palavra"
-                        tabIndex={modal.isVisible ? -1 : 1}
-                        {...register("word")}
-                        title={errors.word?.message || "Palavra a ser cadastrada"}
+                    <ValidatedInput
+                        register={register("word")}
+                        hasError={word_already_exists}
+                        errorMessage={
+                            word_already_exists ?
+                                `A palavra "${word}" já existe neste dicionário.`
+                                : ""
+                        }
+                        inputProps={{
+                            placeholder: "Palavra",
+                            tabIndex: modal.isVisible ? -1 : 1
+                        }}
                     />
                 </label>
                 <div className="t-wrapper grid-fill-bottom">
