@@ -93,8 +93,6 @@ export function ViewScreen() {
     }, [filter, words])
 
     const word_list = useMemo(() => {
-        console.log("rendering word list")
-
         return (
             filtered_words.length === 0 ?
                 <EmptySearch search={search} /> :
@@ -175,8 +173,7 @@ export function ViewScreen() {
                         if (name !== dictionary.name) {
                             setDictionary(api.dictionaries.getDictionary(name))
                         }
-                    }} />
-                }
+                    }} />}
                 left={<ReturnButton />}
                 right={right_content}
             />
