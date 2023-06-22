@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { CircleButton } from "../CircleButton"
 import { CloseIcon } from "../icons"
 import { ModalWrapper } from "./Wrapper"
@@ -40,12 +41,32 @@ export function AlertModalWithIcon(props: AlertWithIconProps) {
 
     const { title, icon, children, onClose } = props
 
+    const firstRender = useRef(true)
+
+    const modalRef = useRef<HTMLDivElement>(null)
+
+    function handleClose() {
+        modalRef.current?.classList.add("close")
+    }
+
+    function handleAnimationEnd() {
+        if (firstRender.current) {
+            firstRender.current = false
+            modalRef.current?.classList.remove("show")
+        } else {
+            onClose()
+        }
+    }
+
     return (
         <ModalWrapper>
-            <div className="modal">
+            <div className="modal show"
+                ref={modalRef}
+                onAnimationEnd={handleAnimationEnd}
+            >
                 <div className="modal-header">
                     {title}
-                    <CircleButton title="Fechar" small onClick={onClose}>
+                    <CircleButton title="Fechar" small onClick={handleClose}>
                         <CloseIcon />
                     </CircleButton>
                 </div>
@@ -60,7 +81,7 @@ export function AlertModalWithIcon(props: AlertWithIconProps) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button onClick={onClose} autoFocus={true}>
+                    <button onClick={handleClose} autoFocus={true}>
                         Ok
                     </button>
                 </div>
