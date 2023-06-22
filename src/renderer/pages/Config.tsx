@@ -30,10 +30,14 @@ export function ConfigScreen() {
         }
     }, [wrapperRef])
 
-    function ToggleTheme() {
+    function handleToggleTheme() {
         api.options.toggleDarkMode()
         document.body.classList.toggle("dark")
         frame.updateTheme()
+    }
+
+    function handleToggleAnimations() {
+        api.options.toggleAnimations()
     }
 
     const openGithub = () => shell.openExternal(GITHUB_LINK)
@@ -51,7 +55,10 @@ export function ConfigScreen() {
                     >
                         <div className="lines">
                             <span>Modo escuro</span>
-                            <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
+                            <Switcher onToggle={handleToggleTheme} checked={api.options.darkMode} />
+
+                            <span>Animações</span>
+                            <Switcher onToggle={handleToggleAnimations} checked={api.options.animations} />
 
                             <WindowSection />
 
