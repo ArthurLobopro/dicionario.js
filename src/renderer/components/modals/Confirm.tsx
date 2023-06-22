@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { ModalWrapper } from "./Wrapper"
 
 interface ConfirmModalProps {
@@ -9,9 +10,31 @@ interface ConfirmModalProps {
 export function ConfirmModal(props: ConfirmModalProps) {
     const { title = "Atenção", message, onClose = () => { } } = props
 
+    const firstRender = useRef(true)
+    const modalRef = useRef<HTMLDivElement>(null)
+    const responseRef = useRef(false)
+
+    function handleClose(confirm: boolean) {
+        responseRef.current = confirm
+        modalRef.current?.classList.add("close")
+    }
+
+    function handleAnimationEnd() {
+        if (firstRender.current) {
+            firstRender.current = false
+            modalRef.current?.classList.remove("show")
+        } else {
+            onClose(responseRef.current)
+        }
+    }
+
     return (
         <ModalWrapper>
-            <div className="modal">
+            <div
+                className="modal show"
+                ref={modalRef}
+                onAnimationEnd={handleAnimationEnd}
+            >
                 <div className="modal-header">
                     {title}
                 </div>
@@ -19,10 +42,10 @@ export function ConfirmModal(props: ConfirmModalProps) {
                     {message}
                 </div>
                 <div className="modal-footer">
-                    <button onClick={() => onClose(true)}>
+                    <button onClick={() => handleClose(true)}>
                         Sim
                     </button>
-                    <button className="cancel" onClick={() => onClose(false)}>
+                    <button className="cancel" onClick={() => handleClose(false)}>
                         Não
                     </button>
                 </div>
