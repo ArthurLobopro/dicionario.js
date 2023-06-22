@@ -307,6 +307,29 @@ button.simple {
     align-items: center;
 }
 
+.show {
+    animation: show .3s ease-in-out;
+}
+
+.close {
+    animation: show .3s ease-in-out reverse forwards;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+        scale: 0;
+    }
+
+    1% {
+        opacity: 1;
+    }
+
+    to {
+        scale: 1;
+    }
+}
+
 @import url(./components/modal.css);
 @import url(./components/switch.css);
 @import url(./components/header.css);
