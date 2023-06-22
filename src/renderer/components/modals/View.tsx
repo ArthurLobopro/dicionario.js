@@ -1,3 +1,4 @@
+import { useRef } from "react"
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { formatDate } from "../../Util"
 import { ModalWrapper } from "./Wrapper"
@@ -11,9 +12,30 @@ interface ViewModalProps {
 export function ViewModal(props: ViewModalProps) {
     const word_data = props.dictionary.Words.getWords()[props.word]
 
+    const firstRender = useRef(true)
+
+    const modalRef = useRef<HTMLDivElement>(null)
+
+    function handleClose() {
+        modalRef.current?.classList.add("close")
+    }
+
+    function handleAnimationEnd() {
+        if (firstRender.current) {
+            firstRender.current = false
+            modalRef.current?.classList.remove("show")
+        } else {
+            props.onClose()
+        }
+    }
+
     return (
         <ModalWrapper>
-            <div className="modal full" id="view-word">
+            <div
+                className="modal full show" id="view-word"
+                onAnimationEnd={handleAnimationEnd}
+                ref={modalRef}
+            >
                 <div className="dashed-border spacing-16">
                     <h1 className="flex-center capitalize">
                         {props.word}
@@ -31,7 +53,7 @@ export function ViewModal(props: ViewModalProps) {
                             </div> : null
                         }
                     </div>
-                    <button onClick={props.onClose}>Ok</button>
+                    <button onClick={handleClose}>Ok</button>
                 </div>
             </div>
         </ModalWrapper>
