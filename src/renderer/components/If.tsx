@@ -1,7 +1,11 @@
+import { memo } from "react"
+
 type IfProps = React.PropsWithChildren<{
     condition: boolean
+    else?: React.ReactNode
 }>
 
-export function If(props: IfProps) {
-    return props.condition ? <>{props.children}</> : null
-}
+export const If = memo(function If(props: IfProps) {
+    const else_component = <>{props.else}</> || null
+    return props.condition ? <>{props.children}</> : else_component
+})
