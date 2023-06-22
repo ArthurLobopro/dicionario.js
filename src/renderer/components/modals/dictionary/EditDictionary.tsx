@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
+import { If } from "../../If"
 import { SelectDictionary } from "../../selects/Dictionary"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
@@ -75,16 +76,20 @@ export function EditDictionaryModal(props: editDictionaryProps) {
                             />
                         </label>
 
-                        {
-                            editing_default ?
-                                <span>Este é o dicionário padrão.</span> :
-                                <label>
-                                    <span>Definir como padrão </span>
-                                    <input
-                                        type="checkbox" {...register("setDefault")}
-                                    />
-                                </label>
-                        }
+                        <If
+                            condition={editing_default}
+                        >
+                            <span>Este é o dicionário padrão.</span>
+                        </If>
+
+                        <If condition={!editing_default}>
+                            <label>
+                                <span>Definir como padrão </span>
+                                <input
+                                    type="checkbox" {...register("setDefault")}
+                                />
+                            </label>
+                        </If>
                     </div>
                 </div>
                 <div className="modal-footer">
