@@ -10,9 +10,9 @@ import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { ValidatedInput } from "../components/ValidatedInput"
-import { ConfirmModal } from "../components/modals/Confirm"
 import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
+import { WarningModal } from "../components/modals/Warning"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
 
@@ -57,13 +57,16 @@ export function CreateScreen() {
     const closeCallback = async (): Promise<boolean> => {
         return new Promise(resolve => {
             if (word.length || definition.length) {
-                modal.open(<ConfirmModal
-                    message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
-                    onClose={(value) => {
-                        resolve(value)
-                        modal.close()
-                    }}
-                />)
+                modal.open(
+                    <WarningModal
+                        onClose={(value) => {
+                            resolve(value)
+                            modal.close()
+                        }}
+                    >
+                        Você tem certeza que deseja sair? Os dados não salvos serão perdidos.
+                    </WarningModal>
+                )
             } else {
                 resolve(true)
             }

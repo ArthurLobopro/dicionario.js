@@ -9,9 +9,9 @@ import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { ConfirmModal } from "../components/modals/Confirm"
 import { ErrorModal } from "../components/modals/Error"
 import { SuccessModal } from "../components/modals/Success"
+import { WarningModal } from "../components/modals/Warning"
 import { useModal } from "../hooks/useModal"
 
 const update_word_schema = z.object({
@@ -41,13 +41,16 @@ export function UpdateScreen() {
     const closeCallback = async (): Promise<boolean> => {
         return new Promise((resolve) => {
             if (dirtyFields.definition || dirtyFields.word) {
-                modal.open(<ConfirmModal
-                    message="Você tem certeza que deseja sair? Os dados não salvos serão perdidos."
-                    onClose={value => {
-                        modal.close()
-                        resolve(value)
-                    }}
-                />)
+                modal.open(
+                    <WarningModal
+                        onClose={(value) => {
+                            resolve(value)
+                            modal.close()
+                        }}
+                    >
+                        Você tem certeza que deseja sair? Os dados não salvos serão perdidos.
+                    </WarningModal>
+                )
             } else {
                 resolve(true)
             }
