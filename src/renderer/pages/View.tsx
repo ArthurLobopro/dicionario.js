@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
 import { CircleButton } from "../components/CircleButton"
 import { Header } from "../components/Header"
+import { If } from "../components/If"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
 import { Word } from "../components/Word"
@@ -94,8 +95,10 @@ export function ViewScreen() {
 
     const word_list = useMemo(() => {
         return (
-            filtered_words.length === 0 ?
-                <EmptySearch search={search} /> :
+            <If
+                condition={filtered_words.length > 0}
+                else={<EmptySearch search={search} />}
+            >
                 <div>
                     <div className="word-wrapper">
                         {filtered_words.map(([word, word_props]) => (
@@ -109,6 +112,7 @@ export function ViewScreen() {
                         ))}
                     </div>
                 </div>
+            </If>
         )
     }, [filtered_words])
 
@@ -136,18 +140,16 @@ export function ViewScreen() {
     const right_content = (
         <div className="flex gap-4">
             <div className="flex align-center">
-                {
-                    words.length > 0 && (
-                        inputVisibility ?
-                            search_input :
-                            <CircleButton
-                                title="Mostrar barra de pesquisa"
-                                onClick={() => setInputVisibility(true)}
-                            >
-                                <SearchIcon />
-                            </CircleButton>
-                    )
-                }
+                <If condition={words.length > 1}>
+                    <If condition={!inputVisibility} else={search_input}>
+                        <CircleButton
+                            title="Mostrar barra de pesquisa"
+                            onClick={() => setInputVisibility(true)}
+                        >
+                            <SearchIcon />
+                        </CircleButton>
+                    </If>
+                </If>
             </div>
             <CircleButton
                 onClick={showInfo}
@@ -177,7 +179,10 @@ export function ViewScreen() {
                 left={<ReturnButton />}
                 right={right_content}
             />
-            {words.length > 0 ? word_list : <EmptyPage link={link} />}
+
+            <If condition={words.length > 0} else={<EmptyPage link={link} />}>
+                {word_list}
+            </If>
         </Page>
     )
 }
