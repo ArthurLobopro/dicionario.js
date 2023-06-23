@@ -62,7 +62,7 @@ export function AddDictionaryModal(props: addDictionaryProps) {
                         <label>
                             Nome
                             <input
-                                type="text" placeholder="Nome do dicionário"
+                                type="text" className="simple" placeholder="Nome do dicionário"
                                 {...register("name")}
                             />
                         </label>
