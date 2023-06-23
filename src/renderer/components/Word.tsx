@@ -6,8 +6,8 @@ import {
     EditIcon,
     EyeIcon, TrashIcon
 } from "./icons"
-import { ConfirmModal } from "./modals/Confirm"
 import { ViewModal } from "./modals/View"
+import { WarningModal } from "./modals/Warning"
 
 interface WordProps {
     word: {
@@ -31,16 +31,19 @@ export function Word(props: WordProps) {
     }
 
     function DeleteWord() {
-        modal.open(<ConfirmModal
-            message="Essa ação é irreversível. Deseja realmente excluir esta palavra?"
-            title="Você tem certeza?"
-            onClose={(confirm) => {
-                if (confirm) {
-                    dictionary.Words.deleteWord(word.word)
-                    reload()
-                }
-                modal.close()
-            }} />)
+        modal.open(
+            <WarningModal
+                title="Você tem certeza?"
+                onClose={(confirm) => {
+                    if (confirm) {
+                        dictionary.Words.deleteWord(word.word)
+                        reload()
+                    }
+                    modal.close()
+                }}>
+                Essa ação é irreversível. Deseja realmente excluir esta palavra?
+            </WarningModal>
+        )
     }
 
     const navigate = useNavigate()
