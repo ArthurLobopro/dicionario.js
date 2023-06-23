@@ -3,7 +3,7 @@ import { useState } from "react"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
-import { AlertModal } from "../Alert"
+import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
 
@@ -26,7 +26,7 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
     function HandleExport() {
         if (data.path === "") {
-            return modal.open(<AlertModal
+            return modal.open(<ErrorModal
                 title="Erro" onClose={modal.close}
                 message="Escolha um local para exportar o dicionário"
             />)
@@ -81,7 +81,11 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
                     </div>
                 </div>
                 <div className="modal-footer">
-                    <button onClick={HandleExport}>
+                    <button
+                        onClick={HandleExport}
+                        className={data.path === "" ? "disabled" : ""}
+                        disabled={data.path === ""}
+                    >
                         Exportar
                     </button>
                     <button className="cancel" onClick={props.onClose}>
