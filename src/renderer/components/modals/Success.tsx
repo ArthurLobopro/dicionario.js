@@ -1,7 +1,7 @@
 import { SuccessIcon } from "../icons"
-import { AlertModalProps, AlertModalWithIcon } from "./Alert"
+import { ModalProps, ModalWithIcon } from "./ModalWithIcon"
 
-type SuccessModalProps = Omit<AlertModalProps, "title"> & Partial<Pick<AlertModalProps, "title">>
+type SuccessModalProps = Omit<ModalProps, "title"> & Partial<Pick<ModalProps, "title">>
 
 export function SuccessModal(props: SuccessModalProps) {
     const {
@@ -11,10 +11,11 @@ export function SuccessModal(props: SuccessModalProps) {
     } = props
 
     return (
-        <AlertModalWithIcon
+        <ModalWithIcon
             title={title} children={message}
             onClose={onClose}
             icon={<SuccessIcon />}
+            type="alert"
         />
     )
 }

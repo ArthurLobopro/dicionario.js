@@ -2,7 +2,7 @@ import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { formatDate } from "../../../Util"
 import { If } from "../../If"
 import { BlueInfoIcon } from "../../icons"
-import { AlertModalWithIcon } from "../Alert"
+import { ModalWithIcon } from "../ModalWithIcon"
 
 interface DictionaryInfoModalProps {
     dictionary: DictionaryController
@@ -18,7 +18,8 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
     const olderRegister = olderWord?.register && formatDate(olderWord.register.toISOString())
 
     return (
-        <AlertModalWithIcon
+        <ModalWithIcon
+            type="alert"
             title={`Informações de: ${props.dictionary.name}`}
             onClose={props.onClose}
             children={<>

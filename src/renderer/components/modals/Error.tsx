@@ -1,7 +1,7 @@
 import { ErrorIcon } from "../icons"
-import { AlertModalProps, AlertModalWithIcon } from "./Alert"
+import { ModalProps, ModalWithIcon } from "./ModalWithIcon"
 
-type ErrorModalProps = Omit<AlertModalProps, "title"> & Partial<Pick<AlertModalProps, "title">>
+type ErrorModalProps = Omit<ModalProps, "title"> & Partial<Pick<ModalProps, "title">>
 
 export function ErrorModal(props: ErrorModalProps) {
     const {
@@ -11,9 +11,10 @@ export function ErrorModal(props: ErrorModalProps) {
     } = props
 
     return (
-        <AlertModalWithIcon
+        <ModalWithIcon
             title={title} children={message}
             onClose={onClose} icon={<ErrorIcon />}
+            type="alert"
         />
     )
 }
