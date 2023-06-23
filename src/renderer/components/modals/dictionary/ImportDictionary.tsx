@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron"
 import fs from "node:fs"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import { dictionary, dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
@@ -34,8 +34,25 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
     })
 
     const modal = useModal()
+    const modalRef = useRef<HTMLDivElement>(null)
+    const firstRender = useRef(true)
 
-    const readyToImport = selectedFile.path && selectedFile.content.words.length > 0
+    function handleAnimationEnd() {
+        if (firstRender.current) {
+            firstRender.current = false
+            modalRef.current?.classList.remove("show")
+        } else {
+            if (modalRef.current?.classList.contains("close")) {
+                close()
+            }
+        }
+    }
+
+    function close() {
+        modalRef.current?.classList.add("close")
+    }
+
+    const readyToImport = selectedFile.path && selectedFile.content.words
 
     const alreadyExists = readyToImport && DictionariesController.getDictionariesNames().includes(selectedFile.content.name)
 
@@ -81,7 +98,6 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                 />)
             }
 
-
             DictionariesController.importDictionary({
                 ...selectedFile.content,
                 name: newName
@@ -103,7 +119,10 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
     return (
         <ModalWrapper>
-            <div className="modal">
+            <div
+                className="modal show" ref={modalRef}
+                onAnimationEnd={handleAnimationEnd}
+            >
                 {modal.content}
                 <div className="modal-header">
                     Importar Dicionário
@@ -170,7 +189,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                                         Nome: {selectedFile.content.name}
                                     </li>
                                     <li>
-                                        Número de palavras: {selectedFile.content.words.length}
+                                        Número de palavras: {selectedFile.content.words?.length}
                                     </li>
                                 </ul>
                             </div>
@@ -180,12 +199,12 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
                 <div className="modal-footer">
                     <button {
-                        ...readyToImport ? {
+                        ...(!!readyToImport ? {
                             onClick: HandleSubmit
                         } : {
                             className: "disabled",
                             title: "Selecione um arquivo válido"
-                        }
+                        })
                     }>
                         <If
                             condition={!alreadyExists && !(action === "merge")}
