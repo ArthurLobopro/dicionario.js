@@ -9,9 +9,7 @@ import { Form } from "../components/Form"
 import { Header } from "../components/Header"
 import { Page } from "../components/Page"
 import { ReturnButton } from "../components/ReturnButton"
-import { ErrorModal } from "../components/modals/Error"
-import { SuccessModal } from "../components/modals/Success"
-import { WarningModal } from "../components/modals/Warning"
+import { ErrorModal, SuccessModal, WarningModal } from "../components/modals"
 import { useModal } from "../hooks/useModal"
 
 const update_word_schema = z.object({

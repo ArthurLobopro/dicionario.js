@@ -6,8 +6,7 @@ import {
     EditIcon,
     EyeIcon, TrashIcon
 } from "./icons"
-import { ViewModal } from "./modals/View"
-import { WarningModal } from "./modals/Warning"
+import { ViewModal, WarningModal } from "./modals"
 
 interface WordProps {
     word: {
