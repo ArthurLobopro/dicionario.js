@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
-import { AlertModal } from "../Alert"
+import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
 
@@ -39,8 +39,8 @@ export function AddDictionaryModal(props: addDictionaryProps) {
             />)
         } catch (error) {
             if (error instanceof Error) {
-                modal.open(<AlertModal
-                    title="Erro" message={error.message}
+                modal.open(<ErrorModal
+                    message={error.message}
                     onClose={modal.close}
                 />)
             }

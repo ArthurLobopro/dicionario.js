@@ -3,7 +3,7 @@ import { api } from "../../../../store/Api"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
-import { AlertModal } from "../Alert"
+import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
 import { WarningModal } from "../Warning"
 import { ModalWrapper } from "../Wrapper"
@@ -23,8 +23,8 @@ export function DeleteDictionaryModal(props: modal_props) {
         }
 
         if (dictionary === DictionariesController.getDefaultDictionary().name) {
-            return modal.open(<AlertModal
-                title="Erro" onClose={modal.close}
+            return modal.open(<ErrorModal
+                onClose={modal.close}
                 message={`Você não pode deletar o dicionário padrão`}
             />)
         }
@@ -42,8 +42,8 @@ export function DeleteDictionaryModal(props: modal_props) {
                     message={`Dicionário "${dictionary}" deletado com sucesso`}
                 />)
             } catch (error) {
-                modal.open(<AlertModal
-                    title="Erro" onClose={HandleClose}
+                modal.open(<ErrorModal
+                    onClose={HandleClose}
                     message={`Houve um erro ao deletar o dicionário "${dictionary}"`}
                 />)
             }

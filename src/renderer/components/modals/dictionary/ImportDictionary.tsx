@@ -5,7 +5,7 @@ import { DictionariesController } from "../../../../store/Controllers/Dictionari
 import { dictionary, dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
 import { If } from "../../If"
-import { AlertModal } from "../Alert"
+import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
 
@@ -74,7 +74,10 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
         const check = CheckFileContent(file)
 
         if (!check.isValid) {
-            return modal.open(<AlertModal title="Erro" message="Arquivo inválido" onClose={modal.close} />)
+            return modal.open(<ErrorModal
+                onClose={modal.close}
+                message="Arquivo inválido"
+            />)
         }
 
         setSelectedFile({
