@@ -291,7 +291,7 @@ button.simple {
     font-size: 16px;
     border-radius: 4px;
 
-    &:hover {
+    &:not(:disabled):not(.disabled):hover {
         box-shadow: 0 0 0 1px currentColor inset;
     }
 }
