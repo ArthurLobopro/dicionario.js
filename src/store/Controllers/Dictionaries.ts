@@ -75,6 +75,10 @@ export class DictionariesController {
             throw new Error("Já existe um dicionário com esse nome")
         }
 
+        if (!name) {
+            throw new Error("Nome inválido")
+        }
+
         dictionaries.push({
             name,
             words: []
