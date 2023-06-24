@@ -116,6 +116,14 @@ export class DictionariesController {
     }
 
     static exportDictionary(name: string, folder: string) {
+        if (!folder) {
+            throw new Error("Pasta inválida")
+        }
+
+        if (!fs.existsSync(folder)) {
+            throw new Error("Pasta não encontrada")
+        }
+
         const dictionary = DictionariesController.getDictionary(name)
 
         const content = dictionary.export()
