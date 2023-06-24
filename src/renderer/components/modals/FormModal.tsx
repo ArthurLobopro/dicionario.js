@@ -8,6 +8,7 @@ interface FormModalProps {
     onClose: () => void
     submitText?: string
     cancelText?: string
+    disableSubmit?: boolean
 }
 
 export function FormModal(props: FormModalProps) {
@@ -42,7 +43,10 @@ export function FormModal(props: FormModalProps) {
                     {props.children}
                 </div>
                 <div className="modal-footer">
-                    <button type="submit">
+                    <button
+                        type="submit"
+                        disabled={props.disableSubmit}
+                    >
                         {props.submitText ?? "Salvar"}
                     </button>
                     <button className="cancel" type="button" onClick={handleCancel}>
