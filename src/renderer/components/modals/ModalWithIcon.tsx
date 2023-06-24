@@ -81,15 +81,18 @@ export function ModalWithIcon(props: ModalWithIconsProps) {
                     <If
                         condition={props.type === "confirm"}
                         else={
-                            <button onClick={handleClose as VoidFunction} autoFocus={true}>
+                            <button
+                                onClick={handleClose as VoidFunction} autoFocus={true}
+                                type="button"
+                            >
                                 Ok
                             </button>
                         }
                     >
-                        <button onClick={() => handleClose(true)}>
+                        <button onClick={() => handleClose(true)} type="button">
                             Sim
                         </button>
-                        <button onClick={() => handleClose(false)}>
+                        <button onClick={() => handleClose(false)} type="button">
                             Não
                         </button>
                     </If>
