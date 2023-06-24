@@ -6,8 +6,8 @@ import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
 import { If } from "../../If"
 import { SelectDictionary } from "../../selects/Dictionary"
+import { FormModal } from "../FormModal"
 import { SuccessModal } from "../Success"
-import { ModalWrapper } from "../Wrapper"
 
 interface editDictionaryProps {
     onClose: () => void
@@ -53,57 +53,41 @@ export function EditDictionaryModal(props: editDictionaryProps) {
     }
 
     return (
-        <ModalWrapper>
-            <form className="modal" id="add-dictionary" onSubmit={handleSubmit(onSubmit)}>
-                {modal.content}
-                <div className="modal-header">
-                    Editar Dicionário
+        <FormModal
+            onSubmit={handleSubmit(onSubmit)}
+            onClose={props.onClose}
+            title="Editar Dicionário"
+            submitText="Editar"
+        >
+            {modal.content}
+            <div className="input-wrapper gap-10 flex-column">
+                <div>
+                    <span>Editar dicionário </span>
+                    <SelectDictionary onChange={name => {
+                        setCurrentDictionary(api.dictionaries.getDictionary(name).dictionary)
+                    }} />
                 </div>
-                <div className="modal-body">
-                    <div className="input-wrapper gap-10 flex-column">
-                        <div>
-                            <span>Editar dicionário </span>
-                            <SelectDictionary onChange={name => {
-                                setCurrentDictionary(api.dictionaries.getDictionary(name).dictionary)
-                            }} />
-                        </div>
 
-                        <label>
-                            Nome
-                            <input
-                                className="simple"
-                                type="text" {...register("newName")}
-                            />
-                        </label>
+                <label>
+                    Nome
+                    <input
+                        className="simple"
+                        type="text" {...register("newName")}
+                    />
+                </label>
 
-                        <If
-                            condition={editing_default}
-                        >
-                            <span>Este é o dicionário padrão.</span>
-                        </If>
-
-                        <If condition={!editing_default}>
-                            <label>
-                                <span>Definir como padrão </span>
-                                <input
-                                    type="checkbox" {...register("setDefault")}
-                                />
-                            </label>
-                        </If>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                    <button type="submit">
-                        Editar
-                    </button>
-                    <button
-                        className="cancel"
-                        onClick={props.onClose}
-                    >
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </ModalWrapper >
+                <If
+                    condition={!editing_default}
+                    else={<span>Este é o dicionário padrão.</span>}
+                >
+                    <label>
+                        <span>Definir como padrão </span>
+                        <input
+                            type="checkbox" {...register("setDefault")}
+                        />
+                    </label>
+                </If>
+            </div>
+        </FormModal>
     )
 }
