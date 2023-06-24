@@ -1,26 +1,34 @@
-import { useState } from "react"
+import { useForm } from "react-hook-form"
 import { api } from "../../../../store/Api"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import { useModal } from "../../../hooks/useModal"
 import { SelectDictionary } from "../../selects/Dictionary"
 import { ErrorModal } from "../Error"
+import { FormModal } from "../FormModal"
 import { SuccessModal } from "../Success"
 import { WarningModal } from "../Warning"
-import { ModalWrapper } from "../Wrapper"
 
 interface modal_props {
     onClose: () => void
 }
 
+interface deleteDictionaryProps {
+    dictionary: string
+}
+
 export function DeleteDictionaryModal(props: modal_props) {
-    const [dictionary, setDictionary] = useState<string>("")
+    const { handleSubmit, setValue } = useForm<deleteDictionaryProps>({
+        defaultValues: {
+            dictionary: api.dictionaries.getDefaultDictionary().name
+        }
+    })
 
     const modal = useModal()
 
-    async function HandleDelete() {
-        if (dictionary === "") {
-            return
-        }
+    async function onDelete(data: deleteDictionaryProps) {
+        const dictionary = data.dictionary
+
+        if (dictionary === "") { return }
 
         if (dictionary === DictionariesController.getDefaultDictionary().name) {
             return modal.open(<ErrorModal
@@ -29,21 +37,16 @@ export function DeleteDictionaryModal(props: modal_props) {
             />)
         }
 
-        function HandleClose() {
-            modal.close()
-            props.onClose()
-        }
-
         function deleteDictionary() {
             try {
                 api.dictionaries.removeDictionary(dictionary)
                 modal.open(<SuccessModal
-                    onClose={HandleClose}
+                    onClose={props.onClose}
                     message={`Dicionário "${dictionary}" deletado com sucesso`}
                 />)
             } catch (error) {
                 modal.open(<ErrorModal
-                    onClose={HandleClose}
+                    onClose={props.onClose}
                     message={`Houve um erro ao deletar o dicionário "${dictionary}"`}
                 />)
             }
@@ -71,25 +74,13 @@ export function DeleteDictionaryModal(props: modal_props) {
     }
 
     return (
-        <ModalWrapper>
-            <div className="modal">
-                {modal.content}
-                <div className="modal-header">
-                    Deletar Dicionário
-                </div>
-                <div className="modal-body">
-                    <span>Deletar o dicinário: </span>
-                    <SelectDictionary onChange={setDictionary} />
-                </div>
-                <div className="modal-footer">
-                    <button onClick={HandleDelete}>
-                        Deletar
-                    </button>
-                    <button className="cancel" onClick={() => props.onClose()}>
-                        Cancelar
-                    </button>
-                </div>
-            </div>
-        </ModalWrapper>
+        <FormModal
+            title="Deletar Dicionário" submitText="Deletar"
+            onClose={props.onClose} onSubmit={handleSubmit(onDelete)}
+        >
+            {modal.content}
+            <span>Deletar o dicinário: </span>
+            <SelectDictionary onChange={value => setValue("dictionary", value)} />
+        </FormModal>
     )
 }
