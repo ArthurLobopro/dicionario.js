@@ -54,6 +54,8 @@ export function ConfigScreen() {
                         ref={wrapperRef}
                     >
                         <div className="lines">
+                            <LineTitle title="Aparência" />
+
                             <span>Modo escuro</span>
                             <Switcher onToggle={handleToggleTheme} checked={api.options.darkMode} />
 
