@@ -10,7 +10,7 @@ import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
 import { DictionarySection } from "../components/config-sections/DictionarySections"
 import { WindowSection } from "../components/config-sections/Window"
-import { GithubLogo } from "../components/icons"
+import { GithubLogo, LinkExternalIcon } from "../components/icons"
 import { useModal } from "../hooks/useModal"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
@@ -40,6 +40,7 @@ export function ConfigScreen() {
         api.options.toggleAnimations()
     }
 
+    const openReport = () => shell.openExternal("https://github.com/ArthurLobopro/dicionario.js/issues")
     const openGithub = () => shell.openExternal(GITHUB_LINK)
     const openDevtools = () => ipcRenderer.send("open-devtolls")
 
@@ -67,6 +68,15 @@ export function ConfigScreen() {
                             <DictionarySection modal={modal} />
 
                             <LineTitle title="Outros" />
+
+                            <span>Relatar erro</span>
+                            <button
+                                className="stroke" title="Relatar erro"
+                                onClick={openReport} onMouseEnter={hoverFocus}
+                            >
+                                <LinkExternalIcon />
+                                Abrir
+                            </button>
 
                             <span>Sobre</span>
                             <button
