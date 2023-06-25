@@ -11,7 +11,8 @@ module.exports = {
             "\\.scss",
             "\\.ts",
             "\\.tsx",
-            "/build"
+            "/build",
+            "/\\.vscode"
         ]
     },
     makers: [
