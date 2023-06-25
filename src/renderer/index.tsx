@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import ReactDOM from "react-dom/client"
 import { api } from "../store/Api"
 import { AppRoutes } from "./Routes"
-import { ReleaseModal } from "./components/modals/Release"
+import { ReleaseModal } from "./components/modals"
 import { useModal } from "./hooks/useModal"
 
 if (api.options.darkMode) {

@@ -1,3 +1,5 @@
+import { api } from "../../store/Api"
+
 interface PageProps {
     children: React.ReactNode
     id?: string
@@ -5,7 +7,10 @@ interface PageProps {
 
 export function Page(props: PageProps) {
     return (
-        <div className="page" {...props}>
+        <div className={[
+            "page",
+            api.options.animations ? "" : "no-animations"
+        ].join(" ")} {...props}>
             {props.children}
         </div>
     )

@@ -15,6 +15,14 @@ export class OptionsController {
         options.set('darkMode', value)
     }
 
+    static get animations() {
+        return options.get('animations')
+    }
+
+    static set animations(value: boolean) {
+        options.set('animations', value)
+    }
+
     static get frameTheme() {
         return options.get("frameTheme")
     }
@@ -37,6 +45,10 @@ export class OptionsController {
 
     static toggleDarkMode() {
         this.darkMode = !this.darkMode
+    }
+
+    static toggleAnimations() {
+        this.animations = !this.animations
     }
 
     static toggleSystemTitleBar() {

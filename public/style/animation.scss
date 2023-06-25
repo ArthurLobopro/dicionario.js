@@ -1,0 +1,30 @@
+:root {
+    --animation-time: .3s;
+}
+
+.no-animations {
+    --animation-time: 0s;
+}
+
+.show {
+    animation: show var(--animation-time) ease-in-out;
+}
+
+.close {
+    animation: show var(--animation-time) ease-in-out reverse forwards;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+        scale: 0;
+    }
+
+    1% {
+        opacity: 1;
+    }
+
+    to {
+        scale: 1;
+    }
+}

@@ -1,11 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import { ErrorModal, SuccessModal } from "../"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
-import { AlertModal } from "../Alert"
-import { SuccessModal } from "../Success"
-import { ModalWrapper } from "../Wrapper"
+import { FormModal } from "../FormModal"
 
 interface addDictionaryProps {
     onClose: () => void
@@ -39,8 +38,8 @@ export function AddDictionaryModal(props: addDictionaryProps) {
             />)
         } catch (error) {
             if (error instanceof Error) {
-                modal.open(<AlertModal
-                    title="Erro" message={error.message}
+                modal.open(<ErrorModal
+                    message={error.message}
                     onClose={modal.close}
                 />)
             }
@@ -48,40 +47,25 @@ export function AddDictionaryModal(props: addDictionaryProps) {
     }
 
     return (
-        <ModalWrapper>
-            <form
-                className="modal" id="add-dictionary"
-                onSubmit={handleSubmit(onSubmit)}
-            >
-                <div className="modal-header">
-                    Adicionar Dicionário
-                </div>
-                <div className="modal-body">
-                    {modal.content}
-                    <div className="input-wrapper gap-10 flex-column">
-                        <label>
-                            Nome
-                            <input
-                                type="text" placeholder="Nome do dicionário"
-                                {...register("name")}
-                            />
-                        </label>
+        <FormModal
+            title="Adicionar dicionário" onClose={props.onClose} onSubmit={handleSubmit(onSubmit)}
+            submitText="Adicionar"
+        >
+            {modal.content}
+            <div className="input-wrapper gap-10 flex-column">
+                <label>
+                    Nome
+                    <input
+                        type="text" className="simple" placeholder="Nome do dicionário"
+                        {...register("name")}
+                    />
+                </label>
 
-                        <label>
-                            <span>Tornar padrão </span>
-                            <input type="checkbox" {...register("setDefault")} />
-                        </label>
-                    </div>
-                </div>
-                <div className="modal-footer">
-                    <button type="submit">
-                        Adicionar
-                    </button>
-                    <button className="cancel" onClick={props.onClose}>
-                        Cancelar
-                    </button>
-                </div>
-            </form>
-        </ModalWrapper>
+                <label>
+                    <span>Tornar padrão </span>
+                    <input type="checkbox" {...register("setDefault")} />
+                </label>
+            </div>
+        </FormModal>
     )
 }

@@ -5,6 +5,7 @@ import { api } from "../../../store/Api"
 import { StoreOptions } from "../../../store/ZodSchemas/options"
 import { frame } from "../../Frame"
 import { hoverFocus } from "../../Util"
+import { If } from "../If"
 import { LineTitle } from "../LineTitle"
 import { Switcher } from "../Switcher"
 
@@ -38,20 +39,18 @@ export function WindowSection() {
         <>
             <LineTitle title="Janela" />
 
-            {isLinux && (
-                <>
-                    <span>Usar titlebar do sistema</span>
-                    <Switcher
-                        onToggle={HandleToggleSystemTitlebar}
-                        checked={useSystemTitleBar}
-                        title={
-                            useSystemTitleBar ?
-                                "Desativar titlebar do sistema" :
-                                "Ativar titlebar do sistema"
-                        }
-                    />
-                </>
-            )}
+            <If condition={isLinux}>
+                <span>Usar titlebar do sistema</span>
+                <Switcher
+                    onToggle={HandleToggleSystemTitlebar}
+                    checked={useSystemTitleBar}
+                    title={
+                        useSystemTitleBar ?
+                            "Desativar titlebar do sistema" :
+                            "Ativar titlebar do sistema"
+                    }
+                />
+            </If >
 
             <span>Estilo da titlebar</span>
             <select

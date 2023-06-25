@@ -1,7 +1,8 @@
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { formatDate } from "../../../Util"
+import { If } from "../../If"
 import { BlueInfoIcon } from "../../icons"
-import { AlertModalWithIcon } from "../Alert"
+import { ModalWithIcon } from "../ModalWithIcon"
 
 interface DictionaryInfoModalProps {
     dictionary: DictionaryController
@@ -17,27 +18,28 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
     const olderRegister = olderWord?.register && formatDate(olderWord.register.toISOString())
 
     return (
-        <AlertModalWithIcon
+        <ModalWithIcon
+            type="alert"
             title={`Informações de: ${props.dictionary.name}`}
             onClose={props.onClose}
             children={<>
                 <p>
                     Palavras cadastradas: {wordsCount} palavra{wordsCount > 1 ? "s" : ""}
                 </p>
-                {
-                    newerWord &&
+
+                <If condition={!!newerWord}>
                     <p className="flex gap-4 align-center">
                         Primeiro Registro:
-                        <span className="info">{newerWord.word} ({newerRegister})</span>
+                        <span className="info">{newerWord?.word} ({newerRegister})</span>
                     </p>
-                }
-                {
-                    olderWord &&
+                </If>
+
+                <If condition={!!olderWord}>
                     <p className="flex gap-4 align-center">
                         Último Registro:
-                        <span className="info">{olderWord.word} ({olderRegister})</span>
+                        <span className="info">{olderWord?.word} ({olderRegister})</span>
                     </p>
-                }
+                </If>
             </>}
             icon={<BlueInfoIcon />}
         />

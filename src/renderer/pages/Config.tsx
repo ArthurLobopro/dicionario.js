@@ -10,7 +10,7 @@ import { ReturnButton } from "../components/ReturnButton"
 import { Switcher } from "../components/Switcher"
 import { DictionarySection } from "../components/config-sections/DictionarySections"
 import { WindowSection } from "../components/config-sections/Window"
-import { GithubLogo } from "../components/icons"
+import { GithubLogo, LinkExternalIcon } from "../components/icons"
 import { useModal } from "../hooks/useModal"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
@@ -30,12 +30,17 @@ export function ConfigScreen() {
         }
     }, [wrapperRef])
 
-    function ToggleTheme() {
+    function handleToggleTheme() {
         api.options.toggleDarkMode()
         document.body.classList.toggle("dark")
         frame.updateTheme()
     }
 
+    function handleToggleAnimations() {
+        api.options.toggleAnimations()
+    }
+
+    const openReport = () => shell.openExternal("https://github.com/ArthurLobopro/dicionario.js/issues")
     const openGithub = () => shell.openExternal(GITHUB_LINK)
     const openDevtools = () => ipcRenderer.send("open-devtolls")
 
@@ -50,14 +55,28 @@ export function ConfigScreen() {
                         ref={wrapperRef}
                     >
                         <div className="lines">
+                            <LineTitle title="Aparência" />
+
                             <span>Modo escuro</span>
-                            <Switcher onToggle={ToggleTheme} checked={api.options.darkMode} />
+                            <Switcher onToggle={handleToggleTheme} checked={api.options.darkMode} />
+
+                            <span>Animações</span>
+                            <Switcher onToggle={handleToggleAnimations} checked={api.options.animations} />
 
                             <WindowSection />
 
                             <DictionarySection modal={modal} />
 
                             <LineTitle title="Outros" />
+
+                            <span>Relatar erro</span>
+                            <button
+                                className="stroke" title="Relatar erro"
+                                onClick={openReport} onMouseEnter={hoverFocus}
+                            >
+                                <LinkExternalIcon />
+                                Abrir
+                            </button>
 
                             <span>Sobre</span>
                             <button

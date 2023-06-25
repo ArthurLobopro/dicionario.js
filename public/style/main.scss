@@ -158,7 +158,7 @@ select {
 
     background-color: var(--option-background);
     width: 80%;
-    max-width: 300px;
+    max-width: 250px;
     aspect-ratio: 1/1;
     font-size: clamp(16px, 2vw, 24px);
     font-family: 'Open Sans', sans-serif;
@@ -193,6 +193,9 @@ select {
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     align-items: center;
+    max-width: 1200px;
+    justify-self: center;
+    width: 100%;
 }
 
 button {
@@ -291,7 +294,7 @@ button.simple {
     font-size: 16px;
     border-radius: 4px;
 
-    &:hover {
+    &:not(:disabled):not(.disabled):hover {
         box-shadow: 0 0 0 1px currentColor inset;
     }
 }
@@ -306,6 +309,8 @@ button.simple {
     gap: 10px;
     align-items: center;
 }
+
+@import url(./animation.css);
 
 @import url(./components/modal.css);
 @import url(./components/switch.css);

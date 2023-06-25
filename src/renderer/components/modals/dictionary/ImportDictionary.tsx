@@ -1,10 +1,11 @@
 import { ipcRenderer } from "electron"
 import fs from "node:fs"
-import { useState } from "react"
+import { useRef, useState } from "react"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import { dictionary, dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
-import { AlertModal } from "../Alert"
+import { If } from "../../If"
+import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../Wrapper"
 
@@ -33,8 +34,25 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
     })
 
     const modal = useModal()
+    const modalRef = useRef<HTMLDivElement>(null)
+    const firstRender = useRef(true)
 
-    const readyToImport = selectedFile.path && selectedFile.content.words.length > 0
+    function handleAnimationEnd() {
+        if (firstRender.current) {
+            firstRender.current = false
+            modalRef.current?.classList.remove("show")
+        } else {
+            if (modalRef.current?.classList.contains("close")) {
+                close()
+            }
+        }
+    }
+
+    function close() {
+        modalRef.current?.classList.add("close")
+    }
+
+    const readyToImport = selectedFile.path && selectedFile.content.words
 
     const alreadyExists = readyToImport && DictionariesController.getDictionariesNames().includes(selectedFile.content.name)
 
@@ -56,7 +74,10 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
         const check = CheckFileContent(file)
 
         if (!check.isValid) {
-            return modal.open(<AlertModal title="Erro" message="Arquivo inválido" onClose={modal.close} />)
+            return modal.open(<ErrorModal
+                onClose={modal.close}
+                message="Arquivo inválido"
+            />)
         }
 
         setSelectedFile({
@@ -80,7 +101,6 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                 />)
             }
 
-
             DictionariesController.importDictionary({
                 ...selectedFile.content,
                 name: newName
@@ -102,7 +122,10 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
     return (
         <ModalWrapper>
-            <div className="modal">
+            <div
+                className="modal show" ref={modalRef}
+                onAnimationEnd={handleAnimationEnd}
+            >
                 {modal.content}
                 <div className="modal-header">
                     Importar Dicionário
@@ -121,76 +144,77 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
                             </button>
                         </div>
 
-                        {
-                            alreadyExists ? (
-                                <div className="flex-column gap">
-                                    <p>
-                                        Já existe um dicionário com o nome "{selectedFile.content.name}".
-                                    </p>
+                        <If condition={!!alreadyExists}>
+                            <div className="flex-column gap">
+                                <p>
+                                    Já existe um dicionário com o nome "{selectedFile.content.name}".
+                                </p>
 
-                                    <div className="flex gap-10 align-center">
-                                        O que deseja fazer?
-                                        <select onChange={(event) => {
-                                            setAction(event.target.value as "merge" | "rename")
-                                        }} value={action}>
-                                            <option value="rename">Renomear</option>
-                                            <option value="merge">Mesclar</option>
-                                        </select>
-                                    </div>
+                                <div className="flex gap-10 align-center">
+                                    O que deseja fazer?
+                                    <select onChange={(event) => {
+                                        setAction(event.target.value as "merge" | "rename")
+                                    }} value={action}>
+                                        <option value="rename">Renomear</option>
+                                        <option value="merge">Mesclar</option>
+                                    </select>
+                                </div>
 
-                                    {
-                                        action === "rename" ? (
-                                            <div className="flex-column gap-10 align-center">
-                                                <span>Novo nome:</span>
-                                                <input
-                                                    type="text" className="simple"
-                                                    value={newName} onChange={(event) => {
-                                                        setNewName(event.target.value)
-                                                    }}
-                                                />
-                                            </div>
-                                        ) : <span>As palavras que ainda não existirem serão cadastradas</span>
+                                <If
+                                    condition={action === "rename"}
+                                    else={
+                                        <span>As palavras que ainda não existirem serão cadastradas</span>
                                     }
+                                >
+                                    <div className="flex-column gap-10 align-center">
+                                        <span>Novo nome:</span>
+                                        <input
+                                            type="text" className="simple"
+                                            value={newName} onChange={(event) => {
+                                                setNewName(event.target.value)
+                                            }}
+                                        />
+                                    </div>
+                                </If>
+                            </div>
+                        </If>
 
-                                </div>
-                            ) : <></>
-                        }
+                        <If condition={
+                            !!selectedFile.path && !!selectedFile.content.words && !alreadyExists
+                        }>
+                            <div className="flex-column gap-10">
+                                <p>
+                                    Foi encontrado um dicionário com as seguintes informações:
+                                </p>
 
-                        {
-                            selectedFile.path && selectedFile.content.words && !alreadyExists ? (
-                                <div className="flex-column gap-10">
-                                    <p>
-                                        Foi encontrado um dicionário com as seguintes informações:
-                                    </p>
-
-                                    <ul>
-                                        <li>
-                                            Nome: {selectedFile.content.name}
-                                        </li>
-                                        <li>
-                                            Número de palavras: {selectedFile.content.words.length}
-                                        </li>
-                                    </ul>
-                                </div>
-                            ) : <></>
-                        }
+                                <ul>
+                                    <li>
+                                        Nome: {selectedFile.content.name}
+                                    </li>
+                                    <li>
+                                        Número de palavras: {selectedFile.content.words?.length}
+                                    </li>
+                                </ul>
+                            </div>
+                        </If>
                     </div>
                 </div>
 
                 <div className="modal-footer">
                     <button {
-                        ...readyToImport ? {
+                        ...(!!readyToImport ? {
                             onClick: HandleSubmit
                         } : {
                             className: "disabled",
                             title: "Selecione um arquivo válido"
-                        }
+                        })
                     }>
-                        {
-                            alreadyExists ?
-                                (action === "merge" ? "Mesclar" : "Importar")
-                                : "Importar"
-                        }
+                        <If
+                            condition={!alreadyExists && !(action === "merge")}
+                            else={"Mesclar"}
+                        >
+                            Importar
+                        </If>
                     </button>
                     <button className="cancel" onClick={props.onClose}>
                         Cancelar
