@@ -29,8 +29,6 @@ type ModalWithIconsProps = (
 export function ModalWithIcon(props: ModalWithIconsProps) {
     const { title, icon, children, onClose, closeIcon = true } = props
 
-    const firstRender = useRef(true)
-
     const modalRef = useRef<HTMLDivElement>(null)
     const responseRef = useRef(false)
 
@@ -44,12 +42,17 @@ export function ModalWithIcon(props: ModalWithIconsProps) {
             }
     }, [props.type])
 
-    function handleAnimationEnd() {
-        if (firstRender.current) {
-            firstRender.current = false
-            modalRef.current?.classList.remove("show")
-        } else {
-            onClose(responseRef.current)
+    function handleAnimationEnd(): any {
+        if (!modalRef.current) {
+            return setTimeout(handleAnimationEnd, 20)
+        }
+
+        if (modalRef.current.classList.contains("show")) {
+            return modalRef.current.classList.remove("show")
+        }
+
+        if (modalRef.current.classList.contains("close")) {
+            return onClose(responseRef.current)
         }
     }
 
@@ -58,11 +61,12 @@ export function ModalWithIcon(props: ModalWithIconsProps) {
             <div className="modal show"
                 ref={modalRef}
                 onAnimationEnd={handleAnimationEnd}
+                onAnimationEndCapture={handleAnimationEnd}
             >
                 <div className="modal-header">
                     {title}
                     <If condition={closeIcon}>
-                        <CircleButton title="Fechar" small onClick={() => handleClose(false)}>
+                        <CircleButton title="Fechar" small onClick={handleClose.bind({}, false)}>
                             <CloseIcon />
                         </CircleButton>
                     </If>
@@ -82,17 +86,17 @@ export function ModalWithIcon(props: ModalWithIconsProps) {
                         condition={props.type === "confirm"}
                         else={
                             <button
-                                onClick={handleClose as VoidFunction} autoFocus={true}
+                                onClick={handleClose as VoidFunction} autoFocus
                                 type="button"
                             >
                                 Ok
                             </button>
                         }
                     >
-                        <button onClick={() => handleClose(true)} type="button">
+                        <button onClick={handleClose.bind({}, true)} type="button">
                             Sim
                         </button>
-                        <button onClick={() => handleClose(false)} type="button">
+                        <button onClick={handleClose.bind({}, false)} type="button">
                             Não
                         </button>
                     </If>
