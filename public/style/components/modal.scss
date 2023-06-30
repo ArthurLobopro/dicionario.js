@@ -18,7 +18,7 @@
         max-width: 80vw;
         min-width: 400px;
         background: var(--modal-background);
-        border-radius: 5px;
+        border-radius: 16px;
         display: grid;
         grid-template-columns: 100%;
         grid-template-rows: max-content 1fr max-content;
@@ -47,10 +47,12 @@
                 }
 
                 &.cancel {
-                    border: 1px solid var(--main-color);
+                    border: 1px solid;
+                    background-color: var(--main-background) !important;
+                    border-color: var(--border-color) !important;
 
                     &:hover {
-                        border: 1px solid var(--blue);
+                        --border-color: var(--blue);
                     }
                 }
             }
