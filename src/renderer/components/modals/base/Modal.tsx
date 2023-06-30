@@ -1,15 +1,15 @@
 import { useMemo, useRef } from "react"
 import { ModalContext } from "./ModalContext"
 
-type ModalProps = ({
+type ModalProps = React.PropsWithChildren<({
     type: "alert"
-    onClose: () => void
+    onClose: VoidFunction
 } | {
     type: "confirm"
     onClose: (confirm: boolean) => void
 }) & {
-    children: React.ReactNode
-}
+    className?: string
+}>
 
 export function Modal(props: ModalProps) {
 
@@ -42,7 +42,7 @@ export function Modal(props: ModalProps) {
 
     return (
         <ModalContext.Provider value={{ onClose: handleClose }}>
-            <div className="modal show" ref={modalRef} onAnimationEnd={handleAnimationEnd}>
+            <div className={`modal show ${props.className || ""}`} ref={modalRef} onAnimationEnd={handleAnimationEnd}>
                 {props.children}
             </div>
         </ModalContext.Provider>

@@ -1,31 +1,36 @@
 import { useContext } from "react"
 import { ModalContext } from "./ModalContext"
 
-interface ModalCancelButtonProps {
+interface GeneralButtonProps {
     text?: string
 }
 
-export function CancelButton({ text = "Cancelar" }: ModalCancelButtonProps) {
+
+export function CancelButton({ text = "Cancelar" }: GeneralButtonProps) {
 
     const { onClose } = useContext(ModalContext)
 
     return (
-        <button className="cancel" onClick={() => onClose(false)}>
+        <button className="cancel" type="button" onClick={() => onClose(false)}>
             {text}
         </button>
     )
 }
 
-interface SubmitButtonProps {
-    text?: string
-}
-
-export function SubmitButton({ text = "Enviar" }: SubmitButtonProps) {
+export function OkButton({ text = "Ok" }: GeneralButtonProps) {
 
     const { onClose } = useContext(ModalContext)
 
     return (
-        <button onClick={() => onClose(true)}>
+        <button onClick={() => onClose(true)} type="button">
+            {text}
+        </button>
+    )
+}
+
+export function SubmitButton({ text = "Enviar" }: GeneralButtonProps) {
+    return (
+        <button type="submit">
             {text}
         </button>
     )

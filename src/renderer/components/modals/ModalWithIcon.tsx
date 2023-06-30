@@ -1,12 +1,14 @@
-import { useMemo, useRef } from "react"
-import { CircleButton } from "../CircleButton"
 import { If } from "../If"
-import { CloseIcon } from "../icons"
+import { Modal } from "./base/Modal"
+import { ModalBody } from "./base/ModalBody"
+import { CancelButton, OkButton } from "./base/ModalButtons"
+import { ModalFooter } from "./base/ModalFooter"
+import { ModalHeader } from "./base/ModalHeader"
 import { ModalWrapper } from "./base/Wrapper"
 
 type ModifyTypeProps = {
     type: "alert"
-    onClose: () => void
+    onClose: VoidFunction
 } | {
     type: "confirm"
     onClose: (confirm: boolean) => void
@@ -27,51 +29,13 @@ type ModalWithIconsProps = (
 )
 
 export function ModalWithIcon(props: ModalWithIconsProps) {
-    const { title, icon, children, onClose, closeIcon = true } = props
-
-    const modalRef = useRef<HTMLDivElement>(null)
-    const responseRef = useRef(false)
-
-    const handleClose = useMemo(() => {
-        return props.type === "alert"
-            ? () => {
-                modalRef.current?.classList.add("close")
-            } : (confirm: boolean) => {
-                responseRef.current = confirm
-                modalRef.current?.classList.add("close")
-            }
-    }, [props.type])
-
-    function handleAnimationEnd(): any {
-        if (!modalRef.current) {
-            return setTimeout(handleAnimationEnd, 20)
-        }
-
-        if (modalRef.current.classList.contains("show")) {
-            return modalRef.current.classList.remove("show")
-        }
-
-        if (modalRef.current.classList.contains("close")) {
-            return onClose(responseRef.current)
-        }
-    }
+    const { title, icon, children, closeIcon = true } = props
 
     return (
         <ModalWrapper>
-            <div className="modal show"
-                ref={modalRef}
-                onAnimationEnd={handleAnimationEnd}
-                onAnimationEndCapture={handleAnimationEnd}
-            >
-                <div className="modal-header">
-                    {title}
-                    <If condition={closeIcon}>
-                        <CircleButton title="Fechar" small onClick={handleClose.bind({}, false)}>
-                            <CloseIcon />
-                        </CircleButton>
-                    </If>
-                </div>
-                <div className="modal-body">
+            <Modal onClose={props.onClose as VoidFunction} type={props.type}>
+                <ModalHeader title={title} closeIcon={closeIcon} />
+                <ModalBody>
                     <div className="grid-left-center">
                         <div className="icon-wrapper">
                             {icon}
@@ -80,28 +44,17 @@ export function ModalWithIcon(props: ModalWithIconsProps) {
                             {children}
                         </div>
                     </div>
-                </div>
-                <div className="modal-footer">
+                </ModalBody>
+                <ModalFooter>
                     <If
                         condition={props.type === "confirm"}
-                        else={
-                            <button
-                                onClick={handleClose as VoidFunction} autoFocus
-                                type="button"
-                            >
-                                Ok
-                            </button>
-                        }
+                        else={<OkButton />}
                     >
-                        <button onClick={handleClose.bind({}, true)} type="button">
-                            Sim
-                        </button>
-                        <button onClick={handleClose.bind({}, false)} type="button">
-                            Não
-                        </button>
+                        <OkButton text="Sim" />
+                        <CancelButton text="Não" />
                     </If>
-                </div>
-            </div>
+                </ModalFooter>
+            </Modal>
         </ModalWrapper>
     )
 }
