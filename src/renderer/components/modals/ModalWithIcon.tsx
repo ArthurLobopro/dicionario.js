@@ -2,7 +2,7 @@ import { useMemo, useRef } from "react"
 import { CircleButton } from "../CircleButton"
 import { If } from "../If"
 import { CloseIcon } from "../icons"
-import { ModalWrapper } from "./Wrapper"
+import { ModalWrapper } from "./base/Wrapper"
 
 type ModifyTypeProps = {
     type: "alert"

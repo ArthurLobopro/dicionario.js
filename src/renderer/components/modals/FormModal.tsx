@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import { ModalWrapper } from "./Wrapper"
+import { ModalWrapper } from "./base/Wrapper"
 
 interface FormModalProps {
     title: string

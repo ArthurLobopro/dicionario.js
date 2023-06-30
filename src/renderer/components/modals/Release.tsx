@@ -1,4 +1,4 @@
-import { ModalWrapper } from "./Wrapper"
+import { ModalWrapper } from "./base/Wrapper"
 
 interface ReleaseModalProps {
     onClose: (v: boolean) => void
