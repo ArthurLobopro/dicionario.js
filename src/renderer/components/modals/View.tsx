@@ -1,7 +1,7 @@
 import { useRef } from "react"
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { formatDate } from "../../Util"
-import { ModalWrapper } from "./Wrapper"
+import { ModalWrapper } from "./base/Wrapper"
 
 interface ViewModalProps {
     dictionary: DictionaryController,

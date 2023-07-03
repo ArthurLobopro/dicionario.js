@@ -7,7 +7,7 @@ import { useModal } from "../../../hooks/useModal"
 import { If } from "../../If"
 import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
-import { ModalWrapper } from "../Wrapper"
+import { ModalWrapper } from "../base/Wrapper"
 
 function CheckFileContent(filePath: string) {
     const fileContent = fs.readFileSync(filePath, "utf-8")

@@ -31,9 +31,9 @@ export function UpdateScreen() {
     })
 
     const dictionary = api.dictionaries.getDictionary(dictionary_name as string)
+    const returnTo = `/view?dictionary=${dictionary.name}`
 
     const navigate = useNavigate()
-
     const modal = useModal()
 
     const closeCallback = async (): Promise<boolean> => {
@@ -75,7 +75,7 @@ export function UpdateScreen() {
 
             function handleClose() {
                 modal.close()
-                navigate("/view")
+                navigate(returnTo)
             }
 
             modal.open(<SuccessModal
@@ -100,7 +100,7 @@ export function UpdateScreen() {
         <Page id="edit">
             {modal.content}
             <Header title="Editar Palavra"
-                left={<ReturnButton returnTo="/view" onClick={closeCallback} />}
+                left={<ReturnButton returnTo={returnTo} onClick={closeCallback} />}
             />
             <Form
                 className="dashed-border spacing-16 grid-fill-center gap"

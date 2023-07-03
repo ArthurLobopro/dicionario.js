@@ -19,6 +19,7 @@ import {
     NotFoundIcon,
     SearchIcon
 } from "../components/icons"
+import { useQuery } from "../hooks/useQuery"
 
 interface EmptyPageProps {
     link: string
@@ -61,7 +62,15 @@ function EmptySearch(props: EmptySearchProps) {
 }
 
 export function ViewScreen() {
-    const [dictionary, setDictionary] = useState(api.dictionaries.getDefaultDictionary())
+    const query = useQuery()
+
+    const [dictionary, setDictionary] = useState(() => {
+        try {
+            return api.dictionaries.getDictionary(query.get("dictionary") as string)
+        } catch (error) {
+            return api.dictionaries.getDefaultDictionary()
+        }
+    })
 
     const getWords = () => Object.entries(dictionary.Words.words)
 
@@ -175,7 +184,9 @@ export function ViewScreen() {
                         if (name !== dictionary.name) {
                             setDictionary(api.dictionaries.getDictionary(name))
                         }
-                    }} />}
+                    }}
+                    default_value={dictionary.name}
+                />}
                 left={<ReturnButton />}
                 right={right_content}
             />
