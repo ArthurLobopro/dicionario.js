@@ -1,6 +1,7 @@
-import { useRef } from "react"
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { formatDate } from "../../Util"
+import { Modal } from "./base/Modal"
+import { OkButton } from "./base/ModalButtons"
 import { ModalWrapper } from "./base/Wrapper"
 
 interface ViewModalProps {
@@ -12,35 +13,18 @@ interface ViewModalProps {
 export function ViewModal(props: ViewModalProps) {
     const word_data = props.dictionary.Words.getWords()[props.word]
 
-    const firstRender = useRef(true)
-
-    const modalRef = useRef<HTMLDivElement>(null)
-
-    function handleClose() {
-        modalRef.current?.classList.add("close")
-    }
-
-    function handleAnimationEnd() {
-        if (firstRender.current) {
-            firstRender.current = false
-            modalRef.current?.classList.remove("show")
-        } else {
-            props.onClose()
-        }
-    }
-
     return (
         <ModalWrapper>
-            <div
+            <Modal
+                onClose={props.onClose}
+                type="alert"
                 className="modal full show" id="view-word"
-                onAnimationEnd={handleAnimationEnd}
-                ref={modalRef}
             >
                 <div className="dashed-border spacing-16">
                     <h1 className="flex-center capitalize">
                         {props.word}
                     </h1>
-                    <textarea readOnly={true} className="info big full-heigth" value={word_data.definition} ></textarea>
+                    <textarea readOnly tabIndex={-1} className="info big full-heigth" value={word_data.definition} ></textarea>
                     <div className="date-wrapper">
                         <div className="flex-column gap-10">
                             <span>Data de registro</span>
@@ -53,9 +37,10 @@ export function ViewModal(props: ViewModalProps) {
                             </div> : null
                         }
                     </div>
-                    <button onClick={handleClose}>Ok</button>
+                    {/* <button onClick={handleClose} autoFocus>Ok</button> */}
+                    <OkButton />
                 </div>
-            </div>
+            </Modal>
         </ModalWrapper>
     )
 }
