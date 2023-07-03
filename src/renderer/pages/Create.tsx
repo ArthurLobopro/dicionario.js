@@ -147,7 +147,7 @@ export function CreateScreen() {
                         }
                         inputProps={{
                             placeholder: "Palavra",
-                            tabIndex: modal.isVisible ? -1 : 1
+                            tabIndex: 1
                         }}
                     />
                 </label>
@@ -155,13 +155,13 @@ export function CreateScreen() {
                     Significado
                     <textarea
                         minLength={5}
-                        tabIndex={modal.isVisible ? -1 : 2}
+                        tabIndex={2}
                         placeholder="Significados que a palavra pode ter"
                         {...register("definition")}
                     ></textarea>
                 </div>
                 <button type="submit"
-                    tabIndex={modal.isVisible ? -1 : 3}
+                    tabIndex={3}
                 >
                     Adicionar
                 </button>

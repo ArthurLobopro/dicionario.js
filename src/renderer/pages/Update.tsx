@@ -110,7 +110,7 @@ export function UpdateScreen() {
                     Palavra
                     <input
                         type="text" placeholder="Palavra" minLength={3}
-                        tabIndex={modal.isVisible ? -1 : 1}
+                        tabIndex={1}
                         {...register("word")}
                     />
                 </label>
@@ -118,12 +118,12 @@ export function UpdateScreen() {
                     Significado
                     <textarea
                         minLength={5}
-                        tabIndex={modal.isVisible ? -1 : 2}
+                        tabIndex={2}
                         placeholder="Significados que a palavra pode ter"
                         {...register("definition")}
                     ></textarea>
                 </div>
-                <button type="submit" tabIndex={modal.isVisible ? -1 : 3}>
+                <button type="submit" tabIndex={3}>
                     Atualizar
                 </button>
             </Form>

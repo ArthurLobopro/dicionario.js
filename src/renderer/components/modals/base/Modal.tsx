@@ -9,6 +9,7 @@ type ModalProps = React.PropsWithChildren<({
     onClose: (confirm: boolean) => void
 }) & {
     className?: string
+    id?: string
 }>
 
 export function Modal(props: ModalProps) {
@@ -42,7 +43,10 @@ export function Modal(props: ModalProps) {
 
     return (
         <ModalContext.Provider value={{ onClose: handleClose }}>
-            <div className={`modal show ${props.className || ""}`} ref={modalRef} onAnimationEnd={handleAnimationEnd}>
+            <div
+                className={`modal show ${props.className || ""}`}
+                ref={modalRef} id={props.id}
+                onAnimationEnd={handleAnimationEnd}>
                 {props.children}
             </div>
         </ModalContext.Provider>
