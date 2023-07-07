@@ -9,7 +9,12 @@ export function ModalWrapper(props: ModalWrapperProps) {
 
     useEffect(() => {
         if (dialogRef.current) {
-            dialogRef.current.showModal()
+            try {
+                dialogRef.current.open = false
+                dialogRef.current.showModal()
+            } catch (error) {
+                console.error(error)
+            }
         }
     }, [])
 
