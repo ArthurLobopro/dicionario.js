@@ -17,12 +17,15 @@ export function CancelButton({ text = "Cancelar" }: GeneralButtonProps) {
     )
 }
 
-export function OkButton({ text = "Ok" }: GeneralButtonProps) {
+interface OkButtonProps extends GeneralButtonProps {
+    autoFocus?: boolean
+}
 
+export function OkButton({ text = "Ok", autoFocus = true }: OkButtonProps) {
     const { onClose } = useContext(ModalContext)
 
     return (
-        <button onClick={() => onClose(true)} type="button">
+        <button onClick={() => onClose(true)} type="button" autoFocus={autoFocus}>
             {text}
         </button>
     )
