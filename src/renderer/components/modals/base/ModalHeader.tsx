@@ -17,7 +17,7 @@ export function ModalHeader(props: ModalHeaderProps) {
             {props.title}
 
             {props.closeIcon && (
-                <CircleButton title="Fechar" small onClick={onClose.bind({}, false)}>
+                <CircleButton title="Fechar" small onClick={onClose.bind({}, false)} useDiv={true}>
                     <CloseIcon />
                 </CircleButton>
             )}
