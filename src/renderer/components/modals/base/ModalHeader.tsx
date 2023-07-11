@@ -4,23 +4,27 @@ import { CloseIcon } from "../../icons"
 import { ModalContext } from "./ModalContext"
 
 interface ModalHeaderProps {
-    title: string
-    closeIcon?: boolean
+  title: string
+  closeIcon?: boolean
 }
 
 export function ModalHeader(props: ModalHeaderProps) {
+  const { onClose } = useContext(ModalContext)
 
-    const { onClose } = useContext(ModalContext)
+  return (
+    <div className="modal-header">
+      {props.title}
 
-    return (
-        <div className="modal-header">
-            {props.title}
-
-            {props.closeIcon && (
-                <CircleButton title="Fechar" small onClick={onClose.bind({}, false)} useDiv={true}>
-                    <CloseIcon />
-                </CircleButton>
-            )}
-        </div>
-    )
+      {props.closeIcon && (
+        <CircleButton
+          title="Fechar"
+          small
+          onClick={onClose.bind({}, false)}
+          useDiv={true}
+        >
+          <CloseIcon />
+        </CircleButton>
+      )}
+    </div>
+  )
 }

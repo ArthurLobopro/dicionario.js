@@ -1,25 +1,23 @@
 import { useEffect, useRef } from "react"
 
-interface FormProps extends React.HTMLProps<HTMLFormElement> { }
+type FormProps = React.HTMLProps<HTMLFormElement>
 
 export function Form(props: FormProps) {
-    const formRef = useRef<HTMLFormElement>(null)
+  const formRef = useRef<HTMLFormElement>(null)
 
-    useEffect(() => {
-        const eventHandler = (event: KeyboardEvent) => {
-            if (event.key === "Enter" && event.ctrlKey) {
-                formRef.current?.requestSubmit()
-            }
-        }
+  useEffect(() => {
+    const eventHandler = (event: KeyboardEvent) => {
+      if (event.key === "Enter" && event.ctrlKey) {
+        formRef.current?.requestSubmit()
+      }
+    }
 
-        formRef.current?.addEventListener("keydown", eventHandler)
+    formRef.current?.addEventListener("keydown", eventHandler)
 
-        return () => {
-            formRef.current?.removeEventListener("keydown", eventHandler)
-        }
-    }, [formRef.current])
+    return () => {
+      formRef.current?.removeEventListener("keydown", eventHandler)
+    }
+  }, [formRef.current])
 
-    return (
-        <form {...props} ref={formRef} />
-    )
+  return <form {...props} ref={formRef} />
 }

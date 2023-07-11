@@ -37,9 +37,7 @@ export class WordsController {
                         definition,
                         register: new Date(register),
                         ...(lastEdit
-                            ? {
-                                  lastEdit: new Date(word.lastEdit as string),
-                              }
+                            ? { lastEdit: new Date(word.lastEdit as string) }
                             : {}),
                     },
                 ]
@@ -191,9 +189,7 @@ export class WordsController {
                     definition: word.definition,
                     register: new Date(word.register),
                     ...(word.lastEdit
-                        ? {
-                              lastEdit: new Date(word.lastEdit),
-                          }
+                        ? { lastEdit: new Date(word.lastEdit) }
                         : {}),
                 }
             }

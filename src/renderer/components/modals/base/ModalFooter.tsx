@@ -1,11 +1,7 @@
 interface ModalFooterProps {
-    children: React.ReactNode
+  children: React.ReactNode
 }
 
 export function ModalFooter(props: ModalFooterProps) {
-    return (
-        <div className="modal-footer">
-            {props.children}
-        </div>
-    )
+  return <div className="modal-footer">{props.children}</div>
 }
