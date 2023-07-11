@@ -7,7 +7,7 @@
             "files": "src/renderer/**/*",
             "extends": [
                 "@arthur-lobo/eslint-config/react"
-            ],
+            ]
         }
     ]
 }
