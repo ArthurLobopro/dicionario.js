@@ -2,12 +2,23 @@
     "extends": [
         "@arthur-lobo/eslint-config/node"
     ],
+    "rules": {
+        "camelcase": "off"
+    },
     "overrides": [
         {
             "files": "src/renderer/**/*",
             "extends": [
                 "@arthur-lobo/eslint-config/react"
-            ]
+            ],
+            "rules": {
+                "camelcase": "off",
+                "react-hooks/exhaustive-deps": "off",
+                "react/no-unescaped-entities": "off",
+                "eol-last": "off",
+                "react/no-children-prop": "off",
+                "@typescript-eslint/no-explicit-any": "off"
+            }
         }
     ]
 }
