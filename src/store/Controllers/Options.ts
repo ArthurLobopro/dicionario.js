@@ -2,25 +2,24 @@ import { options } from "../Store"
 import { StoreOptions } from "../ZodSchemas/options"
 
 export class OptionsController {
-
     static get linux() {
         return options.get("linux")
     }
 
     static get darkMode() {
-        return options.get('darkMode')
+        return options.get("darkMode")
     }
 
     static set darkMode(value: boolean) {
-        options.set('darkMode', value)
+        options.set("darkMode", value)
     }
 
     static get animations() {
-        return options.get('animations')
+        return options.get("animations")
     }
 
     static set animations(value: boolean) {
-        options.set('animations', value)
+        options.set("animations", value)
     }
 
     static get frameTheme() {
@@ -28,7 +27,7 @@ export class OptionsController {
     }
 
     static set frameTheme(value: StoreOptions["frameTheme"]) {
-        options.set('frameTheme', value)
+        options.set("frameTheme", value)
     }
 
     static get frameStyle() {
@@ -36,7 +35,7 @@ export class OptionsController {
     }
 
     static set frameStyle(value: StoreOptions["frameStyle"]) {
-        options.set('frameStyle', value)
+        options.set("frameStyle", value)
     }
 
     static getOptions() {
@@ -52,7 +51,9 @@ export class OptionsController {
     }
 
     static toggleSystemTitleBar() {
-        options.set("linux", { useSystemTitleBar: !this.linux.useSystemTitleBar })
+        options.set("linux", {
+            useSystemTitleBar: !this.linux.useSystemTitleBar,
+        })
     }
 
     static setFrameTheme(frameTheme: StoreOptions["frameTheme"]) {
