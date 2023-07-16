@@ -4,6 +4,7 @@ import { FieldErrors, useForm } from "react-hook-form"
 import { useLocation, useParams } from "react-router-dom"
 import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
+import { wordSchema } from "../../store/ZodSchemas/word"
 import { frame } from "../Frame"
 import { Form } from "../components/Form"
 import { Header } from "../components/Header"
@@ -14,18 +15,9 @@ import { ErrorModal, SuccessModal, WarningModal } from "../components/modals"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
 
-const create_word_schema = z.object({
-  word: z
-    .string({
-      required_error: "Você deve fornecer uma palavra.",
-    })
-    .trim()
-    .min(2, "A palavra deve ter pelo menos 2 caracteres.")
-    .transform((value) => value.toLowerCase()),
-  definition: z
-    .string()
-    .trim()
-    .min(5, "Forneça uma definição com pelo menos 5 caracteres."),
+const create_word_schema = wordSchema.pick({
+  word: true,
+  definition: true,
 })
 
 type CreateWordData = z.infer<typeof create_word_schema>

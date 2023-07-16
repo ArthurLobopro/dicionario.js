@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate, useParams } from "react-router-dom"
 import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
+import { wordSchema } from "../../store/ZodSchemas/word"
 import { frame } from "../Frame"
 import { Form } from "../components/Form"
 import { Header } from "../components/Header"
@@ -12,16 +13,9 @@ import { ReturnButton } from "../components/ReturnButton"
 import { ErrorModal, SuccessModal, WarningModal } from "../components/modals"
 import { useModal } from "../hooks/useModal"
 
-const update_word_schema = z.object({
-  word: z
-    .string()
-    .trim()
-    .min(2, "A palavra deve ter pelo menos 2 caracteres.")
-    .transform((value) => value.toLowerCase()),
-  definition: z
-    .string()
-    .trim()
-    .min(5, "Forneça uma definição com pelo menos 5 caracteres."),
+const update_word_schema = wordSchema.pick({
+  word: true,
+  definition: true,
 })
 
 type UpdateWordData = z.infer<typeof update_word_schema>
