@@ -18,5 +18,5 @@ export const api = {
 
     get dictionaries() {
         return DictionariesController
-    }
+    },
 }

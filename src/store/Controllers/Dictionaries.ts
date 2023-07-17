@@ -21,9 +21,13 @@ export class DictionariesController {
     static getDefaultDictionary() {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const defaultName = dictionaryStore.get("defaultDictionary") as keyof typeof dictionaries
+        const defaultName = dictionaryStore.get(
+            "defaultDictionary",
+        ) as keyof typeof dictionaries
 
-        const defaultDictionary = dictionaries.find(dictionary => dictionary.name === defaultName)
+        const defaultDictionary = dictionaries.find(
+            (dictionary) => dictionary.name === defaultName,
+        )
 
         if (!defaultDictionary) {
             throw new Error("Dicionário padrão não encontrado")
@@ -35,7 +39,9 @@ export class DictionariesController {
     static getDictionary(name: string) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const dictionary = dictionaries.find(dictionary => dictionary.name === name)
+        const dictionary = dictionaries.find(
+            (dictionary) => dictionary.name === name,
+        )
 
         if (!dictionary) {
             throw new Error("Dicionário não encontrado")
@@ -49,13 +55,15 @@ export class DictionariesController {
     }
 
     static getDictionariesNames() {
-        return dictionaryStore.get("dictionaries").map(dictionary => dictionary.name)
+        return dictionaryStore
+            .get("dictionaries")
+            .map((dictionary) => dictionary.name)
     }
 
     static saveDictionary(dictionary: dictionary) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const index = dictionaries.findIndex(d => d.name === dictionary.name)
+        const index = dictionaries.findIndex((d) => d.name === dictionary.name)
 
         if (index === -1) {
             throw new Error("Dicionário não encontrado")
@@ -66,10 +74,12 @@ export class DictionariesController {
         dictionaryStore.set("dictionaries", dictionaries)
     }
 
-    static addDictionary(name: string, setDefault: boolean = false) {
+    static addDictionary(name: string, setDefault = false) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const hasDictionary = dictionaries.some(dictionary => dictionary.name === name)
+        const hasDictionary = dictionaries.some(
+            (dictionary) => dictionary.name === name,
+        )
 
         if (hasDictionary) {
             throw new Error("Já existe um dicionário com esse nome")
@@ -81,7 +91,7 @@ export class DictionariesController {
 
         dictionaries.push({
             name,
-            words: []
+            words: [],
         })
 
         dictionaryStore.set("dictionaries", dictionaries)
@@ -91,10 +101,15 @@ export class DictionariesController {
         }
     }
 
-    static editDictionary(oldName: string, { newName, setDefault }: { newName: string, setDefault: boolean }) {
+    static editDictionary(
+        oldName: string,
+        { newName, setDefault }: { newName: string; setDefault: boolean },
+    ) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const index = dictionaries.findIndex(dictionary => dictionary.name === oldName)
+        const index = dictionaries.findIndex(
+            (dictionary) => dictionary.name === oldName,
+        )
 
         if (index === -1) {
             throw new Error("Dicionário não encontrado")
@@ -110,7 +125,9 @@ export class DictionariesController {
     }
 
     static removeDictionary(name: string) {
-        const dictionaries = dictionaryStore.get("dictionaries").filter(dictionary => dictionary.name !== name)
+        const dictionaries = dictionaryStore
+            .get("dictionaries")
+            .filter((dictionary) => dictionary.name !== name)
 
         dictionaryStore.set("dictionaries", dictionaries)
     }
@@ -130,7 +147,10 @@ export class DictionariesController {
 
         const exportName = name.replace(/ /g, "_").toLowerCase()
 
-        const filePath = path.resolve(folder, `${exportName}_${getDateToSave()}.json`)
+        const filePath = path.resolve(
+            folder,
+            `${exportName}_${getDateToSave()}.json`,
+        )
 
         fs.writeFileSync(filePath, content)
     }
@@ -138,7 +158,7 @@ export class DictionariesController {
     static importDictionary(dicionary: dictionary) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const names = dictionaries.map(dictionary => dictionary.name)
+        const names = dictionaries.map((dictionary) => dictionary.name)
 
         if (names.includes(dicionary.name)) {
             throw new Error("Já existe um dicionário com esse nome")
@@ -150,8 +170,10 @@ export class DictionariesController {
     }
 
     static mergeDictionary(dictionary: dictionary) {
-        const current_dictionary = DictionariesController.getDictionary(dictionary.name)
+        const currentDictionary = DictionariesController.getDictionary(
+            dictionary.name,
+        )
 
-        current_dictionary.Words.mergeWords(dictionary.words)
+        currentDictionary.Words.mergeWords(dictionary.words)
     }
 }

@@ -24,5 +24,4 @@ export class DictionaryController {
     export() {
         return JSON.stringify(this.dictionary, null, 4)
     }
-
 }

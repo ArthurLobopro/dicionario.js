@@ -103,8 +103,16 @@ select {
     }
 }
 
+.relative {
+    position: relative;
+}
+
 .full-heigth {
     height: 100%;
+}
+
+.fill-heigth {
+    height: -webkit-fill-available;
 }
 
 .align-center {

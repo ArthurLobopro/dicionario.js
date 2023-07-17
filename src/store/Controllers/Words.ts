@@ -28,43 +28,51 @@ export class WordsController {
     }
 
     getWords() {
-        return Object.fromEntries(this.dictionary.words.map(word => {
-            const { definition, register, lastEdit = null } = word
-            return [
-                word.word,
-                {
-                    definition,
-                    register: new Date(register),
-                    ...(lastEdit ? {
-                        lastEdit: new Date(word.lastEdit as string)
-                    } : {})
-                }
-            ]
-        }))
+        return Object.fromEntries(
+            this.dictionary.words.map((word) => {
+                const { definition, register, lastEdit = null } = word
+                return [
+                    word.word,
+                    {
+                        definition,
+                        register: new Date(register),
+                        ...(lastEdit
+                            ? { lastEdit: new Date(word.lastEdit as string) }
+                            : {}),
+                    },
+                ]
+            }),
+        )
     }
 
     getWord(word: string) {
-        return this.words[word] || null
+        const finded_word = this.dictionary.words.find((w) => w.word === word)
+
+        if (!word) {
+            throw new Error("Palavra não encontrada")
+        }
+
+        return finded_word as StoreWord
     }
 
     getWordsToSave(words: words) {
-        return Object.entries(this.sortWords(words))
-            .map(([word, { definition, register, lastEdit = null }]) => {
+        return Object.entries(this.sortWords(words)).map(
+            ([word, { definition, register, lastEdit = null }]) => {
                 return {
                     word,
                     definition,
                     register: register.toISOString(),
-                    ...(lastEdit && { lastEdit: lastEdit.toISOString() })
+                    ...(lastEdit && { lastEdit: lastEdit.toISOString() }),
                 }
-            })
+            },
+        )
     }
 
     sortWords(words: words) {
         return Object.fromEntries(
-            Object.entries(words)
-                .sort((a, b) => {
-                    return a[0].localeCompare(b[0])
-                })
+            Object.entries(words).sort((a, b) => {
+                return a[0].localeCompare(b[0])
+            }),
         )
     }
 
@@ -77,7 +85,7 @@ export class WordsController {
 
         words[word] = {
             definition,
-            register: new Date()
+            register: new Date(),
         }
 
         this.dictionary.words = this.getWordsToSave(this.sortWords(words))
@@ -89,14 +97,13 @@ export class WordsController {
 
         if (!words.length) return null
 
-        const newerWord = words
-            .sort((a, b) => {
-                return b[1].register.getTime() - a[1].register.getTime()
-            })[0]
+        const newerWord = words.sort((a, b) => {
+            return b[1].register.getTime() - a[1].register.getTime()
+        })[0]
 
         return {
             word: newerWord?.[0],
-            ...newerWord?.[1]
+            ...newerWord?.[1],
         }
     }
 
@@ -105,14 +112,13 @@ export class WordsController {
 
         if (!words.length) return null
 
-        const olderWord = words
-            .sort((a, b) => {
-                return a[1].register.getTime() - b[1].register.getTime()
-            })[0]
+        const olderWord = words.sort((a, b) => {
+            return a[1].register.getTime() - b[1].register.getTime()
+        })[0]
 
         return {
             word: olderWord?.[0],
-            ...olderWord?.[1]
+            ...olderWord?.[1],
         }
     }
 
@@ -131,11 +137,14 @@ export class WordsController {
 
         return {
             word: biggerDefinition?.[0],
-            ...biggerDefinition?.[1]
+            ...biggerDefinition?.[1],
         }
     }
 
-    updateWord(word: string, { new_word, definition }: { new_word: string; definition: string }) {
+    updateWord(
+        word: string,
+        { new_word, definition }: { new_word: string; definition: string },
+    ) {
         const words = this.words
 
         if (!(word in words)) {
@@ -151,7 +160,7 @@ export class WordsController {
         words[new_word] = {
             ...wordData,
             definition,
-            lastEdit: new Date()
+            lastEdit: new Date(),
         }
 
         this.dictionary.words = this.getWordsToSave(this.sortWords(words))
@@ -177,18 +186,17 @@ export class WordsController {
     }
 
     mergeWords(words: StoreWord[]) {
-
         const new_words = this.words
         const keys = Object.entries(new_words).map(([key]) => key)
 
-        words.forEach(word => {
+        words.forEach((word) => {
             if (!keys.includes(word.word)) {
                 new_words[word.word] = {
                     definition: word.definition,
                     register: new Date(word.register),
-                    ...(word.lastEdit ? {
-                        lastEdit: new Date(word.lastEdit)
-                    } : {})
+                    ...(word.lastEdit
+                        ? { lastEdit: new Date(word.lastEdit) }
+                        : {}),
                 }
             }
         })

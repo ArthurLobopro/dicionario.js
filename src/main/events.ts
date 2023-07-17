@@ -1,25 +1,25 @@
-import { BrowserWindow, app, autoUpdater, dialog, ipcMain } from 'electron'
+import { BrowserWindow, app, autoUpdater, dialog, ipcMain } from "electron"
 
 const appPath = app.getAppPath()
 
 // Main events
 
-ipcMain.on('app-path', (event) => {
+ipcMain.on("app-path", (event) => {
     event.returnValue = appPath
 })
 
-ipcMain.on('open-devtolls', (event) => {
+ipcMain.on("open-devtolls", (event) => {
     const win = BrowserWindow.fromId(event.sender.id) as BrowserWindow
     win.webContents.openDevTools({
-        mode: 'undocked'
+        mode: "undocked",
     })
 })
 
-ipcMain.on('get-folder', async (event) => {
+ipcMain.on("get-folder", async (event) => {
     const win = BrowserWindow.fromId(event.sender.id) as BrowserWindow
     try {
         const result = await dialog.showOpenDialog(win, {
-            properties: ['openDirectory'],
+            properties: ["openDirectory"],
             title: "Selecione uma pasta para exportar:",
         })
         if (result.canceled) {
@@ -35,11 +35,9 @@ ipcMain.on('get-folder', async (event) => {
 ipcMain.on("get-file", async (event) => {
     try {
         const result = await dialog.showOpenDialog({
-            properties: ['openFile'],
+            properties: ["openFile"],
             title: "Selecione um arquivo para importar:",
-            filters: [
-                { name: 'JSON', extensions: ['json'] }
-            ]
+            filters: [{ name: "JSON", extensions: ["json"] }],
         })
         if (result.canceled) {
             event.returnValue = "canceled"
@@ -51,25 +49,32 @@ ipcMain.on("get-file", async (event) => {
     }
 })
 
-ipcMain.on('get-version', (event) => {
+ipcMain.on("get-version", (event) => {
     event.returnValue = app.getVersion()
 })
 
-ipcMain.on('relaunch', (event) => {
+ipcMain.on("relaunch", () => {
     app.relaunch({
-        args: process.argv.slice(1).concat(['--relaunch'])
+        args: process.argv.slice(1).concat(["--relaunch"]),
     })
     app.quit()
 })
 
-ipcMain.on("isDev", event => {
+ipcMain.on("isDev", (event) => {
     event.returnValue = app.isPackaged
 })
 
 // Update events
 autoUpdater.on("update-downloaded", (...props) => {
     const [event, releaseNotes, releaseName, releaseDate, updateUrl] = props
-    ipcMain.emit("update-downloaded", event, releaseNotes, releaseName, releaseDate, updateUrl)
+    ipcMain.emit(
+        "update-downloaded",
+        event,
+        releaseNotes,
+        releaseName,
+        releaseDate,
+        updateUrl,
+    )
     const mainWindow = BrowserWindow.getAllWindows()[0]
     mainWindow.webContents.send("update-downloaded")
 })

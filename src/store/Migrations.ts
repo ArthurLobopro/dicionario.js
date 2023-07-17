@@ -5,39 +5,38 @@ import { StoreDictionaries } from "./ZodSchemas/dictionaries"
 type versions_types = {
     "1.8.1": {
         palavras: {
-            palavra: string,
-            definicao: string,
-            registro: string,
+            palavra: string
+            definicao: string
+            registro: string
             ultimaEdicao?: string
         }[]
-    },
+    }
     "1.10.0": {
         words: {
-            word: string,
-            definition: string,
-            register: string,
+            word: string
+            definition: string
+            register: string
             lastEdit?: string
         }[]
-    },
+    }
 }
-
 
 export const WordsMigrations = {
     "1.9.0": (store: Store<versions_types["1.8.1"]>) => {
         if (store.has("palavras") && store.get("palavras").length > 0) {
-            const old_data = store.get("palavras")
-            const new_data = old_data.map(word => {
+            const oldData = store.get("palavras")
+            const newData = oldData.map((word) => {
                 return {
                     word: word.palavra,
                     definition: word.definicao,
                     register: word.registro,
-                    ...(word.ultimaEdicao && { lastEdit: word.ultimaEdicao })
+                    ...(word.ultimaEdicao && { lastEdit: word.ultimaEdicao }),
                 }
             })
             store.delete("palavras")
-            store.set("words", new_data)
+            store.set("words", newData)
         }
-    }
+    },
 }
 
 export const DictionariesMigrations = {
@@ -45,21 +44,23 @@ export const DictionariesMigrations = {
         const dictionaries = store.get("dictionaries")
         const defaultName = store.get("defaultDictionary")
 
-        const defaultDictionary = dictionaries.find(dictionary => dictionary.name === defaultName)
+        const defaultDictionary = dictionaries.find(
+            (dictionary) => dictionary.name === defaultName,
+        )
 
         if (defaultDictionary && defaultDictionary.words.length === 0) {
             defaultDictionary.words = data.get("words")
 
             store.set(
                 "dictionaries",
-                dictionaries.map(dictionary => {
+                dictionaries.map((dictionary) => {
                     if (dictionary.name === defaultName) {
                         return defaultDictionary
                     } else {
                         return dictionary
                     }
-                })
+                }),
             )
         }
-    }
+    },
 }

@@ -1,21 +1,21 @@
-import { app, BrowserWindow, Menu, MenuItem } from 'electron'
-import path from 'node:path'
+import { app, BrowserWindow, Menu, MenuItem } from "electron"
+import path from "node:path"
 import UpdateListener from "update-electron-app"
-import Store from 'zod-electron-store'
+import Store from "zod-electron-store"
 import { createJumpList } from "./windowsJumpList"
 
 import { options } from "../store/Store"
 
-Store.initRenderer()
-
 import "electron-frame/main"
 import "./events"
 
+Store.initRenderer()
+
 UpdateListener({
-    notifyUser: false
+    notifyUser: false,
 })
 
-const isLinux = process.platform === 'linux'
+const isLinux = process.platform === "linux"
 
 const appPath = app.getAppPath()
 
@@ -25,17 +25,23 @@ function setSpellCheck(win: BrowserWindow) {
             const menu = new Menu()
 
             for (const suggestion of params.dictionarySuggestions) {
-                menu.append(new MenuItem({
-                    label: suggestion,
-                    click: () => win.webContents.replaceMisspelling(suggestion)
-                }))
+                menu.append(
+                    new MenuItem({
+                        label: suggestion,
+                        click: () =>
+                            win.webContents.replaceMisspelling(suggestion),
+                    }),
+                )
             }
 
             menu.append(
                 new MenuItem({
                     label: `Adicionar "${params.misspelledWord}" ao dicionário ortográfico`,
-                    click: () => win.webContents.session.addWordToSpellCheckerDictionary(params.misspelledWord)
-                })
+                    click: () =>
+                        win.webContents.session.addWordToSpellCheckerDictionary(
+                            params.misspelledWord,
+                        ),
+                }),
             )
 
             menu.popup()
@@ -52,20 +58,20 @@ function createWindow() {
         frame: isLinux && options.store.linux.useSystemTitleBar,
         autoHideMenuBar: true,
         show: false,
-        icon: path.join(appPath, 'assets', 'icon.png'),
+        icon: path.join(appPath, "assets", "icon.png"),
         webPreferences: {
             nodeIntegration: true,
-            preload: path.join(__dirname, 'preload.js')
-        }
+            preload: path.join(__dirname, "preload.js"),
+        },
     })
 
     if (app.isPackaged) {
         win.setMenu(null)
     }
 
-    win.loadFile('public/index.html')
+    win.loadFile("public/index.html")
 
-    win.once('ready-to-show', () => {
+    win.once("ready-to-show", () => {
         win.show()
         win.center()
         win.focus()
@@ -75,16 +81,16 @@ function createWindow() {
 
     createJumpList()
 
-    if (process.argv.includes('--add-word')) {
-        win.webContents.send('open-in', '/create')
+    if (process.argv.includes("--add-word")) {
+        win.webContents.send("open-in", "/create")
     }
 
-    if (process.argv.includes('--view-words')) {
-        win.webContents.send('open-in', '/view')
+    if (process.argv.includes("--view-words")) {
+        win.webContents.send("open-in", "/view")
     }
 
-    if (process.argv.includes('--relaunch')) {
-        win.webContents.send('open-in', '/config')
+    if (process.argv.includes("--relaunch")) {
+        win.webContents.send("open-in", "/config")
     }
 }
 
@@ -96,26 +102,26 @@ if (!isUnicWindow) {
     app.whenReady().then(createWindow)
 }
 
-app.on('second-instance', () => {
+app.on("second-instance", () => {
     const win = BrowserWindow.getAllWindows()[0]
     if (win.isMinimized()) win.restore()
     win.center()
     win.focus()
 })
 
-app.on('window-all-closed', () => {
-    if (process.platform !== 'darwin') {
+app.on("window-all-closed", () => {
+    if (process.platform !== "darwin") {
         app.quit()
     }
 })
 
-app.on('activate', () => {
+app.on("activate", () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow()
     }
 })
 
 // Faz com que o programa não inicie várias vezes durante a instalação
-if (require('electron-squirrel-startup')) {
+if (require("electron-squirrel-startup")) {
     app.quit()
 }
