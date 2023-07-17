@@ -10,6 +10,31 @@ type popoverExtends = {
   showPopover: VoidFunction
 }
 
+function trapFocus(element: HTMLElement) {
+  element.onkeydown = (event) => {
+    const focusableElements = element.querySelectorAll(
+      'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    )
+
+    const firstElement = focusableElements[0] as HTMLElement
+    const lastElement = focusableElements[
+      focusableElements.length - 1
+    ] as HTMLElement
+
+    if (event.key === "Tab") {
+      if (document.activeElement === firstElement && event.shiftKey) {
+        event.preventDefault()
+        lastElement.focus()
+      }
+
+      if (document.activeElement === lastElement) {
+        event.preventDefault()
+        firstElement.focus()
+      }
+    }
+  }
+}
+
 export function ModalWrapper(props: ModalWrapperProps) {
   const wrapperRef = useRef<HTMLDivElement & popoverExtends>(null)
 
@@ -18,6 +43,7 @@ export function ModalWrapper(props: ModalWrapperProps) {
       try {
         wrapperRef.current.popover = "true"
         wrapperRef.current.showPopover()
+        trapFocus(wrapperRef.current)
       } catch (error) {
         console.error(error)
       }
