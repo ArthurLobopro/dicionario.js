@@ -3,15 +3,18 @@ import { useEffect, useRef, useState } from "react"
 import { api } from "../../store/Api"
 import { frame } from "../Frame"
 import { hoverFocus } from "../Util"
-import { Header } from "../components/base/Header"
-import { LineTitle } from "../components/base/LineTitle"
-import { Page } from "../components/base/Page"
-import { ReturnButton } from "../components/base/ReturnButton"
-import { Switcher } from "../components/base/Switcher"
 import { DictionarySection } from "../components/config-sections/DictionarySections"
 import { WindowSection } from "../components/config-sections/Window"
 import { GithubLogo, LinkExternalIcon } from "../components/icons"
 import { useModal } from "../hooks/useModal"
+
+import {
+  Header,
+  LineTitle,
+  Page,
+  ReturnButton,
+  Switcher,
+} from "../components/base"
 
 const GITHUB_LINK = "https://github.com/ArthurLobopro/dicionario.js"
 

@@ -1,6 +1,6 @@
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { formatDate } from "../../../Util"
-import { If } from "../../base/If"
+import { If } from "../../base"
 import { BlueInfoIcon } from "../../icons"
 import { ModalWithIcon } from "../ModalWithIcon"
 

@@ -7,7 +7,7 @@ import {
   dictionarySchema,
 } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
-import { If } from "../../base/If"
+import { If } from "../../base"
 import { ErrorModal } from "../Error"
 import { SuccessModal } from "../Success"
 import { ModalWrapper } from "../base/Wrapper"

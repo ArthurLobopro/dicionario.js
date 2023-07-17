@@ -1,12 +1,14 @@
 import { useEffect, useMemo, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { api } from "../../store/Api"
-import { CircleButton } from "../components/base/CircleButton"
-import { Header } from "../components/base/Header"
-import { If } from "../components/base/If"
-import { Page } from "../components/base/Page"
-import { ReturnButton } from "../components/base/ReturnButton"
-import { Word } from "../components/base/Word"
+import {
+  CircleButton,
+  Header,
+  If,
+  Page,
+  ReturnButton,
+  Word,
+} from "../components/base"
 import { DictionaryInfoModal } from "../components/modals/dictionary"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"

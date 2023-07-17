@@ -6,14 +6,17 @@ import { ZodError, z } from "zod"
 import { api } from "../../store/Api"
 import { wordSchema } from "../../store/ZodSchemas/word"
 import { frame } from "../Frame"
-import { ReturnButton } from "../components/base/ReturnButton"
-import { ValidatedInput } from "../components/base/ValidatedInput"
-import { Form } from "../components/base/Form"
-import { Header } from "../components/base/Header"
-import { Page } from "../components/base/Page"
 import { ErrorModal, SuccessModal, WarningModal } from "../components/modals"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
+
+import {
+  Form,
+  Header,
+  Page,
+  ReturnButton,
+  ValidatedInput,
+} from "../components/base"
 
 const create_word_schema = wordSchema.pick({
   word: true,

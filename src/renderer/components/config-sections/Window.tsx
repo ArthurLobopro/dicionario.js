@@ -1,13 +1,12 @@
 import { ipcRenderer } from "electron"
 import { frameStyle } from "electron-frame"
 import { useState } from "react"
+
 import { api } from "../../../store/Api"
 import { StoreOptions } from "../../../store/ZodSchemas/options"
 import { frame } from "../../Frame"
 import { hoverFocus } from "../../Util"
-import { If } from "../base/If"
-import { LineTitle } from "../base/LineTitle"
-import { Switcher } from "../base/Switcher"
+import { If, LineTitle, Switcher } from "../base"
 
 const isLinux = process.platform === "linux"
 
