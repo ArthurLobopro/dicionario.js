@@ -147,7 +147,7 @@ export function ViewScreen() {
   const right_content = (
     <div className="flex gap-4">
       <div className="flex align-center">
-        <If condition={words.length > 1}>
+        <If condition={words.length > 0}>
           <If condition={!inputVisibility} else={search_input}>
             <CircleButton
               title="Mostrar barra de pesquisa"
