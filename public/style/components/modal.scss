@@ -25,10 +25,18 @@
         padding: 20px;
     }
 
-    :not(.modal-header) .circle-button {
-        position: absolute;
-        right: 5px;
-        top: 5px;
+
+
+    :not(:is(.modal-header)) {
+        &:has(>.circle-button) {
+            position: relative;
+
+            >.circle-button {
+                position: absolute;
+                right: 5px;
+                top: 5px;
+            }
+        }
     }
 
     >.modal {
