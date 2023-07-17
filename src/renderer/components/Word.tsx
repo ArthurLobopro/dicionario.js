@@ -1,9 +1,9 @@
-import { useNavigate } from "react-router-dom"
 import { DictionaryController } from "../../store/Controllers/Dictionary"
 import { useModal } from "../hooks/useModal"
 import { CircleButton } from "./CircleButton"
 import { EditIcon, EyeIcon, TrashIcon } from "./icons"
 import { ViewModal, WarningModal } from "./modals"
+import { EditWordModal } from "./modals/word/Edit"
 
 interface WordProps {
   word: {
@@ -46,8 +46,6 @@ export function Word(props: WordProps) {
     )
   }
 
-  const navigate = useNavigate()
-
   return (
     <div className="word" key={word.word} onDoubleClick={ShowViewModal}>
       <div className="content">
@@ -58,14 +56,25 @@ export function Word(props: WordProps) {
         <CircleButton title="Visualizar" onClick={ShowViewModal}>
           <EyeIcon />
         </CircleButton>
+
         <CircleButton
           title="Editar"
           onClick={() => {
-            navigate(`/update/${dictionary.name}/${word.word}`)
+            modal.open(
+              <EditWordModal
+                word={word.word}
+                dictionary={dictionary.name}
+                onClose={() => {
+                  modal.close()
+                  reload()
+                }}
+              />,
+            )
           }}
         >
           <EditIcon id="edit" />
         </CircleButton>
+
         <CircleButton title="Apagar" onClick={DeleteWord}>
           <TrashIcon id="delete" />
         </CircleButton>
