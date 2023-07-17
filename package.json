@@ -9,7 +9,8 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "generate-icons": "node ./scripts/generate-icons.js",
-    "postinstall": "yarn generate-icons"
+    "postinstall": "yarn generate-icons",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "repository": {
     "type": "git",
