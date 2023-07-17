@@ -4,14 +4,20 @@ interface ModalWrapperProps {
   children: JSX.Element
 }
 
+// Typescript doesn't know about these properties
+type popoverExtends = {
+  popover: string
+  showPopover: VoidFunction
+}
+
 export function ModalWrapper(props: ModalWrapperProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null)
+  const wrapperRef = useRef<HTMLDivElement & popoverExtends>(null)
 
   useEffect(() => {
-    if (dialogRef.current) {
+    if (wrapperRef.current) {
       try {
-        dialogRef.current.open = false
-        dialogRef.current.showModal()
+        wrapperRef.current.popover = "true"
+        wrapperRef.current.showPopover()
       } catch (error) {
         console.error(error)
       }
@@ -19,8 +25,8 @@ export function ModalWrapper(props: ModalWrapperProps) {
   }, [])
 
   return (
-    <dialog className="modal-wrapper" ref={dialogRef}>
+    <div className="modal-wrapper" ref={wrapperRef}>
       {props.children}
-    </dialog>
+    </div>
   )
 }
