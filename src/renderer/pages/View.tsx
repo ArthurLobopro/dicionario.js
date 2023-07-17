@@ -10,6 +10,7 @@ import { Word } from "../components/Word"
 import { DictionaryInfoModal } from "../components/modals/dictionary"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
+import { useQuery } from "../hooks/useQuery"
 import { InputChangeEvent, InputFocusEvent } from "../types"
 
 import {
@@ -19,7 +20,6 @@ import {
   NotFoundIcon,
   SearchIcon,
 } from "../components/icons"
-import { useQuery } from "../hooks/useQuery"
 
 interface EmptyPageProps {
   link: string
@@ -69,12 +69,14 @@ export function ViewScreen() {
     }
   })
 
-  const getWords = () => Object.entries(dictionary.Words.words)
+  const getWords = () => {
+    return Object.entries(dictionary.Words.words)
+  }
 
-  const [words, setWords] = useState(getWords())
+  const [words, setWords] = useState(getWords)
 
   function reloadWords() {
-    setWords(Object.entries(dictionary.Words.words))
+    setWords(getWords)
   }
 
   useEffect(reloadWords, [dictionary])
@@ -99,25 +101,24 @@ export function ViewScreen() {
   }, [filter, words])
 
   const word_list = useMemo(() => {
-    return (
-      <If
-        condition={filtered_words.length > 0}
-        else={<EmptySearch search={search} />}
-      >
-        <div>
-          <div className="word-wrapper">
-            {filtered_words.map(([word, word_props]) => (
-              <Word
-                word={{ ...word_props, word }}
-                reload={reloadWords}
-                dictionary={dictionary}
-                modal={modal}
-                key={word}
-              />
-            ))}
-          </div>
+    return filtered_words.length === 0 ? (
+      <EmptySearch search={search} />
+    ) : (
+      <div>
+        <div className="word-wrapper">
+          {filtered_words.map(([word, word_props]) => (
+            <Word
+              word={{ ...word_props, word }}
+              reload={() => {
+                setDictionary(api.dictionaries.getDictionary(dictionary.name))
+              }}
+              dictionary={dictionary}
+              modal={modal}
+              key={word}
+            />
+          ))}
         </div>
-      </If>
+      </div>
     )
   }, [filtered_words])
 
@@ -158,9 +159,11 @@ export function ViewScreen() {
           </If>
         </If>
       </div>
+
       <CircleButton onClick={showInfo} title="Informações do dicionário">
         <InfoIcon />
       </CircleButton>
+
       <CircleButton onClick={() => navigate(link)} title="Adicionar palavra">
         <AddIcon className="add-button" />
       </CircleButton>
