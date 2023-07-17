@@ -18,7 +18,7 @@ export function ViewModal(props: ViewModalProps) {
       <Modal
         onClose={props.onClose}
         type="alert"
-        className="modal full show"
+        className="full"
         id="view-word"
       >
         <div className="dashed-border spacing-16">
