@@ -1,4 +1,4 @@
-import { api } from "../../store/Api"
+import { api } from "../../../store/Api"
 
 interface PageProps {
   children: React.ReactNode

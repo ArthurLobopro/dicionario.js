@@ -1,5 +1,5 @@
 import { useContext } from "react"
-import { CircleButton } from "../../CircleButton"
+import { CircleButton } from "../../base/CircleButton"
 import { CloseIcon } from "../../icons"
 import { ModalContext } from "./ModalContext"
 

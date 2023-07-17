@@ -1,4 +1,4 @@
-import { If } from "../If"
+import { If } from "../base/If"
 import { Modal } from "./base/Modal"
 import { ModalBody } from "./base/ModalBody"
 import { CancelButton, OkButton } from "./base/ModalButtons"

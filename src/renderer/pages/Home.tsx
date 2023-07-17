@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
-import { Header } from "../components/Header"
-import { Page } from "../components/Page"
+import { Header } from "../components/base/Header"
+import { Page } from "../components/base/Page"
 import { AddIcon, ConfigIcon, EyeIcon } from "../components/icons"
 
 interface OptionProps {

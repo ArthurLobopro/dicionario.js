@@ -1,19 +1,19 @@
 import { hoverFocus } from "../../Util"
 import { useModal } from "../../hooks/useModal"
-import { LineTitle } from "../LineTitle"
+import { LineTitle } from "../base/LineTitle"
 import {
-  AddIcon,
-  DonwloadIcon,
-  EditIcon,
-  MinifiedTrashIcon,
-  UploadIcon,
+    AddIcon,
+    DonwloadIcon,
+    EditIcon,
+    MinifiedTrashIcon,
+    UploadIcon,
 } from "../icons"
 import {
-  AddDictionaryModal,
-  DeleteDictionaryModal,
-  EditDictionaryModal,
-  ExportDictionaryModal,
-  ImportDictionaryModal,
+    AddDictionaryModal,
+    DeleteDictionaryModal,
+    EditDictionaryModal,
+    ExportDictionaryModal,
+    ImportDictionaryModal,
 } from "../modals/dictionary"
 
 interface DictionarySectionsProps {

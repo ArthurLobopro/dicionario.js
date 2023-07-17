@@ -1,9 +1,9 @@
-import { DictionaryController } from "../../store/Controllers/Dictionary"
-import { useModal } from "../hooks/useModal"
+import { DictionaryController } from "../../../store/Controllers/Dictionary"
+import { useModal } from "../../hooks/useModal"
+import { EditIcon, EyeIcon, TrashIcon } from "../icons"
+import { ViewModal, WarningModal } from "../modals"
+import { EditWordModal } from "../modals/word/Edit"
 import { CircleButton } from "./CircleButton"
-import { EditIcon, EyeIcon, TrashIcon } from "./icons"
-import { ViewModal, WarningModal } from "./modals"
-import { EditWordModal } from "./modals/word/Edit"
 
 interface WordProps {
   word: {

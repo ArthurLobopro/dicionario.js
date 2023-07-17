@@ -1,5 +1,5 @@
 import { UseFormRegisterReturn } from "react-hook-form"
-import { ErrorInfoIcon } from "./icons"
+import { ErrorInfoIcon } from "../icons"
 
 interface ValidatedInputProps {
   hasError: boolean
