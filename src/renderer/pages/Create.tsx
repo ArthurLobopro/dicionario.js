@@ -48,7 +48,13 @@ export function CreateScreen() {
 
   const { word, definition } = watch()
 
-  const word_already_exists = !!dictionary.Words.getWord(word)
+  const word_already_exists = (() => {
+    try {
+      return dictionary.Words.getWord(word)?.word === word
+    } catch (error) {
+      return false
+    }
+  })()
 
   const closeCallback = async (): Promise<boolean> => {
     return new Promise((resolve) => {
