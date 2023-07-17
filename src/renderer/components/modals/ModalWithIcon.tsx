@@ -44,7 +44,7 @@ export function ModalWithIcon(props: ModalWithIconsProps) {
             condition={props.type === "confirm"}
             else={<OkButton autoFocus />}
           >
-            <OkButton text="Sim" autoFocus={false} />
+            <OkButton text="Sim" autoFocus />
             <CancelButton text="Não" />
           </If>
         </ModalFooter>
