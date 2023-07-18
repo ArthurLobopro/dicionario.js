@@ -8,7 +8,7 @@ interface GeneralButtonProps {
 
 export function CancelButton({
   text = "Cancelar",
-  autoFocus,
+  autoFocus = false,
 }: GeneralButtonProps) {
   const { onClose } = useContext(ModalContext)
 
