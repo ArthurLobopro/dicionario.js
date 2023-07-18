@@ -1,8 +1,8 @@
 import { DictionaryController } from "../../../store/Controllers/Dictionary"
 import { useModal } from "../../hooks/useModal"
 import { EditIcon, EyeIcon, TrashIcon } from "../icons"
-import { ViewModal, WarningModal } from "../modals"
-import { EditWordModal } from "../modals/word/Edit"
+import { WarningModal } from "../modals"
+import { EditWordModal, ViewWordModal } from "../modals/word"
 import { CircleButton } from "./CircleButton"
 
 interface WordProps {
@@ -21,7 +21,7 @@ export function Word(props: WordProps) {
 
   function ShowViewModal() {
     modal.open(
-      <ViewModal
+      <ViewWordModal
         onClose={modal.close}
         dictionary={dictionary}
         word={word.word}
