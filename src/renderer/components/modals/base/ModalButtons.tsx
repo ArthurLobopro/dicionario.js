@@ -3,21 +3,28 @@ import { ModalContext } from "./ModalContext"
 
 interface GeneralButtonProps {
   text?: string
+  autoFocus?: boolean
 }
 
-export function CancelButton({ text = "Cancelar" }: GeneralButtonProps) {
+export function CancelButton({
+  text = "Cancelar",
+  autoFocus,
+}: GeneralButtonProps) {
   const { onClose } = useContext(ModalContext)
 
   return (
-    <button className="cancel" type="button" onClick={() => onClose(false)}>
+    <button
+      className="cancel"
+      type="button"
+      onClick={() => onClose(false)}
+      autoFocus={autoFocus}
+    >
       {text}
     </button>
   )
 }
 
-interface OkButtonProps extends GeneralButtonProps {
-  autoFocus?: boolean
-}
+type OkButtonProps = GeneralButtonProps
 
 export function OkButton({ text = "Ok", autoFocus = true }: OkButtonProps) {
   const { onClose } = useContext(ModalContext)
@@ -29,6 +36,8 @@ export function OkButton({ text = "Ok", autoFocus = true }: OkButtonProps) {
   )
 }
 
-export function SubmitButton({ text = "Enviar" }: GeneralButtonProps) {
+type SubmitButtonProps = Omit<GeneralButtonProps, "autoFocus">
+
+export function SubmitButton({ text = "Enviar" }: SubmitButtonProps) {
   return <button type="submit">{text}</button>
 }
