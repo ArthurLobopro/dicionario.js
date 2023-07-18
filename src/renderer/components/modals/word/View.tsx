@@ -1,16 +1,16 @@
-import { DictionaryController } from "../../../store/Controllers/Dictionary"
-import { formatDate } from "../../Util"
-import { Modal } from "./base/Modal"
-import { OkButton } from "./base/ModalButtons"
-import { ModalWrapper } from "./base/Wrapper"
+import { DictionaryController } from "../../../../store/Controllers/Dictionary"
+import { formatDate } from "../../../Util"
+import { Modal } from "../base/Modal"
+import { OkButton } from "../base/ModalButtons"
+import { ModalWrapper } from "../base/Wrapper"
 
-interface ViewModalProps {
+interface ViewWordModalProps {
   dictionary: DictionaryController
   word: string
   onClose: () => void
 }
 
-export function ViewModal(props: ViewModalProps) {
+export function ViewWordModal(props: ViewWordModalProps) {
   const word_data = props.dictionary.Words.getWords()[props.word]
 
   return (
@@ -45,7 +45,6 @@ export function ViewModal(props: ViewModalProps) {
               </div>
             ) : null}
           </div>
-          {/* <button onClick={handleClose} autoFocus>Ok</button> */}
           <OkButton />
         </div>
       </Modal>
