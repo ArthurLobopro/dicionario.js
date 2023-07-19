@@ -8,7 +8,7 @@
     --red: #b32727;
 
     --main-background: #FAFAFA;
-    --option-background: #F5F5F5;
+    --secondary-background: #F5F5F5;
     --modal-background: #FFFFFF;
     --border-color: #ccc;
     --main-color: #000;
@@ -24,7 +24,7 @@
 
 .dark {
     --main-background: #1F1F1F;
-    --option-background: #1f1f1f;
+    --secondary-background: #1f1f1f;
     --modal-background: #262626;
     --border-color: #ccc;
     --main-color: #ddd;
@@ -165,7 +165,7 @@ select {
     gap: 16px;
     justify-self: center;
 
-    background-color: var(--option-background);
+    background-color: var(--secondary-background);
     width: 80%;
     max-width: 250px;
     aspect-ratio: 1/1;
