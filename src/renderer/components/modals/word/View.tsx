@@ -1,5 +1,7 @@
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { formatDate } from "../../../Util"
+import { CircleButton } from "../../base"
+import { CloseIcon } from "../../icons"
 import { Modal } from "../base/Modal"
 import { OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
@@ -22,6 +24,10 @@ export function ViewWordModal(props: ViewWordModalProps) {
         id="view-word"
       >
         <div className="dashed-border spacing-16">
+          <CircleButton title="Fechar" onClick={props.onClose} useDiv={true}>
+            <CloseIcon />
+          </CircleButton>
+
           <h1 className="flex-center capitalize">{props.word}</h1>
           <textarea
             readOnly
