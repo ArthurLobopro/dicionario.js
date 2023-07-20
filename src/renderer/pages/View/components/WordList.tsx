@@ -1,7 +1,7 @@
 import { useContext, useMemo } from "react"
-import { Word } from "../../../components/base"
 import { ViewContext } from "../../../contexts/ViewContext"
 import { EmptySearch } from "./EmptySearch"
+import { Word } from "./Word"
 
 export function WordList() {
   const { words, search, reload, dictionary, modal } = useContext(ViewContext)
