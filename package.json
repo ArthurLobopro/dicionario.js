@@ -10,7 +10,7 @@
     "publish": "electron-forge publish",
     "generate-icons": "node ./scripts/generate-icons.js",
     "postinstall": "yarn generate-icons",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "repository": {
     "type": "git",
