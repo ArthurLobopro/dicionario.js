@@ -1,20 +1,22 @@
-import { hoverFocus } from "../../Util"
-import { useModal } from "../../hooks/useModal"
-import { LineTitle } from "../base"
+import { hoverFocus } from "../../../Util"
+import { LineTitle } from "../../../components/base"
+import { useModal } from "../../../hooks/useModal"
+
 import {
   AddIcon,
   DonwloadIcon,
   EditIcon,
   MinifiedTrashIcon,
   UploadIcon,
-} from "../icons"
+} from "../../../components/icons"
+
 import {
   AddDictionaryModal,
   DeleteDictionaryModal,
   EditDictionaryModal,
   ExportDictionaryModal,
   ImportDictionaryModal,
-} from "../modals/dictionary"
+} from "../../../components/modals/dictionary"
 
 interface DictionarySectionsProps {
   modal: ReturnType<typeof useModal>
