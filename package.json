@@ -1,6 +1,6 @@
 {
   "name": "dicionario",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "Dicionário simples onde você pode cadastrar as palavras que você aprendeu recentemente, fácil e prático.",
   "main": "./dist/main/main.js",
   "scripts": {
@@ -10,7 +10,7 @@
     "publish": "electron-forge publish",
     "generate-icons": "node ./scripts/generate-icons.js",
     "postinstall": "yarn generate-icons",
-    "lint": "eslint . --ext .ts,.tsx"
+    "lint": "eslint . --ext .ts,.tsx --fix"
   },
   "repository": {
     "type": "git",

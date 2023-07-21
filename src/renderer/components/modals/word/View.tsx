@@ -1,16 +1,18 @@
-import { DictionaryController } from "../../../store/Controllers/Dictionary"
-import { formatDate } from "../../Util"
-import { Modal } from "./base/Modal"
-import { OkButton } from "./base/ModalButtons"
-import { ModalWrapper } from "./base/Wrapper"
+import { DictionaryController } from "../../../../store/Controllers/Dictionary"
+import { formatDate } from "../../../Util"
+import { CircleButton } from "../../base"
+import { CloseIcon } from "../../icons"
+import { Modal } from "../base/Modal"
+import { OkButton } from "../base/ModalButtons"
+import { ModalWrapper } from "../base/Wrapper"
 
-interface ViewModalProps {
+interface ViewWordModalProps {
   dictionary: DictionaryController
   word: string
   onClose: () => void
 }
 
-export function ViewModal(props: ViewModalProps) {
+export function ViewWordModal(props: ViewWordModalProps) {
   const word_data = props.dictionary.Words.getWords()[props.word]
 
   return (
@@ -22,6 +24,10 @@ export function ViewModal(props: ViewModalProps) {
         id="view-word"
       >
         <div className="dashed-border spacing-16">
+          <CircleButton title="Fechar" onClick={props.onClose} useDiv={true}>
+            <CloseIcon />
+          </CircleButton>
+
           <h1 className="flex-center capitalize">{props.word}</h1>
           <textarea
             readOnly
@@ -45,7 +51,6 @@ export function ViewModal(props: ViewModalProps) {
               </div>
             ) : null}
           </div>
-          {/* <button onClick={handleClose} autoFocus>Ok</button> */}
           <OkButton />
         </div>
       </Modal>

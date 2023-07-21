@@ -94,7 +94,7 @@ export function EditWordModal(props: EditWordModalProps) {
         {modal.content}
 
         <div className="dashed-border spacing-16 flex-column fill-heigth">
-          <CircleButton title="Fechar" onClick={props.onClose} useDiv={true}>
+          <CircleButton title="Fechar" onClick={onClose} useDiv={true}>
             <CloseIcon />
           </CircleButton>
 
