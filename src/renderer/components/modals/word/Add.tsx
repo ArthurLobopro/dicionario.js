@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ipcRenderer } from "electron"
 import { useEffect } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import { ZodError, z } from "zod"
@@ -8,9 +9,9 @@ import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { wordSchema } from "../../../../store/ZodSchemas/word"
 import { frame } from "../../../Frame"
 import { useModal } from "../../../hooks/useModal"
-import { CircleButton, Form, ValidatedInput } from "../../base"
-import { CloseIcon } from "../../icons"
+import { Form, If, ValidatedInput } from "../../base"
 import { Modal } from "../base/Modal"
+import { CloseModalButton, OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
 
 const create_word_schema = wordSchema.pick({
@@ -37,6 +38,18 @@ export function AddWordModal(props: AddWordModalProps) {
   const { dictionary } = props
 
   const { word, definition } = watch()
+
+  useEffect(() => {
+    ipcRenderer.send("update-spellchecker", dictionary.languages)
+  }, [])
+
+  useEffect(() => {
+    frame.instance.setBeforeCloseCallback(shouldClose)
+
+    return () => {
+      frame.instance.setBeforeCloseCallback()
+    }
+  }, [word.length + definition.length > 0])
 
   const word_already_exists = (() => {
     try {
@@ -81,14 +94,6 @@ export function AddWordModal(props: AddWordModalProps) {
     }
   }
 
-  useEffect(() => {
-    frame.instance.setBeforeCloseCallback(shouldClose)
-
-    return () => {
-      frame.instance.setBeforeCloseCallback()
-    }
-  }, [word.length + definition.length > 0])
-
   function onError(errors: FieldErrors) {
     const message = Object.values(errors)
       .map((error) => error?.message)
@@ -124,13 +129,11 @@ export function AddWordModal(props: AddWordModalProps) {
 
   return (
     <ModalWrapper>
-      <Modal type="alert" className="full word-action" onClose={props.onClose}>
+      <Modal type="alert" className="full word-action" onClose={onClose}>
         <div className="dashed-border spacing-16 flex-column fill-heigth">
           {modal.content}
 
-          <CircleButton title="Fechar" onClick={onClose} useDiv={true}>
-            <CloseIcon />
-          </CircleButton>
+          <CloseModalButton />
 
           <Form
             className="grid-fill-center gap fill-heigth"
@@ -162,7 +165,12 @@ export function AddWordModal(props: AddWordModalProps) {
               ></textarea>
             </label>
 
-            <button type="submit">{hasChanges ? "Adicionar" : "Fechar"}</button>
+            <If
+              condition={hasChanges}
+              else={<OkButton text="Fechar" autoFocus={false} />}
+            >
+              <button type="submit">Adicionar</button>
+            </If>
           </Form>
         </div>
       </Modal>

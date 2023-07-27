@@ -27,7 +27,7 @@
 
 
 
-    :not(:is(.modal-header)) {
+    :not(:is(.modal-header, .info)) {
         &:has(>.circle-button) {
             position: relative;
 

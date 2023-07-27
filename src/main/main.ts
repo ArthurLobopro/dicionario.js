@@ -4,7 +4,7 @@ import UpdateListener from "update-electron-app"
 import Store from "zod-electron-store"
 import { createJumpList } from "./windowsJumpList"
 
-import { options } from "../store/Store"
+import { options } from "../store/Store/options"
 
 import "electron-frame/main"
 import "./events"

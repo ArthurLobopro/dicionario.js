@@ -17,6 +17,10 @@ export class DictionaryController {
         return this.dictionary.name
     }
 
+    get languages() {
+        return this.dictionary.languages
+    }
+
     save() {
         DictionariesController.saveDictionary(this.dictionary)
     }
