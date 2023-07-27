@@ -1,9 +1,7 @@
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { formatDate } from "../../../Util"
-import { CircleButton } from "../../base"
-import { CloseIcon } from "../../icons"
 import { Modal } from "../base/Modal"
-import { OkButton } from "../base/ModalButtons"
+import { CloseModalButton, OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
 
 interface ViewWordModalProps {
@@ -24,17 +22,12 @@ export function ViewWordModal(props: ViewWordModalProps) {
         id="view-word"
       >
         <div className="dashed-border spacing-16">
-          <CircleButton title="Fechar" onClick={props.onClose} useDiv={true}>
-            <CloseIcon />
-          </CircleButton>
+          <CloseModalButton />
 
           <h1 className="flex-center capitalize">{props.word}</h1>
-          <textarea
-            readOnly
-            tabIndex={-1}
-            className="info big full-heigth"
-            value={word_data.definition}
-          ></textarea>
+
+          <div className="info big full-heigth">{word_data.definition}</div>
+
           <div className="date-wrapper">
             <div className="flex-column gap-10">
               <span>Data de registro</span>
@@ -42,6 +35,7 @@ export function ViewWordModal(props: ViewWordModalProps) {
                 {formatDate(word_data.register.toISOString())}
               </span>
             </div>
+
             {word_data.lastEdit ? (
               <div className="flex-column gap-10">
                 <span>Última edição</span>
@@ -51,6 +45,7 @@ export function ViewWordModal(props: ViewWordModalProps) {
               </div>
             ) : null}
           </div>
+
           <OkButton />
         </div>
       </Modal>

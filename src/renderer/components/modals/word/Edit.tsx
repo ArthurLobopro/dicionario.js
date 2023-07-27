@@ -7,9 +7,9 @@ import { ErrorModal, SuccessModal, WarningModal } from ".."
 import { api } from "../../../../store/Api"
 import { wordSchema } from "../../../../store/ZodSchemas/word"
 import { useModal } from "../../../hooks/useModal"
-import { CircleButton, Form } from "../../base"
-import { CloseIcon } from "../../icons"
+import { Form, If } from "../../base"
 import { Modal } from "../base/Modal"
+import { CloseModalButton, OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
 
 interface EditWordModalProps {
@@ -100,9 +100,7 @@ export function EditWordModal(props: EditWordModalProps) {
         {modal.content}
 
         <div className="dashed-border spacing-16 flex-column fill-heigth">
-          <CircleButton title="Fechar" onClick={onClose} useDiv={true}>
-            <CloseIcon />
-          </CircleButton>
+          <CloseModalButton />
 
           <h1 className="flex-center">Editar Palavra</h1>
           <Form
@@ -129,7 +127,12 @@ export function EditWordModal(props: EditWordModalProps) {
               ></textarea>
             </div>
 
-            <button type="submit">{hasChanges ? "Salvar" : "Fechar"}</button>
+            <If
+              condition={hasChanges}
+              else={<OkButton text="Fechar" autoFocus={false} />}
+            >
+              <button type="submit">Salvar</button>
+            </If>
           </Form>
         </div>
       </Modal>
