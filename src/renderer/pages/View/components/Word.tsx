@@ -1,3 +1,4 @@
+import { memo } from "react"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { CircleButton } from "../../../components/base/CircleButton"
 import { EditIcon, EyeIcon, TrashIcon } from "../../../components/icons"
@@ -16,7 +17,7 @@ interface WordProps {
   dictionary: DictionaryController
   reload: () => void
 }
-export function Word(props: WordProps) {
+export const Word = memo(function Word(props: WordProps) {
   const { modal, word, dictionary, reload } = props
 
   function ShowViewModal() {
@@ -81,4 +82,4 @@ export function Word(props: WordProps) {
       </div>
     </div>
   )
-}
+})
