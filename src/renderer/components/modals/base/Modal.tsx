@@ -1,5 +1,5 @@
 import { useMemo, useRef } from "react"
-import { ModalContext } from "./ModalContext"
+import { ModalContext } from "../../../contexts/ModalContext"
 
 type ModalProps = React.PropsWithChildren<
   (

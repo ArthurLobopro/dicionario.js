@@ -1,7 +1,7 @@
 import { useContext } from "react"
+import { ModalContext } from "../../../contexts/ModalContext"
 import { CircleButton } from "../../base"
 import { CloseIcon } from "../../icons"
-import { ModalContext } from "./ModalContext"
 
 interface GeneralButtonProps {
   text?: string

@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react"
 import { api } from "../../../store/Api"
 import { Header, If, Page, ReturnButton } from "../../components/base"
-import { AddWordModal } from "../../components/modals/word/Add"
+import { AddWordModal } from "../../components/modals/word"
 import { SelectDictionary } from "../../components/selects/Dictionary"
 import { ViewContext } from "../../contexts/ViewContext"
 import { useModal } from "../../hooks/useModal"
