@@ -26,7 +26,12 @@ export function ViewWordModal(props: ViewWordModalProps) {
 
           <h1 className="flex-center capitalize">{props.word}</h1>
 
-          <div className="info big full-heigth">{word_data.definition}</div>
+          <div
+            className="info big full-heigth"
+            style={{ whiteSpace: "pre-wrap" }}
+          >
+            {word_data.definition}
+          </div>
 
           <div className="date-wrapper">
             <div className="flex-column gap-10">
