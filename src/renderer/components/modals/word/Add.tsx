@@ -1,4 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ipcRenderer } from "electron"
 import { useEffect } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import { ZodError, z } from "zod"
@@ -37,6 +38,18 @@ export function AddWordModal(props: AddWordModalProps) {
   const { dictionary } = props
 
   const { word, definition } = watch()
+
+  useEffect(() => {
+    ipcRenderer.send("update-spellchecker", dictionary.languages)
+  }, [])
+
+  useEffect(() => {
+    frame.instance.setBeforeCloseCallback(shouldClose)
+
+    return () => {
+      frame.instance.setBeforeCloseCallback()
+    }
+  }, [word.length + definition.length > 0])
 
   const word_already_exists = (() => {
     try {
@@ -80,14 +93,6 @@ export function AddWordModal(props: AddWordModalProps) {
       props.onClose()
     }
   }
-
-  useEffect(() => {
-    frame.instance.setBeforeCloseCallback(shouldClose)
-
-    return () => {
-      frame.instance.setBeforeCloseCallback()
-    }
-  }, [word.length + definition.length > 0])
 
   function onError(errors: FieldErrors) {
     const message = Object.values(errors)

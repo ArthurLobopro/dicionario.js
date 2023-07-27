@@ -1,4 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ipcRenderer } from "electron"
+import { useEffect } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import z from "zod"
 import { ErrorModal, SuccessModal, WarningModal } from ".."
@@ -39,6 +41,10 @@ export function EditWordModal(props: EditWordModalProps) {
   })
 
   const modal = useModal()
+
+  useEffect(() => {
+    ipcRenderer.send("update-spellchecker", dictionary.languages)
+  }, [])
 
   const hasChanges = Object.entries(dirtyFields).length > 0
 

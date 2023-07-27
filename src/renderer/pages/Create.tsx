@@ -10,6 +10,7 @@ import { ErrorModal, SuccessModal, WarningModal } from "../components/modals"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
 
+import { ipcRenderer } from "electron"
 import {
   Form,
   Header,
@@ -48,6 +49,10 @@ export function CreateScreen() {
       return api.dictionaries.getDefaultDictionary()
     }
   })
+
+  useEffect(() => {
+    ipcRenderer.send("update-spellchecker", dictionary.languages)
+  }, [dictionary.name])
 
   const { word, definition } = watch()
 
