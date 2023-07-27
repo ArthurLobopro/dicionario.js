@@ -41,7 +41,7 @@ export function ModalWrapper(props: ModalWrapperProps) {
   useEffect(() => {
     if (wrapperRef.current) {
       try {
-        wrapperRef.current.popover = "true"
+        wrapperRef.current.setAttribute("popover", "")
         wrapperRef.current.showPopover()
         trapFocus(wrapperRef.current)
       } catch (error) {
