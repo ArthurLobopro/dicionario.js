@@ -1,7 +1,7 @@
 import * as fs from "node:fs"
 import * as path from "node:path"
 import { dictionaries as dictionaryStore } from "../Store"
-import { dictionary } from "../ZodSchemas/dictionary"
+import { dictionary, dictionarySchema } from "../ZodSchemas/dictionary"
 import { DictionaryController } from "./Dictionary"
 
 function getDateToSave() {
@@ -89,10 +89,7 @@ export class DictionariesController {
             throw new Error("Nome inválido")
         }
 
-        dictionaries.push({
-            name,
-            words: [],
-        })
+        dictionaries.push(dictionarySchema.parse({ name, words: [] }))
 
         dictionaryStore.set("dictionaries", dictionaries)
 
@@ -103,7 +100,11 @@ export class DictionariesController {
 
     static editDictionary(
         oldName: string,
-        { newName, setDefault }: { newName: string; setDefault: boolean },
+        {
+            newName,
+            setDefault,
+            languages,
+        }: { newName: string; setDefault: boolean; languages: string[] },
     ) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
@@ -116,6 +117,7 @@ export class DictionariesController {
         }
 
         dictionaries[index].name = newName
+        dictionaries[index].languages = languages
 
         dictionaryStore.set("dictionaries", dictionaries)
 
