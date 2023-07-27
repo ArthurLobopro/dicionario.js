@@ -27,7 +27,7 @@
     "@electron-forge/maker-squirrel": "^6.2.1",
     "@electron-forge/maker-zip": "^6.2.1",
     "@electron-forge/publisher-github": "^6.2.1",
-    "@types/react": "^18.2.15",
+    "@types/react": "^18.2.17",
     "@types/react-dom": "^18.2.7",
     "electron": "^25.3.0",
     "eslint": "^8.44.0",
@@ -47,6 +47,6 @@
     "react-router-dom": "^6.14.1",
     "update-electron-app": "^2.0.1",
     "zod": "^3.20.6",
-    "zod-electron-store": "^1.0.1"
+    "zod-electron-store": "^1.0.2"
   }
 }

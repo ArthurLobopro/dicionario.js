@@ -967,10 +967,19 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^18.2.15":
+"@types/react@*":
   version "18.2.15"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.15.tgz#14792b35df676c20ec3cf595b262f8c615a73066"
   integrity sha512-oEjE7TQt1fFTFSbf8kkNuc798ahTUzn3Le67/PWjE8MAfYAD/qB7O8hSTcromLFqHCt9bcdOg5GXMokzTjJ5SA==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^18.2.17":
+  version "18.2.17"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.17.tgz#baa565b17ddb649c2dac85b5eaf9e9a1fe0f3b4e"
+  integrity sha512-u+e7OlgPPh+aryjOm5UJMX32OvB2E3QASOAqVMY6Ahs90djagxwv2ya0IctglNbNTexC12qCSMZG47KPfy1hAA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1680,10 +1689,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-conf-with-zod@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/conf-with-zod/-/conf-with-zod-1.0.1.tgz#dcdda455f854dafb95137def19d8e98e4b325c03"
-  integrity sha512-RMPhE85mQORC2KIwEO+3U+tznQkHkz0CZWtMQ4LqAKM3fy8IrMHdV4aKcUD6GUOtLk/Z1CRfYrVzRKiP3ZxoZw==
+conf-with-zod@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/conf-with-zod/-/conf-with-zod-1.0.2.tgz#fa9784c5ad6b6f841be0b917ac91b80d9976c43c"
+  integrity sha512-hrXVX/Xj9NpjBxeZdefEHXZOgMG2GTznbFIkX8oIvp02cYkIAQf0KrAScZ9jW/YoX8nzj68VqEPlF7IW6Q4aFg==
   dependencies:
     atomically "^1.7.0"
     debounce-fn "^4.0.0"
@@ -5383,12 +5392,12 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod-electron-store@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/zod-electron-store/-/zod-electron-store-1.0.1.tgz#c465239091821fb0c3dd3d4d8d54543059d29681"
-  integrity sha512-brEEgjkZ3AzuymJl2MfRn/9EN/CE2P0Zx0KUXzKKV28n7RZMUszIhZEUc1CP0M8zjPDeroop5I30rIy5ZAlK1A==
+zod-electron-store@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/zod-electron-store/-/zod-electron-store-1.0.2.tgz#cb6b850ba5bee7702572fcd633754be3b72977f7"
+  integrity sha512-2vjlwYZd/IdGmA8hLCJHRpdJEtrHm39IK7so7nUVoMjq5NgT/IDX8FCg0fwc4gi5nCtPEYLbAvTTfKwV1Gtwyw==
   dependencies:
-    conf-with-zod "^1.0.1"
+    conf-with-zod "^1.0.2"
     type-fest "^2.17.0"
 
 zod@^3.20.6, zod@^3.21.4:
