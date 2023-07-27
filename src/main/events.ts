@@ -82,3 +82,19 @@ autoUpdater.on("update-downloaded", (...props) => {
 ipcMain.on("install-update", () => {
     autoUpdater.quitAndInstall()
 })
+
+ipcMain.on("get-system-language", (event) => {
+    event.returnValue = app.getLocale()
+})
+
+ipcMain.on("get-available-languages", (event) => {
+    const win = BrowserWindow.fromId(event.sender.id) as BrowserWindow
+    event.returnValue = win.webContents.session.availableSpellCheckerLanguages
+})
+
+ipcMain.on("update-spellchecker", (event, languages: string[]) => {
+    const win = BrowserWindow.fromId(event.sender.id) as BrowserWindow
+    win.webContents.session.setSpellCheckerLanguages(
+        languages || [app.getLocale()],
+    )
+})
