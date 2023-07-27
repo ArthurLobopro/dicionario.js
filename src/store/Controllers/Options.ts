@@ -1,4 +1,4 @@
-import { options } from "../Store"
+import { options } from "../Store/options"
 import { StoreOptions } from "../ZodSchemas/options"
 
 export class OptionsController {

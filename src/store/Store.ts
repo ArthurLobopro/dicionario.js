@@ -6,7 +6,6 @@ import {
     StoreDictionaries,
     dictionariesSchema,
 } from "./ZodSchemas/dictionaries"
-import { StoreOptions, optionsSchema } from "./ZodSchemas/options"
 import { StoreWords, wordsSchema } from "./ZodSchemas/word"
 
 export const data = new ZodElectronStore<StoreWords>({
@@ -15,12 +14,6 @@ export const data = new ZodElectronStore<StoreWords>({
     schema: wordsSchema,
     // @ts-ignore
     migrations: WordsMigrations,
-})
-
-export const options = new ZodElectronStore<StoreOptions>({
-    name: "options",
-    watch: true,
-    schema: optionsSchema,
 })
 
 export const dictionaries = new ZodElectronStore<StoreDictionaries>({
