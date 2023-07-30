@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react"
+import { useCallback, useMemo, useRef, useState } from "react"
 import { api } from "../../../store/Api"
 import { Header, If, Page, ReturnButton } from "../../components/base"
 import { AddWordModal } from "../../components/modals/word"
@@ -26,6 +26,7 @@ export function ViewScreen() {
   const words = useMemo(getWords, [dictionary])
   const [search, setSearch] = useState("")
   const modal = useModal()
+  const wrapperRef = useRef<HTMLDivElement>(null)
 
   function reload() {
     setDictionary(api.dictionaries.getDictionary(dictionary.name))
@@ -48,11 +49,12 @@ export function ViewScreen() {
       <ViewContext.Provider
         value={{
           modal,
-          handleAddWord,
           search,
-          setSearch,
           words,
           dictionary,
+          wrapperRef,
+          handleAddWord,
+          setSearch,
           reload,
         }}
       >

@@ -4,7 +4,8 @@ import { EmptySearch } from "./EmptySearch"
 import { Word } from "./Word"
 
 export function WordList() {
-  const { words, search, reload, dictionary, modal } = useContext(ViewContext)
+  const { words, search, reload, dictionary, modal, wrapperRef } =
+    useContext(ViewContext)
 
   const filter = useMemo(() => new RegExp(`^${search.trim()}`), [search])
 
@@ -17,7 +18,7 @@ export function WordList() {
       <EmptySearch />
     ) : (
       <div>
-        <div className="word-wrapper">
+        <div className="word-wrapper" ref={wrapperRef}>
           {filtered_words.map(([word, word_props]) => (
             <Word
               word={{ ...word_props, word }}
