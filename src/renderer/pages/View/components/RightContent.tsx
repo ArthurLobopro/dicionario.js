@@ -1,15 +1,45 @@
-import { useContext, useMemo, useState } from "react"
+import { useContext, useEffect, useMemo, useState } from "react"
 import { CircleButton, If } from "../../../components/base"
-import { AddIcon, InfoIcon, SearchIcon } from "../../../components/icons"
 import { DictionaryInfoModal } from "../../../components/modals/dictionary"
 import { ViewContext } from "../../../contexts/ViewContext"
 import { InputChangeEvent, InputFocusEvent } from "../../../types"
 
+import {
+  AddIcon,
+  InfoIcon,
+  ScrollTopIcon,
+  SearchIcon,
+} from "../../../components/icons"
+
 export function RightContent() {
-  const { handleAddWord, search, setSearch, modal, dictionary, words } =
-    useContext(ViewContext)
+  const {
+    handleAddWord,
+    search,
+    setSearch,
+    modal,
+    dictionary,
+    words,
+    wrapperRef,
+  } = useContext(ViewContext)
+
+  useEffect(() => {
+    if (wrapperRef.current) {
+      wrapperRef.current.addEventListener("scroll", () => {
+        if (
+          (wrapperRef.current?.scrollTop as number) >
+          window.outerHeight * 2
+        ) {
+          setResetScroll(true)
+        }
+        if ((wrapperRef.current?.scrollTop as number) === 0) {
+          setResetScroll(false)
+        }
+      })
+    }
+  }, [wrapperRef.current])
 
   const [inputVisibility, setInputVisibility] = useState(false)
+  const [resetScroll, setResetScroll] = useState(false)
 
   function showInfo() {
     modal.open(
@@ -55,6 +85,18 @@ export function RightContent() {
       <CircleButton onClick={showInfo} title="Informações do dicionário">
         <InfoIcon />
       </CircleButton>
+
+      <If condition={resetScroll}>
+        <CircleButton
+          title="Rolar para o topo"
+          onClick={() => {
+            wrapperRef.current?.scrollTo({ top: 0, behavior: "smooth" })
+            setTimeout(() => setResetScroll(false), 100)
+          }}
+        >
+          <ScrollTopIcon />
+        </CircleButton>
+      </If>
 
       <CircleButton onClick={handleAddWord} title="Adicionar palavra">
         <AddIcon className="add-button" />

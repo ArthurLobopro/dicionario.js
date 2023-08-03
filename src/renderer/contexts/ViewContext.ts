@@ -11,6 +11,7 @@ interface ViewPageContext {
   search: string
   words: ReturnType<typeof getWords>
   dictionary: DictionaryController
+  wrapperRef: React.RefObject<HTMLDivElement>
   setSearch: (search: string) => void
   handleAddWord: () => void
   reload: () => void
