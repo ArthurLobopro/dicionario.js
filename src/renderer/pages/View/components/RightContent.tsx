@@ -1,14 +1,15 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { CircleButton, If } from "../../../components/base"
+import { DictionaryInfoModal } from "../../../components/modals/dictionary"
+import { ViewContext } from "../../../contexts/ViewContext"
+import { InputChangeEvent, InputFocusEvent } from "../../../types"
+
 import {
   AddIcon,
   InfoIcon,
   ScrollTopIcon,
   SearchIcon,
 } from "../../../components/icons"
-import { DictionaryInfoModal } from "../../../components/modals/dictionary"
-import { ViewContext } from "../../../contexts/ViewContext"
-import { InputChangeEvent, InputFocusEvent } from "../../../types"
 
 export function RightContent() {
   const {

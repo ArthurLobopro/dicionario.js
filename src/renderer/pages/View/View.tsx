@@ -42,7 +42,7 @@ export function ViewScreen() {
         }}
       />,
     )
-  }, [])
+  }, [dictionary])
 
   return (
     <Page id="view">
