@@ -17,10 +17,11 @@ interface WordProps {
   dictionary: DictionaryController
   reload: () => void
 }
+
 export const Word = memo(function Word(props: WordProps) {
   const { modal, word, dictionary, reload } = props
 
-  function ShowViewModal() {
+  function handleViewWord() {
     modal.open(
       <ViewWordModal
         onClose={modal.close}
@@ -30,7 +31,20 @@ export const Word = memo(function Word(props: WordProps) {
     )
   }
 
-  function DeleteWord() {
+  function handleEditWord() {
+    modal.open(
+      <EditWordModal
+        word={word.word}
+        dictionary={dictionary.name}
+        onClose={(edited?: boolean) => {
+          edited && reload()
+          modal.close()
+        }}
+      />,
+    )
+  }
+
+  function handleDeleteWord() {
     modal.open(
       <WarningModal
         title="Você tem certeza?"
@@ -48,35 +62,22 @@ export const Word = memo(function Word(props: WordProps) {
   }
 
   return (
-    <div className="word" key={word.word} onDoubleClick={ShowViewModal}>
+    <div className="word" onDoubleClick={handleViewWord}>
       <div className="content">
         <div className="word-header capitalize">{word.word}</div>
         <div className="word-definition">{word.definition}</div>
       </div>
+
       <div className="controls">
-        <CircleButton title="Visualizar" onClick={ShowViewModal}>
+        <CircleButton title="Visualizar" onClick={handleViewWord}>
           <EyeIcon />
         </CircleButton>
 
-        <CircleButton
-          title="Editar"
-          onClick={() => {
-            modal.open(
-              <EditWordModal
-                word={word.word}
-                dictionary={dictionary.name}
-                onClose={() => {
-                  modal.close()
-                  reload()
-                }}
-              />,
-            )
-          }}
-        >
+        <CircleButton title="Editar" onClick={handleEditWord}>
           <EditIcon id="edit" />
         </CircleButton>
 
-        <CircleButton title="Apagar" onClick={DeleteWord}>
+        <CircleButton title="Apagar" onClick={handleDeleteWord}>
           <TrashIcon id="delete" />
         </CircleButton>
       </div>

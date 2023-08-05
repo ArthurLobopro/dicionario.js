@@ -1,4 +1,4 @@
-import { Route, HashRouter as Router, Routes } from "react-router-dom"
+import { Route, MemoryRouter as Router, Routes } from "react-router-dom"
 import { ConfigScreen } from "./pages/Config"
 import { CreateScreen } from "./pages/Create"
 import { Home } from "./pages/Home"
