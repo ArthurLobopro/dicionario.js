@@ -36,8 +36,8 @@ export function ViewScreen() {
     modal.open(
       <AddWordModal
         dictionary={dictionary}
-        onClose={(v) => {
-          v && reload()
+        onClose={(added) => {
+          added && reload()
           modal.close()
         }}
       />,

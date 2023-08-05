@@ -13,7 +13,7 @@ import { CloseModalButton, OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
 
 interface EditWordModalProps {
-  onClose: () => void
+  onClose: (edited?: boolean) => void
   word: string
   dictionary: string
 }
@@ -84,7 +84,7 @@ export function EditWordModal(props: EditWordModalProps) {
       modal.open(
         <SuccessModal
           message="Palavra atualizada com sucesso!"
-          onClose={props.onClose}
+          onClose={props.onClose.bind(null, true)}
         />,
       )
     } catch (error: any) {
