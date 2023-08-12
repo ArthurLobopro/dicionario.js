@@ -12,8 +12,9 @@ export function ContextMenu(props: ContextMenuProps) {
   const { target, open, onClose } = props
 
   const [state, setState] = useState({
-    x: 0,
-    y: 0,
+    // Dont show the menu if the position is invalid
+    x: -9999,
+    y: -9999,
   })
 
   const ref = useRef<HTMLDivElement>(null)
