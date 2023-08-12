@@ -6,13 +6,11 @@ import {
   AddIcon,
   DonwloadIcon,
   EditIcon,
-  MinifiedTrashIcon,
   UploadIcon,
 } from "../../../components/icons"
 
 import {
   AddDictionaryModal,
-  DeleteDictionaryModal,
   EditDictionaryModal,
   ExportDictionaryModal,
   ImportDictionaryModal,
@@ -31,10 +29,6 @@ export function DictionarySection(props: DictionarySectionsProps) {
 
   function HandleEditDictionary() {
     modal.open(<EditDictionaryModal onClose={modal.close} />)
-  }
-
-  function HandleDeleteDictionary() {
-    modal.open(<DeleteDictionaryModal onClose={modal.close} />)
   }
 
   function HandleExportDictionary() {
@@ -69,17 +63,6 @@ export function DictionarySection(props: DictionarySectionsProps) {
       >
         <EditIcon className="use-main-colors" />
         Editar
-      </button>
-
-      <span className="warning">Deletar dicionário</span>
-      <button
-        className="stroke warning"
-        title="Deletar um dicionário"
-        onClick={HandleDeleteDictionary}
-        onMouseEnter={hoverFocus}
-      >
-        <MinifiedTrashIcon className="use-main-colors" />
-        Deletar
       </button>
 
       <span>Exportar dicionário</span>
