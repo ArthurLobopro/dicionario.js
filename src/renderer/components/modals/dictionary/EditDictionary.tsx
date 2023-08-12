@@ -1,15 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod"
+import DeepEqual from "deep-equal"
 import { ipcRenderer } from "electron"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { languageNames } from "../../../../lib/languageNames"
 import { api } from "../../../../store/Api"
+import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
 import { useModal } from "../../../hooks/useModal"
 import { CircleButton, If, LineTitle } from "../../base"
 import { CloseIcon } from "../../icons"
-import { SelectDictionary } from "../../selects/Dictionary"
 import { FormModal } from "../FormModal"
 import { SuccessModal } from "../Success"
 
@@ -20,7 +21,8 @@ function getLangName(lang: string) {
 }
 
 interface editDictionaryProps {
-  onClose: () => void
+  onClose: (v?: boolean) => void
+  dictionary: DictionaryController
 }
 
 const edit_dictionary_schema = dictionarySchema
@@ -39,32 +41,40 @@ type edit_dictionary = z.infer<typeof edit_dictionary_schema>
 type edit_dictionary_inputs = z.infer<typeof edit_dictionary_inputs_schema>
 
 export function EditDictionaryModal(props: editDictionaryProps) {
-  const [currentDictionary, setCurrentDictionary] = useState(
-    api.dictionaries.getDictionaries()[0],
-  )
+  const { dictionary } = props
 
   const default_dictionary_name = api.dictionaries.getDefaultDictionary().name
 
-  const editing_default = currentDictionary.name === default_dictionary_name
+  const editing_default = dictionary.name === default_dictionary_name
 
   const modal = useModal()
 
-  const { register, handleSubmit, setValue, resetField, watch } =
-    useForm<edit_dictionary_inputs>({
-      resolver: zodResolver(edit_dictionary_inputs_schema),
-      defaultValues: {
-        newName: currentDictionary.name,
-        setDefault: false,
-        languages: currentDictionary.languages,
-        language_to_add: "NULL",
-      },
-    })
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    resetField,
+    watch,
+    formState: { dirtyFields },
+  } = useForm<edit_dictionary_inputs>({
+    resolver: zodResolver(edit_dictionary_inputs_schema),
+    defaultValues: {
+      newName: dictionary.name,
+      setDefault: false,
+      languages: dictionary.languages,
+      language_to_add: "NULL",
+    },
+  })
+
+  const { languages, language_to_add } = watch()
+
+  const hasChanges =
+    !!Object.keys(dirtyFields).filter((key) => key !== "language_to_add")
+      .length || !DeepEqual(languages, dictionary.languages)
 
   const available_languages = useMemo(() => {
     return ipcRenderer.sendSync("get-available-languages") as string[]
   }, [])
-
-  const { languages, language_to_add } = watch()
 
   function addLang() {
     if (language_to_add !== "NULL") {
@@ -76,34 +86,20 @@ export function EditDictionaryModal(props: editDictionaryProps) {
   function removeLang(lang: string) {
     setValue(
       "languages",
-      currentDictionary.languages.filter((language) => language !== lang),
+      languages.filter((language) => language !== lang),
     )
   }
 
-  useEffect(() => {
-    const name = currentDictionary.name
-
-    setValue("newName", name)
-
-    if (name === default_dictionary_name) {
-      setValue("setDefault", false)
-    }
-
-    setValue("languages", currentDictionary.languages)
-
-    console.log(currentDictionary.languages)
-  }, [currentDictionary])
-
   function onSubmit(data: edit_dictionary) {
     api.dictionaries.editDictionary(
-      currentDictionary.name,
+      dictionary.name,
       edit_dictionary_schema.parse(data),
     )
 
     modal.open(
       <SuccessModal
         message="Dicionário editado com sucesso!"
-        onClose={props.onClose}
+        onClose={props.onClose.bind(null, true)}
       />,
     )
   }
@@ -114,18 +110,14 @@ export function EditDictionaryModal(props: editDictionaryProps) {
       onClose={props.onClose}
       title="Editar Dicionário"
       submitText="Editar"
+      disableSubmit={!hasChanges}
     >
       {modal.content}
       <div className="input-wrapper gap-10 flex-column">
         <div>
-          <span>Editar dicionário </span>
-          <SelectDictionary
-            onChange={(name) => {
-              setCurrentDictionary(
-                api.dictionaries.getDictionary(name).dictionary,
-              )
-            }}
-          />
+          <span>
+            Editar dicionário "<strong>{dictionary.name}</strong>"
+          </span>
         </div>
         <label>
           Nome
@@ -143,7 +135,7 @@ export function EditDictionaryModal(props: editDictionaryProps) {
         <LineTitle title="Verificação gramatical" />
         Línguas usadas:
         <If
-          condition={!!currentDictionary.languages.length}
+          condition={!!dictionary.languages.length}
           else={<span>Nenhuma língua selecionada.</span>}
         >
           <div className="flex gap-4" style={{ flexWrap: "wrap" }}>
