@@ -1,3 +1,5 @@
+import { forwardRef } from "react"
+
 interface CircleButtonProps {
   onClick: () => void
   title: string
@@ -6,10 +8,14 @@ interface CircleButtonProps {
   useDiv?: boolean
 }
 
-export function CircleButton(props: CircleButtonProps) {
+export const CircleButton = forwardRef(function CircleButton(
+  props: CircleButtonProps,
+  ref,
+) {
   const Component = props.useDiv
-    ? (props: any) => <div {...props} />
-    : (props: any) => <button {...props} />
+    ? (props: any) => <div {...props} ref={ref} />
+    : (props: any) => <button {...props} ref={ref} />
+
   return (
     <Component
       className={`circle-button ${props.small ? "small" : ""}`}
@@ -20,4 +26,4 @@ export function CircleButton(props: CircleButtonProps) {
       {props.children}
     </Component>
   )
-}
+})
