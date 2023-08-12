@@ -1,18 +1,10 @@
 import { hoverFocus } from "../../../Util"
 import { LineTitle } from "../../../components/base"
+import { AddIcon, DonwloadIcon } from "../../../components/icons"
 import { useModal } from "../../../hooks/useModal"
 
 import {
-  AddIcon,
-  DonwloadIcon,
-  EditIcon,
-  UploadIcon,
-} from "../../../components/icons"
-
-import {
   AddDictionaryModal,
-  EditDictionaryModal,
-  ExportDictionaryModal,
   ImportDictionaryModal,
 } from "../../../components/modals/dictionary"
 
@@ -25,14 +17,6 @@ export function DictionarySection(props: DictionarySectionsProps) {
 
   function HandleAddDictionary() {
     modal.open(<AddDictionaryModal onClose={modal.close} />)
-  }
-
-  function HandleEditDictionary() {
-    modal.open(<EditDictionaryModal onClose={modal.close} />)
-  }
-
-  function HandleExportDictionary() {
-    modal.open(<ExportDictionaryModal onClose={modal.close} />)
   }
 
   function HandleImportDictionary() {
@@ -52,28 +36,6 @@ export function DictionarySection(props: DictionarySectionsProps) {
       >
         <AddIcon className="use-main-colors" />
         Adicionar
-      </button>
-
-      <span>Editar dicionário</span>
-      <button
-        className="stroke"
-        title="Editar um dicionário"
-        onClick={HandleEditDictionary}
-        onMouseEnter={hoverFocus}
-      >
-        <EditIcon className="use-main-colors" />
-        Editar
-      </button>
-
-      <span>Exportar dicionário</span>
-      <button
-        className="stroke"
-        title="Exportar um dicionário"
-        onClick={HandleExportDictionary}
-        onMouseEnter={hoverFocus}
-      >
-        <UploadIcon />
-        Exportar
       </button>
 
       <span>Importar dicionário</span>
