@@ -18,12 +18,15 @@ function getDateToSave() {
 }
 
 export class DictionariesController {
+    static getDefaultDictionaryName() {
+        return dictionaryStore.get("defaultDictionary")
+    }
+
     static getDefaultDictionary() {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const defaultName = dictionaryStore.get(
-            "defaultDictionary",
-        ) as keyof typeof dictionaries
+        const defaultName =
+            this.getDefaultDictionaryName() as keyof typeof dictionaries
 
         const defaultDictionary = dictionaries.find(
             (dictionary) => dictionary.name === defaultName,
@@ -99,34 +102,51 @@ export class DictionariesController {
     }
 
     static editDictionary(
-        oldName: string,
+        name: string,
         {
             newName,
             setDefault,
             languages,
-        }: { newName: string; setDefault: boolean; languages: string[] },
+        }: { newName?: string; setDefault?: boolean; languages?: string[] },
     ) {
         const dictionaries = dictionaryStore.get("dictionaries")
 
         const index = dictionaries.findIndex(
-            (dictionary) => dictionary.name === oldName,
+            (dictionary) => dictionary.name === name,
         )
 
         if (index === -1) {
             throw new Error("Dicionário não encontrado")
         }
 
-        dictionaries[index].name = newName
-        dictionaries[index].languages = languages
+        if (newName) {
+            const hasDictionary = dictionaries.some(
+                (dictionary) => dictionary.name === newName,
+            )
+
+            if (hasDictionary) {
+                throw new Error("Já existe um dicionário com esse nome")
+            }
+
+            dictionaries[index].name = newName
+        }
+
+        if (languages) {
+            dictionaries[index].languages = languages
+        }
 
         dictionaryStore.set("dictionaries", dictionaries)
 
         if (setDefault) {
-            dictionaryStore.set("defaultDictionary", newName)
+            dictionaryStore.set("defaultDictionary", newName ?? name)
         }
     }
 
     static removeDictionary(name: string) {
+        if (this.getDefaultDictionary().name === name) {
+            throw new Error("Não é possível remover o dicionário padrão")
+        }
+
         const dictionaries = dictionaryStore
             .get("dictionaries")
             .filter((dictionary) => dictionary.name !== name)
