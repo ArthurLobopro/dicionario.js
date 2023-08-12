@@ -16,6 +16,10 @@
 
     cursor: pointer;
 
+    &:has(.context-wrapper:hover):hover {
+        background-color: inherit;
+    }
+
     &:hover {
         background-color: var(--main-hover-background);
     }
