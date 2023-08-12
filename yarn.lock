@@ -44,6 +44,11 @@
     eslint-plugin-react-hooks "^4.5.0"
     prettier "^2.6.2"
 
+"@arthur-lobo/react-onclickout@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@arthur-lobo/react-onclickout/-/react-onclickout-1.1.0.tgz#456bc36c342c97e8db4a7d1921bd73fd5ad8145e"
+  integrity sha512-TH+44ezCN0lx9Ct6LQzK/Nvq3XQg46KXFhVgdHCIg4c0Tm0i/EvUhRZJJY7mKUfRvahtNE2AOePA1j/QiMIlvg==
+
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.22.5":
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.22.5.tgz#234d98e1551960604f1246e6475891a570ad5658"
