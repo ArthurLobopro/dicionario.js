@@ -3,6 +3,7 @@ import { CircleButton, If } from "../../../components/base"
 import { DictionaryInfoModal } from "../../../components/modals/dictionary"
 import { ViewContext } from "../../../contexts/ViewContext"
 import { InputChangeEvent, InputFocusEvent } from "../../../types"
+import { Menu } from "./Menu"
 
 import {
   AddIcon,
@@ -101,6 +102,8 @@ export function RightContent() {
       <CircleButton onClick={handleAddWord} title="Adicionar palavra">
         <AddIcon className="add-button" />
       </CircleButton>
+
+      <Menu />
     </div>
   )
 }
