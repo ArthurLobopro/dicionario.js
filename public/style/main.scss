@@ -245,6 +245,7 @@ button {
     padding: 5px;
 }
 
+.use-main-colors svg:not(:is(.use-own-colors)),
 svg.use-main-colors {
     * {
         &[stroke]:not([stroke="none"]) {

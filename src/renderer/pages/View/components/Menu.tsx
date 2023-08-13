@@ -75,7 +75,7 @@ export function Menu() {
         <Item
           text="Exportar Dicionário"
           onClick={handleExportDictionary}
-          icon={<UploadIcon />}
+          icon={<UploadIcon className="use-own-colors" />}
         />
         <Item
           text="Deletar Dicionário"

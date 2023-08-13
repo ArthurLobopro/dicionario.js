@@ -21,7 +21,7 @@ export function OthersSection() {
         onClick={openReport}
         onMouseEnter={hoverFocus}
       >
-        <LinkExternalIcon />
+        <LinkExternalIcon className="use-main-colors" />
         Abrir
       </button>
 
