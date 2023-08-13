@@ -12,6 +12,7 @@
     --modal-background: #FFFFFF;
     --border-color: #ccc;
     --main-color: #000;
+    --context-background: rgb(216, 216, 231);
 
     --main-hover-background: #77777731;
     --main-hover-brightness: .95;
@@ -28,6 +29,7 @@
     --modal-background: #262626;
     --border-color: #ccc;
     --main-color: #ddd;
+    --context-background: rgb(39, 39, 42);
 
     --main-hover-background: #77777731;
     --main-hover-brightness: 1.3;
@@ -309,6 +311,11 @@ button.simple {
     }
 }
 
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -328,6 +335,7 @@ button.simple {
 @import url(./components/linetitle.css);
 @import url(./components/circle-button.css);
 @import url(./components/validated-input.css);
+@import url(./components/context-menu.css);
 
 @import url(./pages/view.css);
 @import url(./pages/create.css);

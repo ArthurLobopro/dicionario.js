@@ -29,7 +29,11 @@ export function ViewScreen() {
   const wrapperRef = useRef<HTMLDivElement>(null)
 
   function reload() {
-    setDictionary(api.dictionaries.getDictionary(dictionary.name))
+    try {
+      setDictionary(api.dictionaries.getDictionary(dictionary.name))
+    } catch (error) {
+      setDictionary(api.dictionaries.getDefaultDictionary())
+    }
   }
 
   const handleAddWord = useCallback(() => {

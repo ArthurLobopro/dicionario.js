@@ -21,6 +21,17 @@ export class DictionaryController {
         return this.dictionary.languages
     }
 
+    get isDefault() {
+        return (
+            this.dictionary.name ===
+            DictionariesController.getDefaultDictionaryName()
+        )
+    }
+
+    changeName(newName: string) {
+        DictionariesController.editDictionary(this.dictionary.name, { newName })
+    }
+
     save() {
         DictionariesController.saveDictionary(this.dictionary)
     }

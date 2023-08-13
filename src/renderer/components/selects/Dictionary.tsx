@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { useEffect, useState } from "react"
 import { api } from "../../../store/Api"
 
@@ -18,11 +19,7 @@ export function SelectDictionary(props: select_props) {
 
   const [selected, setSelected] = useState(default_value || default_dictionary)
 
-  const [names, setNames] = useState([] as string[])
-
-  useEffect(() => {
-    setNames(api.dictionaries.getDictionariesNames())
-  }, [])
+  const names = api.dictionaries.getDictionariesNames()
 
   useEffect(() => {
     props.onChange && props.onChange(selected)
@@ -41,14 +38,14 @@ export function SelectDictionary(props: select_props) {
       onChange={(e) => setSelected(e.target.value)}
       {...(isDisabled
         ? {
-            tabIndex: -1,
-            disabled: true,
-            title:
-              "Você já selecionou este dicionário ou ele é o único dicionário existente.",
-          }
+          tabIndex: -1,
+          disabled: true,
+          title:
+            "Você já selecionou este dicionário ou ele é o único dicionário existente.",
+        }
         : {
-            title: "Selecione um dicionário",
-          })}
+          title: "Selecione um dicionário",
+        })}
     >
       {names.map((name) => (
         <option key={name} value={name}>

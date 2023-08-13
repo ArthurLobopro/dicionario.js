@@ -4,25 +4,20 @@ import { FieldErrors, useForm } from "react-hook-form"
 import z from "zod"
 import { ErrorModal, SuccessModal } from "../"
 import { api } from "../../../../store/Api"
+import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { useModal } from "../../../hooks/useModal"
-import { SelectDictionary } from "../../selects/Dictionary"
 import { FormModal } from "../FormModal"
 interface ExportDictionaryModalProps {
   onClose: () => void
+  dictionary: DictionaryController
 }
 
 type data = {
-  dictionary: string
   path: string
 }
 
 export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
   const dataSchema = z.object({
-    dictionary: z
-      .string()
-      .refine((value) => api.dictionaries.getDictionary(value) !== undefined, {
-        message: "Dicionário não encontrado",
-      }),
     path: z.string().refine((value) => value !== "", {
       message: "Escolha um local para exportar o dicionário",
     }),
@@ -31,10 +26,11 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
   const { setValue, watch, handleSubmit } = useForm({
     resolver: zodResolver(dataSchema),
     defaultValues: {
-      dictionary: api.dictionaries.getDefaultDictionary().name,
       path: "",
     },
   })
+
+  const { dictionary } = props
 
   const path = watch("path")
 
@@ -42,7 +38,7 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
   function handleExport(data: data) {
     try {
-      api.dictionaries.exportDictionary(data.dictionary, data.path)
+      api.dictionaries.exportDictionary(dictionary.name, data.path)
 
       modal.open(
         <SuccessModal
@@ -82,10 +78,9 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
       {modal.content}
       <div className="flex-column gap-10">
         <div className="flex align-center gap-10">
-          <span>Exportar dicionário: </span>
-          <SelectDictionary
-            onChange={(value) => setValue("dictionary", value)}
-          />
+          <span>
+            Exportar dicionário "<strong>{dictionary.name}</strong>"
+          </span>
         </div>
         <div className="grid-column-fill-center align-center gap-10">
           <span>Salvar em: </span>
