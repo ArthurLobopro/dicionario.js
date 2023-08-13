@@ -119,7 +119,7 @@ export class DictionariesController {
             throw new Error("Dicionário não encontrado")
         }
 
-        if (newName) {
+        if (newName && newName !== name) {
             const hasDictionary = dictionaries.some(
                 (dictionary) => dictionary.name === newName,
             )
@@ -137,7 +137,8 @@ export class DictionariesController {
 
         dictionaryStore.set("dictionaries", dictionaries)
 
-        if (setDefault) {
+        const editingDefault = this.getDefaultDictionaryName() === name
+        if (setDefault || editingDefault) {
             dictionaryStore.set("defaultDictionary", newName ?? name)
         }
     }
