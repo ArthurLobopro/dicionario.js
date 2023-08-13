@@ -27,7 +27,15 @@ export function Menu() {
   }
 
   function handleEditDictionary() {
-    modal.open(<EditDictionaryModal onClose={modal.close} />)
+    modal.open(
+      <EditDictionaryModal
+        dictionary={dictionary}
+        onClose={(edited?: boolean) => {
+          edited && reload()
+          modal.close()
+        }}
+      />,
+    )
     handleClose()
   }
 
@@ -45,7 +53,9 @@ export function Menu() {
   }
 
   function handleExportDictionary() {
-    modal.open(<ExportDictionaryModal onClose={modal.close} />)
+    modal.open(
+      <ExportDictionaryModal dictionary={dictionary} onClose={modal.close} />,
+    )
     handleClose()
   }
 
