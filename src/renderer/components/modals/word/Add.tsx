@@ -129,7 +129,11 @@ export function AddWordModal(props: AddWordModalProps) {
 
   return (
     <ModalWrapper>
-      <Modal type="alert" className="full word-action" onClose={onClose}>
+      <Modal
+        type="alert"
+        className="full dashed-border-modal"
+        onClose={onClose}
+      >
         <div className="dashed-border spacing-16 flex-column fill-heigth">
           {modal.content}
 

@@ -96,7 +96,11 @@ export function EditWordModal(props: EditWordModalProps) {
 
   return (
     <ModalWrapper>
-      <Modal type="alert" className="full word-action" onClose={onClose}>
+      <Modal
+        type="alert"
+        className="full dashed-border-modal"
+        onClose={onClose}
+      >
         {modal.content}
 
         <div className="dashed-border spacing-16 flex-column fill-heigth">
