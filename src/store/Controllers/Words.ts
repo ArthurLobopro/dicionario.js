@@ -12,7 +12,7 @@ export class WordsController {
     #dictionary: DictionaryController
 
     get dictionary() {
-        return this.#dictionary.dictionary
+        return this.#dictionary.data
     }
 
     constructor(dictionary: DictionaryController) {

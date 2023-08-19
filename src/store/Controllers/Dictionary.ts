@@ -3,10 +3,10 @@ import { DictionariesController } from "./Dictionaries"
 import { WordsController } from "./Words"
 
 export class DictionaryController {
-    dictionary: dictionary
+    data: dictionary
 
     constructor(dictionary: dictionary) {
-        this.dictionary = dictionary
+        this.data = dictionary
     }
 
     get Words() {
@@ -14,29 +14,28 @@ export class DictionaryController {
     }
 
     get name() {
-        return this.dictionary.name
+        return this.data.name
     }
 
     get languages() {
-        return this.dictionary.languages
+        return this.data.languages
     }
 
     get isDefault() {
         return (
-            this.dictionary.name ===
-            DictionariesController.getDefaultDictionaryName()
+            this.data.name === DictionariesController.getDefaultDictionaryName()
         )
     }
 
     changeName(newName: string) {
-        DictionariesController.editDictionary(this.dictionary.name, { newName })
+        DictionariesController.editDictionary(this.data.name, { newName })
     }
 
     save() {
-        DictionariesController.saveDictionary(this.dictionary)
+        DictionariesController.saveDictionary(this.data)
     }
 
     export() {
-        return JSON.stringify(this.dictionary, null, 4)
+        return JSON.stringify(this.data, null, 4)
     }
 }
