@@ -141,6 +141,28 @@ export class WordsController {
         }
     }
 
+    getBiggerLinesDefinition() {
+        const words = Object.entries(this.words)
+
+        if (!words.length) return null
+
+        const biggerDefinition = words.reduce((bigger, current) => {
+            if (
+                current[1].definition.split("\n").length >
+                bigger[1].definition.split("\n").length
+            ) {
+                return current
+            }
+
+            return bigger
+        }, words[0])
+
+        return {
+            word: biggerDefinition?.[0],
+            ...biggerDefinition?.[1],
+        }
+    }
+
     updateWord(
         word: string,
         { new_word, definition }: { new_word: string; definition: string },
