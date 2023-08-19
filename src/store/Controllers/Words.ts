@@ -123,33 +123,30 @@ export class WordsController {
     }
 
     getBiggerDefinition() {
-        const words = Object.entries(this.words)
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
         const biggerDefinition = words.reduce((bigger, current) => {
-            if (current[1].definition.length > bigger[1].definition.length) {
+            if (current.definition.length > bigger.definition.length) {
                 return current
             }
 
             return bigger
         }, words[0])
 
-        return {
-            word: biggerDefinition?.[0],
-            ...biggerDefinition?.[1],
-        }
+        return biggerDefinition
     }
 
     getBiggerLinesDefinition() {
-        const words = Object.entries(this.words)
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
         const biggerDefinition = words.reduce((bigger, current) => {
             if (
-                current[1].definition.split("\n").length >
-                bigger[1].definition.split("\n").length
+                current.definition.split("\n").length >
+                bigger.definition.split("\n").length
             ) {
                 return current
             }
@@ -157,10 +154,7 @@ export class WordsController {
             return bigger
         }, words[0])
 
-        return {
-            word: biggerDefinition?.[0],
-            ...biggerDefinition?.[1],
-        }
+        return biggerDefinition
     }
 
     updateWord(
