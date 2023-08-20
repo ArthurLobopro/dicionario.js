@@ -16,7 +16,7 @@
         background: rgba(0, 0, 0, 0.5);
     }
 
-    &:has(#view-word, .word-action) {
+    &:has(#view-word, .dashed-border-modal) {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -27,7 +27,7 @@
 
 
 
-    :not(:is(.modal-header, .info)) {
+    :not(:is(.modal-header, .info, p)) {
         &:has(>.circle-button) {
             position: relative;
 
@@ -103,6 +103,11 @@
             &.big {
                 display: block;
                 width: 100%;
+                overflow: auto;
+
+                &::-webkit-scrollbar {
+                    width: 6px;
+                }
             }
         }
 

@@ -1,5 +1,6 @@
 import { ipcRenderer } from "electron"
 import path from "node:path"
+import { languageNames } from "../lib/languageNames"
 import { ReactMouseEvent } from "./types"
 
 export const appPath = ipcRenderer.sendSync("app-path") as string
@@ -26,4 +27,10 @@ export function hoverFocus(
   event.currentTarget.focus()
   event.stopPropagation()
   event.preventDefault()
+}
+
+export type keyofLangs = keyof typeof languageNames
+
+export function getLangName(lang: string) {
+  return languageNames[lang as keyofLangs] || lang
 }

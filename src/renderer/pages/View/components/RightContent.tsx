@@ -1,27 +1,13 @@
 import { useContext, useEffect, useMemo, useState } from "react"
 import { CircleButton, If } from "../../../components/base"
-import { DictionaryInfoModal } from "../../../components/modals/dictionary"
+import { AddIcon, ScrollTopIcon, SearchIcon } from "../../../components/icons"
 import { ViewContext } from "../../../contexts/ViewContext"
 import { InputChangeEvent, InputFocusEvent } from "../../../types"
 import { Menu } from "./Menu"
 
-import {
-  AddIcon,
-  InfoIcon,
-  ScrollTopIcon,
-  SearchIcon,
-} from "../../../components/icons"
-
 export function RightContent() {
-  const {
-    handleAddWord,
-    search,
-    setSearch,
-    modal,
-    dictionary,
-    words,
-    wrapperRef,
-  } = useContext(ViewContext)
+  const { handleAddWord, search, setSearch, words, wrapperRef } =
+    useContext(ViewContext)
 
   useEffect(() => {
     if (wrapperRef.current) {
@@ -41,12 +27,6 @@ export function RightContent() {
 
   const [inputVisibility, setInputVisibility] = useState(false)
   const [resetScroll, setResetScroll] = useState(false)
-
-  function showInfo() {
-    modal.open(
-      <DictionaryInfoModal dictionary={dictionary} onClose={modal.close} />,
-    )
-  }
 
   const search_input = useMemo(() => {
     const handle_change = (e: InputChangeEvent) => setSearch(e?.target.value)
@@ -82,10 +62,6 @@ export function RightContent() {
           </If>
         </If>
       </div>
-
-      <CircleButton onClick={showInfo} title="Informações do dicionário">
-        <InfoIcon />
-      </CircleButton>
 
       <If condition={resetScroll}>
         <CircleButton

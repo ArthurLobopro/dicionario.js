@@ -4,21 +4,15 @@ import { ipcRenderer } from "electron"
 import { useMemo } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { languageNames } from "../../../../lib/languageNames"
 import { api } from "../../../../store/Api"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { dictionarySchema } from "../../../../store/ZodSchemas/dictionary"
+import { getLangName } from "../../../Util"
 import { useModal } from "../../../hooks/useModal"
 import { CircleButton, If, LineTitle } from "../../base"
 import { CloseIcon } from "../../icons"
 import { FormModal } from "../FormModal"
 import { SuccessModal } from "../Success"
-
-type keyofLangs = keyof typeof languageNames
-
-function getLangName(lang: string) {
-  return languageNames[lang as keyofLangs] || lang
-}
 
 interface editDictionaryProps {
   onClose: (v?: boolean) => void

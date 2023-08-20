@@ -11,7 +11,7 @@ interface ViewWordModalProps {
 }
 
 export function ViewWordModal(props: ViewWordModalProps) {
-  const word_data = props.dictionary.Words.getWords()[props.word]
+  const word_data = props.dictionary.Words.getWord(props.word)
 
   return (
     <ModalWrapper>
@@ -36,17 +36,13 @@ export function ViewWordModal(props: ViewWordModalProps) {
           <div className="date-wrapper">
             <div className="flex-column gap-10">
               <span>Data de registro</span>
-              <span className="info">
-                {formatDate(word_data.register.toISOString())}
-              </span>
+              <span className="info">{formatDate(word_data.register)}</span>
             </div>
 
             {word_data.lastEdit ? (
               <div className="flex-column gap-10">
                 <span>Última edição</span>
-                <span className="info">
-                  {formatDate(word_data.lastEdit.toISOString())}
-                </span>
+                <span className="info">{formatDate(word_data.lastEdit)}</span>
               </div>
             ) : null}
           </div>

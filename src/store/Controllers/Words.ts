@@ -12,7 +12,7 @@ export class WordsController {
     #dictionary: DictionaryController
 
     get dictionary() {
-        return this.#dictionary.dictionary
+        return this.#dictionary.data
     }
 
     constructor(dictionary: DictionaryController) {
@@ -123,22 +123,38 @@ export class WordsController {
     }
 
     getBiggerDefinition() {
-        const words = Object.entries(this.words)
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
         const biggerDefinition = words.reduce((bigger, current) => {
-            if (current[1].definition.length > bigger[1].definition.length) {
+            if (current.definition.length > bigger.definition.length) {
                 return current
             }
 
             return bigger
         }, words[0])
 
-        return {
-            word: biggerDefinition?.[0],
-            ...biggerDefinition?.[1],
-        }
+        return biggerDefinition
+    }
+
+    getBiggerLinesDefinition() {
+        const { words } = this.dictionary
+
+        if (!words.length) return null
+
+        const biggerDefinition = words.reduce((bigger, current) => {
+            if (
+                current.definition.split("\n").length >
+                bigger.definition.split("\n").length
+            ) {
+                return current
+            }
+
+            return bigger
+        }, words[0])
+
+        return biggerDefinition
     }
 
     updateWord(
