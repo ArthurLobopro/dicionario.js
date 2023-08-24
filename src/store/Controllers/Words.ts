@@ -97,28 +97,31 @@ export class WordsController {
 
         if (!words.length) return null
 
-        const newerWord = words.sort((a, b) => {
-            return (
-                new Date(b.register).getTime() - new Date(a.register).getTime()
-            )
-        })[0]
+        const newerWord = words.reduce((newer, current) => {
+            if (Date.parse(current.register) > Date.parse(newer.register)) {
+                return current
+            }
+
+            return newer
+        }, words[0])
 
         return newerWord
     }
 
     get olderWord() {
-        const words = Object.entries(this.words)
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
-        const olderWord = words.sort((a, b) => {
-            return a[1].register.getTime() - b[1].register.getTime()
-        })[0]
+        const olderWord = words.reduce((older, current) => {
+            if (Date.parse(current.register) < Date.parse(older.register)) {
+                return current
+            }
 
-        return {
-            word: olderWord?.[0],
-            ...olderWord?.[1],
-        }
+            return older
+        }, words[0])
+
+        return olderWord
     }
 
     get biggerDefinitionWord() {

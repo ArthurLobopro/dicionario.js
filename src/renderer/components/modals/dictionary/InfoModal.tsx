@@ -22,8 +22,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
   } = props.dictionary.Words
 
   const newerRegister = newerWord?.register && formatDate(newerWord.register)
-  const olderRegister =
-    olderWord?.register && formatDate(olderWord.register.toISOString())
+  const olderRegister = olderWord?.register && formatDate(olderWord.register)
 
   const modal = useModal()
 
