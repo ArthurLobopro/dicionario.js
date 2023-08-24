@@ -55,7 +55,7 @@ export class WordsController {
         return finded_word as StoreWord
     }
 
-    getWordsToSave(words: words) {
+    private getWordsToSave(words: words) {
         return Object.entries(this.sortWords(words)).map(
             ([word, { definition, register, lastEdit = null }]) => {
                 return {
@@ -68,7 +68,7 @@ export class WordsController {
         )
     }
 
-    sortWords(words: words) {
+    private sortWords(words: words) {
         return Object.fromEntries(
             Object.entries(words).sort((a, b) => {
                 return a[0].localeCompare(b[0])
