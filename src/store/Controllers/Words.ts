@@ -199,10 +199,6 @@ export class WordsController {
         this.#dictionary.save()
     }
 
-    clearWords() {
-        this.dictionary.words = []
-    }
-
     mergeWords(words: StoreWord[]) {
         const new_words = this.words
         const keys = Object.entries(new_words).map(([key]) => key)
