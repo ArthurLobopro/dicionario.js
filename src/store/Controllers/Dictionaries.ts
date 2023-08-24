@@ -18,15 +18,15 @@ function getDateToSave() {
 }
 
 export class DictionariesController {
-    static getDefaultDictionaryName() {
+    static get defaultDictionaryName() {
         return dictionaryStore.get("defaultDictionary")
     }
 
-    static getDefaultDictionary() {
+    static get defaultDictionary() {
         const dictionaries = dictionaryStore.get("dictionaries")
 
-        const defaultName =
-            this.getDefaultDictionaryName() as keyof typeof dictionaries
+        const defaultName = this
+            .defaultDictionaryName as keyof typeof dictionaries
 
         const defaultDictionary = dictionaries.find(
             (dictionary) => dictionary.name === defaultName,
@@ -137,14 +137,14 @@ export class DictionariesController {
 
         dictionaryStore.set("dictionaries", dictionaries)
 
-        const editingDefault = this.getDefaultDictionaryName() === name
+        const editingDefault = this.defaultDictionaryName === name
         if (setDefault || editingDefault) {
             dictionaryStore.set("defaultDictionary", newName ?? name)
         }
     }
 
     static removeDictionary(name: string) {
-        if (this.getDefaultDictionary().name === name) {
+        if (this.defaultDictionary.name === name) {
             throw new Error("Não é possível remover o dicionário padrão")
         }
 

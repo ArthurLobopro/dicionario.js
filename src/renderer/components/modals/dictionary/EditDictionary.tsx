@@ -37,7 +37,7 @@ type edit_dictionary_inputs = z.infer<typeof edit_dictionary_inputs_schema>
 export function EditDictionaryModal(props: editDictionaryProps) {
   const { dictionary } = props
 
-  const default_dictionary_name = api.dictionaries.getDefaultDictionary().name
+  const default_dictionary_name = api.dictionaries.defaultDictionary.name
 
   const editing_default = dictionary.name === default_dictionary_name
 

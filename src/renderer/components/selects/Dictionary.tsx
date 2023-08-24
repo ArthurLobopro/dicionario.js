@@ -15,7 +15,7 @@ export function SelectDictionary(props: select_props) {
   const isDisabled =
     disabled || api.dictionaries.getDictionariesNames().length === 1
 
-  const default_dictionary = api.dictionaries.getDefaultDictionary().name
+  const default_dictionary = api.dictionaries.defaultDictionary.name
 
   const [selected, setSelected] = useState(default_value || default_dictionary)
 

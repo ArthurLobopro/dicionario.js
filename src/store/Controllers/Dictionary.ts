@@ -22,9 +22,7 @@ export class DictionaryController {
     }
 
     get isDefault() {
-        return (
-            this.data.name === DictionariesController.getDefaultDictionaryName()
-        )
+        return this.data.name === DictionariesController.defaultDictionaryName
     }
 
     changeName(newName: string) {

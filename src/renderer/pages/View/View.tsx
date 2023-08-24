@@ -17,7 +17,7 @@ export function ViewScreen() {
     try {
       return api.dictionaries.getDictionary(query.get("dictionary") as string)
     } catch (error) {
-      return api.dictionaries.getDefaultDictionary()
+      return api.dictionaries.defaultDictionary
     }
   })
 
@@ -32,7 +32,7 @@ export function ViewScreen() {
     try {
       setDictionary(api.dictionaries.getDictionary(dictionary.name))
     } catch (error) {
-      setDictionary(api.dictionaries.getDefaultDictionary())
+      setDictionary(api.dictionaries.defaultDictionary)
     }
   }
 

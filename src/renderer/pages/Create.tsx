@@ -46,7 +46,7 @@ export function CreateScreen() {
     try {
       return api.dictionaries.getDictionary(dictionary_name as string)
     } catch (error) {
-      return api.dictionaries.getDefaultDictionary()
+      return api.dictionaries.defaultDictionary
     }
   })
 
