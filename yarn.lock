@@ -986,10 +986,10 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^18.2.20":
-  version "18.2.20"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.20.tgz#1605557a83df5c8a2cc4eeb743b3dfc0eb6aaeb2"
-  integrity sha512-WKNtmsLWJM/3D5mG4U84cysVY31ivmyw85dE84fOCk5Hx78wezB/XEjVPWl2JTZ5FkEeaTJf+VgUAUn3PE7Isw==
+"@types/react@^18.2.21":
+  version "18.2.21"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.21.tgz#774c37fd01b522d0b91aed04811b58e4e0514ed9"
+  integrity sha512-neFKG/sBAwGxHgXiIxnbm3/AAVQ/cMRS93hvBpg8xYRbeQSPVABp9U2bRnPf0iI4+Ucdv3plSxKK+3CW2ENJxA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -1942,10 +1942,10 @@ electron-css-injector@^1.2.1:
   resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.2.1.tgz#e7bd4efc779e56c1d88721157cdb1643755295bf"
   integrity sha512-yLrZgQ6ksy0LmHmGfH3dUeaA6MYEclCzeeq6yyw7QYfQpLGBK3p4HopiRstD2qGkR+UFHQZnHf38ps1uRThNqQ==
 
-electron-frame@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.4.4.tgz#8122edad6fcd0acdad04210593c5eb1b294e1df0"
-  integrity sha512-a0dTWDyjG0t+eDxzIQWnTdnrNtIiCkFl5aFz8HdoOLmkVtBeGkcWpjFp7kNjVbOL0jwO31SnWUBIOiG0tX+z9A==
+electron-frame@^1.4.5:
+  version "1.4.5"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.4.5.tgz#f41003e64103fc222ca1d7652406650a3f31fd87"
+  integrity sha512-wvNAXqAh9l4cNjbE0DTr6pj4EGghd2njaj/9MCNB1LDvpCwS/IZTRNzX77Us2PgVhn6h05rXNmqTJIto54k2Gg==
   dependencies:
     "@electron-fonts/nunito" "^1.1.0"
     electron-css-injector "^1.2.1"
@@ -2047,10 +2047,10 @@ electron-winstaller@^5.0.0:
     lodash.template "^4.2.2"
     temp "^0.9.0"
 
-electron@^25.5.0:
-  version "25.5.0"
-  resolved "https://registry.yarnpkg.com/electron/-/electron-25.5.0.tgz#6465d49c0731424e3e48776628c35771697caf11"
-  integrity sha512-w1DNj1LuAk0Vaas1rQ0pAkTe2gZ5YG75J27mC2m88y0G6Do5b5YoFDaF84fOGQHeQ4j8tC5LngSgWhbwmqDlrw==
+electron@^26.1.0:
+  version "26.1.0"
+  resolved "https://registry.yarnpkg.com/electron/-/electron-26.1.0.tgz#d26fefba5a5c68069b07a117d87aee1c4e5d172d"
+  integrity sha512-qEh19H09Pysn3ibms5nZ0haIh5pFoOd7/5Ww7gzmAwDQOulRi8Sa2naeueOyIb1GKpf+6L4ix3iceYRAuA5r5Q==
   dependencies:
     "@electron/get" "^2.0.0"
     "@types/node" "^18.11.18"
