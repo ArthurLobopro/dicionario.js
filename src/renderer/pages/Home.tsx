@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Header, Page } from "../components/base"
 import { AddIcon, ConfigIcon, EyeIcon } from "../components/icons"
@@ -21,6 +22,17 @@ function Option(props: OptionProps) {
 }
 
 export function Home() {
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    if (
+      ["/view", "/create", "/config"].includes(sessionStorage.openIn as string)
+    ) {
+      navigate(sessionStorage.openIn)
+      sessionStorage.removeItem("openIn")
+    }
+  }, [])
+
   return (
     <Page id="home">
       <Header title="Dicionário Pessoal" />
