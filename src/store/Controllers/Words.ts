@@ -76,22 +76,6 @@ export class WordsController {
         )
     }
 
-    addWord({ word, definition }: { word: string; definition: string }) {
-        const words = this.words
-
-        if (word in words) {
-            throw new Error("A palavra já foi registrada")
-        }
-
-        words[word] = {
-            definition,
-            register: new Date(),
-        }
-
-        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
-        this.#dictionary.save()
-    }
-
     get newerWord() {
         const { words } = this.dictionary
 
@@ -157,6 +141,22 @@ export class WordsController {
         }, words[0])
 
         return biggerDefinition
+    }
+
+    addWord({ word, definition }: { word: string; definition: string }) {
+        const words = this.words
+
+        if (word in words) {
+            throw new Error("A palavra já foi registrada")
+        }
+
+        words[word] = {
+            definition,
+            register: new Date(),
+        }
+
+        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
+        this.#dictionary.save()
     }
 
     updateWord(
