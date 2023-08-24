@@ -92,22 +92,21 @@ export class WordsController {
         this.#dictionary.save()
     }
 
-    getOlderWord() {
-        const words = Object.entries(this.words)
+    get newerWord() {
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
         const newerWord = words.sort((a, b) => {
-            return b[1].register.getTime() - a[1].register.getTime()
+            return (
+                new Date(b.register).getTime() - new Date(a.register).getTime()
+            )
         })[0]
 
-        return {
-            word: newerWord?.[0],
-            ...newerWord?.[1],
-        }
+        return newerWord
     }
 
-    getNewerWord() {
+    get olderWord() {
         const words = Object.entries(this.words)
 
         if (!words.length) return null
@@ -122,7 +121,7 @@ export class WordsController {
         }
     }
 
-    getBiggerDefinition() {
+    get biggerDefinitionWord() {
         const { words } = this.dictionary
 
         if (!words.length) return null
@@ -138,7 +137,7 @@ export class WordsController {
         return biggerDefinition
     }
 
-    getBiggerLinesDefinition() {
+    get biggerLinesDefinitionWord() {
         const { words } = this.dictionary
 
         if (!words.length) return null
