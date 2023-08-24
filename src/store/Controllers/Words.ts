@@ -192,9 +192,9 @@ export class WordsController {
             throw new Error("Palavra não encontrada")
         }
 
-        delete words[word]
-
-        this.dictionary.words = this.getWordsToSave(words)
+        this.dictionary.words = this.dictionary.words.filter(
+            (w) => w.word !== word,
+        )
 
         this.#dictionary.save()
     }
