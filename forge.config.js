@@ -1,3 +1,5 @@
+/* eslint-disable no-async-promise-executor */
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { version } = require("./package.json")
 const { execSync } = require("child_process")
 const { generateIcons } = require("./scripts/generate-icons.js")
@@ -11,9 +13,11 @@ module.exports = {
             "\\.scss",
             "\\.ts",
             "\\.tsx",
+            "\\.eslint*",
             "/build",
-            "/\\.vscode"
-        ]
+            "/\\.vscode",
+            "tsconfig.json",
+        ],
     },
     makers: [
         {
@@ -22,41 +26,37 @@ module.exports = {
                 name: "dicionario",
                 setupIcon: "./build/icon.ico",
                 setupExe: `dicionario-${version}-setup.exe`,
-                iconUrl: "https://raw.githubusercontent.com/ArthurLobopro/dicionario.js/main/build/icon.ico"
-            }
+                iconUrl:
+                    "https://raw.githubusercontent.com/ArthurLobopro/dicionario.js/main/build/icon.ico",
+            },
         },
         {
             name: "@electron-forge/maker-zip",
-            platforms: [
-                "darwin"
-            ]
+            platforms: ["darwin"],
         },
         {
             name: "@electron-forge/maker-deb",
             config: {
                 name: "dicionario.js",
                 productName: "Dicionario.js",
-                categories: [
-                    "Utility",
-                    "Education"
-                ],
-                description: "Dicionário onde você cadastra suas próprias palavras e definições.",
+                categories: ["Utility", "Education"],
+                description:
+                    "Dicionário onde você cadastra suas próprias palavras e definições.",
                 genericName: "Dicionario.js",
                 icon: path.resolve(__dirname, "./assets/icon.png"),
                 options: {
-                    maintainer: 'Arthur Lobo',
-                    homepage: 'https://github.com/ArthurLobopro/dicionario.js#readme'
-                }
+                    maintainer: "Arthur Lobo",
+                    homepage:
+                        "https://github.com/ArthurLobopro/dicionario.js#readme",
+                },
             },
-            platforms: [
-                "linux"
-            ]
+            platforms: ["linux"],
         },
         {
             name: "@electron-forge/maker-rpm",
             config: {},
-            platforms: []
-        }
+            platforms: [],
+        },
     ],
     publishers: [
         {
@@ -64,12 +64,12 @@ module.exports = {
             config: {
                 repository: {
                     owner: "ArthurLobopro",
-                    name: "dicionario.js"
+                    name: "dicionario.js",
                 },
                 prerelease: false,
-                draft: true
-            }
-        }
+                draft: true,
+            },
+        },
     ],
     hooks: {
         async generateAssets() {
@@ -86,6 +86,6 @@ module.exports = {
                     reject(error)
                 }
             })
-        }
-    }
+        },
+    },
 }

@@ -55,7 +55,7 @@ export class WordsController {
         return finded_word as StoreWord
     }
 
-    getWordsToSave(words: words) {
+    private getWordsToSave(words: words) {
         return Object.entries(this.sortWords(words)).map(
             ([word, { definition, register, lastEdit = null }]) => {
                 return {
@@ -68,7 +68,7 @@ export class WordsController {
         )
     }
 
-    sortWords(words: words) {
+    private sortWords(words: words) {
         return Object.fromEntries(
             Object.entries(words).sort((a, b) => {
                 return a[0].localeCompare(b[0])
@@ -76,53 +76,39 @@ export class WordsController {
         )
     }
 
-    addWord({ word, definition }: { word: string; definition: string }) {
-        const words = this.words
-
-        if (word in words) {
-            throw new Error("A palavra já foi registrada")
-        }
-
-        words[word] = {
-            definition,
-            register: new Date(),
-        }
-
-        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
-        this.#dictionary.save()
-    }
-
-    getOlderWord() {
-        const words = Object.entries(this.words)
+    get newerWord() {
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
-        const newerWord = words.sort((a, b) => {
-            return b[1].register.getTime() - a[1].register.getTime()
-        })[0]
+        const newerWord = words.reduce((newer, current) => {
+            if (Date.parse(current.register) > Date.parse(newer.register)) {
+                return current
+            }
 
-        return {
-            word: newerWord?.[0],
-            ...newerWord?.[1],
-        }
+            return newer
+        }, words[0])
+
+        return newerWord
     }
 
-    getNewerWord() {
-        const words = Object.entries(this.words)
+    get olderWord() {
+        const { words } = this.dictionary
 
         if (!words.length) return null
 
-        const olderWord = words.sort((a, b) => {
-            return a[1].register.getTime() - b[1].register.getTime()
-        })[0]
+        const olderWord = words.reduce((older, current) => {
+            if (Date.parse(current.register) < Date.parse(older.register)) {
+                return current
+            }
 
-        return {
-            word: olderWord?.[0],
-            ...olderWord?.[1],
-        }
+            return older
+        }, words[0])
+
+        return olderWord
     }
 
-    getBiggerDefinition() {
+    get biggerDefinitionWord() {
         const { words } = this.dictionary
 
         if (!words.length) return null
@@ -138,7 +124,7 @@ export class WordsController {
         return biggerDefinition
     }
 
-    getBiggerLinesDefinition() {
+    get biggerLinesDefinitionWord() {
         const { words } = this.dictionary
 
         if (!words.length) return null
@@ -155,6 +141,22 @@ export class WordsController {
         }, words[0])
 
         return biggerDefinition
+    }
+
+    addWord({ word, definition }: { word: string; definition: string }) {
+        const words = this.words
+
+        if (word in words) {
+            throw new Error("A palavra já foi registrada")
+        }
+
+        words[word] = {
+            definition,
+            register: new Date(),
+        }
+
+        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
+        this.#dictionary.save()
     }
 
     updateWord(
@@ -190,15 +192,11 @@ export class WordsController {
             throw new Error("Palavra não encontrada")
         }
 
-        delete words[word]
-
-        this.dictionary.words = this.getWordsToSave(words)
+        this.dictionary.words = this.dictionary.words.filter(
+            (w) => w.word !== word,
+        )
 
         this.#dictionary.save()
-    }
-
-    clearWords() {
-        this.dictionary.words = []
     }
 
     mergeWords(words: StoreWord[]) {

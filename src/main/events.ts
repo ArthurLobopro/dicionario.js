@@ -54,9 +54,14 @@ ipcMain.on("get-version", (event) => {
 })
 
 ipcMain.on("relaunch", () => {
-    app.relaunch({
-        args: process.argv.slice(1).concat(["--relaunch"]),
-    })
+    const ignored_args = ["--relaunch", "--add-word", "--view-words"]
+
+    const args = process.argv
+        .slice(1)
+        .filter((arg) => !ignored_args.includes(arg))
+        .concat(["--relaunch"])
+
+    app.relaunch({ args })
     app.quit()
 })
 

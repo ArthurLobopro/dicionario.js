@@ -59,9 +59,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
   const alreadyExists =
     readyToImport &&
-    DictionariesController.getDictionariesNames().includes(
-      selectedFile.content.name,
-    )
+    DictionariesController.dictionariesNames.includes(selectedFile.content.name)
 
   const [action, setAction] = useState<"merge" | "rename">("rename")
   const [newName, setNewName] = useState("")
@@ -97,36 +95,45 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
       return
     }
 
-    if (alreadyExists) {
-      if (action === "merge") {
-        DictionariesController.mergeDictionary(selectedFile.content)
+    try {
+      if (alreadyExists) {
+        if (action === "merge") {
+          DictionariesController.mergeDictionary(selectedFile.content)
+
+          return modal.open(
+            <SuccessModal
+              message="Dicionário mesclado com sucesso"
+              onClose={props.onClose}
+            />,
+          )
+        }
+
+        DictionariesController.importDictionary({
+          ...selectedFile.content,
+          name: newName,
+        })
 
         return modal.open(
           <SuccessModal
-            message="Dicionário mesclado com sucesso"
+            message="Dicionário importado com sucesso"
+            onClose={props.onClose}
+          />,
+        )
+      } else {
+        DictionariesController.importDictionary(selectedFile.content)
+
+        modal.open(
+          <SuccessModal
+            message="Dicionário importado com sucesso"
             onClose={props.onClose}
           />,
         )
       }
-
-      DictionariesController.importDictionary({
-        ...selectedFile.content,
-        name: newName,
-      })
-
-      return modal.open(
-        <SuccessModal
-          message="Dicionário importado com sucesso"
-          onClose={props.onClose}
-        />,
-      )
-    } else {
-      DictionariesController.importDictionary(selectedFile.content)
-
+    } catch (error) {
       modal.open(
-        <SuccessModal
-          message="Dicionário importado com sucesso"
-          onClose={props.onClose}
+        <ErrorModal
+          message={(error as Error).message || "Erro ao importar dicionário"}
+          onClose={modal.close}
         />,
       )
     }
@@ -220,17 +227,15 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
         <div className="modal-footer">
           <button
-            {...(readyToImport
-              ? {
-                  onClick: HandleSubmit,
-                }
-              : {
-                  className: "disabled",
-                  title: "Selecione um arquivo válido",
-                })}
+            {...((readyToImport && {
+              onClick: HandleSubmit,
+            }) || {
+              className: "disabled",
+              title: "Selecione um arquivo válido",
+            })}
           >
             <If
-              condition={!alreadyExists && !(action === "merge")}
+              condition={!alreadyExists || action !== "merge"}
               else={"Mesclar"}
             >
               Importar
