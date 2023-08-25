@@ -220,17 +220,15 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
         <div className="modal-footer">
           <button
-            {...(readyToImport
-              ? {
-                  onClick: HandleSubmit,
-                }
-              : {
-                  className: "disabled",
-                  title: "Selecione um arquivo válido",
-                })}
+            {...((readyToImport && {
+              onClick: HandleSubmit,
+            }) || {
+              className: "disabled",
+              title: "Selecione um arquivo válido",
+            })}
           >
             <If
-              condition={!alreadyExists && !(action === "merge")}
+              condition={!alreadyExists || action !== "merge"}
               else={"Mesclar"}
             >
               Importar
