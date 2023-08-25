@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { version } = require("./package.json")
 const { execSync } = require("child_process")
@@ -12,8 +13,10 @@ module.exports = {
             "\\.scss",
             "\\.ts",
             "\\.tsx",
+            "\\.eslint*",
             "/build",
             "/\\.vscode",
+            "tsconfig.json",
         ],
     },
     makers: [
