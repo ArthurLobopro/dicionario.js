@@ -13,13 +13,13 @@ export function SelectDictionary(props: select_props) {
   const { default_value = 0, disabled = false, titleMode = false } = props
 
   const isDisabled =
-    disabled || api.dictionaries.getDictionariesNames().length === 1
+    disabled || api.dictionaries.dictionariesNames.length === 1
 
   const default_dictionary = api.dictionaries.defaultDictionary.name
 
   const [selected, setSelected] = useState(default_value || default_dictionary)
 
-  const names = api.dictionaries.getDictionariesNames()
+  const names = api.dictionaries.dictionariesNames
 
   useEffect(() => {
     props.onChange && props.onChange(selected)

@@ -39,8 +39,16 @@ export class DictionariesController {
         return new DictionaryController(defaultDictionary)
     }
 
+    static get dictionaries() {
+        return dictionaryStore.get("dictionaries")
+    }
+
+    static get dictionariesNames() {
+        return this.dictionaries.map((dictionary) => dictionary.name)
+    }
+
     static getDictionary(name: string) {
-        const dictionaries = dictionaryStore.get("dictionaries")
+        const { dictionaries } = this
 
         const dictionary = dictionaries.find(
             (dictionary) => dictionary.name === name,
@@ -51,16 +59,6 @@ export class DictionariesController {
         }
 
         return new DictionaryController(dictionary)
-    }
-
-    static getDictionaries() {
-        return dictionaryStore.get("dictionaries")
-    }
-
-    static getDictionariesNames() {
-        return dictionaryStore
-            .get("dictionaries")
-            .map((dictionary) => dictionary.name)
     }
 
     static saveDictionary(dictionary: dictionary) {
