@@ -21,7 +21,7 @@ export function ViewScreen() {
     }
   })
 
-  const getWords = () => Object.entries(dictionary.Words.wordsObject)
+  const getWords = () => dictionary.Words.words
 
   const words = useMemo(getWords, [dictionary])
   const [search, setSearch] = useState("")

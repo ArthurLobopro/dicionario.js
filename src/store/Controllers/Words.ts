@@ -23,6 +23,10 @@ export class WordsController {
         return this.getWordsObject()
     }
 
+    get words() {
+        return this.dictionary.words
+    }
+
     get length() {
         return this.dictionary.words.length
     }
@@ -55,25 +59,27 @@ export class WordsController {
         return finded_word as StoreWord
     }
 
-    private getWordsToSave(words: words) {
-        return Object.entries(this.sortWords(words)).map(
-            ([word, { definition, register, lastEdit = null }]) => {
-                return {
-                    word,
-                    definition,
-                    register: register.toISOString(),
-                    ...(lastEdit && { lastEdit: lastEdit.toISOString() }),
-                }
-            },
-        )
+    // private getWordsToSave(words: words) {
+    //     return Object.entries(this.sortWords(words)).map(
+    //         ([word, { definition, register, lastEdit = null }]) => {
+    //             return {
+    //                 word,
+    //                 definition,
+    //                 register: register.toISOString(),
+    //                 ...(lastEdit && { lastEdit: lastEdit.toISOString() }),
+    //             }
+    //         },
+    //     )
+    // }
+
+    private sortWords() {
+        this.dictionary.words.sort((a, b) => {
+            return a.word.localeCompare(b.word)
+        })
     }
 
-    private sortWords(words: words) {
-        return Object.fromEntries(
-            Object.entries(words).sort((a, b) => {
-                return a[0].localeCompare(b[0])
-            }),
-        )
+    private alreadyExists(word: string) {
+        return this.dictionary.words.some((w) => w.word === word)
     }
 
     get newerWord() {
@@ -144,18 +150,17 @@ export class WordsController {
     }
 
     addWord({ word, definition }: { word: string; definition: string }) {
-        const words = this.wordsObject
-
-        if (word in words) {
+        if (this.alreadyExists(word)) {
             throw new Error("A palavra já foi registrada")
         }
 
-        words[word] = {
+        this.dictionary.words.push({
+            word,
             definition,
-            register: new Date(),
-        }
+            register: new Date().toISOString(),
+        })
 
-        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
+        this.sortWords()
         this.#dictionary.save()
     }
 
@@ -163,32 +168,37 @@ export class WordsController {
         word: string,
         { new_word, definition }: { new_word: string; definition: string },
     ) {
-        const words = this.wordsObject
-
-        if (!(word in words)) {
+        if (!this.alreadyExists(word)) {
             throw new Error("A palavra não foi registrada")
         }
 
-        const wordData = words[word]
-
         if (word !== new_word) {
-            delete words[word]
+            if (this.alreadyExists(new_word)) {
+                throw new Error(
+                    "Você não pode renomear a palavra para uma palavra já registrada",
+                )
+            }
         }
 
-        words[new_word] = {
-            ...wordData,
-            definition,
-            lastEdit: new Date(),
-        }
+        this.dictionary.words = this.dictionary.words.map((w) => {
+            if (w.word === word) {
+                return {
+                    ...w,
+                    word: new_word,
+                    definition,
+                    lastEdit: new Date().toISOString(),
+                }
+            }
 
-        this.dictionary.words = this.getWordsToSave(this.sortWords(words))
+            return w
+        })
+
+        word !== new_word && this.sortWords()
         this.#dictionary.save()
     }
 
     deleteWord(word: string) {
-        const words = this.wordsObject
-
-        if (!(word in words)) {
+        if (!this.alreadyExists(word)) {
             throw new Error("Palavra não encontrada")
         }
 
@@ -200,23 +210,18 @@ export class WordsController {
     }
 
     mergeWords(words: StoreWord[]) {
-        const new_words = this.wordsObject
-        const keys = Object.entries(new_words).map(([key]) => key)
+        const new_words = this.words
+        const keys = new_words.map((w) => w.word)
 
         words.forEach((word) => {
             if (!keys.includes(word.word)) {
-                new_words[word.word] = {
-                    definition: word.definition,
-                    register: new Date(word.register),
-                    ...(word.lastEdit
-                        ? { lastEdit: new Date(word.lastEdit) }
-                        : {}),
-                }
+                new_words.push(word)
             }
         })
 
-        this.dictionary.words = this.getWordsToSave(this.sortWords(new_words))
+        this.dictionary.words = new_words
 
+        this.sortWords()
         this.#dictionary.save()
     }
 }

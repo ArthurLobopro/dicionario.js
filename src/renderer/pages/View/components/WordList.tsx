@@ -13,7 +13,7 @@ export function WordList() {
   )
 
   const filtered_words = useMemo(() => {
-    return words.filter(([word]) => filter.test(word))
+    return words.filter(({ word }) => filter.test(word))
   }, [filter, words.length, words])
 
   const list = useMemo(() => {
@@ -22,13 +22,13 @@ export function WordList() {
     ) : (
       <div>
         <div className="word-wrapper" ref={wrapperRef}>
-          {filtered_words.map(([word, word_props]) => (
+          {filtered_words.map((word) => (
             <Word
-              word={{ ...word_props, word }}
+              word={word}
               reload={reload}
               dictionary={dictionary}
               modal={modal}
-              key={word}
+              key={word.word}
             />
           ))}
         </div>
