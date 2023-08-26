@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import z from "zod"
 import { ErrorModal, SuccessModal, WarningModal } from ".."
 import { api } from "../../../../store/Api"
 import { wordSchema } from "../../../../store/ZodSchemas/word"
+import { frame } from "../../../Frame"
 import { useModal } from "../../../hooks/useModal"
 import { Form, If } from "../../base"
 import { Modal } from "../base/Modal"
@@ -48,22 +49,33 @@ export function EditWordModal(props: EditWordModalProps) {
 
   const hasChanges = Object.entries(dirtyFields).length > 0
 
-  function onClose() {
-    if (dirtyFields.definition || dirtyFields.word) {
-      modal.open(
-        <WarningModal
-          onClose={(value) => {
-            value && props.onClose()
-            modal.close()
-          }}
-        >
-          Você tem certeza que deseja sair? Os dados não salvos serão perdidos.
-        </WarningModal>,
-      )
-    } else {
-      props.onClose()
+  const shouldClose = useCallback((): Promise<boolean> => {
+    return new Promise((resolve) => {
+      if (hasChanges) {
+        modal.open(
+          <WarningModal
+            onClose={(value) => {
+              resolve(value)
+              modal.close()
+            }}
+          >
+            Você tem certeza que deseja sair? Os dados não salvos serão
+            perdidos.
+          </WarningModal>,
+        )
+      } else {
+        resolve(true)
+      }
+    })
+  }, [hasChanges])
+
+  useEffect(() => {
+    frame.instance.setBeforeCloseCallback(shouldClose)
+
+    return () => {
+      frame.instance.setBeforeCloseCallback()
     }
-  }
+  }, [shouldClose])
 
   function onError(errors: FieldErrors) {
     const message = Object.values(errors)
@@ -99,7 +111,8 @@ export function EditWordModal(props: EditWordModalProps) {
       <Modal
         type="alert"
         className="full dashed-border-modal"
-        onClose={onClose}
+        onClose={props.onClose}
+        shouldClose={shouldClose}
       >
         {modal.content}
 
@@ -117,15 +130,14 @@ export function EditWordModal(props: EditWordModalProps) {
                 type="text"
                 placeholder="Palavra"
                 minLength={3}
-                tabIndex={1}
                 {...register("word")}
               />
             </label>
+
             <div className="t-wrapper grid-fill-bottom">
               Significado
               <textarea
                 minLength={5}
-                tabIndex={2}
                 placeholder="Significados que a palavra pode ter"
                 {...register("definition")}
               ></textarea>
