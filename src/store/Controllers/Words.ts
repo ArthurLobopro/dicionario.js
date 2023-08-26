@@ -1,13 +1,6 @@
 import { StoreWord } from "../ZodSchemas/word"
 import { DictionaryController } from "./Dictionary"
 
-type words = {
-    [s: string]: {
-        definition: string
-        register: Date
-        lastEdit?: Date
-    }
-}
 export class WordsController {
     #dictionary: DictionaryController
 
@@ -19,34 +12,12 @@ export class WordsController {
         this.#dictionary = dictionary
     }
 
-    get wordsObject() {
-        return this.getWordsObject()
-    }
-
     get words() {
         return this.dictionary.words
     }
 
     get length() {
         return this.dictionary.words.length
-    }
-
-    getWordsObject() {
-        return Object.fromEntries(
-            this.dictionary.words.map((word) => {
-                const { definition, register, lastEdit = null } = word
-                return [
-                    word.word,
-                    {
-                        definition,
-                        register: new Date(register),
-                        ...(lastEdit
-                            ? { lastEdit: new Date(word.lastEdit as string) }
-                            : {}),
-                    },
-                ]
-            }),
-        )
     }
 
     getWord(word: string) {
@@ -58,19 +29,6 @@ export class WordsController {
 
         return finded_word as StoreWord
     }
-
-    // private getWordsToSave(words: words) {
-    //     return Object.entries(this.sortWords(words)).map(
-    //         ([word, { definition, register, lastEdit = null }]) => {
-    //             return {
-    //                 word,
-    //                 definition,
-    //                 register: register.toISOString(),
-    //                 ...(lastEdit && { lastEdit: lastEdit.toISOString() }),
-    //             }
-    //         },
-    //     )
-    // }
 
     private sortWords() {
         this.dictionary.words.sort((a, b) => {
