@@ -19,15 +19,15 @@ export class WordsController {
         this.#dictionary = dictionary
     }
 
-    get words() {
-        return this.getWords()
+    get wordsObject() {
+        return this.getWordsObject()
     }
 
     get length() {
         return this.dictionary.words.length
     }
 
-    getWords() {
+    getWordsObject() {
         return Object.fromEntries(
             this.dictionary.words.map((word) => {
                 const { definition, register, lastEdit = null } = word
@@ -144,7 +144,7 @@ export class WordsController {
     }
 
     addWord({ word, definition }: { word: string; definition: string }) {
-        const words = this.words
+        const words = this.wordsObject
 
         if (word in words) {
             throw new Error("A palavra já foi registrada")
@@ -163,7 +163,7 @@ export class WordsController {
         word: string,
         { new_word, definition }: { new_word: string; definition: string },
     ) {
-        const words = this.words
+        const words = this.wordsObject
 
         if (!(word in words)) {
             throw new Error("A palavra não foi registrada")
@@ -186,7 +186,7 @@ export class WordsController {
     }
 
     deleteWord(word: string) {
-        const words = this.words
+        const words = this.wordsObject
 
         if (!(word in words)) {
             throw new Error("Palavra não encontrada")
@@ -200,7 +200,7 @@ export class WordsController {
     }
 
     mergeWords(words: StoreWord[]) {
-        const new_words = this.words
+        const new_words = this.wordsObject
         const keys = Object.entries(new_words).map(([key]) => key)
 
         words.forEach((word) => {

@@ -4,7 +4,7 @@ import { DictionaryController } from "../../store/Controllers/Dictionary"
 import { useModal } from "../hooks/useModal"
 
 const getWords = () =>
-  Object.entries(api.dictionaries.defaultDictionary.Words.words)
+  Object.entries(api.dictionaries.defaultDictionary.Words.wordsObject)
 
 interface ViewPageContext {
   modal: ReturnType<typeof useModal>
