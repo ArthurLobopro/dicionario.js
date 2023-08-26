@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import { ZodError, z } from "zod"
 import { ErrorModal, SuccessModal, WarningModal } from ".."
@@ -27,6 +27,8 @@ interface AddWordModalProps {
 }
 
 export function AddWordModal(props: AddWordModalProps) {
+  const { dictionary } = props
+
   const { register, handleSubmit, watch } = useForm<CreateWordData>({
     resolver: zodResolver(create_word_schema),
     defaultValues: {
@@ -35,21 +37,7 @@ export function AddWordModal(props: AddWordModalProps) {
     },
   })
 
-  const { dictionary } = props
-
   const { word, definition } = watch()
-
-  useEffect(() => {
-    ipcRenderer.send("update-spellchecker", dictionary.languages)
-  }, [])
-
-  useEffect(() => {
-    frame.instance.setBeforeCloseCallback(shouldClose)
-
-    return () => {
-      frame.instance.setBeforeCloseCallback()
-    }
-  }, [word.length + definition.length > 0])
 
   const word_already_exists = (() => {
     try {
@@ -61,8 +49,14 @@ export function AddWordModal(props: AddWordModalProps) {
 
   const modal = useModal()
 
-  async function askShouldClose(): Promise<boolean> {
+  const hasChanges = word.length + definition.length > 0
+
+  const shouldClose = useCallback(async (): Promise<boolean> => {
     return new Promise((resolve) => {
+      if (!hasChanges) {
+        return resolve(true)
+      }
+
       modal.open(
         <WarningModal
           onClose={(value) => {
@@ -74,25 +68,19 @@ export function AddWordModal(props: AddWordModalProps) {
         </WarningModal>,
       )
     })
-  }
+  }, [hasChanges])
 
-  const hasChanges = word.length + definition.length > 0
+  useEffect(() => {
+    frame.instance.setBeforeCloseCallback(shouldClose)
 
-  const shouldClose = async (): Promise<boolean> => {
-    if (!hasChanges) return true
-
-    return await askShouldClose()
-  }
-
-  function onClose() {
-    if (hasChanges) {
-      askShouldClose().then((should_close) => {
-        should_close && props.onClose()
-      })
-    } else {
-      props.onClose()
+    return () => {
+      frame.instance.setBeforeCloseCallback()
     }
-  }
+  }, [shouldClose])
+
+  useEffect(() => {
+    ipcRenderer.send("update-spellchecker", dictionary.languages)
+  }, [])
 
   function onError(errors: FieldErrors) {
     const message = Object.values(errors)
@@ -132,11 +120,11 @@ export function AddWordModal(props: AddWordModalProps) {
       <Modal
         type="alert"
         className="full dashed-border-modal"
-        onClose={onClose}
+        onClose={props.onClose}
+        shouldClose={shouldClose}
       >
+        {modal.content}
         <div className="dashed-border spacing-16 flex-column fill-heigth">
-          {modal.content}
-
           <CloseModalButton />
 
           <Form

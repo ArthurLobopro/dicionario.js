@@ -8,9 +8,9 @@ import { useModal } from "../../../hooks/useModal"
 
 interface WordProps {
   word: {
-    lastEdit?: Date | undefined
+    lastEdit?: string | undefined
     definition: string
-    register: Date
+    register: string
     word: string
   }
   modal: ReturnType<typeof useModal>

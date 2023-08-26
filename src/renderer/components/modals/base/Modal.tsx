@@ -1,17 +1,19 @@
+/* eslint-disable prettier/prettier */
 import { useMemo, useRef } from "react"
 import { ModalContext } from "../../../contexts/ModalContext"
 
 type ModalProps = React.PropsWithChildren<
   (
     | {
-        type: "alert"
-        onClose: VoidFunction
-      }
+      type: "alert"
+      onClose: VoidFunction
+    }
     | {
-        type: "confirm"
-        onClose: (confirm: boolean) => void
-      }
+      type: "confirm"
+      onClose: (confirm: boolean) => void
+    }
   ) & {
+    shouldClose?: () => Promise<boolean>
     className?: string
     id?: string
   }
@@ -23,14 +25,28 @@ export function Modal(props: ModalProps) {
 
   const handleClose = useMemo(() => {
     return props.type === "alert"
-      ? () => {
-          modalRef.current?.classList.add("close")
+      ? async () => {
+        if (props.shouldClose) {
+          const should_close = await props.shouldClose()
+          if (!should_close) {
+            return
+          }
         }
-      : (confirm: boolean) => {
-          responseRef.current = confirm
-          modalRef.current?.classList.add("close")
+
+        modalRef.current?.classList.add("close")
+      }
+      : async (confirm: boolean) => {
+        if (props.shouldClose) {
+          const should_close = await props.shouldClose()
+          if (!should_close) {
+            return
+          }
         }
-  }, [props.type])
+
+        responseRef.current = confirm
+        modalRef.current?.classList.add("close")
+      }
+  }, [props.type, props.shouldClose])
 
   function handleAnimationEnd(): any {
     if (!modalRef.current) {
