@@ -36,7 +36,7 @@ export class WordsController {
         })
     }
 
-    private alreadyExists(word: string) {
+    alreadyExists(word: string) {
         return this.dictionary.words.some((w) => w.word === word)
     }
 
