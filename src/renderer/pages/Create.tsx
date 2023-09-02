@@ -34,7 +34,12 @@ export function CreateScreen() {
   const has_return_to = search.includes("return_to=")
   const return_to = has_return_to ? search.split("=")[1] : "/"
 
-  const { register, handleSubmit, reset, watch } = useForm<CreateWordData>({
+  const {
+    register,
+    handleSubmit,
+    reset: resetFields,
+    watch,
+  } = useForm<CreateWordData>({
     resolver: zodResolver(create_word_schema),
     defaultValues: {
       word: "",
@@ -114,7 +119,7 @@ export function CreateScreen() {
           message="Palavra adicionada com sucesso!"
           onClose={() => {
             modal.close()
-            reset()
+            resetFields()
           }}
         />,
       )
