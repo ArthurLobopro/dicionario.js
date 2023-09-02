@@ -1,12 +1,7 @@
-import { ipcRenderer } from "electron"
-import path from "node:path"
 import { FieldErrors } from "react-hook-form"
 import { ZodError } from "zod"
 import { languageNames } from "../lib/languageNames"
 import { ReactMouseEvent } from "./types"
-
-export const appPath = ipcRenderer.sendSync("app-path") as string
-export const assetsPath = path.join(appPath, "assets")
 
 export function formatDate(datestring: string) {
   const pad2 = (n: any) => String(n).padStart(2, "0")
