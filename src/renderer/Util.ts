@@ -1,5 +1,3 @@
-import { FieldErrors } from "react-hook-form"
-import { ZodError } from "zod"
 import { languageNames } from "../lib/languageNames"
 import { ReactMouseEvent } from "./types"
 
@@ -30,14 +28,4 @@ export type keyofLangs = keyof typeof languageNames
 
 export function getLangName(lang: string) {
   return languageNames[lang as keyofLangs] || lang
-}
-
-export function getHookformErrorMessage(errors: FieldErrors) {
-  return Object.values(errors)
-    .map((error) => error?.message)
-    .join("\n")
-}
-
-export function getZodErrorMessage(error: ZodError) {
-  return error.issues.map((issue) => issue.message).join("\n")
 }
