@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
 import { useCallback, useEffect } from "react"
-import { FieldErrors, useForm } from "react-hook-form"
-import { ZodError, z } from "zod"
-import { ErrorModal, SuccessModal, WarningModal } from ".."
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { SuccessModal, WarningModal } from ".."
 import { api } from "../../../../store/Api"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { wordSchema } from "../../../../store/ZodSchemas/word"
@@ -13,6 +13,11 @@ import { Form, If, ValidatedInput } from "../../base"
 import { Modal } from "../base/Modal"
 import { CloseModalButton, OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
+
+import {
+  defaultErrorHandler,
+  hookformOnErrorFactory,
+} from "../../../ErrorHandler"
 
 const create_word_schema = wordSchema.pick({
   word: true,
@@ -27,8 +32,6 @@ interface AddWordModalProps {
 }
 
 export function AddWordModal(props: AddWordModalProps) {
-  const { dictionary } = props
-
   const { register, handleSubmit, watch } = useForm<CreateWordData>({
     resolver: zodResolver(create_word_schema),
     defaultValues: {
@@ -37,19 +40,13 @@ export function AddWordModal(props: AddWordModalProps) {
     },
   })
 
+  const { dictionary } = props
   const { word, definition } = watch()
 
-  const word_already_exists = (() => {
-    try {
-      return dictionary.Words.getWord(word)?.word === word
-    } catch (error) {
-      return false
-    }
-  })()
+  const word_already_exists = dictionary.Words.alreadyExists(word)
+  const hasChanges = word.length + definition.length > 0
 
   const modal = useModal()
-
-  const hasChanges = word.length + definition.length > 0
 
   const shouldClose = useCallback(async (): Promise<boolean> => {
     return new Promise((resolve) => {
@@ -73,21 +70,12 @@ export function AddWordModal(props: AddWordModalProps) {
   useEffect(() => {
     frame.instance.setBeforeCloseCallback(shouldClose)
 
-    return () => {
-      frame.instance.setBeforeCloseCallback()
-    }
+    return () => frame.instance.setBeforeCloseCallback()
   }, [shouldClose])
 
   useEffect(() => {
     ipcRenderer.send("update-spellchecker", dictionary.languages)
   }, [])
-
-  function onError(errors: FieldErrors) {
-    const message = Object.values(errors)
-      .map((error) => error?.message)
-      .join("\n")
-    modal.open(<ErrorModal message={message} onClose={modal.close} />)
-  }
 
   function onSubmit(data: CreateWordData) {
     if (!hasChanges) return props.onClose()
@@ -101,19 +89,12 @@ export function AddWordModal(props: AddWordModalProps) {
           onClose={props.onClose.bind(null, true)}
         />,
       )
-    } catch (error: unknown) {
-      if (error instanceof ZodError) {
-        const zod_error = error as ZodError
-        const message = zod_error.issues
-          .map((issue) => issue.message)
-          .join("\n")
-        modal.open(<ErrorModal onClose={modal.close} message={message} />)
-      } else {
-        const message = (error as Error).message
-        modal.open(<ErrorModal message={message} onClose={modal.close} />)
-      }
+    } catch (error) {
+      defaultErrorHandler(error, modal)
     }
   }
+
+  const onError = hookformOnErrorFactory(modal)
 
   return (
     <ModalWrapper>

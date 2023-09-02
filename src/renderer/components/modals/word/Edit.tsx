@@ -1,9 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
 import { useCallback, useEffect } from "react"
-import { FieldErrors, useForm } from "react-hook-form"
-import z from "zod"
-import { ErrorModal, SuccessModal, WarningModal } from ".."
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import { SuccessModal, WarningModal } from ".."
 import { api } from "../../../../store/Api"
 import { wordSchema } from "../../../../store/ZodSchemas/word"
 import { frame } from "../../../Frame"
@@ -12,6 +12,11 @@ import { Form, If } from "../../base"
 import { Modal } from "../base/Modal"
 import { CloseModalButton, OkButton } from "../base/ModalButtons"
 import { ModalWrapper } from "../base/Wrapper"
+
+import {
+  defaultErrorHandler,
+  hookformOnErrorFactory,
+} from "../../../ErrorHandler"
 
 interface EditWordModalProps {
   onClose: (edited?: boolean) => void
@@ -72,17 +77,8 @@ export function EditWordModal(props: EditWordModalProps) {
   useEffect(() => {
     frame.instance.setBeforeCloseCallback(shouldClose)
 
-    return () => {
-      frame.instance.setBeforeCloseCallback()
-    }
+    return () => frame.instance.setBeforeCloseCallback()
   }, [shouldClose])
-
-  function onError(errors: FieldErrors) {
-    const message = Object.values(errors)
-      .map((error) => error?.message)
-      .join("\n")
-    modal.open(<ErrorModal onClose={modal.hide} message={message} />)
-  }
 
   function onSubmit(data: UpdateWordData) {
     if (!hasChanges) return props.onClose()
@@ -99,12 +95,12 @@ export function EditWordModal(props: EditWordModalProps) {
           onClose={props.onClose.bind(null, true)}
         />,
       )
-    } catch (error: any) {
-      console.log(error)
-      const message = (error as Error).message
-      modal.open(<ErrorModal message={message} onClose={modal.close} />)
+    } catch (error) {
+      defaultErrorHandler(error, modal)
     }
   }
+
+  const onError = hookformOnErrorFactory(modal)
 
   return (
     <ModalWrapper>

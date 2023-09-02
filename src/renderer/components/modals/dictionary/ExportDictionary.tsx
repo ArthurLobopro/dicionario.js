@@ -1,28 +1,32 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
 import { FieldErrors, useForm } from "react-hook-form"
-import z from "zod"
+import { z } from "zod"
 import { ErrorModal, SuccessModal } from "../"
 import { api } from "../../../../store/Api"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { useModal } from "../../../hooks/useModal"
 import { FormModal } from "../FormModal"
+
+import {
+  defaultErrorHandler,
+  getHookformErrorMessage,
+} from "../../../ErrorHandler"
+
 interface ExportDictionaryModalProps {
   onClose: () => void
   dictionary: DictionaryController
 }
 
-type data = {
-  path: string
-}
+const dataSchema = z.object({
+  path: z.string().refine((value) => value !== "", {
+    message: "Escolha um local para exportar o dicionário",
+  }),
+})
+
+type data = z.infer<typeof dataSchema>
 
 export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
-  const dataSchema = z.object({
-    path: z.string().refine((value) => value !== "", {
-      message: "Escolha um local para exportar o dicionário",
-    }),
-  })
-
   const { setValue, watch, handleSubmit } = useForm({
     resolver: zodResolver(dataSchema),
     defaultValues: {
@@ -47,17 +51,12 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
         />,
       )
     } catch (error) {
-      modal.open(
-        <ErrorModal onClose={modal.close} message={(error as Error).message} />,
-      )
+      defaultErrorHandler(error, modal)
     }
   }
 
   function handleExportError(errors: FieldErrors<data>) {
-    const message = Object.values(errors)
-      .map((error) => error?.message)
-      .join("\n")
-
+    const message = getHookformErrorMessage(errors)
     modal.open(<ErrorModal onClose={modal.close} message={message} />)
   }
 
