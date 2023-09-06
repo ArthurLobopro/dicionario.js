@@ -1,9 +1,12 @@
-import { Modal } from "./base/Modal"
-import { ModalBody } from "./base/ModalBody"
-import { CancelButton, OkButton } from "./base/ModalButtons"
-import { ModalFooter } from "./base/ModalFooter"
-import { ModalHeader } from "./base/ModalHeader"
-import { ModalWrapper } from "./base/Wrapper"
+import {
+  CancelButton,
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalWrapper,
+  OkButton,
+} from "./base"
 
 interface ReleaseModalProps {
   onClose: (v: boolean) => void
