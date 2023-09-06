@@ -26,11 +26,15 @@ const dataSchema = z.object({
 
 type data = z.infer<typeof dataSchema>
 
+function getDefaulPath(): string {
+  return ipcRenderer.sendSync("get-path", "documents")
+}
+
 export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
   const { setValue, watch, handleSubmit } = useForm({
     resolver: zodResolver(dataSchema),
     defaultValues: {
-      path: "",
+      path: getDefaulPath(),
     },
   })
 
