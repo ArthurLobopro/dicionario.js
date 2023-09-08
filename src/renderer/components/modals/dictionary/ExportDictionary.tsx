@@ -1,8 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
-import { FieldErrors, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { ErrorModal, SuccessModal } from "../"
+import { SuccessModal } from "../"
 import { api } from "../../../../store/Api"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { useModal } from "../../../hooks/useModal"
@@ -10,7 +10,7 @@ import { FormModal } from "../FormModal"
 
 import {
   defaultErrorHandler,
-  getHookformErrorMessage,
+  hookformOnErrorFactory,
 } from "../../../ErrorHandler"
 
 interface ExportDictionaryModalProps {
@@ -39,9 +39,7 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
   })
 
   const { dictionary } = props
-
   const path = watch("path")
-
   const modal = useModal()
 
   function handleExport(data: data) {
@@ -59,10 +57,7 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
     }
   }
 
-  function handleExportError(errors: FieldErrors<data>) {
-    const message = getHookformErrorMessage(errors)
-    modal.open(<ErrorModal onClose={modal.close} message={message} />)
-  }
+  const handleExportError = hookformOnErrorFactory(modal)
 
   function handlePickFolder() {
     const folder = ipcRenderer.sendSync("get-folder")
