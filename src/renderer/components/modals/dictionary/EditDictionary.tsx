@@ -37,12 +37,6 @@ type edit_dictionary_inputs = z.infer<typeof edit_dictionary_inputs_schema>
 export function EditDictionaryModal(props: editDictionaryProps) {
   const { dictionary } = props
 
-  const default_dictionary_name = api.dictionaries.defaultDictionary.name
-
-  const editing_default = dictionary.name === default_dictionary_name
-
-  const modal = useModal()
-
   const {
     register,
     handleSubmit,
@@ -59,6 +53,10 @@ export function EditDictionaryModal(props: editDictionaryProps) {
       language_to_add: "NULL",
     },
   })
+
+  const default_dictionary_name = api.dictionaries.defaultDictionary.name
+  const editing_default = dictionary.name === default_dictionary_name
+  const modal = useModal()
 
   const { languages, language_to_add } = watch()
 

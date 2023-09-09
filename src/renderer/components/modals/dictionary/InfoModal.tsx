@@ -1,4 +1,4 @@
-import { useCallback } from "react"
+import { useCallback, useMemo } from "react"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
 import { formatDate, getLangName } from "../../../Util"
 import { useModal } from "../../../hooks/useModal"
@@ -21,8 +21,15 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
     olderWord,
   } = props.dictionary.Words
 
-  const newerRegister = newerWord?.register && formatDate(newerWord.register)
-  const olderRegister = olderWord?.register && formatDate(olderWord.register)
+  const newerRegister = useMemo(
+    () => newerWord?.register && formatDate(newerWord.register),
+    [newerWord?.register],
+  )
+
+  const olderRegister = useMemo(
+    () => olderWord?.register && formatDate(olderWord.register),
+    [olderWord?.register],
+  )
 
   const modal = useModal()
 
@@ -46,6 +53,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
       type="alert"
       title={`Informações de: ${props.dictionary.name}`}
       onClose={props.onClose}
+      icon={<BlueInfoIcon />}
       children={
         <>
           {modal.content}
@@ -82,7 +90,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
             <p className="flex gap-4 align-center">
               Último Registro:
               <span className="info">
-                {newerWord?.word} ({newerRegister})
+                {newerWord.word} ({newerRegister})
               </span>
               <CircleButton
                 title="Visualizar"
@@ -97,8 +105,8 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
             <p className="flex gap-4 align-center">
               Maior Definição (caracteres):
               <span className="info">
-                {biggerDefinitionWord?.word} (
-                {biggerDefinitionWord?.definition.length} caracteres)
+                {biggerDefinitionWord.word} (
+                {biggerDefinitionWord.definition.length} caracteres)
               </span>
               <CircleButton
                 title="Visualizar"
@@ -113,8 +121,8 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
             <p className="flex gap-4 align-center">
               Maior Definição (linhas):
               <span className="info">
-                {biggerLinesDefinitionWord?.word} (
-                {biggerLinesDefinitionWord?.definition.split("\n").length}{" "}
+                {biggerLinesDefinitionWord.word} (
+                {biggerLinesDefinitionWord.definition.split("\n").length}{" "}
                 linhas)
               </span>
               <CircleButton
@@ -127,7 +135,6 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
           )}
         </>
       }
-      icon={<BlueInfoIcon />}
     />
   )
 }

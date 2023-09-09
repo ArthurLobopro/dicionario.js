@@ -1,6 +1,7 @@
 import { FormEvent } from "react"
 import { api } from "../../../../store/Api"
 import { DictionaryController } from "../../../../store/Controllers/Dictionary"
+import { defaultErrorHandler } from "../../../ErrorHandler"
 import { useModal } from "../../../hooks/useModal"
 import { ErrorModal } from "../Error"
 import { FormModal } from "../FormModal"
@@ -39,12 +40,7 @@ export function DeleteDictionaryModal(props: modal_props) {
           />,
         )
       } catch (error) {
-        modal.open(
-          <ErrorModal
-            onClose={props.onClose}
-            message={`Houve um erro ao deletar o dicionário "${dictionary.name}"`}
-          />,
-        )
+        defaultErrorHandler(error, modal)
       }
     }
 

@@ -1,14 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FieldErrors, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { ErrorModal, SuccessModal } from "../"
+import { SuccessModal } from "../"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
 import { FormModal } from "../FormModal"
 
 import {
   defaultErrorHandler,
-  getHookformErrorMessage,
+  hookformOnErrorFactory,
 } from "../../../ErrorHandler"
 
 interface addDictionaryProps {
@@ -48,10 +48,7 @@ export function AddDictionaryModal(props: addDictionaryProps) {
     }
   }
 
-  function onError(errors: FieldErrors) {
-    const message = getHookformErrorMessage(errors)
-    modal.open(<ErrorModal onClose={modal.hide} message={message} />)
-  }
+  const onError = hookformOnErrorFactory(modal)
 
   return (
     <FormModal
