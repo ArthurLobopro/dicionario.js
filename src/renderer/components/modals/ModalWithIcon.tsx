@@ -1,20 +1,25 @@
 import { If } from "../base/If"
-import { Modal } from "./base/Modal"
-import { ModalBody } from "./base/ModalBody"
 import { CancelButton, OkButton } from "./base/ModalButtons"
-import { ModalFooter } from "./base/ModalFooter"
-import { ModalHeader } from "./base/ModalHeader"
-import { ModalWrapper } from "./base/Wrapper"
 
-type ModifyTypeProps =
-  | {
-      type: "alert"
-      onClose: VoidFunction
-    }
-  | {
-      type: "confirm"
-      onClose: (confirm: boolean) => void
-    }
+import {
+  Modal,
+  ModalBody,
+  ModalFooter,
+  ModalHeader,
+  ModalWrapper,
+} from "./base"
+
+type alertProps = {
+  type: "alert"
+  onClose: VoidFunction
+}
+
+type confirmProps = {
+  type: "confirm"
+  onClose: (confirm: boolean) => void
+}
+
+type ModifyTypeProps = alertProps | confirmProps
 
 export type ModalProps = {
   title: string

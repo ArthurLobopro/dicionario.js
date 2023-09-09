@@ -60,8 +60,15 @@ div:has(> .word-wrapper) {
 			}
 		}
 
-		.controls {
+		>.controls {
+			display: none;
+		}
+
+		&:hover>.controls {
 			@extend %flex-center;
+		}
+
+		.controls {
 			gap: 4px;
 
 			>div {

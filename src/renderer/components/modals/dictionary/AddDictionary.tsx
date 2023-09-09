@@ -1,10 +1,15 @@
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { ErrorModal, SuccessModal } from "../"
+import { SuccessModal } from "../"
 import { api } from "../../../../store/Api"
 import { useModal } from "../../../hooks/useModal"
 import { FormModal } from "../FormModal"
+
+import {
+  defaultErrorHandler,
+  hookformOnErrorFactory,
+} from "../../../ErrorHandler"
 
 interface addDictionaryProps {
   onClose: () => void
@@ -39,17 +44,17 @@ export function AddDictionaryModal(props: addDictionaryProps) {
         />,
       )
     } catch (error) {
-      if (error instanceof Error) {
-        modal.open(<ErrorModal message={error.message} onClose={modal.close} />)
-      }
+      defaultErrorHandler(error, modal)
     }
   }
+
+  const onError = hookformOnErrorFactory(modal)
 
   return (
     <FormModal
       title="Adicionar dicionário"
       onClose={props.onClose}
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit(onSubmit, onError)}
       submitText="Adicionar"
     >
       {modal.content}

@@ -103,3 +103,9 @@ ipcMain.on("update-spellchecker", (event, languages: string[]) => {
         languages || [app.getLocale()],
     )
 })
+
+type pathName = Parameters<typeof app.getPath>[0]
+
+ipcMain.on("get-path", (event, pathName: pathName) => {
+    event.returnValue = app.getPath(pathName)
+})

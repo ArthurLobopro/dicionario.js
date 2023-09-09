@@ -6,6 +6,7 @@ import {
   dictionary,
   dictionarySchema,
 } from "../../../../store/ZodSchemas/dictionary"
+import { defaultErrorHandler } from "../../../ErrorHandler"
 import { useModal } from "../../../hooks/useModal"
 import { If } from "../../base"
 import { ErrorModal } from "../Error"
@@ -130,12 +131,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
         )
       }
     } catch (error) {
-      modal.open(
-        <ErrorModal
-          message={(error as Error).message || "Erro ao importar dicionário"}
-          onClose={modal.close}
-        />,
-      )
+      defaultErrorHandler(error, modal)
     }
   }
 

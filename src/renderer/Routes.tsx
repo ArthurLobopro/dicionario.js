@@ -10,7 +10,6 @@ export function AppRoutes() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create" element={<CreateScreen />} />
-        <Route path="/create/:dictionary" element={<CreateScreen />} />
         <Route path="/config" element={<ConfigScreen />} />
         <Route path="/view" element={<ViewScreen />} />
       </Routes>

@@ -37,3 +37,5 @@ export function useModal(props?: useModalProps) {
     close,
   }
 }
+
+export type modal = ReturnType<typeof useModal>

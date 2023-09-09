@@ -39,14 +39,13 @@ export function ViewWordModal(props: ViewWordModalProps) {
               <span className="info">{formatDate(word_data.register)}</span>
             </div>
 
-            {word_data.lastEdit ? (
+            {!!word_data.lastEdit && (
               <div className="flex-column gap-10">
                 <span>Última edição</span>
                 <span className="info">{formatDate(word_data.lastEdit)}</span>
               </div>
-            ) : null}
+            )}
           </div>
-
           <OkButton />
         </div>
       </Modal>

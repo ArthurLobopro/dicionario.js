@@ -1,16 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useEffect, useState } from "react"
-import { FieldErrors, useForm } from "react-hook-form"
-import { useLocation, useParams } from "react-router-dom"
-import { ZodError, z } from "zod"
+import { ipcRenderer } from "electron"
+import { useCallback, useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 import { api } from "../../store/Api"
 import { wordSchema } from "../../store/ZodSchemas/word"
+import { defaultErrorHandler, hookformOnErrorFactory } from "../ErrorHandler"
 import { frame } from "../Frame"
-import { ErrorModal, SuccessModal, WarningModal } from "../components/modals"
+import { SuccessModal, WarningModal } from "../components/modals"
 import { SelectDictionary } from "../components/selects/Dictionary"
 import { useModal } from "../hooks/useModal"
 
-import { ipcRenderer } from "electron"
 import {
   Form,
   Header,
@@ -27,14 +27,12 @@ const create_word_schema = wordSchema.pick({
 type CreateWordData = z.infer<typeof create_word_schema>
 
 export function CreateScreen() {
-  const { search } = useLocation()
-
-  const { dictionary: dictionary_name = "" } = useParams()
-
-  const has_return_to = search.includes("return_to=")
-  const return_to = has_return_to ? search.split("=")[1] : "/"
-
-  const { register, handleSubmit, reset, watch } = useForm<CreateWordData>({
+  const {
+    register,
+    handleSubmit,
+    reset: resetFields,
+    watch,
+  } = useForm<CreateWordData>({
     resolver: zodResolver(create_word_schema),
     defaultValues: {
       word: "",
@@ -42,13 +40,9 @@ export function CreateScreen() {
     },
   })
 
-  const [dictionary, setDictionary] = useState(() => {
-    try {
-      return api.dictionaries.getDictionary(dictionary_name as string)
-    } catch (error) {
-      return api.dictionaries.defaultDictionary
-    }
-  })
+  const [dictionary, setDictionary] = useState(
+    api.dictionaries.defaultDictionary,
+  )
 
   useEffect(() => {
     ipcRenderer.send("update-spellchecker", dictionary.languages)
@@ -56,17 +50,12 @@ export function CreateScreen() {
 
   const { word, definition } = watch()
 
-  const word_already_exists = (() => {
-    try {
-      return dictionary.Words.getWord(word)?.word === word
-    } catch (error) {
-      return false
-    }
-  })()
+  const wordAlreadyExists = dictionary.Words.alreadyExists(word)
+  const hasChanges = word.length + definition.length > 0
 
-  const closeCallback = async (): Promise<boolean> => {
+  const shouldCloseCallback = useCallback((): Promise<boolean> => {
     return new Promise((resolve) => {
-      if (word.length || definition.length) {
+      if (hasChanges) {
         modal.open(
           <WarningModal
             onClose={(value) => {
@@ -82,27 +71,18 @@ export function CreateScreen() {
         resolve(true)
       }
     })
-  }
+  }, [hasChanges])
 
   useEffect(() => {
-    frame.instance.setBeforeCloseCallback(closeCallback)
+    frame.instance.setBeforeCloseCallback(shouldCloseCallback)
 
-    return () => {
-      frame.instance.setBeforeCloseCallback()
-    }
-  }, [word.length + definition.length > 0])
+    return () => frame.instance.setBeforeCloseCallback()
+  }, [shouldCloseCallback])
 
   const modal = useModal()
 
   function handleChangeDictionary(name: string) {
     setDictionary(api.dictionaries.getDictionary(name))
-  }
-
-  function onError(errors: FieldErrors) {
-    const message = Object.values(errors)
-      .map((error) => error?.message)
-      .join("\n")
-    modal.open(<ErrorModal message={message} onClose={modal.close} />)
   }
 
   function onSubmit(data: CreateWordData) {
@@ -114,35 +94,23 @@ export function CreateScreen() {
           message="Palavra adicionada com sucesso!"
           onClose={() => {
             modal.close()
-            reset()
+            resetFields()
           }}
         />,
       )
-    } catch (error: unknown) {
-      if (error instanceof ZodError) {
-        const zod_error = error as ZodError
-        const message = zod_error.issues
-          .map((issue) => issue.message)
-          .join("\n")
-        modal.open(<ErrorModal onClose={modal.close} message={message} />)
-      } else {
-        const message = (error as Error).message
-        modal.open(<ErrorModal message={message} onClose={modal.close} />)
-      }
+    } catch (error) {
+      defaultErrorHandler(error, modal)
     }
   }
+
+  const onError = hookformOnErrorFactory(modal)
 
   return (
     <Page id="create">
       {modal.content}
       <Header
         title="Adicionar Palavra"
-        left={
-          <ReturnButton
-            returnTo={has_return_to ? return_to : "/"}
-            onClick={closeCallback}
-          />
-        }
+        left={<ReturnButton onClick={shouldCloseCallback} />}
       />
       <Form
         className="dashed-border spacing-16 grid-fill-center gap"
@@ -151,7 +119,6 @@ export function CreateScreen() {
         <label>
           Salvar em
           <SelectDictionary
-            disabled={!!dictionary_name}
             default_value={dictionary.name}
             onChange={handleChangeDictionary}
           />
@@ -160,9 +127,9 @@ export function CreateScreen() {
           Palavra
           <ValidatedInput
             register={register("word")}
-            hasError={word_already_exists}
+            hasError={wordAlreadyExists}
             errorMessage={
-              word_already_exists
+              wordAlreadyExists
                 ? `A palavra "${word}" já existe neste dicionário.`
                 : ""
             }
