@@ -2,6 +2,7 @@ import * as fs from "node:fs"
 import * as path from "node:path"
 import { dictionaries as dictionaryStore } from "../Store"
 import { dictionary, dictionarySchema } from "../ZodSchemas/dictionary"
+import { exportDataSchema } from "../ZodSchemas/exportdata"
 import { DictionaryController } from "./Dictionary"
 
 function getDateToSave() {
@@ -151,6 +152,27 @@ export class DictionariesController {
             .filter((dictionary) => dictionary.name !== name)
 
         dictionaryStore.set("dictionaries", dictionaries)
+    }
+
+    static exportData(folder: string) {
+        if (!folder) {
+            throw new Error("Pasta inválida")
+        }
+
+        if (!fs.existsSync(folder)) {
+            throw new Error("Pasta não encontrada")
+        }
+
+        const data = exportDataSchema.parse(dictionaryStore.store)
+
+        const filePath = path.resolve(
+            folder,
+            `dictionaries-backup_${getDateToSave()}.json`,
+        )
+
+        const content = JSON.stringify(data, null, 4)
+
+        fs.writeFileSync(filePath, content)
     }
 
     static exportDictionary(name: string, folder: string) {

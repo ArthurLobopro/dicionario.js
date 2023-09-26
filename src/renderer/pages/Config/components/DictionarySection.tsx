@@ -1,8 +1,9 @@
 import { hoverFocus } from "../../../Util"
 import { LineTitle } from "../../../components/base"
-import { AddIcon, DonwloadIcon } from "../../../components/icons"
+import { AddIcon, DonwloadIcon, UploadIcon } from "../../../components/icons"
 import { useModal } from "../../../hooks/useModal"
 
+import { ExportDataModal } from "../../../components/modals/ExportData"
 import {
   AddDictionaryModal,
   ImportDictionaryModal,
@@ -21,6 +22,10 @@ export function DictionarySection(props: DictionarySectionsProps) {
 
   function HandleImportDictionary() {
     modal.open(<ImportDictionaryModal onClose={modal.close} />)
+  }
+
+  function HandleExportData() {
+    modal.open(<ExportDataModal onClose={modal.close} />)
   }
 
   return (
@@ -47,6 +52,17 @@ export function DictionarySection(props: DictionarySectionsProps) {
       >
         <DonwloadIcon />
         Importar
+      </button>
+
+      <span>Exportar Dados</span>
+      <button
+        className="stroke"
+        title="Exportar Dados"
+        onClick={HandleExportData}
+        onMouseEnter={hoverFocus}
+      >
+        <UploadIcon />
+        Exportar
       </button>
     </>
   )
