@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import { validateFolder } from "../../util"
-import { dictionaries as dictionaryStore } from "../Store"
+import { dictionariesStore } from "../Store"
 import { backupDataSchema } from "../ZodSchemas/exportdata"
 import { DictionariesController } from "./Dictionaries"
 
@@ -39,7 +39,7 @@ export class DataExporter {
     static exportData(folder: string, compress = false) {
         validateFolder(folder)
 
-        const data = backupDataSchema.parse(dictionaryStore.store)
+        const data = backupDataSchema.parse(dictionariesStore.store)
 
         const filePath = path.resolve(
             folder,

@@ -16,7 +16,7 @@ export const data = new ZodElectronStore<StoreWords>({
     migrations: WordsMigrations,
 })
 
-export const dictionaries = new ZodElectronStore<StoreDictionaries>({
+export const dictionariesStore = new ZodElectronStore<StoreDictionaries>({
     schema: dictionariesSchema,
     name: "dictionaries",
     // @ts-ignore

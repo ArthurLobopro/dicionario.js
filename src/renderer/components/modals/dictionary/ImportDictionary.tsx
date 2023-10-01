@@ -1,6 +1,7 @@
 import { ipcRenderer } from "electron"
 import fs from "node:fs"
 import { useRef, useState } from "react"
+import { api } from "../../../../store/Api"
 import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import {
   dictionary,
@@ -99,7 +100,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
     try {
       if (alreadyExists) {
         if (action === "merge") {
-          DictionariesController.mergeDictionary(selectedFile.content)
+          api.importer.mergeDictionary(selectedFile.content)
 
           return modal.open(
             <SuccessModal
@@ -109,7 +110,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
           )
         }
 
-        DictionariesController.importDictionary({
+        api.importer.importDictionary({
           ...selectedFile.content,
           name: newName,
         })
@@ -121,7 +122,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
           />,
         )
       } else {
-        DictionariesController.importDictionary(selectedFile.content)
+        api.importer.importDictionary(selectedFile.content)
 
         modal.open(
           <SuccessModal

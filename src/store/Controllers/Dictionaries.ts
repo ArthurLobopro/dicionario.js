@@ -1,15 +1,14 @@
-import { dictionaries, dictionaries as dictionaryStore } from "../Store"
+import { dictionariesStore } from "../Store"
 import { dictionary, dictionarySchema } from "../ZodSchemas/dictionary"
-import { backupData } from "../ZodSchemas/exportdata"
 import { DictionaryController } from "./Dictionary"
 
 export class DictionariesController {
     static get defaultDictionaryName() {
-        return dictionaryStore.get("defaultDictionary")
+        return dictionariesStore.get("defaultDictionary")
     }
 
     static get defaultDictionary() {
-        const dictionaries = dictionaryStore.get("dictionaries")
+        const dictionaries = dictionariesStore.get("dictionaries")
 
         const defaultName = this
             .defaultDictionaryName as keyof typeof dictionaries
@@ -26,7 +25,7 @@ export class DictionariesController {
     }
 
     static get dictionaries() {
-        return dictionaryStore.get("dictionaries")
+        return dictionariesStore.get("dictionaries")
     }
 
     static get dictionariesNames() {
@@ -34,12 +33,9 @@ export class DictionariesController {
     }
 
     static exists(name: string) {
-        try {
-            this.getDictionary(name)
-            return true
-        } catch (err) {
-            return false
-        }
+        return dictionariesStore
+            .get("dictionaries")
+            .some((dictionary) => dictionary.name === name)
     }
 
     static getDictionary(name: string) {
@@ -57,7 +53,7 @@ export class DictionariesController {
     }
 
     static saveDictionary(dictionary: dictionary) {
-        const dictionaries = dictionaryStore.get("dictionaries")
+        const dictionaries = dictionariesStore.get("dictionaries")
 
         const index = dictionaries.findIndex((d) => d.name === dictionary.name)
 
@@ -67,30 +63,26 @@ export class DictionariesController {
 
         dictionaries[index] = dictionary
 
-        dictionaryStore.set("dictionaries", dictionaries)
+        dictionariesStore.set("dictionaries", dictionaries)
     }
 
     static addDictionary(name: string, setDefault = false) {
-        const dictionaries = dictionaryStore.get("dictionaries")
+        if (!name) {
+            throw new Error("Nome inválido")
+        }
 
-        const hasDictionary = dictionaries.some(
-            (dictionary) => dictionary.name === name,
-        )
+        const hasDictionary = this.exists(name)
 
         if (hasDictionary) {
             throw new Error("Já existe um dicionário com esse nome")
         }
 
-        if (!name) {
-            throw new Error("Nome inválido")
-        }
-
+        const dictionaries = dictionariesStore.get("dictionaries")
         dictionaries.push(dictionarySchema.parse({ name, words: [] }))
-
-        dictionaryStore.set("dictionaries", dictionaries)
+        dictionariesStore.set("dictionaries", dictionaries)
 
         if (setDefault) {
-            dictionaryStore.set("defaultDictionary", name)
+            dictionariesStore.set("defaultDictionary", name)
         }
     }
 
@@ -102,7 +94,7 @@ export class DictionariesController {
             languages,
         }: { newName?: string; setDefault?: boolean; languages?: string[] },
     ) {
-        const dictionaries = dictionaryStore.get("dictionaries")
+        const dictionaries = dictionariesStore.get("dictionaries")
 
         const index = dictionaries.findIndex(
             (dictionary) => dictionary.name === name,
@@ -113,9 +105,7 @@ export class DictionariesController {
         }
 
         if (newName && newName !== name) {
-            const hasDictionary = dictionaries.some(
-                (dictionary) => dictionary.name === newName,
-            )
+            const hasDictionary = this.exists(newName)
 
             if (hasDictionary) {
                 throw new Error("Já existe um dicionário com esse nome")
@@ -128,11 +118,11 @@ export class DictionariesController {
             dictionaries[index].languages = languages
         }
 
-        dictionaryStore.set("dictionaries", dictionaries)
+        dictionariesStore.set("dictionaries", dictionaries)
 
         const editingDefault = this.defaultDictionaryName === name
         if (setDefault || editingDefault) {
-            dictionaryStore.set("defaultDictionary", newName ?? name)
+            dictionariesStore.set("defaultDictionary", newName ?? name)
         }
     }
 
@@ -141,50 +131,10 @@ export class DictionariesController {
             throw new Error("Não é possível remover o dicionário padrão")
         }
 
-        const dictionaries = dictionaryStore
+        const dictionaries = dictionariesStore
             .get("dictionaries")
             .filter((dictionary) => dictionary.name !== name)
 
-        dictionaryStore.set("dictionaries", dictionaries)
-    }
-
-    static importData(data: backupData, action: "merge" | "replace") {
-        const { dictionariesNames } = this
-
-        if (action === "merge") {
-            for (const dictionary of data.dictionaries) {
-                if (dictionariesNames.includes(dictionary.name)) {
-                    this.mergeDictionary(dictionary)
-                } else {
-                    this.importDictionary(dictionary)
-                }
-            }
-        }
-
-        if (action === "replace") {
-            dictionaries.store = data
-        }
-    }
-
-    static importDictionary(dicionary: dictionary) {
-        const dictionaries = dictionaryStore.get("dictionaries")
-
-        const names = dictionaries.map((dictionary) => dictionary.name)
-
-        if (names.includes(dicionary.name)) {
-            throw new Error("Já existe um dicionário com esse nome")
-        }
-
-        dictionaries.push(dicionary)
-
-        dictionaryStore.set("dictionaries", dictionaries)
-    }
-
-    static mergeDictionary(dictionary: dictionary) {
-        const currentDictionary = DictionariesController.getDictionary(
-            dictionary.name,
-        )
-
-        currentDictionary.Words.mergeWords(dictionary.words)
+        dictionariesStore.set("dictionaries", dictionaries)
     }
 }
