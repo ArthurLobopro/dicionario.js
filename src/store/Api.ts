@@ -1,6 +1,6 @@
 import { ipcRenderer } from "electron"
 import { DataExporter } from "./Controllers/DataExporter"
-import { DataImporter } from "./Controllers/DataImpoter"
+import { DataImporter } from "./Controllers/DataImporter"
 import { DictionariesController } from "./Controllers/Dictionaries"
 import { OptionsController } from "./Controllers/Options"
 import { WordsController } from "./Controllers/Words"
