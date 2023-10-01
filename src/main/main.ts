@@ -4,7 +4,7 @@ import UpdateListener from "update-electron-app"
 import Store from "zod-electron-store"
 import { createJumpList } from "./windowsJumpList"
 
-import { options } from "../store/Store/options"
+import { optionsStore } from "../store/Store/options"
 
 import "electron-frame/main"
 import "./events"
@@ -55,7 +55,7 @@ function createWindow() {
         height: 600,
         minWidth: 800,
         minHeight: 600,
-        frame: isLinux && options.store.linux.useSystemTitleBar,
+        frame: isLinux && optionsStore.store.linux.useSystemTitleBar,
         autoHideMenuBar: true,
         show: false,
         icon: path.join(appPath, "assets", "icon.png"),
