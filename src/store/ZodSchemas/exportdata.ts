@@ -4,6 +4,8 @@ import { dictionariesSchema } from "./dictionaries"
 
 const version = ipcRenderer.sendSync("get-version") as string
 
-export const exportDataSchema = dictionariesSchema.extend({
+export const backupDataSchema = dictionariesSchema.extend({
     version: z.string().default(version),
 })
+
+export type backupData = z.infer<typeof backupDataSchema>

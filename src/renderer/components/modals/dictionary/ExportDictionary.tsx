@@ -44,7 +44,7 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
 
   function handleExport(data: data) {
     try {
-      api.dictionaries.exportDictionary(dictionary.name, data.path)
+      api.exporter.exportDictionary(dictionary.name, data.path)
 
       modal.open(
         <SuccessModal

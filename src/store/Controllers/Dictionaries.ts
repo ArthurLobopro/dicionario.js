@@ -1,22 +1,7 @@
-import * as fs from "node:fs"
-import * as path from "node:path"
-import { dictionaries as dictionaryStore } from "../Store"
+import { dictionaries, dictionaries as dictionaryStore } from "../Store"
 import { dictionary, dictionarySchema } from "../ZodSchemas/dictionary"
-import { exportDataSchema } from "../ZodSchemas/exportdata"
+import { backupData } from "../ZodSchemas/exportdata"
 import { DictionaryController } from "./Dictionary"
-
-function getDateToSave() {
-    const now = new Date()
-
-    const day = String(now.getDate()).padStart(2, "0")
-    const month = String(now.getMonth() + 1).padStart(2, "0")
-    const year = String(now.getFullYear())
-
-    const hour = String(now.getHours()).padStart(2, "0")
-    const minute = String(now.getMinutes()).padStart(2, "0")
-
-    return `${year}-${month}-${day}_${hour}-${minute}`
-}
 
 export class DictionariesController {
     static get defaultDictionaryName() {
@@ -46,6 +31,15 @@ export class DictionariesController {
 
     static get dictionariesNames() {
         return this.dictionaries.map((dictionary) => dictionary.name)
+    }
+
+    static exists(name: string) {
+        try {
+            this.getDictionary(name)
+            return true
+        } catch (err) {
+            return false
+        }
     }
 
     static getDictionary(name: string) {
@@ -154,48 +148,22 @@ export class DictionariesController {
         dictionaryStore.set("dictionaries", dictionaries)
     }
 
-    static exportData(folder: string) {
-        if (!folder) {
-            throw new Error("Pasta inválida")
+    static importData(data: backupData, action: "merge" | "replace") {
+        const { dictionariesNames } = this
+
+        if (action === "merge") {
+            for (const dictionary of data.dictionaries) {
+                if (dictionariesNames.includes(dictionary.name)) {
+                    this.mergeDictionary(dictionary)
+                } else {
+                    this.importDictionary(dictionary)
+                }
+            }
         }
 
-        if (!fs.existsSync(folder)) {
-            throw new Error("Pasta não encontrada")
+        if (action === "replace") {
+            dictionaries.store = data
         }
-
-        const data = exportDataSchema.parse(dictionaryStore.store)
-
-        const filePath = path.resolve(
-            folder,
-            `dictionaries-backup_${getDateToSave()}.json`,
-        )
-
-        const content = JSON.stringify(data, null, 4)
-
-        fs.writeFileSync(filePath, content)
-    }
-
-    static exportDictionary(name: string, folder: string) {
-        if (!folder) {
-            throw new Error("Pasta inválida")
-        }
-
-        if (!fs.existsSync(folder)) {
-            throw new Error("Pasta não encontrada")
-        }
-
-        const dictionary = DictionariesController.getDictionary(name)
-
-        const content = dictionary.export()
-
-        const exportName = name.replace(/ /g, "_").toLowerCase()
-
-        const filePath = path.resolve(
-            folder,
-            `${exportName}_${getDateToSave()}.json`,
-        )
-
-        fs.writeFileSync(filePath, content)
     }
 
     static importDictionary(dicionary: dictionary) {
