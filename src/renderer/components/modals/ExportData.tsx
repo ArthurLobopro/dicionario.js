@@ -2,26 +2,21 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { ipcRenderer } from "electron"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
-import { SuccessModal } from "../"
-import { api } from "../../../../store/Api"
-import { DictionaryController } from "../../../../store/Controllers/Dictionary"
-import { useModal } from "../../../hooks/useModal"
-import { FormModal } from "../FormModal"
+import { SuccessModal } from "."
+import { api } from "../../../store/Api"
+import { defaultErrorHandler, hookformOnErrorFactory } from "../../ErrorHandler"
+import { useModal } from "../../hooks/useModal"
+import { FormModal } from "./FormModal"
 
-import {
-  defaultErrorHandler,
-  hookformOnErrorFactory,
-} from "../../../ErrorHandler"
-
-interface ExportDictionaryModalProps {
+interface ExportDataModalProps {
   onClose: () => void
-  dictionary: DictionaryController
 }
 
 const dataSchema = z.object({
   path: z.string().refine((value) => value !== "", {
     message: "Escolha um local para exportar o dicionário",
   }),
+  compress: z.boolean().default(true),
 })
 
 type data = z.infer<typeof dataSchema>
@@ -30,26 +25,26 @@ function getDefaulPath(): string {
   return ipcRenderer.sendSync("get-path", "documents")
 }
 
-export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
-  const { setValue, watch, handleSubmit } = useForm({
+export function ExportDataModal(props: ExportDataModalProps) {
+  const { setValue, watch, handleSubmit, register } = useForm({
     resolver: zodResolver(dataSchema),
     defaultValues: {
       path: getDefaulPath(),
+      compress: true,
     },
   })
 
-  const { dictionary } = props
   const path = watch("path")
   const modal = useModal()
 
   function handleExport(data: data) {
     try {
-      api.exporter.exportDictionary(dictionary.name, data.path)
+      api.exporter.exportData(data.path, data.compress)
 
       modal.open(
         <SuccessModal
           onClose={props.onClose}
-          message="Dicionário exportado com sucesso!"
+          message="Dados exportados com sucesso!"
         />,
       )
     } catch (error) {
@@ -75,17 +70,21 @@ export function ExportDictionaryModal(props: ExportDictionaryModalProps) {
     >
       {modal.content}
       <div className="flex-column gap-10">
-        <div className="flex align-center gap-10">
-          <span>
-            Exportar dicionário "<strong>{dictionary.name}</strong>"
-          </span>
-        </div>
         <div className="grid-column-fill-center align-center gap-10">
           <span>Salvar em: </span>
-          <input type="text" className="simple" readOnly value={path} />
+          <input
+            type="text"
+            className="simple"
+            readOnly
+            value={path}
+            title={path}
+          />
           <button className="simple" type="button" onClick={handlePickFolder}>
             Escolher pasta
           </button>
+
+          <span>Comprimir arquivo</span>
+          <input type="checkbox" {...register("compress")} />
         </div>
       </div>
     </FormModal>
