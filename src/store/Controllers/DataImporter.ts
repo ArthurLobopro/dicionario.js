@@ -1,4 +1,4 @@
-import { dictionariesStore } from "../Store"
+import { dictionariesStore } from "../Store/dictionaries"
 import { dictionary } from "../ZodSchemas/dictionary"
 import { backupData } from "../ZodSchemas/exportdata"
 import { DictionariesController } from "./Dictionaries"

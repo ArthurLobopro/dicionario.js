@@ -1,7 +1,7 @@
 import fs from "node:fs"
 import path from "node:path"
 import { validateFolder } from "../../util"
-import { dictionariesStore } from "../Store"
+import { dictionariesStore } from "../Store/dictionaries"
 import { backupDataSchema } from "../ZodSchemas/exportdata"
 import { DictionariesController } from "./Dictionaries"
 
