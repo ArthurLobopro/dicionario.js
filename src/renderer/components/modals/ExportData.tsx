@@ -16,6 +16,7 @@ const dataSchema = z.object({
   path: z.string().refine((value) => value !== "", {
     message: "Escolha um local para exportar o dicionário",
   }),
+  compress: z.boolean().default(true),
 })
 
 type data = z.infer<typeof dataSchema>
@@ -25,10 +26,11 @@ function getDefaulPath(): string {
 }
 
 export function ExportDataModal(props: ExportDataModalProps) {
-  const { setValue, watch, handleSubmit } = useForm({
+  const { setValue, watch, handleSubmit, register } = useForm({
     resolver: zodResolver(dataSchema),
     defaultValues: {
       path: getDefaulPath(),
+      compress: true,
     },
   })
 
@@ -37,7 +39,7 @@ export function ExportDataModal(props: ExportDataModalProps) {
 
   function handleExport(data: data) {
     try {
-      api.exporter.exportData(data.path)
+      api.exporter.exportData(data.path, data.compress)
 
       modal.open(
         <SuccessModal
@@ -70,10 +72,19 @@ export function ExportDataModal(props: ExportDataModalProps) {
       <div className="flex-column gap-10">
         <div className="grid-column-fill-center align-center gap-10">
           <span>Salvar em: </span>
-          <input type="text" className="simple" readOnly value={path} />
+          <input
+            type="text"
+            className="simple"
+            readOnly
+            value={path}
+            title={path}
+          />
           <button className="simple" type="button" onClick={handlePickFolder}>
             Escolher pasta
           </button>
+
+          <span>Comprimir arquivo</span>
+          <input type="checkbox" {...register("compress")} />
         </div>
       </div>
     </FormModal>
