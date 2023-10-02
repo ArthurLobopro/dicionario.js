@@ -80,6 +80,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
               <CircleButton
                 title="Visualizar"
                 onClick={handleShowWord(olderWord.word)}
+                useDiv
               >
                 <EyeIcon />
               </CircleButton>
@@ -95,6 +96,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
               <CircleButton
                 title="Visualizar"
                 onClick={handleShowWord(newerWord.word)}
+                useDiv
               >
                 <EyeIcon />
               </CircleButton>
@@ -111,6 +113,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
               <CircleButton
                 title="Visualizar"
                 onClick={handleShowWord(biggerDefinitionWord.word)}
+                useDiv
               >
                 <EyeIcon />
               </CircleButton>
@@ -128,6 +131,7 @@ export function DictionaryInfoModal(props: DictionaryInfoModalProps) {
               <CircleButton
                 title="Visualizar"
                 onClick={handleShowWord(biggerLinesDefinitionWord.word)}
+                useDiv
               >
                 <EyeIcon />
               </CircleButton>
