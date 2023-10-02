@@ -1,9 +1,10 @@
 import { hoverFocus } from "../../../Util"
 import { LineTitle } from "../../../components/base"
 import { AddIcon, DonwloadIcon, UploadIcon } from "../../../components/icons"
+import { ExportDataModal } from "../../../components/modals/ExportData"
+import { ImportDataModal } from "../../../components/modals/ImportData"
 import { useModal } from "../../../hooks/useModal"
 
-import { ExportDataModal } from "../../../components/modals/ExportData"
 import {
   AddDictionaryModal,
   ImportDictionaryModal,
@@ -28,6 +29,10 @@ export function DictionarySection(props: DictionarySectionsProps) {
     modal.open(<ExportDataModal onClose={modal.close} />)
   }
 
+  function HandleImportData() {
+    modal.open(<ImportDataModal onClose={modal.close} />)
+  }
+
   return (
     <>
       <LineTitle title="Dicionários" />
@@ -35,9 +40,9 @@ export function DictionarySection(props: DictionarySectionsProps) {
       <span>Adicionar dicionário</span>
       <button
         className="stroke"
+        onMouseEnter={hoverFocus}
         title="Adicionar um dicionário"
         onClick={HandleAddDictionary}
-        onMouseEnter={hoverFocus}
       >
         <AddIcon className="use-main-colors" />
         Adicionar
@@ -46,9 +51,9 @@ export function DictionarySection(props: DictionarySectionsProps) {
       <span>Importar dicionário</span>
       <button
         className="stroke"
+        onMouseEnter={hoverFocus}
         title="Importar um dicionário"
         onClick={HandleImportDictionary}
-        onMouseEnter={hoverFocus}
       >
         <DonwloadIcon />
         Importar
@@ -57,12 +62,23 @@ export function DictionarySection(props: DictionarySectionsProps) {
       <span>Exportar Dados</span>
       <button
         className="stroke"
+        onMouseEnter={hoverFocus}
         title="Exportar Dados"
         onClick={HandleExportData}
-        onMouseEnter={hoverFocus}
       >
         <UploadIcon />
         Exportar
+      </button>
+
+      <span>Importar Dados</span>
+      <button
+        className="stroke"
+        onMouseEnter={hoverFocus}
+        title="Importar Dados"
+        onClick={HandleImportData}
+      >
+        <DonwloadIcon />
+        Importar
       </button>
     </>
   )

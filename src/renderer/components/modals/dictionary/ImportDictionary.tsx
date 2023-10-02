@@ -2,7 +2,6 @@ import { ipcRenderer } from "electron"
 import fs from "node:fs"
 import { useRef, useState } from "react"
 import { api } from "../../../../store/Api"
-import { DictionariesController } from "../../../../store/Controllers/Dictionaries"
 import {
   dictionary,
   dictionarySchema,
@@ -61,7 +60,7 @@ export function ImportDictionaryModal(props: ImportDictionaryModalProps) {
 
   const alreadyExists =
     readyToImport &&
-    DictionariesController.dictionariesNames.includes(selectedFile.content.name)
+    api.dictionaries.dictionariesNames.includes(selectedFile.content.name)
 
   const [action, setAction] = useState<"merge" | "rename">("rename")
   const [newName, setNewName] = useState("")
