@@ -4,6 +4,7 @@ import { ContextMenu, Item } from "../../../components/context-menu"
 import { ViewContext } from "../../../contexts/ViewContext"
 
 import {
+  AddIcon,
   EditIcon,
   InfoIcon,
   MenuIcon,
@@ -12,6 +13,7 @@ import {
 } from "../../../components/icons"
 
 import {
+  AddDictionaryModal,
   DeleteDictionaryModal,
   DictionaryInfoModal,
   EditDictionaryModal,
@@ -26,6 +28,7 @@ export function Menu() {
 
   const {
     handleClose,
+    handleAddDictionary,
     handleEditDictionary,
     handleDeleteDictionary,
     handleExportDictionary,
@@ -33,6 +36,11 @@ export function Menu() {
   } = useMemo(() => {
     function handleClose() {
       setOpen(false)
+    }
+
+    function handleAddDictionary() {
+      modal.open(<AddDictionaryModal onClose={modal.close} />)
+      handleClose()
     }
 
     function handleEditDictionary() {
@@ -77,6 +85,7 @@ export function Menu() {
 
     return {
       handleClose,
+      handleAddDictionary,
       handleEditDictionary,
       handleDeleteDictionary,
       handleExportDictionary,
@@ -93,18 +102,23 @@ export function Menu() {
       <MenuIcon />
       <ContextMenu target={menuRef} onClose={handleClose} open={open}>
         <Item
-          text="Editar Dicionário"
+          text="Criar novo dicionário"
+          onClick={handleAddDictionary}
+          icon={<AddIcon />}
+        />
+        <Item
+          text="Editar dicionário"
           onClick={handleEditDictionary}
           icon={<EditIcon />}
         />
         <Item text="Informações" onClick={handleShowInfo} icon={<InfoIcon />} />
         <Item
-          text="Exportar Dicionário"
+          text="Exportar dicionário"
           onClick={handleExportDictionary}
           icon={<UploadIcon />}
         />
         <Item
-          text="Deletar Dicionário"
+          text="Deletar dicionário"
           disabled={dictionary.isDefault}
           onClick={handleDeleteDictionary}
           icon={<MinifiedTrashIcon />}
