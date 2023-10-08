@@ -10,7 +10,8 @@ async function generate() {
     return await generateIcons({
         exporterPath: icon_exporter_path,
         srcDir: assets_path,
-        outDir: icons_out
+        outDir: icons_out,
+        exporterFinalBlankLine: true
     })
 }
 
