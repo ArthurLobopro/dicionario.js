@@ -49,7 +49,7 @@
     "react-hook-form": "^7.46.2",
     "react-router-dom": "^6.16.0",
     "update-electron-app": "^2.0.1",
-    "zod": "^3.22.2",
-    "zod-electron-store": "^1.0.3"
+    "zod": "^3.22.4",
+    "zod-electron-store": "^1.0.4"
   }
 }
