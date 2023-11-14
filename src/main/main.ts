@@ -1,6 +1,6 @@
 import { app, BrowserWindow, Menu, MenuItem } from "electron"
 import path from "node:path"
-import UpdateListener from "update-electron-app"
+import { updateElectronApp } from "update-electron-app"
 import Store from "zod-electron-store"
 import { createJumpList } from "./windowsJumpList"
 
@@ -11,7 +11,7 @@ import "./events"
 
 Store.initRenderer()
 
-UpdateListener({
+updateElectronApp({
     notifyUser: false,
 })
 
