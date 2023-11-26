@@ -1,8 +1,14 @@
 import z from "zod"
-import { dictionarySchema } from "./dictionary"
+import { dictionarySchema, systemLanguage } from "./dictionary"
 
 export const dictionariesSchema = z.object({
-    dictionaries: z.array(dictionarySchema).default([]),
+    dictionaries: z.array(dictionarySchema).default([
+        {
+            name: "Dicionário Padrão",
+            words: [],
+            languages: [systemLanguage],
+        },
+    ]),
     defaultDictionary: z.string().default("Dicionário Padrão"),
 })
 
