@@ -2,7 +2,7 @@ import { app, ipcRenderer } from "electron"
 import { z } from "zod"
 import { wordSchema } from "./word"
 
-const systemLanguage = (() => {
+export const systemLanguage = (() => {
     if (app) {
         return app.getLocale()
     }
