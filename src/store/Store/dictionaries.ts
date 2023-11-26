@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-
 import ZodElectronStore from "zod-electron-store"
 import {
     StoreDictionaries,
