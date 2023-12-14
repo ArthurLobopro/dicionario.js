@@ -232,10 +232,17 @@
   dependencies:
     electron-css-injector "1.2.0"
 
-"@electron-fonts/open-sans@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@electron-fonts/open-sans/-/open-sans-1.1.0.tgz#83c156ec562c494d6aa500b365a5b7def9ce5f23"
-  integrity sha512-UmcDEK4nTgQKqpIl8rvHbGTlrnxEbR5sjEF/HXVce9mK4zjZllj3zxTTevi2//SJXMwCk8IYXEAQZ5l/MR0VDw==
+"@electron-fonts/nunito@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/nunito/-/nunito-1.1.1.tgz#2ea4b452249ad72eec4babef368d865cde8690ee"
+  integrity sha512-j9FO7Y8b4/fVZS2q2FqSAQkYxyku6VNme5P0B+GERP6R139kwfmPdbBsrgjXGcQY8rGweB6eLULdeWNWwlesYg==
+  dependencies:
+    electron-css-injector "1.2.0"
+
+"@electron-fonts/open-sans@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/open-sans/-/open-sans-1.1.1.tgz#9f7412503f36af4d7a64baf682e5bc2195cd0385"
+  integrity sha512-11nLBCUCCzUcGVU98I0oIwYilB+j3lwASu0D79X2cMCaJ6dUNh8+GEpHiZeQDwgRObX4XbQdB8TtvAnj8al08w==
   dependencies:
     electron-css-injector "1.2.0"
 
