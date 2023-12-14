@@ -2,7 +2,7 @@ name: Publish App
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   publish:
@@ -14,16 +14,15 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest]
 
-    steps:   
-
+    steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: "18.x"
+          registry-url: "https://registry.npmjs.org"
 
       - name: Install
         run: |
@@ -32,11 +31,11 @@ jobs:
       - name: compile-sass
         run: |
           yarn sass-compiler --compile
-          
+
       - name: compile typescript
         run: |
           yarn tsc
-          
+
       - name: Publish
         run: |
           yarn run publish
