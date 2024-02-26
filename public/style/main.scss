@@ -158,22 +158,18 @@ select {
 }
 
 .option {
-    @extend .dashed-border;
+    // @extend .dashed-border;
 
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
     gap: 16px;
-    justify-self: center;
+
+    width: 100%;
 
     background-color: var(--secondary-background);
-    width: 80%;
-    max-width: 250px;
-    aspect-ratio: 1/1;
     font-size: clamp(16px, 2vw, 24px);
     font-family: 'Open Sans', sans-serif;
-    padding: 25px 0;
+    padding: 16px;
     cursor: pointer;
     border-radius: 16px;
     user-select: none;
@@ -182,7 +178,7 @@ select {
         @extend .flex-center;
     }
 
-    svg {
+    svg.follow-colors {
         * {
             &[stroke]:not([stroke="none"]) {
                 stroke: var(--main-color);
@@ -196,17 +192,27 @@ select {
 
     &:hover {
         filter: brightness(var(--main-hover-brightness));
+
+        svg.no-brightness {
+            filter: brightness(calc(2 - var(--main-hover-brightness)))
+        }
     }
 }
 
 .option-wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-content: center;
-    align-items: center;
-    max-width: 1200px;
-    justify-self: center;
+    padding: 8px;
+    margin: 0 16px;
+
     width: 100%;
+    height: max-content;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 8px;
+
+    justify-self: center;
+    align-self: center;
 }
 
 button {

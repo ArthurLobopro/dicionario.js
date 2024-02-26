@@ -52,6 +52,13 @@ export class DictionariesController {
         return new DictionaryController(dictionary)
     }
 
+    static getTopDictionaries() {
+        return dictionariesStore
+            .get("dictionaries")
+            .sort((a, b) => b.words.length - a.words.length)
+            .slice(0, 3)
+    }
+
     static saveDictionary(dictionary: dictionary) {
         const dictionaries = dictionariesStore.get("dictionaries")
 
