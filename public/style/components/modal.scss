@@ -61,6 +61,7 @@
 
         &:has(.dashed-border) {
             display: block;
+            border-radius: 32px;
         }
 
         &.full {
