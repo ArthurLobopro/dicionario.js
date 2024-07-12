@@ -1,43 +1,43 @@
 name: Publish App
 
 on:
-  push:
-    branches: [main]
+    push:
+        branches: [main]
 
 jobs:
-  publish:
-    name: Publish on ${{ matrix.os }}
+    publish:
+        name: Publish on ${{ matrix.os }}
 
-    runs-on: ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
 
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest]
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v3
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18.x"
-          registry-url: "https://registry.npmjs.org"
+            - name: Setup Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: "18.x"
+                  registry-url: "https://registry.npmjs.org"
 
-      - name: Install
-        run: |
-          yarn install --frozen-lockfile
+            - name: Install
+              run: |
+                  yarn install --frozen-lockfile
 
-      - name: compile-sass
-        run: |
-          yarn sass-compiler --compile
+            - name: compile-sass
+              run: |
+                  yarn sass-compiler --compile
 
-      - name: compile typescript
-        run: |
-          yarn tsc
+            - name: compile typescript
+              run: |
+                  yarn tsc
 
-      - name: Publish
-        run: |
-          yarn run publish
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
+            - name: Publish
+              run: |
+                  yarn run publish
+              env:
+                  GITHUB_TOKEN: ${{ github.token }}
