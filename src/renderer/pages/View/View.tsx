@@ -6,6 +6,7 @@ import { SelectDictionary } from "../../components/selects/Dictionary"
 import { ViewContext } from "../../contexts/ViewContext"
 import { useModal } from "../../hooks/useModal"
 import { useQuery } from "../../hooks/useQuery"
+import { useSearch } from "../../hooks/useSearch"
 import { EmptyPage } from "./components/EmptyPage"
 import { RightContent } from "./components/RightContent"
 import { WordList } from "./components/WordList"
@@ -24,9 +25,10 @@ export function ViewScreen() {
   const getWords = () => dictionary.Words.words
 
   const words = useMemo(getWords, [dictionary])
-  const [search, setSearch] = useState("")
   const modal = useModal()
   const wrapperRef = useRef<HTMLDivElement>(null)
+
+  const { search, setSearch, searchRegex } = useSearch()
 
   function reload() {
     try {
@@ -60,6 +62,7 @@ export function ViewScreen() {
           handleAddWord,
           setSearch,
           reload,
+          searchRegex,
         }}
       >
         {modal.content}

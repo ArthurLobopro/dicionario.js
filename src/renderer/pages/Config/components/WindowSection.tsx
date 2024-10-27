@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron"
-import { frameStyle } from "electron-frame"
 import { useState } from "react"
 
+import { FrameStyle } from "electron-frame"
 import { api } from "../../../../store/Api"
 import { StoreOptions } from "../../../../store/ZodSchemas/options"
 import { frame } from "../../../Frame"
@@ -23,7 +23,7 @@ export function WindowSection() {
   }
 
   function HandleFrameStyleChange(event: React.ChangeEvent<HTMLSelectElement>) {
-    const frameStyle = event.currentTarget.value as frameStyle
+    const frameStyle = event.currentTarget.value as FrameStyle
     api.options.setFrameStyle(frameStyle)
     setConfig({ ...config, frameStyle })
     frame.setFrameStyle(frameStyle)
