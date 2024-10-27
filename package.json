@@ -38,8 +38,8 @@
   },
   "dependencies": {
     "@arthur-lobo/react-onclickout": "^1.1.1",
-    "@electron-fonts/nunito": "^1.1.1",
-    "@electron-fonts/open-sans": "^1.1.1",
+    "@electron-fonts/nunito": "^1.2.0",
+    "@electron-fonts/open-sans": "^1.2.0",
     "@hookform/resolvers": "^3.3.4",
     "deep-equal": "^2.2.3",
     "electron-frame": "^1.6.1",
