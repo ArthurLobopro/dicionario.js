@@ -247,19 +247,19 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@electron-fonts/nunito@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@electron-fonts/nunito/-/nunito-1.1.0.tgz#4027735ad04a6500322b2956b485afa5fa26c619"
-  integrity sha512-MceBt+ktvaYJlJnX1Zcg+kkWX00m9N+z+I9bEhjjeMlXpBGg+t48nzWKpiJZoLNDznXu6D7KxfY+ShJhtKBf3Q==
-  dependencies:
-    electron-css-injector "1.2.0"
-
 "@electron-fonts/nunito@^1.1.1":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/@electron-fonts/nunito/-/nunito-1.1.1.tgz#2ea4b452249ad72eec4babef368d865cde8690ee"
   integrity sha512-j9FO7Y8b4/fVZS2q2FqSAQkYxyku6VNme5P0B+GERP6R139kwfmPdbBsrgjXGcQY8rGweB6eLULdeWNWwlesYg==
   dependencies:
     electron-css-injector "1.2.0"
+
+"@electron-fonts/nunito@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@electron-fonts/nunito/-/nunito-1.2.0.tgz#fa0621c6898edf408475e0b89452ebfd9f346514"
+  integrity sha512-+G0tW/XWDx2XNgIFoTYt77uOUKbU9+tPx9R41s/voYDqhkxEYlhrQaX0F4TTOJd+GXZx/8OpKInJ7bckSDahBg==
+  dependencies:
+    electron-css-injector "1.3.0"
 
 "@electron-fonts/open-sans@^1.1.1":
   version "1.1.1"
@@ -2124,17 +2124,22 @@ electron-css-injector@1.2.0:
   resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.2.0.tgz#248b5aed5c11b3c52dc8785357da53b371140d87"
   integrity sha512-oON1RYcD+XTNhe5KxkKgKnqSvWbu1dkvlJG2xTiMf30YpuaRSXKQHOgXnF6R6EsSNjSvIeGwIBxZyfzIu+2eIw==
 
+electron-css-injector@1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.3.0.tgz#57f1f5c9076e7ad16114c5d529e71962899731a0"
+  integrity sha512-xRpwgP2fYSkB21vtL6jC77p4Gn/bc6PH2M6kOe5tOJkUsznqk3kpDe/UHpuvehHH+MMn8Mf+g24PXEADWhSvIA==
+
 electron-css-injector@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/electron-css-injector/-/electron-css-injector-1.2.1.tgz#e7bd4efc779e56c1d88721157cdb1643755295bf"
   integrity sha512-yLrZgQ6ksy0LmHmGfH3dUeaA6MYEclCzeeq6yyw7QYfQpLGBK3p4HopiRstD2qGkR+UFHQZnHf38ps1uRThNqQ==
 
-electron-frame@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.5.1.tgz#ab5cbd281d99b5e57506c770ab4c42c7e0bbbda5"
-  integrity sha512-3RMLmSiCmLO/TyIaAdRnFCn+db0KyT9bPjdyqzZzdL4pDjucNVbBT7SeFj8XDjoD8NBJ1HuBiekLsQUCfqcIWg==
+electron-frame@^1.6.1:
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/electron-frame/-/electron-frame-1.6.1.tgz#2e9df91f1526bf6ab307e6d16c4a0867ac512046"
+  integrity sha512-b7uQHtVzhhTvShuibzu/UCULnaFVQSadjTZ2CNW/T1YRz/iAlZzrObGhfVsBFgCeXBxsnFr3w4PWA4lEG3FhDA==
   dependencies:
-    "@electron-fonts/nunito" "^1.1.0"
+    "@electron-fonts/nunito" "^1.2.0"
     electron-css-injector "^1.2.1"
 
 electron-installer-common@^0.10.2:
@@ -4693,18 +4698,18 @@ rcedit@^4.0.0:
   dependencies:
     cross-spawn-windows-exe "^1.1.0"
 
-react-dom@^18.2.0:
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
-  integrity sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==
+react-dom@^18.3.1:
+  version "18.3.1"
+  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.3.1.tgz#c2265d79511b57d479b3dd3fdfa51536494c5cb4"
+  integrity sha512-5m4nQKp+rZRb09LNH59GM4BxTh9251/ylbKIbpe7TpGxfJ+9kv6BLkLBXIjjspbgbnIBNqlI23tRnTWT0snUIw==
   dependencies:
     loose-envify "^1.1.0"
-    scheduler "^0.23.0"
+    scheduler "^0.23.2"
 
-react-hook-form@^7.50.1:
-  version "7.50.1"
-  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.50.1.tgz#f6aeb17a863327e5a0252de8b35b4fc8990377ed"
-  integrity sha512-3PCY82oE0WgeOgUtIr3nYNNtNvqtJ7BZjsbxh6TnYNbXButaD5WpjOmTjdxZfheuHKR68qfeFnEDVYoSSFPMTQ==
+react-hook-form@^7.53.1:
+  version "7.53.1"
+  resolved "https://registry.yarnpkg.com/react-hook-form/-/react-hook-form-7.53.1.tgz#3f2cd1ed2b3af99416a4ac674da2d526625add67"
+  integrity sha512-6aiQeBda4zjcuaugWvim9WsGqisoUk+etmFEsSUMm451/Ic8L/UAb7sRtMj3V+Hdzm6mMjU1VhiSzYUZeBm0Vg==
 
 react-is@^16.13.1:
   version "16.13.1"
@@ -4726,10 +4731,10 @@ react-router@6.22.0:
   dependencies:
     "@remix-run/router" "1.15.0"
 
-react@^18.2.0:
-  version "18.2.0"
-  resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
-  integrity sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ==
+react@^18.3.1:
+  version "18.3.1"
+  resolved "https://registry.yarnpkg.com/react/-/react-18.3.1.tgz#49ab892009c53933625bd16b2533fc754cab2891"
+  integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
   dependencies:
     loose-envify "^1.1.0"
 
@@ -4971,10 +4976,10 @@ sass@^1.56.1:
     immutable "^4.0.0"
     source-map-js ">=0.6.2 <2.0.0"
 
-scheduler@^0.23.0:
-  version "0.23.0"
-  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.0.tgz#ba8041afc3d30eb206a487b6b384002e4e61fdfe"
-  integrity sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==
+scheduler@^0.23.2:
+  version "0.23.2"
+  resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.23.2.tgz#414ba64a3b282892e944cf2108ecc078d115cdc3"
+  integrity sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==
   dependencies:
     loose-envify "^1.1.0"
 
