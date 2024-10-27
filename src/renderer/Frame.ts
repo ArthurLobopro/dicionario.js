@@ -1,17 +1,17 @@
-import { ElectronFrame, frameStyle } from "electron-frame/renderer"
+import { ElectronFrame, FrameStyle } from "electron-frame/renderer"
 import { api } from "../store/Api"
 
 const options = () => api.options
 
 const frame = new ElectronFrame({
-  frameStyle: options().frameStyle as frameStyle,
+  frameStyle: options().frameStyle as FrameStyle,
   darkMode: (options().frameTheme === "auto"
     ? options().darkMode
     : options().frameTheme === "dark") as boolean,
 })
 
 const frameApi = {
-  setFrameStyle(frameStyle: frameStyle) {
+  setFrameStyle(frameStyle: FrameStyle) {
     frame.setFrameStyle(frameStyle)
   },
 

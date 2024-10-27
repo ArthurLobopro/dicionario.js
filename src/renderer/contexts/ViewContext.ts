@@ -5,6 +5,7 @@ import { useModal } from "../hooks/useModal"
 interface ViewPageContext {
   modal: ReturnType<typeof useModal>
   search: string
+  searchRegex: RegExp
   words: typeof DictionaryController.prototype.Words.words
   dictionary: DictionaryController
   wrapperRef: React.RefObject<HTMLDivElement>
