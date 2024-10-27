@@ -1,6 +1,6 @@
 {
   "name": "dicionario",
-  "version": "2.7.5",
+  "version": "2.8.0",
   "description": "Dicionário simples onde você pode cadastrar as palavras que você aprendeu recentemente, fácil e prático.",
   "main": "./dist/main/main.js",
   "scripts": {
