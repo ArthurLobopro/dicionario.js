@@ -631,10 +631,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@hookform/resolvers@^3.3.4":
-  version "3.3.4"
-  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-3.3.4.tgz#de9b668c2835eb06892290192de6e2a5c906229b"
-  integrity sha512-o5cgpGOuJYrd+iMKvkttOclgwRW86EsWJZZRC23prf0uU2i48Htq4PuT73AVb9ionFyZrwYEITuOFGF+BydEtQ==
+"@hookform/resolvers@^3.9.0":
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/@hookform/resolvers/-/resolvers-3.9.0.tgz#cf540ac21c6c0cd24a40cf53d8e6d64391fb753d"
+  integrity sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==
 
 "@humanwhocodes/config-array@^0.11.13":
   version "0.11.13"
@@ -1858,10 +1858,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==
 
-conf-with-zod@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/conf-with-zod/-/conf-with-zod-1.0.4.tgz#c1b4726e0119ffa76a0fc8ffc7d9dced1f97258f"
-  integrity sha512-KsE9ENIpaMd0yDYbDkbUepUxZ9SaaUkC8fvw3792gABCH2dfzdjU3L+tJlPfsBttMqY+xj9/kt82alokuLOjqQ==
+conf-with-zod@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/conf-with-zod/-/conf-with-zod-1.0.5.tgz#6e6f00c4ff5fadf761eafc8cb2e8cf4fffde096b"
+  integrity sha512-5s7FDVqFERaX47mxAAvD5QjX7HVE9Iv0XEKy1jh3UtXEiW9INp9W9rInP4naPZmJIQsR6bC5jGdSl+HiLNFStw==
   dependencies:
     atomically "^1.7.0"
     debounce-fn "^4.0.0"
@@ -1872,7 +1872,7 @@ conf-with-zod@^1.0.4:
     onetime "^5.1.2"
     pkg-up "^3.1.0"
     semver "^7.5.4"
-    zod "^3.22.4"
+    zod "^3.23.8"
 
 console-control-strings@^1.1.0:
   version "1.1.0"
@@ -5783,15 +5783,15 @@ yocto-queue@^0.1.0:
   resolved "https://registry.yarnpkg.com/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zod-electron-store@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/zod-electron-store/-/zod-electron-store-1.0.4.tgz#a02a39f1046f437445b30be1a4c66fa9324ec1d6"
-  integrity sha512-7h+Rxr/rqnnv6b1SBW1/E1NG6hok3b6Z3+wQzk61559J704Ne2G/crd8+8eF3/c2mXI/0fdO7fEIWsVzrIUdBg==
+zod-electron-store@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/zod-electron-store/-/zod-electron-store-1.0.5.tgz#694d7394d6dcb36841b212d31c05ca45ba79388e"
+  integrity sha512-1H2x3C2W47CXDgdMPLKLY2jnHVQDq9ipNOFOf5Hk5n+gkmgOzDgG/JjkgRdsVwgtRWZtoS31YqKE6vRX1/CVXg==
   dependencies:
-    conf-with-zod "^1.0.4"
+    conf-with-zod "^1.0.5"
     type-fest "^2.17.0"
 
-zod@^3.22.4:
-  version "3.22.4"
-  resolved "https://registry.yarnpkg.com/zod/-/zod-3.22.4.tgz#f31c3a9386f61b1f228af56faa9255e845cf3fff"
-  integrity sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==
+zod@^3.23.8:
+  version "3.23.8"
+  resolved "https://registry.yarnpkg.com/zod/-/zod-3.23.8.tgz#e37b957b5d52079769fb8097099b592f0ef4067d"
+  integrity sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g==
